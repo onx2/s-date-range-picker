@@ -4,9 +4,9 @@
 	import { dayOffset, getCalendar, getDayMetaData } from "./utils";
 	import DayOfMonth from "./DayOfMonth.svelte";
 
-	export let dateFormat;
 	export let disabledDates;
 	export let events;
+	export let hoverDate;
 	export let firstDayOfWeek;
 	export let isoWeekNumbers;
 	export let locale;
@@ -24,18 +24,8 @@
 	export let weekGuides;
 	export let weekNumbers;
 	export let yearDropdown;
-	let hoverDate = null;
-	const dispatchEvent = new createEventDispatcher();
 
-	$: calendarDays = getCalendar(month, dayOffset(firstDayOfWeek), {
-		startDate: tempStartDate,
-		hoverDate,
-		minDate,
-		maxDate,
-		today,
-		endDate: tempEndDate,
-		singlePicker
-	});
+	const dispatchEvent = new createEventDispatcher();
 
 	const onClick = day => {
 		if (singlePicker) {
@@ -51,38 +41,26 @@
 		}
 	};
 
-	function onHover(day) {
-		hoverDate = day.date;
-		dispatchEvent("hover", { hoverDate });
-	}
-
-	$: startDateReadout = () => {
-		if (!tempEndDate) {
-			if (isBefore(hoverDate, tempStartDate)) {
-				return hoverDate;
-			}
-
-			return tempStartDate;
-		}
-
-		return tempStartDate;
+	const onHover = day => {
+		dispatchEvent("hover", { hoverDate: day.date });
 	};
 
-	$: endDateReadout = () => {
-		if (!tempEndDate) {
-			if (isBefore(hoverDate, tempStartDate)) {
-				return tempStartDate;
-			}
-
-			return hoverDate;
-		}
-
-		return tempEndDate;
-	};
+	$: calendarDays = getCalendar({
+		month,
+		weekStartsOn: dayOffset(firstDayOfWeek),
+		disabledDates,
+		startDate: tempStartDate,
+		hoverDate,
+		minDate,
+		maxDate,
+		today,
+		endDate: tempEndDate,
+		singlePicker
+	});
 </script>
 
 <style>
-	div.calendar {
+	.calendar {
 		display: flex;
 		justify-content: space-evenly;
 		flex-wrap: wrap;
@@ -90,9 +68,8 @@
 	}
 </style>
 
-<div>{startDateReadout()} - {endDateReadout()}</div>
-
 <div class="calendar">
+	<slot />
 	{#each calendarDays as day (day.date.toString())}
 		<DayOfMonth
 			{locale}

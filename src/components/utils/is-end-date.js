@@ -1,9 +1,13 @@
-import { isSameDay } from "date-fns";
+import { isSameDay, isBefore } from "date-fns";
 
-export const isEndDate = (date, endDate) => {
+export const isEndDate = ({ endDate, date, hoverDate, startDate }) => {
 	if (endDate) {
 		return isSameDay(date, endDate);
 	}
 
-	return false;
+	if (isBefore(hoverDate, startDate)) {
+		return isSameDay(date, startDate);
+	}
+
+	return isSameDay(date, hoverDate);
 };

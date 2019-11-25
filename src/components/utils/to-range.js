@@ -1,23 +1,23 @@
 import { isBefore } from "date-fns";
 
-export const toRange = (startDate, endDate) => {
-	if (!endDate) {
+export const toRange = (dateLeft, dateRight) => {
+	if (!dateRight) {
 		return {
-			startDate,
-			endDate: startDate
+			start: dateLeft,
+			end: dateLeft
 		};
 	}
 
 	// Swap startDate and endDate values when endDate is before startDate.
-	if (isBefore(endDate, startDate)) {
+	if (isBefore(dateRight, dateLeft)) {
 		return {
-			startDate: endDate,
-			endDate: startDate
+			start: dateRight,
+			end: dateLeft
 		};
 	}
 
 	return {
-		startDate,
-		endDate
+		start: dateLeft,
+		end: dateRight
 	};
 };

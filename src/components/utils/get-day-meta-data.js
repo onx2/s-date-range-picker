@@ -1,21 +1,21 @@
-import { isSameDay, isWeekend, isSameMonth, subMonths, addMonths } from "date-fns";
+import { isSameDay, isWeekend, isSameMonth, isWithinInterval, subMonths, addMonths } from "date-fns";
 
-import { getRange, isWithinSelection, isStartDate, isEndDate, isPreview, isDisabled } from "./index";
+import { isStartDate, isEndDate, isDisabled, toRange } from "./index";
 
 export const getDayMetaData = params => {
 	const { date, startDate, hoverDate, minDate, maxDate, month, today, endDate, singlePicker } = params;
-	const range = getRange(startDate, endDate, hoverDate);
-
+	const { start, end } = toRange(startDate, endDate || hoverDate);
+	// isWithinSelection(date, startDate, endDate || hoverDate)
 	return {
 		date,
 		isToday: isSameDay(date, today),
 		isWeekend: isWeekend(date),
 		isLastMonth: isSameMonth(subMonths(date, 1), month),
 		isNextMonth: isSameMonth(addMonths(date, 1), month),
-		isStartDate: isStartDate(date, startDate),
-		isEndDate: !singlePicker ? isEndDate(date, range.endDate) : false,
-		isWithinSelection: !singlePicker ? isWithinSelection(date, startDate, endDate || hoverDate) : false,
-		isPreview: !singlePicker ? isPreview(date, startDate, endDate, hoverDate) : false,
-		isDisabled: isDisabled(date, minDate, maxDate, month)
+		isStartDate: isStartDate(params),
+		isDisabled: isDisabled(params),
+		// Used only in range mode
+		isEndDate: !singlePicker ? isEndDate(params) : false,
+		isWithinSelection: !singlePicker ? isWithinInterval(date, { start, end }) : false
 	};
 };

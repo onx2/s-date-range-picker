@@ -6,35 +6,47 @@
 	 * svelte-material UI
 	 * svelte-mat-ui
 	 */
+	/**
+	 * @todo Accessibility (keyboard controls, label, etc... compliance)
+	 * @todo Button to open and close picker (maybe a prop to have it inline?)
+	 * @todo Handle timezones (there are a few unknown unknowns right now)
+	 * 			 It is probably going to be handled just fine via the `today` prop,
+	 * 		   but i'd like to verify it works fine with times... Date objects use system time
+	 * @todo Build out timePicker mode (24hr)
+	 * @todo Multi-page calendar
+	 * @todo locales (this might be fine if all pressure to add conversions is on the consumer)
+	 * 			 e.g. passing in the locale and correct translations for their predefined ranges...
+	 * @todo weekGuides
+	 * @todo weekNumbers
+	 * @todo isoWeekNumbers
+	 * @todo min / maxDate
+	 * @todo Month and year dropdowns
+	 * @todo autoApply (currently a WIP)
+	 * @todo TypeScript support -- is this even possible in SvelteJS?
+	 */
 
 	/* <<< Imports >>> */
 	import { createEventDispatcher, onMount } from "svelte";
-	import {
-		addDays,
-		addMonths,
-		endOfWeek,
-		format,
-		isSameDay,
-		isValid,
-		parseISO,
-		startOfWeek,
-		subMonths
-	} from "date-fns";
+	import { addDays, addMonths, endOfWeek, format, isBefore, isSameDay, startOfWeek, subMonths } from "date-fns";
+	import { dayOffset, getWeek } from "./utils";
 	import Calendar from "./Calendar.svelte";
 
 	/* <<< Private variables >>> */
 	const dispatchEvent = createEventDispatcher();
 	const id = "s-date-range-picker";
+	const weekStart = startOfWeek(new Date());
+	const weekEnd = endOfWeek(new Date());
+	let hoverDate = weekStart;
 	let month = new Date();
-	let tempEndDate = endOfWeek(new Date());
-	let tempStartDate = startOfWeek(new Date());
+	let tempEndDate = weekEnd;
+	let tempStartDate = weekStart;
 
 	/* <<< Props >>> */
 	export let autoApply = false;
-	export let dateFormat = "yyyy-MM-dd";
+	export let dateFormat = "MMM dd, yyyy";
 	export let disabled = false;
-	export let disabledDates = [];
-	export let endDate = endOfWeek(new Date());
+	export let disabledDates = [new Date("November 21, 2019"), new Date("November 11, 2019")];
+	export let endDate = weekEnd;
 	export let events = [];
 	export let firstDayOfWeek = "sunday";
 	export let isoWeekNumbers = false;
@@ -47,7 +59,7 @@
 	export let predefinedRanges = [];
 	export let rtl = false;
 	export let singlePicker = false;
-	export let startDate = startOfWeek(new Date());
+	export let startDate = weekStart;
 	export let timePicker = false;
 	export let timePicker24Hour = true;
 	export let timePickerIncrement = 1;
@@ -57,14 +69,33 @@
 	export let weekNumbers = false;
 	export let yearDropdown = true;
 
-	$: canApply = () => !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate);
-	$: canCancel = () => !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
+	$: canApply = !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate);
+	/** @todo Account for the selection not being visible in the view (month) */
+	$: canCancel = !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
+	$: daysOfWeek = getWeek(new Date(), dayOffset(firstDayOfWeek));
+	$: startDateReadout = () => {
+		if (!tempEndDate) {
+			if (isBefore(hoverDate, tempStartDate)) {
+				return hoverDate;
+			}
 
-	/* <<< Startup >>> */
-	onMount(() => {
-		// Always use lowercase (increases the performance of the dayOffset() function)
-		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase();
-	});
+			return tempStartDate;
+		}
+
+		return tempStartDate;
+	};
+
+	$: endDateReadout = () => {
+		if (!tempEndDate) {
+			if (isBefore(hoverDate, tempStartDate)) {
+				return tempStartDate;
+			}
+
+			return hoverDate;
+		}
+
+		return tempEndDate;
+	};
 
 	/* <<< Custom Events >>> */
 	const show = () => {
@@ -76,14 +107,7 @@
 	};
 
 	const apply = () => {
-		/**
-		 * When autoApply is true, every onSelection event fires apply()
-		 * but the enDate is undefined and the singlePicker prop is false
-		 * apply() shouldn't be called.
-		 *
-		 * apply() must output a startDate and endDate.
-		 */
-		if (!tempEndDate) {
+		if (!tempEndDate && !singlePicker) {
 			return;
 		}
 
@@ -92,7 +116,7 @@
 		endDate = tempEndDate;
 
 		// Notify the consumer of SDateRangePicker
-		dispatchEvent("change", {
+		dispatchEvent("apply", {
 			startDate,
 			endDate
 		});
@@ -102,6 +126,7 @@
 		// Reset the temp state
 		tempStartDate = startDate;
 		tempEndDate = endDate;
+		month = startDate;
 
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("cancel", {
@@ -115,7 +140,6 @@
 		tempStartDate = detail.tempStartDate;
 		tempEndDate = detail.tempEndDate;
 
-		console.log("onSelection", detail);
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("selection", {
 			startDate: tempStartDate,
@@ -127,33 +151,39 @@
 		}
 	};
 
-	const onHover = ({ detail: { hoverDate } }) => {
-		console.log("SDateRangePicker hover", hoverDate);
+	const onHover = ({ detail }) => {
+		hoverDate = detail.hoverDate;
 	};
 
 	const previousMonth = () => {
-		console.log("previousMonth", format(month, "MMM"));
 		month = subMonths(month, 1);
-		console.log("previousMonth", format(month, "MMM"));
 	};
 
 	const nextMonth = () => {
-		console.log("nextMonth", format(month, "MMM"));
 		month = addMonths(month, 1);
-		console.log("nextMonth", format(month, "MMM"));
 	};
 </script>
 
+<style>
+	.week-date {
+		width: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+
 <div {id}>
+	<div>{format(startDateReadout(), dateFormat)} to {format(endDateReadout(), dateFormat)}</div>
 	<button type="button" on:click={previousMonth}>Previous</button>
 	<span>{format(month, `${monthFormat}, yyyy`)}</span>
 	<button type="button" on:click={nextMonth}>Next</button>
 	<Calendar
 		on:hover={onHover}
 		on:selection={onSelection}
-		{dateFormat}
 		{disabledDates}
 		{events}
+		{hoverDate}
 		{firstDayOfWeek}
 		{isoWeekNumbers}
 		{locale}
@@ -170,14 +200,18 @@
 		{today}
 		{weekGuides}
 		{weekNumbers}
-		{yearDropdown} />
+		{yearDropdown}>
+		{#each daysOfWeek as dayOfWeek (dayOfWeek.toString())}
+			<div class="week-date">{format(dayOfWeek, 'eeeeee')}</div>
+		{/each}
+	</Calendar>
 
 	<button
 		type="button"
 		aria-label="Cancel the current selection and revert to previous start and end dates"
 		aria-controls={id}
 		on:click={cancel}
-		disabled={!canCancel()}>
+		disabled={!canCancel}>
 		Cancel
 	</button>
 	<button
@@ -185,7 +219,7 @@
 		aria-label="Apply the current selection"
 		aria-controls={id}
 		on:click={apply}
-		disabled={!canApply()}>
+		disabled={!canApply}>
 		Apply
 	</button>
 </div>

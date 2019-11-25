@@ -4,7 +4,7 @@
 
 # Getting Started
 
--   Consuming the component
+- Consuming the component
 
 # API
 
@@ -14,6 +14,10 @@ Table of Props / Options
 
 ## Events
 
-Table of Events
+- show
+- hide
+- selection
+- cancel
+- apply
 
 Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) compnent template!
