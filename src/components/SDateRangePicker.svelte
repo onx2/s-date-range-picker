@@ -9,12 +9,23 @@
 
 	/* <<< Imports >>> */
 	import { createEventDispatcher, onMount } from "svelte";
-	import { addDays, endOfWeek, format, isSameDay, isValid, parseISO, startOfWeek } from "date-fns";
+	import {
+		addDays,
+		addMonths,
+		endOfWeek,
+		format,
+		isSameDay,
+		isValid,
+		parseISO,
+		startOfWeek,
+		subMonths
+	} from "date-fns";
 	import Calendar from "./Calendar.svelte";
 
 	/* <<< Private variables >>> */
 	const dispatchEvent = createEventDispatcher();
 	const id = "s-date-range-picker";
+	let month = new Date();
 	let tempEndDate = endOfWeek(new Date());
 	let tempStartDate = startOfWeek(new Date());
 
@@ -51,6 +62,7 @@
 
 	/* <<< Startup >>> */
 	onMount(() => {
+		// Always use lowercase (increases the performance of the dayOffset() function)
 		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase();
 	});
 
@@ -98,11 +110,13 @@
 		});
 	};
 
-	const onSelection = selection => {
+	const onSelection = ({ detail }) => {
 		// Update the temporary state with the new selection
-		tempStartDate = selection.startDate;
-		tempEndDate = selection.endDate;
+		tempStartDate = detail.tempStartDate;
+		tempEndDate = detail.tempEndDate;
 
+		console.log("onSelection", detail);
+		// Notify the consumer of SDateRangePicker
 		dispatchEvent("selection", {
 			startDate: tempStartDate,
 			endDate: tempEndDate
@@ -116,11 +130,27 @@
 	const onHover = ({ detail: { hoverDate } }) => {
 		console.log("SDateRangePicker hover", hoverDate);
 	};
+
+	const previousMonth = () => {
+		console.log("previousMonth", format(month, "MMM"));
+		month = subMonths(month, 1);
+		console.log("previousMonth", format(month, "MMM"));
+	};
+
+	const nextMonth = () => {
+		console.log("nextMonth", format(month, "MMM"));
+		month = addMonths(month, 1);
+		console.log("nextMonth", format(month, "MMM"));
+	};
 </script>
 
 <div {id}>
+	<button type="button" on:click={previousMonth}>Previous</button>
+	<span>{format(month, `${monthFormat}, yyyy`)}</span>
+	<button type="button" on:click={nextMonth}>Next</button>
 	<Calendar
 		on:hover={onHover}
+		on:selection={onSelection}
 		{dateFormat}
 		{disabledDates}
 		{events}
@@ -130,6 +160,7 @@
 		{maxDate}
 		{maxSpan}
 		{minDate}
+		{month}
 		{monthDropdown}
 		{monthFormat}
 		{rtl}
@@ -140,14 +171,6 @@
 		{weekGuides}
 		{weekNumbers}
 		{yearDropdown} />
-	<button
-		type="button"
-		aria-label="Apply the current selection"
-		aria-controls={id}
-		on:click={apply}
-		disabled={!canApply()}>
-		Apply
-	</button>
 
 	<button
 		type="button"
@@ -156,5 +179,13 @@
 		on:click={cancel}
 		disabled={!canCancel()}>
 		Cancel
+	</button>
+	<button
+		type="button"
+		aria-label="Apply the current selection"
+		aria-controls={id}
+		on:click={apply}
+		disabled={!canApply()}>
+		Apply
 	</button>
 </div>

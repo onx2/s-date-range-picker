@@ -14,7 +14,7 @@ export const getDayMetaData = params => {
 		isNextMonth: isSameMonth(addMonths(date, 1), month),
 		isStartDate: isStartDate(date, startDate),
 		isEndDate: !singlePicker ? isEndDate(date, range.endDate) : false,
-		isWithinSelection: !singlePicker ? isWithinSelection(date, startDate, endDate) : false,
+		isWithinSelection: !singlePicker ? isWithinSelection(date, startDate, endDate || hoverDate) : false,
 		isPreview: !singlePicker ? isPreview(date, startDate, endDate, hoverDate) : false,
 		isDisabled: isDisabled(date, minDate, maxDate, month)
 	};

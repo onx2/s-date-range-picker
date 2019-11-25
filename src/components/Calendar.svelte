@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from "svelte";
-	import { format } from "date-fns";
+	import { format, isBefore } from "date-fns";
 	import { dayOffset, getCalendar, getDayMetaData } from "./utils";
 	import DayOfMonth from "./DayOfMonth.svelte";
 
@@ -13,6 +13,7 @@
 	export let maxDate;
 	export let maxSpan;
 	export let minDate;
+	export let month;
 	export let monthDropdown;
 	export let monthFormat;
 	export let rtl;
@@ -26,9 +27,7 @@
 	let hoverDate = null;
 	const dispatchEvent = new createEventDispatcher();
 
-	// This should be a prop to handle
-	const month = new Date();
-	const calendarDays = getCalendar(month, dayOffset(firstDayOfWeek), {
+	$: calendarDays = getCalendar(month, dayOffset(firstDayOfWeek), {
 		startDate: tempStartDate,
 		hoverDate,
 		minDate,
@@ -39,15 +38,47 @@
 	});
 
 	const onClick = day => {
-		console.log("onClick", day);
-		// todo create a selection object
-		// dispatchEvent("selection", { data: day.date });
+		if (singlePicker) {
+			dispatchEvent("selection", { tempStartDate: day.date, tempEndDate: day.date });
+		} else if (tempStartDate && tempEndDate) {
+			dispatchEvent("selection", { tempStartDate: day.date, tempEndDate: undefined });
+		} else {
+			if (isBefore(day.date, tempStartDate)) {
+				dispatchEvent("selection", { tempStartDate: day.date, tempEndDate: tempStartDate });
+			} else {
+				dispatchEvent("selection", { tempStartDate, tempEndDate: day.date });
+			}
+		}
 	};
 
 	function onHover(day) {
 		hoverDate = day.date;
 		dispatchEvent("hover", { hoverDate });
 	}
+
+	$: startDateReadout = () => {
+		if (!tempEndDate) {
+			if (isBefore(hoverDate, tempStartDate)) {
+				return hoverDate;
+			}
+
+			return tempStartDate;
+		}
+
+		return tempStartDate;
+	};
+
+	$: endDateReadout = () => {
+		if (!tempEndDate) {
+			if (isBefore(hoverDate, tempStartDate)) {
+				return tempStartDate;
+			}
+
+			return hoverDate;
+		}
+
+		return tempEndDate;
+	};
 </script>
 
 <style>
@@ -59,7 +90,7 @@
 	}
 </style>
 
-<div>{tempStartDate} - {tempEndDate}</div>
+<div>{startDateReadout()} - {endDateReadout()}</div>
 
 <div class="calendar">
 	{#each calendarDays as day (day.date.toString())}
