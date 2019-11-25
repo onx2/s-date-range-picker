@@ -1,0 +1,78 @@
+{
+	"browserslist": [
+		"defaults"
+	],
+	"description": "A date range picker for SvelteJS",
+	"dependencies": {
+		"date-fns": "2.8.1"
+	},
+	"devDependencies": {
+		"@babel/core": "7.7.2",
+		"@babel/plugin-syntax-dynamic-import": "7.2.0",
+		"@babel/plugin-transform-runtime": "7.6.0",
+		"@babel/preset-env": "7.7.1",
+		"@testing-library/jest-dom": "4.2.4",
+		"@testing-library/svelte": "1.9.0",
+		"@types/jest": "24.0.23",
+		"autoprefixer": "9.7.1",
+		"babel-jest": "24.9.0",
+		"eslint": "6.6.0",
+		"eslint-config-prettier": "6.6.0",
+		"eslint-plugin-jest": "23.0.4",
+		"eslint-plugin-svelte3": "2.7.3",
+		"husky": "3.1.0",
+		"jest": "24.9.0",
+		"lint-staged": "9.4.3",
+		"npm-run-all": "4.1.5",
+		"postcss": "7.0.21",
+		"prettier": "1.19.1",
+		"rollup": "1.27.0",
+		"rollup-plugin-babel": "4.3.3",
+		"rollup-plugin-commonjs": "10.1.0",
+		"rollup-plugin-livereload": "1.0.4",
+		"rollup-plugin-node-resolve": "5.2.0",
+		"rollup-plugin-svelte": "5.1.1",
+		"rollup-plugin-terser": "5.1.2",
+		"sirv-cli": "0.4.5",
+		"svelte": "3.14.1",
+		"svelte-jest": "0.3.1",
+		"svelte-preprocess": "3.2.6"
+	},
+	"files": [
+		"src",
+		"dist"
+	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"keywords": [
+		"svelte"
+	],
+	"license": "TODO",
+	"lint-staged": {
+		"*.{html, css, scss, stylus, js, ts, json, yml, md}": [
+			"prettier --write",
+			"git add"
+		],
+		"*.{js, svelte}": [
+			"eslint --fix",
+			"git add"
+		]
+	},
+	"main": "dist/index.min.js",
+	"module": "dist/index.min.mjs",
+	"name": "svelte-date-range-picker",
+	"repository": "TODO",
+	"scripts": {
+		"build": "rollup -c",
+		"dev": "rollup -c -w",
+		"lint": "eslint --color .",
+		"prepublishOnly": "npm run build",
+		"start": "sirv public --single",
+		"start:dev": "sirv public --single --dev",
+		"test": "jest"
+	},
+	"svelte": "src/components/components.module.js"
+}
