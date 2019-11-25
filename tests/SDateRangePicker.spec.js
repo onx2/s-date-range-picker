@@ -1,14 +1,12 @@
-import SDateRangePicker from '../src/components/SDateRangePicker.svelte';
-import { render } from '@testing-library/svelte';
+import SDateRangePicker from "../src/components/SDateRangePicker.svelte"
+import { render } from "@testing-library/svelte"
 
-describe('SDateRangePicker', () => {
-	it('Should render greeting', () => {
+describe("SDateRangePicker", () => {
+	it("Should render greeting", () => {
 		const { container } = render(SDateRangePicker, {
-			props: {},
-		});
+			props: {}
+		})
 
-		expect(container.querySelector('div')).toHaveTextContent(
-			'Hello world!'
-		);
-	});
-});
+		expect(container.querySelector("div")).toHaveTextContent("Hello world!")
+	})
+})

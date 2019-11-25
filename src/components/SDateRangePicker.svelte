@@ -1,130 +1,128 @@
 <script>
-	// Component library name ideas:
-	// svelterial-ui
-	// sveterial-ui
-	// svelte-material UI
-	// svelte-mat-ui
-
-	// Imports
-	import { createEventDispatcher, onMount } from 'svelte';
-	import {
-		endOfWeek,
-		format,
-		formatRFC3339,
-		isValid,
-		parseISO,
-		startOfWeek,
-	} from 'date-fns';
-	import SCalendar from './SCalendar.svelte';
-
-	const dispatchEvent = createEventDispatcher();
-
-	// Props
-	export let autoApply = false;
-	export let id = 's-date-range-picker';
-	export let dateFormat = 'yyyy-MM-dd';
-	export let disabled = false;
-	export let disabledDates = [];
-	export let endDate = endOfWeek(new Date());
-	export let events = [];
-	export let firstDayOfWeek = 'sunday';
-	export let isoWeekNumbers = false;
-	export let locale = null;
-	export let maxDate = null;
-	export let maxSpan = null;
-	export let minDate = null;
-	export let monthDropdown = true;
-	export let monthFormat = 'MMMM';
-	export let predefinedRanges = [];
-	export let rtl = false;
-	export let singlePicker = false;
-	export let startDate = startOfWeek(new Date());
-	export let timePicker = false;
-	export let timePicker24Hour = true;
-	export let timePickerIncrement = 1;
-	export let timePickerSeconds = false;
-	export let today = new Date();
-	export let weekGuides = false;
-	export let weekNumbers = false;
-	export let yearDropdown = true;
-
-	// Startup
-	onMount(() => {
-		console.log(formatRFC3339(new Date()));
-
-		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase();
-	});
-
-	// Custom Events
-	/**
-	 * @param {string} eventName
-	 * @param {object} payload
-	 *
-	 * @returns {undefined}
+	/*
+	 * <<< Component library name ideas >>>
+	 * svelterial-ui
+	 * sveterial-ui
+	 * svelte-material UI
+	 * svelte-mat-ui
 	 */
-	const dispatchCustomEvent = (eventName, payload) => {
-		dispatch(eventName, {
-			bubbles: true,
-			cancelable: false,
-			detail: payload,
-		});
-	};
 
-	const beforeShow = () => {
-		const payload = {};
+	/* <<< Imports >>> */
+	import { createEventDispatcher, onMount } from "svelte"
+	import { addDays, endOfWeek, format, isSameDay, isValid, parseISO, startOfWeek } from "date-fns"
+	import SCalendar from "./SCalendar.svelte"
 
-		dispatchCustomEvent('beforeShow', payload);
-	};
+	/* <<< Private variables >>> */
+	const dispatchEvent = createEventDispatcher()
+	const id = "s-date-range-picker"
+	let tempEndDate = endOfWeek(new Date())
+	let tempStartDate = startOfWeek(new Date())
 
+	/* <<< Props >>> */
+	export let autoApply = false
+	export let dateFormat = "yyyy-MM-dd"
+	export let disabled = false
+	export let disabledDates = []
+	export let endDate = endOfWeek(new Date())
+	export let events = []
+	export let firstDayOfWeek = "sunday"
+	export let isoWeekNumbers = false
+	export let locale = null
+	export let maxDate = null
+	export let maxSpan = null
+	export let minDate = null
+	export let monthDropdown = true
+	export let monthFormat = "MMMM"
+	export let predefinedRanges = []
+	export let rtl = false
+	export let singlePicker = false
+	export let startDate = startOfWeek(new Date())
+	export let timePicker = false
+	export let timePicker24Hour = true
+	export let timePickerIncrement = 1
+	export let timePickerSeconds = false
+	export let today = new Date()
+	export let weekGuides = false
+	export let weekNumbers = false
+	export let yearDropdown = true
+
+	$: canApply = () => !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate)
+	$: canCancel = () => !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
+
+	/* <<< Startup >>> */
+	onMount(() => {
+		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase()
+	})
+
+	/* <<< Custom Events >>> */
 	const show = () => {
-		const payload = {};
-
-		dispatchCustomEvent('show', payload);
-	};
-
-	const beforeHide = () => {
-		const payload = {};
-
-		dispatchCustomEvent('beforeHide', payload);
-	};
+		dispatchEvent("show")
+	}
 
 	const hide = () => {
-		const payload = {};
-
-		dispatchCustomEvent('hide', payload);
-	};
-
-	const beforeApply = () => {
-		const payload = {};
-
-		dispatchCustomEvent('beforeApply', payload);
-	};
+		dispatchEvent("hide")
+	}
 
 	const apply = () => {
-		const payload = {};
+		/**
+		 * When autoApply is true, every onSelection event fires apply()
+		 * but the enDate is undefined and the singlePicker prop is false
+		 * apply() shouldn't be called.
+		 *
+		 * apply() must output a startDate and endDate.
+		 */
+		if (!tempEndDate) {
+			return
+		}
 
-		dispatchCustomEvent('apply', payload);
-	};
+		// Update "state" of the component
+		startDate = tempStartDate
+		endDate = tempEndDate
 
-	const beforeCancel = () => {
-		const payload = {};
-
-		dispatchCustomEvent('beforeCancel', payload);
-	};
+		// Notify the consumer of SDateRangePicker
+		dispatchEvent("change", {
+			startDate,
+			endDate
+		})
+	}
 
 	const cancel = () => {
-		const payload = {};
+		// Reset the temp state
+		tempStartDate = startDate
+		tempEndDate = endDate
 
-		dispatchCustomEvent('cancel', payload);
-	};
+		// Notify the consumer of SDateRangePicker
+		dispatchEvent("cancel", {
+			startDate,
+			endDate
+		})
+	}
+
+	const onSelection = selection => {
+		// Update the temporary state with the new selection
+		tempStartDate = selection.startDate
+		tempEndDate = selection.endDate
+
+		dispatchEvent("selection", {
+			startDate: tempStartDate,
+			endDate: tempEndDate
+		})
+
+		if (autoApply) {
+			apply()
+		}
+	}
+
+	setInterval(() => {
+		tempEndDate = addDays(new Date(), 1)
+	}, 5000)
 </script>
 
-<div {id}>
+<div {id} class={disabled ? 'disabled' : ''}>
 	Hello world!
 	<SCalendar
 		{dateFormat}
 		{disabledDates}
-		{endDate}
 		{events}
 		{firstDayOfWeek}
 		{isoWeekNumbers}
@@ -135,9 +133,27 @@
 		{monthDropdown}
 		{monthFormat}
 		{rtl}
-		{startDate}
+		{tempEndDate}
+		{tempStartDate}
 		{today}
 		{weekGuides}
 		{weekNumbers}
 		{yearDropdown} />
+	<button
+		type="button"
+		aria-label="Apply the current selection"
+		aria-controls={id}
+		on:click={apply}
+		disabled={!canApply()}>
+		Apply
+	</button>
+
+	<button
+		type="button"
+		aria-label="Cancel the current selection and revert to previous start and end dates"
+		aria-controls={id}
+		on:click={cancel}
+		disabled={!canCancel()}>
+		Cancel
+	</button>
 </div>
