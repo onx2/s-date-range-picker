@@ -2,7 +2,7 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 version: 2
 jobs:
-  build:
+  lint:
     docker:
       - image: circleci/node:10.15.2
 
@@ -14,6 +14,26 @@ jobs:
 
       - run: yarn lint
 
+  test:
+    docker:
+      - image: circleci/node:10.15.2
+
+    working_directory: ~/svelte-date-range-picker
+
+    steps:
+      - checkout
+      - run: npm install
+
       - run: yarn test
+
+  build:
+    docker:
+      - image: circleci/node:10.15.2
+
+    working_directory: ~/svelte-date-range-picker
+
+    steps:
+      - checkout
+      - run: npm install
 
       - run: yarn build
