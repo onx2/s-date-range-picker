@@ -15,3 +15,5 @@ Table of Props / Options
 ## Events
 
 Table of Events
+
+Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) compnent template!
