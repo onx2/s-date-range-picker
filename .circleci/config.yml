@@ -37,3 +37,10 @@ jobs:
       - run: npm install
 
       - run: yarn build
+workflows:
+  version: 2
+  all:
+    jobs:
+      - lint
+      - test
+      - build
