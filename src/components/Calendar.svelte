@@ -40,11 +40,12 @@
 
 	const onClick = day => {
 		console.log("onClick", day);
+		// todo create a selection object
+		// dispatchEvent("selection", { data: day.date });
 	};
 
 	function onHover(day) {
 		hoverDate = day.date;
-		console.log("onHover", hoverDate);
 		dispatchEvent("hover", { hoverDate });
 	}
 </script>
@@ -68,7 +69,6 @@
 			{weekGuides}
 			{isoWeekNumbers}
 			on:click={() => onClick(day)}
-			on:mouseenter={() => onHover(day)}
-			on:focus={onHover} />
+			on:mouseenter={() => onHover(day)} />
 	{/each}
 </div>

@@ -24,4 +24,4 @@
 	}
 </style>
 
-<button on:click on:mouseenter on:focus disabled={day.isDisabled}>{format(day.date, 'd', { locale })}</button>
+<button on:click on:mouseenter disabled={day.isDisabled}>{format(day.date, 'd', { locale })}</button>
