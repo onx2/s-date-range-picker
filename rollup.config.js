@@ -1,18 +1,18 @@
-import { terser } from "rollup-plugin-terser"
-import autoPreprocess from "svelte-preprocess"
-import babel from "rollup-plugin-babel"
-import commonjs from "rollup-plugin-commonjs"
-import livereload from "rollup-plugin-livereload"
-import pkg from "./package.json"
-import resolve from "rollup-plugin-node-resolve"
-import rollup_start_dev from "./rollup_start_dev"
-import svelte from "rollup-plugin-svelte"
+import { terser } from "rollup-plugin-terser";
+import autoPreprocess from "svelte-preprocess";
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import livereload from "rollup-plugin-livereload";
+import pkg from "./package.json";
+import resolve from "rollup-plugin-node-resolve";
+import rollup_start_dev from "./rollup_start_dev";
+import svelte from "rollup-plugin-svelte";
 
-const production = !process.env.ROLLUP_WATCH
+const production = !process.env.ROLLUP_WATCH;
 const name = pkg.name
 	.replace(/^(@\S+\/)?(svelte-)?(\S+)/, "$3")
 	.replace(/^\w/, m => m.toUpperCase())
-	.replace(/-\w/g, m => m[1].toUpperCase())
+	.replace(/-\w/g, m => m[1].toUpperCase());
 
 export default {
 	input: !production ? "src/main.js" : "src/components/components.module.js",
@@ -47,7 +47,7 @@ export default {
 			// we'll extract any component CSS out into
 			// a separate file — better for performance
 			css: css => {
-				css.write("public/bundle.css")
+				css.write("public/bundle.css");
 			},
 
 			/**
@@ -88,4 +88,4 @@ export default {
 	watch: {
 		clearScreen: false
 	}
-}
+};

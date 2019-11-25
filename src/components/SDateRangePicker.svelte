@@ -8,60 +8,60 @@
 	 */
 
 	/* <<< Imports >>> */
-	import { createEventDispatcher, onMount } from "svelte"
-	import { addDays, endOfWeek, format, isSameDay, isValid, parseISO, startOfWeek } from "date-fns"
-	import SCalendar from "./SCalendar.svelte"
+	import { createEventDispatcher, onMount } from "svelte";
+	import { addDays, endOfWeek, format, isSameDay, isValid, parseISO, startOfWeek } from "date-fns";
+	import Calendar from "./Calendar.svelte";
 
 	/* <<< Private variables >>> */
-	const dispatchEvent = createEventDispatcher()
-	const id = "s-date-range-picker"
-	let tempEndDate = endOfWeek(new Date())
-	let tempStartDate = startOfWeek(new Date())
+	const dispatchEvent = createEventDispatcher();
+	const id = "s-date-range-picker";
+	let tempEndDate = endOfWeek(new Date());
+	let tempStartDate = startOfWeek(new Date());
 
 	/* <<< Props >>> */
-	export let autoApply = false
-	export let dateFormat = "yyyy-MM-dd"
-	export let disabled = false
-	export let disabledDates = []
-	export let endDate = endOfWeek(new Date())
-	export let events = []
-	export let firstDayOfWeek = "sunday"
-	export let isoWeekNumbers = false
-	export let locale = null
-	export let maxDate = null
-	export let maxSpan = null
-	export let minDate = null
-	export let monthDropdown = true
-	export let monthFormat = "MMMM"
-	export let predefinedRanges = []
-	export let rtl = false
-	export let singlePicker = false
-	export let startDate = startOfWeek(new Date())
-	export let timePicker = false
-	export let timePicker24Hour = true
-	export let timePickerIncrement = 1
-	export let timePickerSeconds = false
-	export let today = new Date()
-	export let weekGuides = false
-	export let weekNumbers = false
-	export let yearDropdown = true
+	export let autoApply = false;
+	export let dateFormat = "yyyy-MM-dd";
+	export let disabled = false;
+	export let disabledDates = [];
+	export let endDate = endOfWeek(new Date());
+	export let events = [];
+	export let firstDayOfWeek = "sunday";
+	export let isoWeekNumbers = false;
+	export let locale = null;
+	export let maxDate = null;
+	export let maxSpan = null;
+	export let minDate = null;
+	export let monthDropdown = true;
+	export let monthFormat = "MMMM";
+	export let predefinedRanges = [];
+	export let rtl = false;
+	export let singlePicker = false;
+	export let startDate = startOfWeek(new Date());
+	export let timePicker = false;
+	export let timePicker24Hour = true;
+	export let timePickerIncrement = 1;
+	export let timePickerSeconds = false;
+	export let today = new Date();
+	export let weekGuides = false;
+	export let weekNumbers = false;
+	export let yearDropdown = true;
 
-	$: canApply = () => !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate)
-	$: canCancel = () => !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
+	$: canApply = () => !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate);
+	$: canCancel = () => !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
 
 	/* <<< Startup >>> */
 	onMount(() => {
-		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase()
-	})
+		firstDayOfWeek = firstDayOfWeek.toLocaleLowerCase();
+	});
 
 	/* <<< Custom Events >>> */
 	const show = () => {
-		dispatchEvent("show")
-	}
+		dispatchEvent("show");
+	};
 
 	const hide = () => {
-		dispatchEvent("hide")
-	}
+		dispatchEvent("hide");
+	};
 
 	const apply = () => {
 		/**
@@ -72,55 +72,55 @@
 		 * apply() must output a startDate and endDate.
 		 */
 		if (!tempEndDate) {
-			return
+			return;
 		}
 
 		// Update "state" of the component
-		startDate = tempStartDate
-		endDate = tempEndDate
+		startDate = tempStartDate;
+		endDate = tempEndDate;
 
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("change", {
 			startDate,
 			endDate
-		})
-	}
+		});
+	};
 
 	const cancel = () => {
 		// Reset the temp state
-		tempStartDate = startDate
-		tempEndDate = endDate
+		tempStartDate = startDate;
+		tempEndDate = endDate;
 
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("cancel", {
 			startDate,
 			endDate
-		})
-	}
+		});
+	};
 
 	const onSelection = selection => {
 		// Update the temporary state with the new selection
-		tempStartDate = selection.startDate
-		tempEndDate = selection.endDate
+		tempStartDate = selection.startDate;
+		tempEndDate = selection.endDate;
 
 		dispatchEvent("selection", {
 			startDate: tempStartDate,
 			endDate: tempEndDate
-		})
+		});
 
 		if (autoApply) {
-			apply()
+			apply();
 		}
-	}
+	};
 
-	setInterval(() => {
-		tempEndDate = addDays(new Date(), 1)
-	}, 5000)
+	const onHover = ({ detail: { hoverDate } }) => {
+		console.log("SDateRangePicker hover", hoverDate);
+	};
 </script>
 
-<div {id} class={disabled ? 'disabled' : ''}>
-	Hello world!
-	<SCalendar
+<div {id}>
+	<Calendar
+		on:hover={onHover}
 		{dateFormat}
 		{disabledDates}
 		{events}
@@ -133,6 +133,7 @@
 		{monthDropdown}
 		{monthFormat}
 		{rtl}
+		{singlePicker}
 		{tempEndDate}
 		{tempStartDate}
 		{today}

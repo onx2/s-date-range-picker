@@ -1,1 +1,1 @@
-export { default as SDateRangePicker } from "./SDateRangePicker.svelte"
+export { default as SDateRangePicker } from "./SDateRangePicker.svelte";

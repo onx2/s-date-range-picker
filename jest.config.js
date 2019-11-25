@@ -7,4 +7,4 @@ module.exports = {
 	bail: false,
 	verbose: true,
 	setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"]
-}
+};
