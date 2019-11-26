@@ -10,7 +10,34 @@
 
 ## Props / Options
 
-Table of Props / Options
+- autoApply (boolean)
+- dateFormat (string)
+- disabled (boolean)
+- disabledDates (Date[])
+- endDate (Date)
+- events (Date[])
+- firstDayOfWeek (string)
+- hideOnCancel (boolean)
+- hideOnApply (boolean)
+- isoWeekNumbers (boolean)
+- locale (Locale)
+- maxDate (Date)
+- maxSpan (number) - in days
+- minDate (Date)
+- monthDropdown (boolean)
+- monthFormat (string)
+- predefinedRanges (Date[])
+- rtl (boolean)
+- singlePicker (boolean)
+- startDate (Date)
+- timePicker (boolean)
+- timePicker24Hour (boolean)
+- timePickerIncrement (number)
+- timePickerSeconds (boolean)
+- today (Date)
+- weekGuides (boolean)
+- weekNumbers (boolean)
+- yearDropdown (boolean)
 
 ## Events
 
