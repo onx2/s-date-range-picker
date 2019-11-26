@@ -20,4 +20,4 @@ Table of Props / Options
 - cancel
 - apply
 
-Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) compnent template!
+Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) component template!
