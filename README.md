@@ -1,6 +1,6 @@
 # svelte-date-range-picker
 
-(Badges) A date range picker built in SvelteJS
+[![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master) A date range picker built in SvelteJS
 
 # Getting Started
 
