@@ -1,11 +1,10 @@
 import { isSameDay, isWeekend, isSameMonth, isWithinInterval, subMonths, addMonths } from "date-fns";
 
-import { isStartDate, isEndDate, isDisabled, toRange } from "./index";
+import { isDisabled, isEndDate, isStartDate, toRange } from "./index";
 
 export const getDayMetaData = params => {
-	const { date, startDate, hoverDate, minDate, maxDate, month, today, endDate, singlePicker } = params;
+	const { date, endDate, hoverDate, month, singlePicker, startDate, today } = params;
 	const { start, end } = toRange(startDate, endDate || hoverDate);
-	// isWithinSelection(date, startDate, endDate || hoverDate)
 	return {
 		date,
 		isToday: isSameDay(date, today),

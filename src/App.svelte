@@ -1,12 +1,8 @@
 <script>
-	import { SDateRangePicker } from "./components/components.module.js"
-	const onChange = evt => {
-		console.log(evt)
-	}
+	import { SDateRangePicker } from "./components/components.module.js";
+	const onEvt = evt => {
+		console.log(evt);
+	};
 </script>
 
-<style>
-
-</style>
-
-<SDateRangePicker on:change={onChange} />
+<SDateRangePicker on:apply={onEvt} on:cancel={onEvt} on:show={onEvt} on:hide={onEvt} on:selection={onEvt} />

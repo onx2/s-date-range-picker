@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from "svelte";
+	import { fly } from "svelte/transition";
 	import { format, isBefore } from "date-fns";
 	import { dayOffset, getCalendar, getDayMetaData } from "./utils";
 	import DayOfMonth from "./DayOfMonth.svelte";
@@ -47,7 +48,7 @@
 
 	$: calendarDays = getCalendar({
 		month,
-		weekStartsOn: dayOffset(firstDayOfWeek),
+		weekStartsOn: dayOffset(firstDayOfWeek, locale),
 		disabledDates,
 		startDate: tempStartDate,
 		hoverDate,
@@ -70,13 +71,14 @@
 
 <div class="calendar">
 	<slot />
-	{#each calendarDays as day (day.date.toString())}
+	{#each calendarDays as day, index (day.date.toString() + index)}
 		<DayOfMonth
 			{locale}
 			{day}
 			{weekGuides}
 			{isoWeekNumbers}
 			on:click={() => onClick(day)}
-			on:mouseenter={() => onHover(day)} />
+			on:mouseenter={() => onHover(day)}
+			on:focus={() => onHover(day)} />
 	{/each}
 </div>

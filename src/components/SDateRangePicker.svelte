@@ -23,11 +23,13 @@
 	 * @todo Month and year dropdowns
 	 * @todo autoApply (currently a WIP)
 	 * @todo TypeScript support -- is this even possible in SvelteJS?
+	 * @todo TESTS TESTS TESTS
 	 */
 
 	/* <<< Imports >>> */
-	import { createEventDispatcher, onMount } from "svelte";
-	import { addDays, addMonths, endOfWeek, format, isBefore, isSameDay, startOfWeek, subMonths } from "date-fns";
+	import { createEventDispatcher } from "svelte";
+	import { addMonths, endOfWeek, format, isBefore, isSameDay, startOfWeek, subMonths } from "date-fns";
+	import { enUS } from "date-fns/locale";
 	import { dayOffset, getWeek } from "./utils";
 	import Calendar from "./Calendar.svelte";
 
@@ -36,6 +38,7 @@
 	const id = "s-date-range-picker";
 	const weekStart = startOfWeek(new Date());
 	const weekEnd = endOfWeek(new Date());
+
 	let hoverDate = weekStart;
 	let month = new Date();
 	let tempEndDate = weekEnd;
@@ -44,35 +47,38 @@
 	/* <<< Props >>> */
 	export let autoApply = false;
 	export let dateFormat = "MMM dd, yyyy";
-	export let disabled = false;
-	export let disabledDates = [new Date("November 21, 2019"), new Date("November 11, 2019")];
+	// export let disabled = false;
+	export let disabledDates = [];
 	export let endDate = weekEnd;
 	export let events = [];
 	export let firstDayOfWeek = "sunday";
+	export let hideOnCancel = true;
+	export let hideOnApply = true;
 	export let isoWeekNumbers = false;
-	export let locale = null;
+	export let locale = enUS;
 	export let maxDate = null;
 	export let maxSpan = null;
 	export let minDate = null;
 	export let monthDropdown = true;
 	export let monthFormat = "MMMM";
-	export let predefinedRanges = [];
+	// export let predefinedRanges = [];
 	export let rtl = false;
 	export let singlePicker = false;
 	export let startDate = weekStart;
-	export let timePicker = false;
-	export let timePicker24Hour = true;
-	export let timePickerIncrement = 1;
-	export let timePickerSeconds = false;
+	// export let timePicker = false;
+	// export let timePicker24Hour = true;
+	// export let timePickerIncrement = 1;
+	// export let timePickerSeconds = false;
 	export let today = new Date();
 	export let weekGuides = false;
 	export let weekNumbers = false;
 	export let yearDropdown = true;
 
+	/* <<< Computed variables >>> */
 	$: canApply = !isSameDay(tempStartDate, startDate) && !isSameDay(tempEndDate, endDate);
 	/** @todo Account for the selection not being visible in the view (month) */
 	$: canCancel = !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
-	$: daysOfWeek = getWeek(new Date(), dayOffset(firstDayOfWeek));
+	$: daysOfWeek = getWeek(new Date(), dayOffset(firstDayOfWeek, locale));
 	$: startDateReadout = () => {
 		if (!tempEndDate) {
 			if (isBefore(hoverDate, tempStartDate)) {
@@ -115,6 +121,10 @@
 		startDate = tempStartDate;
 		endDate = tempEndDate;
 
+		if (hideOnApply) {
+			hide();
+		}
+
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("apply", {
 			startDate,
@@ -127,6 +137,10 @@
 		tempStartDate = startDate;
 		tempEndDate = endDate;
 		month = startDate;
+
+		if (hideOnCancel) {
+			hide();
+		}
 
 		// Notify the consumer of SDateRangePicker
 		dispatchEvent("cancel", {
