@@ -2,13 +2,13 @@
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master) A date range picker built in SvelteJS
 
-# Getting Started
+## Getting Started
 
 - Consuming the component
 
-# API
+## API
 
-## Props / Options
+### Props / Options
 
 - `autoApply` (boolean) _WIP_
 - `dateFormat` (string)
@@ -39,7 +39,7 @@
 - `weekNumbers` (boolean) _WIP_
 - `yearDropdown` (boolean) _WIP_
 
-## Events
+### Events
 
 - `show` Fired after the picker has been shown
 - `hide` Fired after the picker has been hidden
