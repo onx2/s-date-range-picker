@@ -1,2 +1,4 @@
-public
-dist
+./public
+./dist
+./*.md
+./**/*.md

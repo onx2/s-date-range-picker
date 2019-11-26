@@ -22,7 +22,7 @@
 - `isoWeekNumbers` (boolean) _WIP_
 - `locale` (Locale)
 - `maxDate` (Date) _WIP_
-- `maxSpan` (number) - in days  _WIP_
+- `maxSpan` (number) - in days _WIP_
 - `minDate` (Date) _WIP_
 - `monthDropdown` (boolean) _WIP_
 - `monthFormat` (string)

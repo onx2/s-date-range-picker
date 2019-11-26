@@ -4,7 +4,7 @@
 	export let locale;
 	export let day;
 	export let weekGuides;
-	export let isoWeekNumbers;
+	export let isoWeekNumbers
 </script>
 
 <style>
