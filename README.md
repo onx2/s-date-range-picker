@@ -68,6 +68,6 @@
 
 ___
 
-Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) component template!
+Thanks [geakstr](https://github.com/geakstr/svelte-3-rollup-typescript-vscode) for the [Svelte](https://svelte.dev/) component template!
 
 This project is using [date-fns](https://date-fns.org/) under the hood for date calculations / manipulation.
