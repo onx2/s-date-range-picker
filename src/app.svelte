@@ -6,7 +6,7 @@
    * reactivity, rather than using foobar.$on() and foobar.$set()
    */
   import { addDays } from "date-fns";
-  import DateRangePicker from "./date-range-picker/date-range-picker.svelte";
+  import SDateRangePicker from "./date-range-picker/s-date-range-picker.svelte";
 
   let startDate = new Date();
   let endDate = addDays(new Date(), 7);
@@ -18,4 +18,4 @@
   }
 </script>
 
-<DateRangePicker numPages={4} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker numPages={4} {startDate} {endDate} on:apply={onApply} />

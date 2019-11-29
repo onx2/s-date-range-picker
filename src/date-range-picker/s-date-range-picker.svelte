@@ -21,7 +21,7 @@
   export let monthIndicator = true;
   // export let disabled = false;
   export let disabledDates = [];
-  export let endDate = weekEnd;
+  export let endDate = new Date();
   export let events = [];
   export let firstDayOfWeek = "sunday";
   export let hideOnCancel = true;
@@ -37,7 +37,7 @@
   // export let predefinedRanges = [];
   export let rtl = false;
   export let singlePicker = false;
-  export let startDate = weekStart;
+  export let startDate = startOfWeek(new Date());
   // export let timePicker = false;
   // export let timePicker24Hour = true;
   // export let timePickerIncrement = 1;
@@ -58,8 +58,6 @@
   const pageWidth = cellWidth * 7;
   const pageWidthWithPadding =
     pageWidth + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
-  const weekStart = startOfWeek(new Date());
-  const weekEnd = new Date();
 
   $: canApply =
     (!isSameDay(tempStartDate, startDate) ||
