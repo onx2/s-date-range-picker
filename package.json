@@ -20,7 +20,7 @@
   "license": "MIT",
   "author": "Jeff Rooks <rooksjj@gmail.com>",
   "repository": "https://github.com/onx2/svelte-date-range-picker",
-  "svelte": "./src/date-range-picker/index.ts",
+  "svelte": "./src/date-range-picker/index.js",
   "scripts": {
     "cleanup": "rimraf ./build",
     "test": "cross-env NODE_ENV=test jest",

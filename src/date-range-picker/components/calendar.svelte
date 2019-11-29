@@ -1,5 +1,5 @@
 <script>
-  import { getCalendarWeeks, dayOffset } from "../utils/index";
+  import { getCalendarWeeks, dayOffset } from "../utils";
   import Week from "./week.svelte";
   import DaysOfWeek from "./days-of-week.svelte";
   import Controls from "./controls.svelte";
