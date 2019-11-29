@@ -10,6 +10,7 @@
   export let locale;
   export let day;
   export let monthIndicator;
+  export let rtl;
 </script>
 
 <style>
@@ -74,9 +75,19 @@
   button:disabled {
     opacity: 0.6;
   }
+
+  /* Swap border radius when in rtl */
+  .rtl.within-selection.end-date {
+    border-radius: 20px 0 0 20px;
+  }
+
+  .rtl.within-selection.start-date {
+    border-radius: 0 20px 20px 0;
+  }
 </style>
 
 <div
+  class:rtl
   class:today={day.isToday}
   class:weekend={day.isWeekend}
   class:next-month={day.isNextMonth}

@@ -41,7 +41,7 @@
   export let monthFormat = "MMMM";
   export let numPages = 1;
   // export let predefinedRanges = [];
-  // export let rtl = false;
+  export let rtl = false;
   export let singlePicker = false;
   export let startDate = weekStart;
   // export let timePicker = false;
@@ -246,6 +246,7 @@
           {monthDropdown}
           {monthFormat}
           {monthIndicator}
+          {rtl}
           {singlePicker}
           {tempEndDate}
           {tempStartDate}

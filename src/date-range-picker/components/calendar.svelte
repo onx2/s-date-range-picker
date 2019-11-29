@@ -16,6 +16,7 @@
   export let monthDropdown;
   export let monthFormat;
   export let monthIndicator;
+  export let rtl;
   export let singlePicker;
   export let tempEndDate;
   export let tempStartDate;
@@ -46,9 +47,12 @@
   div {
     width: 280px;
   }
+  .rtl {
+    direction: rtl;
+  }
 </style>
 
-<div style={`padding: ${padding}px`}>
+<div style={`padding: ${padding}px;`} class={rtl ? 'rtl' : ''}>
   <Controls
     on:pageChange
     on:previousMonth
@@ -70,6 +74,7 @@
       {locale}
       {month}
       {monthIndicator}
+      {rtl}
       {weekGuides}
       {weekNumbers}
       {isoWeekNumbers}

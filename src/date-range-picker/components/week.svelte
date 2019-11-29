@@ -3,16 +3,17 @@
   import { isBefore, format } from "date-fns";
   import Day from "./day.svelte";
 
-  export let week;
+  export let locale;
+  export let isoWeekNumbers;
   export let month;
   export let monthIndicator;
-  export let locale;
-  export let weekGuides;
-  export let weekNumbers;
-  export let isoWeekNumbers;
+  export let rtl;
+  export let singlePicker;
   export let tempStartDate;
   export let tempEndDate;
-  export let singlePicker;
+  export let week;
+  export let weekGuides;
+  export let weekNumbers;
 
   const dispatchEvent = new createEventDispatcher();
 
@@ -98,8 +99,9 @@
     {#each week.daysInWeek as day (day.date.toString())}
       <Day
         {day}
-        {monthIndicator}
         {locale}
+        {monthIndicator}
+        {rtl}
         on:click={() => onClick(day.date)}
         on:mouseenter={() => onHover(day.date)}
         on:focus={() => onHover(day.date)} />
