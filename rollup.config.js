@@ -3,8 +3,8 @@ import commonjs from "rollup-plugin-commonjs";
 import resolve from "rollup-plugin-node-resolve";
 import serve from "rollup-plugin-serve";
 import html from "rollup-plugin-bundle-html";
-import typescript from "rollup-plugin-typescript2";
-import tscompile from "typescript";
+// import typescript from "rollup-plugin-typescript2";
+// import tscompile from "typescript";
 import { terser } from "rollup-plugin-terser";
 import livereload from "rollup-plugin-livereload";
 import bundleSize from "rollup-plugin-bundle-size";
@@ -21,7 +21,7 @@ const isTest = process.env.NODE_ENV === "test";
 
 const plugins = [
   commonjs({ include: "node_modules/**" }),
-  typescript({ typescript: tscompile }),
+  // typescript({ typescript: tscompile }),
   svelte({
     dev: isProd ? false : true,
     extensions: [".svelte"],
@@ -56,7 +56,7 @@ if (isDev) {
 }
 
 export default {
-  input: isProd ? "src/date-range-picker/index.ts" : "src/index.ts",
+  input: isProd ? "src/date-range-picker/index.js" : "src/index.js",
   output: [
     { file: pkg.module, format: "es" },
     { file: pkg.main, format: "umd", name }
