@@ -20,10 +20,9 @@
 - Requires [NodeJS](https://nodejs.org/)
 - Clone the repo: `git clone https://github.com/onx2/svelte-date-range-picker.git`
 - Enter directory: `cd svelte-date-range-picker`
-- Install dpendencies: `npm install`
-- Run dev web server: `npm run dev`
-- Run tests: `npm run test`
-- Run lint: `npm run lint`
+- Install dpendencies: `yarn`
+- Run dev web server: `yarn serve`
+- Run tests: `yarn test` _(No tests yet)_
 
 ## API
 
