@@ -37,7 +37,7 @@
   export let maxDate = addYears(subMonths(new Date(), 5), 3);
   // export let maxSpan = null;
   export let minDate = subYears(new Date(), 3);
-  // export let monthDropdown = true;
+  export let monthDropdown = true;
   export let monthFormat = "MMMM";
   export let numPages = 1;
   // export let predefinedRanges = [];
@@ -51,7 +51,7 @@
   export let today = new Date();
   export let weekGuides = false;
   export let weekNumbers = false;
-  // export let yearDropdown = true;
+  export let yearDropdown = true;
 
   let hoverDate = startDate;
   let tempEndDate = endDate;
@@ -243,6 +243,7 @@
           {maxDate}
           {minDate}
           {month}
+          {monthDropdown}
           {monthFormat}
           {monthIndicator}
           {singlePicker}
@@ -250,7 +251,8 @@
           {tempStartDate}
           {today}
           {weekGuides}
-          {weekNumbers} />
+          {weekNumbers}
+          {yearDropdown} />
       {/each}
     </div>
     <div class="full-height-scroll" />

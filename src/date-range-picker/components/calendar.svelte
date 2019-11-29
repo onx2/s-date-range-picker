@@ -13,6 +13,7 @@
   export let maxDate;
   export let minDate;
   export let month;
+  export let monthDropdown;
   export let monthFormat;
   export let monthIndicator;
   export let singlePicker;
@@ -21,6 +22,7 @@
   export let today;
   export let weekGuides;
   export let weekNumbers;
+  export let yearDropdown;
 
   $: weeks = getCalendarWeeks({
     month,
@@ -53,9 +55,11 @@
     on:nextMonth
     {locale}
     {month}
+    {monthDropdown}
     {monthFormat}
     {maxDate}
-    {minDate} />
+    {minDate}
+    {yearDropdown} />
   <DaysOfWeek {firstDayOfWeek} {locale} />
   {#each weeks as week}
     <Week

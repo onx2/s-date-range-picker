@@ -16,10 +16,12 @@
   export let locale;
   export let month;
   export let monthFormat;
+  export let monthDropdown;
   export let maxDate;
   export let minDate;
   export let nextIcon = "N";
   export let previousIcon = "P";
+  export let yearDropdown;
 
   const disptachEvent = createEventDispatcher();
 
@@ -69,38 +71,46 @@
     {previousIcon}
   </button>
   <span>
-    <select
-      bind:value={selectedMonth}
-      on:change={() => disptachEvent('pageChange', {
-          incrementAmount: differenceInCalendarMonths(
-            selectedMonth.value,
-            month
-          )
-        })}>
-      {#each months as mo}
-        <option
-          value={mo}
-          selected={isSameMonth(mo.value, month)}
-          disabled={isOptionDisabled(mo.value)}>
-          {mo.text}
-        </option>
-      {/each}
-    </select>
-    <select
-      bind:value={selectedYear}
-      on:change={() => disptachEvent('pageChange', {
-          incrementAmount:
-            differenceInCalendarYears(selectedYear.value, month) * 12
-        })}>
-      {#each years as yr}
-        <option
-          value={yr}
-          selected={isSameYear(yr.value, month)}
-          disabled={isOptionDisabled(yr.value)}>
-          {yr.text}
-        </option>
-      {/each}
-    </select>
+    {#if monthDropdown}
+      <select
+        bind:value={selectedMonth}
+        on:change={() => disptachEvent('pageChange', {
+            incrementAmount: differenceInCalendarMonths(
+              selectedMonth.value,
+              month
+            )
+          })}>
+        {#each months as mo}
+          <option
+            value={mo}
+            selected={isSameMonth(mo.value, month)}
+            disabled={isOptionDisabled(mo.value)}>
+            {mo.text}
+          </option>
+        {/each}
+      </select>
+    {:else}
+      <span>{format(month, 'MMMM', { locale })}</span>
+    {/if}
+    {#if yearDropdown}
+      <select
+        bind:value={selectedYear}
+        on:change={() => disptachEvent('pageChange', {
+            incrementAmount:
+              differenceInCalendarYears(selectedYear.value, month) * 12
+          })}>
+        {#each years as yr}
+          <option
+            value={yr}
+            selected={isSameYear(yr.value, month)}
+            disabled={isOptionDisabled(yr.value)}>
+            {yr.text}
+          </option>
+        {/each}
+      </select>
+    {:else}
+      <span>{format(month, 'yyyy', { locale })}</span>
+    {/if}
   </span>
   <button
     aria-disabled={nextBtnDisabled}
