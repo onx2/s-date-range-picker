@@ -6,14 +6,11 @@ import {
   subMonths,
   addMonths
 } from "date-fns";
-
-import { Day, GetDayMetaDataParams } from "../types";
 import { isDisabled } from "./is-disabled";
 import { isEndDate } from "./is-end-date";
 import { isStartDate } from "./is-start-date";
 import { toRange } from "./to-range";
-
-export function getDayMetaData(params: GetDayMetaDataParams): Day {
+export function getDayMetaData(params) {
   const {
     date,
     endDate,
@@ -27,9 +24,7 @@ export function getDayMetaData(params: GetDayMetaDataParams): Day {
     minDate,
     disabledDates
   } = params;
-
   const { start, end } = toRange(startDate, endDate || hoverDate);
-
   return {
     date,
     events,
