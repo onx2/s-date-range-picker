@@ -6,6 +6,10 @@
 
 - Coming soon...
 
+
+Current state of the picker (missing quite a few pieces of functionality / design)
+![Current state of date picker - WIP](https://i.ibb.co/qgrJMG7/Screenshot-from-2019-11-29-13-26-01.png)
+
 ## Todos
 - [ ] Missing Props / Options
 - [ ] Tests
@@ -20,10 +24,9 @@
 - Requires [NodeJS](https://nodejs.org/)
 - Clone the repo: `git clone https://github.com/onx2/svelte-date-range-picker.git`
 - Enter directory: `cd svelte-date-range-picker`
-- Install dpendencies: `npm install`
-- Run dev web server: `npm run dev`
-- Run tests: `npm run test`
-- Run lint: `npm run lint`
+- Install dpendencies: `yarn`
+- Run dev web server: `yarn serve`
+- Run tests: `yarn test` _(No tests yet)_
 
 ## API
 
@@ -68,6 +71,6 @@
 
 ___
 
-Thanks [YogliB](https://github.com/YogliB/svelte-component-template) for the [Svelte](https://svelte.dev/) component template!
+Thanks [geakstr](https://github.com/geakstr/svelte-3-rollup-typescript-vscode) for the [Svelte](https://svelte.dev/) component template!
 
 This project is using [date-fns](https://date-fns.org/) under the hood for date calculations / manipulation.
