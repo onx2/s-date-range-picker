@@ -1,0 +1,46 @@
+# Javascript Node CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+version: 2
+jobs:
+  # lint:
+  #   docker:
+  #     - image: circleci/node:10.15.2
+
+  #   working_directory: ~/svelte-date-range-picker
+
+  #   steps:
+  #     - checkout
+  #     - run: yarn
+
+  #     - run: yarn run lint
+
+  # test:
+  #   docker:
+  #     - image: circleci/node:10.15.2
+
+  #   working_directory: ~/svelte-date-range-picker
+
+  #   steps:
+  #     - checkout
+  #     - run: npm install
+
+  #     - run: npm run test
+
+  build:
+    docker:
+      - image: circleci/node:10.15.2
+
+    working_directory: ~/svelte-date-range-picker
+
+    steps:
+      - checkout
+      - run: yarn
+
+      - run: yarn build
+workflows:
+  version: 2
+  all:
+    jobs:
+      # - lint
+      # - test
+      - build
