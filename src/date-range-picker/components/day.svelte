@@ -25,6 +25,7 @@
     outline: 0;
     border: 0;
     padding: 0;
+    margin: 0;
   }
 
   button:disabled {
@@ -45,7 +46,7 @@
     border-radius: 100% 0 0 100%;
   }
 
-  .within-selection.end-date.within-selection.start-date {
+  .end-date.start-date {
     border-radius: 100%;
   }
 
