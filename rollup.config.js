@@ -33,7 +33,9 @@ const plugins = [
     template: "src/index.html",
     dest: "build",
     filename: "index.html"
-  })
+  }),
+  // Output bundle sizes to console
+  bundleSize()
 ];
 
 if (isDev) {
@@ -51,8 +53,6 @@ if (isDev) {
 } else if (isProd) {
   // Minify
   plugins.push(terser({ sourcemap: true }));
-  // Output bundle sizes to console
-  plugins.push(bundleSize());
 }
 
 export default {

@@ -26,7 +26,7 @@
   export let dateFormat = "MMM dd, yyyy";
   export let monthIndicator = true;
   // export let disabled = false;
-  export let disabledDates = [subMonths(new Date(), 1)];
+  export let disabledDates = [];
   export let endDate = weekEnd;
   export let events = [];
   export let firstDayOfWeek = "sunday";
@@ -56,9 +56,11 @@
   let hoverDate = startDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
-  const pageWidth = 376;
+  const pageWidth =
+    280 + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
   const maxCalsPerPage = 2;
 
+  console.log(pageWidth);
   $: pickerWidth = numPages * pageWidth;
   $: maxWidth =
     pickerWidth >= maxCalsPerPage * pageWidth
@@ -184,7 +186,9 @@
   #s-date-range-picker {
     font-size: 18px;
     margin: 2em;
-    border: 1px solid black;
+    border: 1px solid #999;
+    border-radius: 6px;
+    padding: 1em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
@@ -217,7 +221,9 @@
     <label>
       {format(startDateReadout(), dateFormat)} to {format(endDateReadout(), dateFormat)}
     </label>
-    <button type="close" on:click={() => close()}>Closse</button>
+    <!-- <button type="close" disabled={!canCancel} on:click={() => close()}>
+      x
+    </button> -->
   </div>
   <div>
     <div class="grid">

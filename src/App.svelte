@@ -18,4 +18,4 @@
   }
 </script>
 
-<DateRangePicker {startDate} {endDate} on:apply={onApply} />
+<DateRangePicker numPages={2} {startDate} {endDate} on:apply={onApply} />
