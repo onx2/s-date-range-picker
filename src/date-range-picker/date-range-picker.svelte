@@ -14,13 +14,7 @@
     subMonths
   } from "date-fns";
   import { enUS } from "date-fns/locale";
-  import { dayOffset } from "./utils";
   import Calendar from "./components/calendar.svelte";
-
-  const dispatchEvent = createEventDispatcher();
-  const id = "s-date-range-picker";
-  const weekStart = startOfWeek(new Date());
-  const weekEnd = new Date();
 
   export let autoApply = false;
   export let dateFormat = "MMM dd, yyyy";
@@ -34,9 +28,9 @@
   export let hideOnApply = true;
   export let isoWeekNumbers = false;
   export let locale = enUS;
-  export let maxDate = addYears(subMonths(new Date(), 5), 3);
+  export let maxDate = addYears(new Date(), 10);
   // export let maxSpan = null;
-  export let minDate = subYears(new Date(), 3);
+  export let minDate = subYears(new Date(), 10);
   export let monthDropdown = true;
   export let monthFormat = "MMMM";
   export let numPages = 1;
@@ -56,41 +50,47 @@
   let hoverDate = startDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
-  const pageWidth =
-    280 + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
-  const maxCalsPerPage = 2;
 
-  console.log(pageWidth);
-  $: pickerWidth = numPages * pageWidth;
-  $: maxWidth =
-    pickerWidth >= maxCalsPerPage * pageWidth
-      ? maxCalsPerPage * pageWidth
-      : pickerWidth;
-  $: months = [...Array(numPages)].map((_, i) => addMonths(today, i));
+  const cellWidth = 44;
+  const dispatchEvent = createEventDispatcher();
+  const id = "s-date-range-picker";
+  const maxCalsPerPage = 2;
+  const pageWidth = cellWidth * 7;
+  const pageWidthWithPadding =
+    pageWidth + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
+  const weekStart = startOfWeek(new Date());
+  const weekEnd = new Date();
+
   $: canApply =
     (!isSameDay(tempStartDate, startDate) ||
       !isSameDay(tempEndDate, endDate)) &&
     tempEndDate;
-  $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
   $: canCancel =
     !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
+  $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
+  $: maxWidth =
+    pickerWidth >= maxCalsPerPage * pageWidth
+      ? maxCalsPerPage * pageWidthWithPadding
+      : pickerWidth;
+  $: months = [...Array(numPages)].map((_, i) => addMonths(today, i));
+  $: pickerWidth = numPages * pageWidthWithPadding;
   $: startDateReadout = function() {
     if (!tempEndDate && isBefore(hoverDate, tempStartDate)) {
-      return hoverDate;
+      return format(hoverDate, dateFormat, { locale });
     }
 
-    return tempStartDate;
+    return format(tempStartDate, dateFormat, { locale });
   };
   $: endDateReadout = function() {
     if (!tempEndDate) {
       if (isBefore(hoverDate, tempStartDate)) {
-        return tempStartDate;
+        return format(tempStartDate, dateFormat, { locale });
       }
 
-      return hoverDate;
+      return format(hoverDate, dateFormat, { locale });
     }
 
-    return tempEndDate;
+    return format(tempEndDate, dateFormat, { locale });
   };
 
   function show() {
@@ -207,8 +207,8 @@
   }
 
   #s-date-range-picker :global(.calendar-cell) {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -218,9 +218,7 @@
 
 <div {id} style={`width: ${maxWidth}px`}>
   <div>
-    <label>
-      {format(startDateReadout(), dateFormat)} to {format(endDateReadout(), dateFormat)}
-    </label>
+    <label>{startDateReadout()} to {endDateReadout()}</label>
     <!-- <button type="close" disabled={!canCancel} on:click={() => close()}>
       x
     </button> -->
@@ -246,6 +244,7 @@
           {monthDropdown}
           {monthFormat}
           {monthIndicator}
+          {pageWidth}
           {rtl}
           {singlePicker}
           {tempEndDate}

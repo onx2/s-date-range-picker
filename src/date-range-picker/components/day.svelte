@@ -21,7 +21,7 @@
   button {
     background-color: transparent;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 100%;
     outline: 0;
     border: 0;
     padding: 0;
@@ -31,20 +31,22 @@
     cursor: not-allowed;
   }
 
-  .within-selection {
+  .within-selection,
+  .end-date,
+  .start-date {
     background-color: #bbdefb;
   }
 
-  .within-selection.end-date {
-    border-radius: 0 20px 20px 0;
+  .end-date {
+    border-radius: 0 100% 100% 0;
   }
 
-  .within-selection.start-date {
-    border-radius: 20px 0 0 20px;
+  .start-date {
+    border-radius: 100% 0 0 100%;
   }
 
   .within-selection.end-date.within-selection.start-date {
-    border-radius: 20px;
+    border-radius: 100%;
   }
 
   .today {
@@ -58,7 +60,7 @@
     color: white;
   }
   .month-indicator {
-    font-size: 0.48rem;
+    font-size: 0.6rem;
     margin-top: -12px;
     position: absolute;
     opacity: 0;
@@ -77,12 +79,12 @@
   }
 
   /* Swap border radius when in rtl */
-  .rtl.within-selection.end-date {
-    border-radius: 20px 0 0 20px;
+  .rtl.end-date {
+    border-radius: 100% 0 0 100%;
   }
 
-  .rtl.within-selection.start-date {
-    border-radius: 0 20px 20px 0;
+  .rtl.start-date {
+    border-radius: 0 100% 100% 0;
   }
 </style>
 
