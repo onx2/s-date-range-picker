@@ -14,6 +14,7 @@
     "datetimepicker",
     "svelte-components"
   ],
+  "private": false,
   "main": "build/js/main.js",
   "module": "build/js/main.mjs",
   "license": "MIT",
