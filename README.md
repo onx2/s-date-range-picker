@@ -59,7 +59,7 @@ Current state of the picker (missing quite a few pieces of functionality / desig
 - [x] `today` (Date)
 - [x] `weekGuides` (boolean)
 - [x] `weekNumbers` (boolean)
-- [ ] `yearDropdown` (boolean)
+- [x] `yearDropdown` (boolean)
 
 ### Events
 
