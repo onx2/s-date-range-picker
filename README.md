@@ -49,7 +49,7 @@ Current state of the picker (missing quite a few pieces of functionality / desig
 - [x] `monthDropdown` (boolean)
 - [x] `monthFormat` (string)
 - [ ] `predefinedRanges` (Date[])
-- [ ] `rtl` (boolean)
+- [x] `rtl` (boolean)
 - [x] `singlePicker` (boolean)
 - [x] `startDate` (Date)
 - [ ] `timePicker` (boolean)
