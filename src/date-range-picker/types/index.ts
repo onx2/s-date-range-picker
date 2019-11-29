@@ -1,3 +1,5 @@
+import { Locale } from "date-fns";
+
 export type GetDayMetaDataParams = {
   date: Date;
   endDate: Date;
