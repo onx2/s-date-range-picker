@@ -60,9 +60,9 @@
 - [x] `hideOnApply` (boolean)
 - [x] `isoWeekNumbers` (boolean)
 - [x] `locale` (Locale)
-- [ ] `maxDate` (Date)
+- [ ] `maxDate` (Date) - WIP
 - [ ] `maxSpan` (number) - in days
-- [ ] `minDate` (Date)
+- [ ] `minDate` (Date) - WIP
 - [x] `monthDropdown` (boolean)
 - [x] `monthFormat` (string)
 - [ ] `predefinedRanges` (Date[])
