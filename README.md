@@ -31,11 +31,14 @@
 - [ ] Add the missing Props / Options
 - [ ] Tests
 - [ ] Linter
+- [ ] Styling
+- [ ] Show & hide functionality _(probably in the form of a button w/ popover)_
 - [x] ~Add TypeScript configuration~ TBD
 - [ ] ~Convert to TypeScript~ TBD
 - [ ] Documentation / Demo Site
 - [x] Publish to npm
 - [ ] Mobile / touch friendly
+- [ ] Optimizations where applicable
 
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
