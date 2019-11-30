@@ -62,7 +62,7 @@
 
   .month-indicator {
     font-size: 0.6rem;
-    margin-top: -12px;
+    top: 4px;
     position: absolute;
     opacity: 0;
   }

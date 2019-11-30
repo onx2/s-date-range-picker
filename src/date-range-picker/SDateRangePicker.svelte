@@ -1,13 +1,5 @@
 <script>
-  /**
-   * TODO!
-   *
-   * Change the way tempEndDate is handled...
-   * It should always exists, however hoverDate should switch between an active and undefined state.
-   * This way tempEndDate can be referenced while hovering and the checks for tempEndDate === undefined
-   * can be changed to hoverDate !== undefined.
-   */
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import {
     addMonths,
     addYears,
@@ -15,6 +7,7 @@
     differenceInCalendarMonths,
     endOfWeek,
     format,
+    isAfter,
     isBefore,
     isSameMinute,
     isSameSecond,
@@ -24,6 +17,7 @@
     subMonths
   } from "date-fns";
   import { enUS } from "date-fns/locale";
+  import { roundDown } from "./utils";
   import Calendar from "./components/Calendar.svelte";
   import TimePicker from "./components/TimePicker.svelte";
 
@@ -51,7 +45,7 @@
   export let startDate = startOfWeek(new Date());
   export let timePicker = true;
   export let timePicker24Hour = true;
-  export let minuteIncrement = 1;
+  export let minuteIncrement = 5;
   export let secondIncrement = 1;
   export let timePickerSeconds = true;
   export let today = new Date();
@@ -64,12 +58,43 @@
   let tempStartDate = startDate;
   let hasSelection = true;
 
-  /** @todo Handle minute and second increments. Round to increment */
-  // onMount(function () {
-  //   if (timePicker) {
-  //     round to increment for minutes and seconds as applicable
-  //   }
-  // })
+  onMount(function() {
+    if (timePicker) {
+      tempStartDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate(),
+        startDate.getHours(),
+        roundDown(startDate.getMinutes(), minuteIncrement),
+        roundDown(startDate.getSeconds(), secondIncrement)
+      );
+
+      tempEndDate = hoverDate = new Date(
+        endDate.getFullYear(),
+        endDate.getMonth(),
+        endDate.getDate(),
+        endDate.getHours(),
+        roundDown(endDate.getMinutes(), minuteIncrement),
+        roundDown(endDate.getSeconds(), secondIncrement)
+      );
+
+      if (
+        !isSameSecond(tempStartDate, startDate) ||
+        !isSameSecond(tempEndDate, endDate)
+      ) {
+        console.warn(`
+          startDate or endDate is not rounded to the proper minute / second increment. This will lead to
+          an inconsistency between the internal state and external state. The "Cancel" and "Apply" button will render
+          as enabled. 
+
+          startDate=${startDate}
+          endDate=${endDate}
+          minuteIncrement=${minuteIncrement}
+          secondIncrement=${secondIncrement}
+        `);
+      }
+    }
+  });
   const cellWidth = 44;
   const dispatchEvent = createEventDispatcher();
   const id = "s-date-range-picker";
@@ -82,28 +107,22 @@
     if (timePicker) {
       if (timePickerSeconds) {
         return (
-          (!isSameSecond(tempStartDate, startDate) ||
-            !isSameSecond(tempEndDate, endDate)) &&
-          tempEndDate
+          !isSameSecond(tempStartDate, startDate) ||
+          !isSameSecond(tempEndDate, endDate)
         );
       }
 
       return (
-        (!isSameMinute(tempStartDate, startDate) ||
-          !isSameMinute(tempEndDate, endDate)) &&
-        tempEndDate
+        !isSameMinute(tempStartDate, startDate) ||
+        !isSameMinute(tempEndDate, endDate)
       );
     }
 
     return (
-      (!isSameDay(tempStartDate, startDate) ||
-        !isSameDay(tempEndDate, endDate)) &&
-      tempEndDate
+      !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
     );
   };
 
-  $: canCancel =
-    !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
   $: maxWidth =
     pickerWidth >= maxCalsPerPage * pageWidth
@@ -161,6 +180,7 @@
   function resetState() {
     tempStartDate = startDate;
     tempEndDate = endDate;
+    hasSelection = true;
   }
 
   function close() {
@@ -195,8 +215,8 @@
         tempStartDate.getSeconds()
       );
     } else if (hasSelection) {
-      // In range mode, if there is currently a selection and the selection event is fired
-      // the user must be selecting the startDate
+      // In range mode, if there is currently a selection and the selection
+      // event is fired the user must be selecting the startDate
       tempStartDate = new Date(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
@@ -274,7 +294,7 @@
   }
 
   function onStartTimeChange({ detail }) {
-    tempStartDate = new Date(
+    const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),
       tempStartDate.getDate(),
@@ -282,18 +302,30 @@
       detail.minutes,
       detail.seconds
     );
+
+    if (isAfter(newDate, tempEndDate)) {
+      tempStartDate = tempEndDate;
+      tempEndDate = newDate;
+    } else {
+      tempStartDate = newDate;
+    }
   }
 
   function onEndTimeChange({ detail }) {
-    if (tempEndDate) {
-      tempEndDate = new Date(
-        tempEndDate.getFullYear(),
-        tempEndDate.getMonth(),
-        tempEndDate.getDate(),
-        detail.hours,
-        detail.minutes,
-        detail.seconds
-      );
+    const newDate = new Date(
+      tempEndDate.getFullYear(),
+      tempEndDate.getMonth(),
+      tempEndDate.getDate(),
+      detail.hours,
+      detail.minutes,
+      detail.seconds
+    );
+
+    if (isBefore(newDate, tempStartDate)) {
+      tempEndDate = tempStartDate;
+      tempStartDate = newDate;
+    } else {
+      tempEndDate = newDate;
     }
   }
 </script>
@@ -302,7 +334,7 @@
   #s-date-range-picker {
     font-size: 18px;
     margin: 2em;
-    border: 1px solid #999;
+    border: 1px solid #d5d5d5;
     border-radius: 6px;
     padding: 1em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -331,6 +363,14 @@
     align-items: center;
   }
 
+  #s-date-range-picker :global(.select) {
+    padding: 8px 12px;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #d5d5d5;
+    margin: 4px;
+    cursor: pointer;
+  }
   .rtl {
     direction: rtl;
   }
@@ -338,18 +378,22 @@
   button {
     margin: 4px;
     background-color: transparent;
-    border: 1px solid #999;
+    border: 1px solid #d5d5d5;
     outline: 0;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
   }
 </style>
 
 <div {id} style={`width: ${maxWidth}px`} class={rtl ? 'rtl' : ''}>
   <!-- <div>
     <label>{startDateReadout()} to {endDateReadout()}</label>
-    <button type="close" disabled={!canCancel} on:click={() => close()}>
+    <button type="close" disabled={!canApply()} on:click={() => close()}>
       x
     </button>
   </div> -->
@@ -425,7 +469,7 @@
       end dates"
       aria-controls={id}
       on:click={cancel}
-      disabled={!canCancel}>
+      disabled={!canApply()}>
       Cancel
     </button>
 

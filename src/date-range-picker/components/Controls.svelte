@@ -61,6 +61,7 @@
 
 <div>
   <button
+    class="select"
     aria-disabled={!canNavigatePrevious}
     disabled={!canNavigatePrevious}
     type="button"
@@ -73,6 +74,7 @@
   <span>
     {#if monthDropdown}
       <select
+        class="select"
         bind:value={selectedMonth}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount: differenceInCalendarMonths(
@@ -94,6 +96,7 @@
     {/if}
     {#if yearDropdown}
       <select
+        class="select"
         bind:value={selectedYear}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
@@ -113,6 +116,7 @@
     {/if}
   </span>
   <button
+    class="select"
     aria-disabled={nextBtnDisabled}
     disabled={nextBtnDisabled}
     type="button"

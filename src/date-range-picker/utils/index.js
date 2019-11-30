@@ -8,7 +8,7 @@ import { isDisabled } from "./is-disabled";
 import { isEndDate } from "./is-end-date";
 import { isStartDate } from "./is-start-date";
 import { pad } from "./pad";
-import { roundTo } from "./round-to";
+import { roundDown } from "./round-down";
 import { toRange } from "./to-range";
 
 export {
@@ -22,6 +22,6 @@ export {
   isEndDate,
   isStartDate,
   pad,
-  roundTo,
+  roundDown,
   toRange
 };
