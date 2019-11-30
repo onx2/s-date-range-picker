@@ -4,8 +4,28 @@
 
 ## Getting Started
 
-- Coming soon...
+**In a Svelte App**
 
+- npm: `npm i s-date-range-picker`
+- yarn: `yarn add s-date-range-picker`
+```
+// App.svelte
+<script>
+  import SDateRangePicker from "s-date-range-picker";
+  
+  // Manage start and end props from main app component
+  let startDate = new Date();
+  let endDate = new Date();
+  
+  // Update state on apply event
+  function onApply({ detail }) {
+    startDate = detail.startDate;
+    endDate = detail.endDate;
+  }
+</script>
+
+<SDateRangePicker {startDate} {endDate} on:apply={onApply} />
+```
 
 Current state of the picker (missing quite a few pieces of functionality / design)
 ![Current state of date picker - WIP](https://i.ibb.co/qgrJMG7/Screenshot-from-2019-11-29-13-26-01.png)
