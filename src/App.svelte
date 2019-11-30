@@ -5,11 +5,12 @@
    * Using a svelte wrapper component to manage state allows for svelte-style
    * reactivity, rather than using foobar.$on() and foobar.$set()
    */
-  import { addDays } from "date-fns";
+  import { endOfWeek, startOfWeek } from "date-fns";
   import SDateRangePicker from "./date-range-picker/SDateRangePicker.svelte";
 
-  let startDate = new Date();
-  let endDate = addDays(new Date(), 7);
+  let startDate = startOfWeek(new Date());
+  let endDate = endOfWeek(new Date());
+  let rtl = false;
 
   function onApply({ detail }) {
     startDate = detail.startDate;
@@ -18,4 +19,4 @@
   }
 </script>
 
-<SDateRangePicker numPages={2} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker numPages={2} {rtl} {startDate} {endDate} on:apply={onApply} />

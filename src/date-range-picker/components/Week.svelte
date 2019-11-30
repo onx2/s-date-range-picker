@@ -1,5 +1,4 @@
 <script>
-  import { createEventDispatcher } from "svelte";
   import { isBefore, format } from "date-fns";
   import Day from "./Day.svelte";
 
@@ -14,32 +13,6 @@
   export let week;
   export let weekGuides;
   export let weekNumbers;
-
-  const dispatchEvent = new createEventDispatcher();
-
-  function onClick(date) {
-    if (singlePicker) {
-      dispatchEvent("selection", { tempStartDate: date, tempEndDate: date });
-    } else if (tempStartDate && tempEndDate) {
-      dispatchEvent("selection", {
-        tempStartDate: date,
-        tempEndDate: undefined
-      });
-    } else {
-      if (isBefore(date, tempStartDate)) {
-        dispatchEvent("selection", {
-          tempStartDate: date,
-          tempEndDate: tempStartDate
-        });
-      } else {
-        dispatchEvent("selection", { tempStartDate, tempEndDate: date });
-      }
-    }
-  }
-
-  function onHover(hoverDate) {
-    dispatchEvent("hover", { hoverDate });
-  }
 
   $: weeksFromToday = function(week) {
     if (week.weeksFromToday > 0) {
@@ -97,14 +70,7 @@
 
   <div class="calendar-row">
     {#each week.daysInWeek as day (day.date.toString())}
-      <Day
-        {day}
-        {locale}
-        {monthIndicator}
-        {rtl}
-        on:click={() => onClick(day.date)}
-        on:mouseenter={() => onHover(day.date)}
-        on:focus={() => onHover(day.date)} />
+      <Day {day} {locale} {monthIndicator} {rtl} on:selection on:hover />
     {/each}
   </div>
   {#if weekNumbers || isoWeekNumbers}

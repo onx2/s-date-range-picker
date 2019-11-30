@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import {
     format,
     isSameMonth,
@@ -11,6 +12,8 @@
   export let day;
   export let monthIndicator;
   export let rtl;
+
+  const dispatchEvent = createEventDispatcher();
 </script>
 
 <style>
@@ -101,9 +104,9 @@
     aria-disabled={day.isDisabled}
     class="calendar-cell"
     disabled={day.isDisabled}
-    on:click
-    on:mouseenter
-    on:focus>
+    on:click={() => dispatchEvent('selection', day.date)}
+    on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:focus={() => dispatchEvent('hover', day.date)}>
     {#if monthIndicator}
       <span class="month-indicator">{format(day.date, 'MMM', { locale })}</span>
     {/if}

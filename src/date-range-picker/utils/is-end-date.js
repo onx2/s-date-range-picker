@@ -1,10 +1,18 @@
-import { isSameDay, isBefore } from "date-fns";
-export function isEndDate({ endDate, date, hoverDate, startDate }) {
-  if (endDate) {
-    return isSameDay(date, endDate);
+import { isSameDay, isAfter } from "date-fns";
+export function isEndDate({
+  tempEndDate,
+  date,
+  hoverDate,
+  hasSelection,
+  tempStartDate
+}) {
+  if (!hasSelection) {
+    if (isAfter(hoverDate, tempStartDate)) {
+      return isSameDay(date, hoverDate);
+    }
+
+    return isSameDay(date, tempStartDate);
   }
-  if (isBefore(hoverDate, startDate)) {
-    return isSameDay(date, startDate);
-  }
-  return isSameDay(date, hoverDate);
+
+  return isSameDay(date, tempEndDate);
 }

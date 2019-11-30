@@ -6,6 +6,7 @@
 
   export let disabledDates;
   export let events;
+  export let hasSelection;
   export let hoverDate;
   export let firstDayOfWeek;
   export let isoWeekNumbers;
@@ -32,27 +33,20 @@
     locale,
     events,
     disabledDates,
-    startDate: tempStartDate,
+    tempStartDate,
     hoverDate,
+    hasSelection,
     minDate,
     maxDate,
     today,
-    endDate: tempEndDate,
+    tempEndDate,
     singlePicker
   });
 
   $: padding = !weekGuides && !isoWeekNumbers && !weekNumbers ? 12 : 48;
 </script>
 
-<style>
-  .rtl {
-    direction: rtl;
-  }
-</style>
-
-<div
-  style={`width: ${pageWidth}px; padding: ${padding}px;`}
-  class={rtl ? 'rtl' : ''}>
+<div style={`width: ${pageWidth}px; padding: ${padding}px;`}>
   <Controls
     on:pageChange
     on:previousMonth
@@ -67,6 +61,8 @@
   <DaysOfWeek {firstDayOfWeek} {locale} />
   {#each weeks as week}
     <Week
+      on:selection
+      on:hover
       {tempEndDate}
       {tempStartDate}
       {week}
@@ -77,8 +73,6 @@
       {rtl}
       {weekGuides}
       {weekNumbers}
-      {isoWeekNumbers}
-      on:selection
-      on:hover />
+      {isoWeekNumbers} />
   {/each}
 </div>

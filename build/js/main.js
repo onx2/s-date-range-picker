@@ -73,6 +73,9 @@
         if (text.data !== data)
             text.data = data;
     }
+    function set_style(node, key, value) {
+        node.style.setProperty(key, value);
+    }
     function select_option(select, value) {
         for (let i = 0; i < select.options.length; i += 1) {
             const option = select.options[i];
@@ -1332,6 +1335,61 @@
       var date = new Date(0);
       date.setFullYear(cleanDate.getFullYear(), 0, 1);
       date.setHours(0, 0, 0, 0);
+      return date;
+    }
+
+    /**
+     * @name endOfWeek
+     * @category Week Helpers
+     * @summary Return the end of a week for the given date.
+     *
+     * @description
+     * Return the end of a week for the given date.
+     * The result will be in the local timezone.
+     *
+     * ### v2.0.0 breaking changes:
+     *
+     * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+     *
+     * @param {Date|Number} date - the original date
+     * @param {Object} [options] - an object with options.
+     * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+     * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+     * @returns {Date} the end of a week
+     * @throws {TypeError} 1 argument required
+     * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+     *
+     * @example
+     * // The end of a week for 2 September 2014 11:55:00:
+     * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+     * //=> Sat Sep 06 2014 23:59:59.999
+     *
+     * @example
+     * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
+     * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+     * //=> Sun Sep 07 2014 23:59:59.999
+     */
+
+    function endOfWeek(dirtyDate, dirtyOptions) {
+      if (arguments.length < 1) {
+        throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+      }
+
+      var options = dirtyOptions || {};
+      var locale = options.locale;
+      var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+      var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+      var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+
+      if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+        throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+      }
+
+      var date = toDate(dirtyDate);
+      var day = date.getDay();
+      var diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+      date.setDate(date.getDate() + diff);
+      date.setHours(23, 59, 59, 999);
       return date;
     }
 
@@ -4205,7 +4263,7 @@
 
     const file = "src/date-range-picker/components/Day.svelte";
 
-    // (107:4) {#if monthIndicator}
+    // (110:4) {#if monthIndicator}
     function create_if_block(ctx) {
     	var span, t_value = format(ctx.day.date, 'MMM', { locale: ctx.locale }), t;
 
@@ -4214,7 +4272,7 @@
     			span = element("span");
     			t = text(t_value);
     			attr(span, "class", "month-indicator svelte-1uv81t1");
-    			add_location(span, file, 107, 6, 1886);
+    			add_location(span, file, 110, 6, 2113);
     		},
 
     		m: function mount(target, anchor) {
@@ -4252,7 +4310,7 @@
     			attr(button, "aria-disabled", button_aria_disabled_value = ctx.day.isDisabled);
     			attr(button, "class", "calendar-cell svelte-1uv81t1");
     			button.disabled = button_disabled_value = ctx.day.isDisabled;
-    			add_location(button, file, 98, 2, 1642);
+    			add_location(button, file, 101, 2, 1742);
     			attr(div, "class", "svelte-1uv81t1");
     			toggle_class(div, "rtl", ctx.rtl);
     			toggle_class(div, "today", ctx.day.isToday);
@@ -4262,7 +4320,7 @@
     			toggle_class(div, "start-date", ctx.day.isStartDate);
     			toggle_class(div, "end-date", ctx.day.isEndDate);
     			toggle_class(div, "within-selection", ctx.day.isWithinSelection);
-    			add_location(div, file, 89, 0, 1369);
+    			add_location(div, file, 92, 0, 1469);
 
     			dispose = [
     				listen(button, "click", ctx.click_handler),
@@ -4343,23 +4401,27 @@
     }
 
     function instance($$self, $$props, $$invalidate) {
-    	let { locale, day, monthIndicator, rtl } = $$props;
+    	
+
+      let { locale, day, monthIndicator, rtl } = $$props;
+
+      const dispatchEvent = createEventDispatcher();
 
     	const writable_props = ['locale', 'day', 'monthIndicator', 'rtl'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Day> was created with unknown prop '${key}'`);
     	});
 
-    	function click_handler(event) {
-    		bubble($$self, event);
+    	function click_handler() {
+    		return dispatchEvent('selection', day.date);
     	}
 
-    	function mouseenter_handler(event) {
-    		bubble($$self, event);
+    	function mouseenter_handler() {
+    		return dispatchEvent('hover', day.date);
     	}
 
-    	function focus_handler(event) {
-    		bubble($$self, event);
+    	function focus_handler() {
+    		return dispatchEvent('hover', day.date);
     	}
 
     	$$self.$set = $$props => {
@@ -4374,6 +4436,7 @@
     		day,
     		monthIndicator,
     		rtl,
+    		dispatchEvent,
     		click_handler,
     		mouseenter_handler,
     		focus_handler
@@ -4444,7 +4507,7 @@
     	return child_ctx;
     }
 
-    // (90:2) {#if weekGuides && week.weeksFromToday}
+    // (63:2) {#if weekGuides && week.weeksFromToday}
     function create_if_block_3(ctx) {
     	var div, span, t0_value = ctx.weeksFromToday(ctx.week), t0, t1, span_aria_label_value;
 
@@ -4456,9 +4519,9 @@
     			t1 = text("w");
     			attr(span, "aria-label", span_aria_label_value = `${ctx.week.weeksFromToday} weeks from today`);
     			attr(span, "class", "svelte-mhpr0y");
-    			add_location(span, file$1, 91, 6, 1866);
+    			add_location(span, file$1, 64, 6, 1120);
     			attr(div, "class", "relative calendar-row side-width left-side svelte-mhpr0y");
-    			add_location(div, file$1, 90, 4, 1803);
+    			add_location(div, file$1, 63, 4, 1057);
     		},
 
     		m: function mount(target, anchor) {
@@ -4486,21 +4549,9 @@
     	};
     }
 
-    // (99:4) {#each week.daysInWeek as day (day.date.toString())}
+    // (72:4) {#each week.daysInWeek as day (day.date.toString())}
     function create_each_block(key_1, ctx) {
     	var first, current;
-
-    	function click_handler() {
-    		return ctx.click_handler(ctx);
-    	}
-
-    	function mouseenter_handler() {
-    		return ctx.mouseenter_handler(ctx);
-    	}
-
-    	function focus_handler() {
-    		return ctx.focus_handler(ctx);
-    	}
 
     	var day = new Day({
     		props: {
@@ -4511,9 +4562,8 @@
     	},
     		$$inline: true
     	});
-    	day.$on("click", click_handler);
-    	day.$on("mouseenter", mouseenter_handler);
-    	day.$on("focus", focus_handler);
+    	day.$on("selection", ctx.selection_handler);
+    	day.$on("hover", ctx.hover_handler);
 
     	return {
     		key: key_1,
@@ -4532,8 +4582,7 @@
     			current = true;
     		},
 
-    		p: function update(changed, new_ctx) {
-    			ctx = new_ctx;
+    		p: function update(changed, ctx) {
     			var day_changes = {};
     			if (changed.week) day_changes.day = ctx.day;
     			if (changed.locale) day_changes.locale = ctx.locale;
@@ -4564,7 +4613,7 @@
     	};
     }
 
-    // (110:2) {#if weekNumbers || isoWeekNumbers}
+    // (76:2) {#if weekNumbers || isoWeekNumbers}
     function create_if_block$1(ctx) {
     	var div, t;
 
@@ -4579,7 +4628,7 @@
     			t = space();
     			if (if_block1) if_block1.c();
     			attr(div, "class", "relative calendar-row side-width right-side svelte-mhpr0y");
-    			add_location(div, file$1, 110, 4, 2361);
+    			add_location(div, file$1, 76, 4, 1471);
     		},
 
     		m: function mount(target, anchor) {
@@ -4628,7 +4677,7 @@
     	};
     }
 
-    // (112:6) {#if weekNumbers}
+    // (78:6) {#if weekNumbers}
     function create_if_block_2(ctx) {
     	var span, t_value = ctx.week.weekNumber, t, span_aria_label_value;
 
@@ -4638,7 +4687,7 @@
     			t = text(t_value);
     			attr(span, "aria-label", span_aria_label_value = `Week ${ctx.week.weekNumber}`);
     			attr(span, "class", "svelte-mhpr0y");
-    			add_location(span, file$1, 112, 8, 2451);
+    			add_location(span, file$1, 78, 8, 1561);
     		},
 
     		m: function mount(target, anchor) {
@@ -4664,7 +4713,7 @@
     	};
     }
 
-    // (115:6) {#if isoWeekNumbers}
+    // (81:6) {#if isoWeekNumbers}
     function create_if_block_1(ctx) {
     	var span, t0, t1_value = ctx.week.isoWeekNumber, t1, span_aria_label_value;
 
@@ -4675,7 +4724,7 @@
     			t1 = text(t1_value);
     			attr(span, "aria-label", span_aria_label_value = `Week ${ctx.week.isoWeekNumber}`);
     			attr(span, "class", "svelte-mhpr0y");
-    			add_location(span, file$1, 115, 8, 2568);
+    			add_location(span, file$1, 81, 8, 1678);
     		},
 
     		m: function mount(target, anchor) {
@@ -4731,12 +4780,12 @@
     			t1 = space();
     			if (if_block1) if_block1.c();
     			attr(div0, "class", "calendar-row");
-    			add_location(div0, file$1, 97, 2, 1996);
+    			add_location(div0, file$1, 70, 2, 1250);
     			attr(div1, "aria-label", div1_aria_label_value = `${ctx.locale.code} week ${ctx.week.weekNumber}, ${format(ctx.month, 'yyyy', {
     locale: ctx.locale
   })}`);
     			attr(div1, "class", "calendar-row");
-    			add_location(div1, file$1, 83, 0, 1627);
+    			add_location(div1, file$1, 56, 0, 881);
     		},
 
     		l: function claim(nodes) {
@@ -4828,47 +4877,17 @@
 
       let { locale, isoWeekNumbers, month, monthIndicator, rtl, singlePicker, tempStartDate, tempEndDate, week, weekGuides, weekNumbers } = $$props;
 
-      const dispatchEvent = new createEventDispatcher();
-
-      function onClick(date) {
-        if (singlePicker) {
-          dispatchEvent("selection", { tempStartDate: date, tempEndDate: date });
-        } else if (tempStartDate && tempEndDate) {
-          dispatchEvent("selection", {
-            tempStartDate: date,
-            tempEndDate: undefined
-          });
-        } else {
-          if (isBefore(date, tempStartDate)) {
-            dispatchEvent("selection", {
-              tempStartDate: date,
-              tempEndDate: tempStartDate
-            });
-          } else {
-            dispatchEvent("selection", { tempStartDate, tempEndDate: date });
-          }
-        }
-      }
-
-      function onHover(hoverDate) {
-        dispatchEvent("hover", { hoverDate });
-      }
-
     	const writable_props = ['locale', 'isoWeekNumbers', 'month', 'monthIndicator', 'rtl', 'singlePicker', 'tempStartDate', 'tempEndDate', 'week', 'weekGuides', 'weekNumbers'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Week> was created with unknown prop '${key}'`);
     	});
 
-    	function click_handler({ day }) {
-    		return onClick(day.date);
+    	function selection_handler(event) {
+    		bubble($$self, event);
     	}
 
-    	function mouseenter_handler({ day }) {
-    		return onHover(day.date);
-    	}
-
-    	function focus_handler({ day }) {
-    		return onHover(day.date);
+    	function hover_handler(event) {
+    		bubble($$self, event);
     	}
 
     	$$self.$set = $$props => {
@@ -4907,12 +4926,9 @@
     		week,
     		weekGuides,
     		weekNumbers,
-    		onClick,
-    		onHover,
     		weeksFromToday,
-    		click_handler,
-    		mouseenter_handler,
-    		focus_handler
+    		selection_handler,
+    		hover_handler
     	};
     }
 
@@ -5090,23 +5106,32 @@
       return false;
     }
 
-    function isEndDate({ endDate, date, hoverDate, startDate }) {
-      if (endDate) {
-        return isSameDay(date, endDate);
+    function isEndDate({
+      tempEndDate,
+      date,
+      hoverDate,
+      hasSelection,
+      tempStartDate
+    }) {
+      if (!hasSelection) {
+        if (isAfter(hoverDate, tempStartDate)) {
+          return isSameDay(date, hoverDate);
+        }
+
+        return isSameDay(date, tempStartDate);
       }
-      if (isBefore(hoverDate, startDate)) {
-        return isSameDay(date, startDate);
-      }
-      return isSameDay(date, hoverDate);
+
+      return isSameDay(date, tempEndDate);
     }
 
-    function isStartDate({ endDate, date, hoverDate, startDate }) {
-      if (!endDate) {
-        if (isBefore(hoverDate, startDate)) {
+    function isStartDate({ hasSelection, date, hoverDate, tempStartDate }) {
+      if (!hasSelection) {
+        if (isBefore(hoverDate, tempStartDate)) {
           return isSameDay(date, hoverDate);
         }
       }
-      return isSameDay(date, startDate);
+
+      return isSameDay(date, tempStartDate);
     }
 
     function toRange(dateLeft, dateRight) {
@@ -5125,18 +5150,24 @@
     function getDayMetaData(params) {
       const {
         date,
-        endDate,
+        tempEndDate,
         events,
         hoverDate,
+        hasSelection,
         month,
         singlePicker,
-        startDate,
+        tempStartDate,
         today,
         maxDate,
         minDate,
         disabledDates
       } = params;
-      const { start, end } = toRange(startDate, endDate || hoverDate);
+
+      // Sort the range asc for `isWithinInterval` function.
+      const { start, end } = toRange(
+        tempStartDate,
+        hasSelection ? tempEndDate : hoverDate
+      );
       return {
         date,
         events,
@@ -5156,11 +5187,7 @@
 
     function buildWeek(startDay, getDayMetaDataParams) {
       return [0, 1, 2, 3, 4, 5, 6].map(value =>
-        getDayMetaData(
-          Object.assign(Object.assign({}, getDayMetaDataParams), {
-            date: addDays(startDay, value)
-          })
-        )
+        getDayMetaData({ ...getDayMetaDataParams, date: addDays(startDay, value) })
       );
     }
     function getCalendarWeeks(getDayMetaDataParams) {
@@ -6068,7 +6095,7 @@
     	return child_ctx;
     }
 
-    // (68:2) {#each weeks as week}
+    // (62:2) {#each weeks as week}
     function create_each_block$3(ctx) {
     	var current;
 
@@ -6136,7 +6163,7 @@
     }
 
     function create_fragment$4(ctx) {
-    	var div, t0, t1, div_style_value, div_class_value, current;
+    	var div, t0, t1, div_style_value, current;
 
     	var controls = new Controls({
     		props: {
@@ -6186,8 +6213,7 @@
     				each_blocks[i].c();
     			}
     			attr(div, "style", div_style_value = `width: ${ctx.pageWidth}px; padding: ${ctx.padding}px;`);
-    			attr(div, "class", div_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-ztwmp7");
-    			add_location(div, file$4, 52, 0, 1090);
+    			add_location(div, file$4, 48, 0, 1064);
     		},
 
     		l: function claim(nodes) {
@@ -6249,10 +6275,6 @@
     			if ((!current || changed.pageWidth || changed.padding) && div_style_value !== (div_style_value = `width: ${ctx.pageWidth}px; padding: ${ctx.padding}px;`)) {
     				attr(div, "style", div_style_value);
     			}
-
-    			if ((!current || changed.rtl) && div_class_value !== (div_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-ztwmp7")) {
-    				attr(div, "class", div_class_value);
-    			}
     		},
 
     		i: function intro(local) {
@@ -6293,9 +6315,9 @@
     function instance$4($$self, $$props, $$invalidate) {
     	
 
-      let { disabledDates, events, hoverDate, firstDayOfWeek, isoWeekNumbers, locale, maxDate, minDate, month, monthDropdown, monthFormat, monthIndicator, pageWidth, rtl, singlePicker, tempEndDate, tempStartDate, today, weekGuides, weekNumbers, yearDropdown } = $$props;
+      let { disabledDates, events, hasSelection, hoverDate, firstDayOfWeek, isoWeekNumbers, locale, maxDate, minDate, month, monthDropdown, monthFormat, monthIndicator, pageWidth, rtl, singlePicker, tempEndDate, tempStartDate, today, weekGuides, weekNumbers, yearDropdown } = $$props;
 
-    	const writable_props = ['disabledDates', 'events', 'hoverDate', 'firstDayOfWeek', 'isoWeekNumbers', 'locale', 'maxDate', 'minDate', 'month', 'monthDropdown', 'monthFormat', 'monthIndicator', 'pageWidth', 'rtl', 'singlePicker', 'tempEndDate', 'tempStartDate', 'today', 'weekGuides', 'weekNumbers', 'yearDropdown'];
+    	const writable_props = ['disabledDates', 'events', 'hasSelection', 'hoverDate', 'firstDayOfWeek', 'isoWeekNumbers', 'locale', 'maxDate', 'minDate', 'month', 'monthDropdown', 'monthFormat', 'monthIndicator', 'pageWidth', 'rtl', 'singlePicker', 'tempEndDate', 'tempStartDate', 'today', 'weekGuides', 'weekNumbers', 'yearDropdown'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Calendar> was created with unknown prop '${key}'`);
     	});
@@ -6323,6 +6345,7 @@
     	$$self.$set = $$props => {
     		if ('disabledDates' in $$props) $$invalidate('disabledDates', disabledDates = $$props.disabledDates);
     		if ('events' in $$props) $$invalidate('events', events = $$props.events);
+    		if ('hasSelection' in $$props) $$invalidate('hasSelection', hasSelection = $$props.hasSelection);
     		if ('hoverDate' in $$props) $$invalidate('hoverDate', hoverDate = $$props.hoverDate);
     		if ('firstDayOfWeek' in $$props) $$invalidate('firstDayOfWeek', firstDayOfWeek = $$props.firstDayOfWeek);
     		if ('isoWeekNumbers' in $$props) $$invalidate('isoWeekNumbers', isoWeekNumbers = $$props.isoWeekNumbers);
@@ -6346,19 +6369,20 @@
 
     	let weeks, padding;
 
-    	$$self.$$.update = ($$dirty = { month: 1, firstDayOfWeek: 1, locale: 1, events: 1, disabledDates: 1, tempStartDate: 1, hoverDate: 1, minDate: 1, maxDate: 1, today: 1, tempEndDate: 1, singlePicker: 1, weekGuides: 1, isoWeekNumbers: 1, weekNumbers: 1 }) => {
-    		if ($$dirty.month || $$dirty.firstDayOfWeek || $$dirty.locale || $$dirty.events || $$dirty.disabledDates || $$dirty.tempStartDate || $$dirty.hoverDate || $$dirty.minDate || $$dirty.maxDate || $$dirty.today || $$dirty.tempEndDate || $$dirty.singlePicker) { $$invalidate('weeks', weeks = getCalendarWeeks({
+    	$$self.$$.update = ($$dirty = { month: 1, firstDayOfWeek: 1, locale: 1, events: 1, disabledDates: 1, tempStartDate: 1, hoverDate: 1, hasSelection: 1, minDate: 1, maxDate: 1, today: 1, tempEndDate: 1, singlePicker: 1, weekGuides: 1, isoWeekNumbers: 1, weekNumbers: 1 }) => {
+    		if ($$dirty.month || $$dirty.firstDayOfWeek || $$dirty.locale || $$dirty.events || $$dirty.disabledDates || $$dirty.tempStartDate || $$dirty.hoverDate || $$dirty.hasSelection || $$dirty.minDate || $$dirty.maxDate || $$dirty.today || $$dirty.tempEndDate || $$dirty.singlePicker) { $$invalidate('weeks', weeks = getCalendarWeeks({
             month,
             firstDayOfWeek,
             locale,
             events,
             disabledDates,
-            startDate: tempStartDate,
+            tempStartDate,
             hoverDate,
+            hasSelection,
             minDate,
             maxDate,
             today,
-            endDate: tempEndDate,
+            tempEndDate,
             singlePicker
           })); }
     		if ($$dirty.weekGuides || $$dirty.isoWeekNumbers || $$dirty.weekNumbers) { $$invalidate('padding', padding = !weekGuides && !isoWeekNumbers && !weekNumbers ? 12 : 48); }
@@ -6367,6 +6391,7 @@
     	return {
     		disabledDates,
     		events,
+    		hasSelection,
     		hoverDate,
     		firstDayOfWeek,
     		isoWeekNumbers,
@@ -6399,7 +6424,7 @@
     class Calendar extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$4, safe_not_equal, ["disabledDates", "events", "hoverDate", "firstDayOfWeek", "isoWeekNumbers", "locale", "maxDate", "minDate", "month", "monthDropdown", "monthFormat", "monthIndicator", "pageWidth", "rtl", "singlePicker", "tempEndDate", "tempStartDate", "today", "weekGuides", "weekNumbers", "yearDropdown"]);
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, ["disabledDates", "events", "hasSelection", "hoverDate", "firstDayOfWeek", "isoWeekNumbers", "locale", "maxDate", "minDate", "month", "monthDropdown", "monthFormat", "monthIndicator", "pageWidth", "rtl", "singlePicker", "tempEndDate", "tempStartDate", "today", "weekGuides", "weekNumbers", "yearDropdown"]);
 
     		const { ctx } = this.$$;
     		const props = options.props || {};
@@ -6408,6 +6433,9 @@
     		}
     		if (ctx.events === undefined && !('events' in props)) {
     			console.warn("<Calendar> was created without expected prop 'events'");
+    		}
+    		if (ctx.hasSelection === undefined && !('hasSelection' in props)) {
+    			console.warn("<Calendar> was created without expected prop 'hasSelection'");
     		}
     		if (ctx.hoverDate === undefined && !('hoverDate' in props)) {
     			console.warn("<Calendar> was created without expected prop 'hoverDate'");
@@ -6481,6 +6509,14 @@
     	}
 
     	set events(value) {
+    		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get hasSelection() {
+    		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set hasSelection(value) {
     		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -6659,7 +6695,7 @@
     	return child_ctx;
     }
 
-    // (38:4) {#each hours as hour}
+    // (53:4) {#each hours as hour}
     function create_each_block_2(ctx) {
     	var option, t_value = ctx.hour, t, option_value_value;
 
@@ -6669,7 +6705,7 @@
     			t = text(t_value);
     			option.__value = option_value_value = ctx.hour;
     			option.value = option.__value;
-    			add_location(option, file$5, 38, 6, 1143);
+    			add_location(option, file$5, 53, 6, 1364);
     		},
 
     		m: function mount(target, anchor) {
@@ -6697,7 +6733,7 @@
     	};
     }
 
-    // (43:4) {#each minutes as minute}
+    // (58:4) {#each minutes as minute}
     function create_each_block_1$1(ctx) {
     	var option, t_value = ctx.minute, t, option_value_value;
 
@@ -6707,7 +6743,7 @@
     			t = text(t_value);
     			option.__value = option_value_value = ctx.minute;
     			option.value = option.__value;
-    			add_location(option, file$5, 43, 6, 1302);
+    			add_location(option, file$5, 58, 6, 1523);
     		},
 
     		m: function mount(target, anchor) {
@@ -6735,7 +6771,7 @@
     	};
     }
 
-    // (47:2) {#if timePickerSeconds}
+    // (62:2) {#if timePickerSeconds}
     function create_if_block_1$2(ctx) {
     	var select, dispose;
 
@@ -6755,7 +6791,8 @@
     				each_blocks[i].c();
     			}
     			if (ctx.selectedSecond === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
-    			add_location(select, file$5, 47, 4, 1397);
+    			attr(select, "class", "svelte-f0d2qi");
+    			add_location(select, file$5, 62, 4, 1618);
 
     			dispose = [
     				listen(select, "change", ctx.select_change_handler),
@@ -6810,7 +6847,7 @@
     	};
     }
 
-    // (49:6) {#each seconds as second}
+    // (64:6) {#each seconds as second}
     function create_each_block$4(ctx) {
     	var option, t_value = ctx.second, t, option_value_value;
 
@@ -6820,7 +6857,7 @@
     			t = text(t_value);
     			option.__value = option_value_value = ctx.second;
     			option.value = option.__value;
-    			add_location(option, file$5, 49, 8, 1497);
+    			add_location(option, file$5, 64, 8, 1718);
     		},
 
     		m: function mount(target, anchor) {
@@ -6848,7 +6885,7 @@
     	};
     }
 
-    // (55:2) {#if !timePicker24Hour}
+    // (70:2) {#if !timePicker24Hour}
     function create_if_block$3(ctx) {
     	var select, option0, option1;
 
@@ -6861,11 +6898,12 @@
     			option1.textContent = "PM";
     			option0.__value = "AM";
     			option0.value = option0.__value;
-    			add_location(option0, file$5, 56, 6, 1620);
+    			add_location(option0, file$5, 71, 6, 1841);
     			option1.__value = "PM";
     			option1.value = option1.__value;
-    			add_location(option1, file$5, 57, 6, 1657);
-    			add_location(select, file$5, 55, 4, 1605);
+    			add_location(option1, file$5, 72, 6, 1878);
+    			attr(select, "class", "svelte-f0d2qi");
+    			add_location(select, file$5, 70, 4, 1826);
     		},
 
     		m: function mount(target, anchor) {
@@ -6926,10 +6964,13 @@
     			t2 = space();
     			if (if_block1) if_block1.c();
     			if (ctx.selectedHour === void 0) add_render_callback(() => ctx.select0_change_handler.call(select0));
-    			add_location(select0, file$5, 36, 2, 1053);
+    			attr(select0, "class", "svelte-f0d2qi");
+    			add_location(select0, file$5, 51, 2, 1274);
     			if (ctx.selectedMinute === void 0) add_render_callback(() => ctx.select1_change_handler.call(select1));
-    			add_location(select1, file$5, 41, 2, 1206);
-    			add_location(div, file$5, 35, 0, 1045);
+    			attr(select1, "class", "svelte-f0d2qi");
+    			add_location(select1, file$5, 56, 2, 1427);
+    			attr(div, "class", "svelte-f0d2qi");
+    			add_location(div, file$5, 50, 0, 1266);
 
     			dispose = [
     				listen(select0, "change", ctx.select0_change_handler),
@@ -7113,7 +7154,7 @@
     		if ($$dirty.dateReference) { $$invalidate('selectedHour', selectedHour = dateReference.getHours()); }
     		if ($$dirty.dateReference || $$dirty.minuteIncrement) { $$invalidate('selectedMinute', selectedMinute = roundTo(dateReference.getMinutes(), minuteIncrement)); }
     		if ($$dirty.dateReference || $$dirty.secondIncrement) { $$invalidate('selectedSecond', selectedSecond = roundTo(dateReference.getSeconds(), secondIncrement)); }
-    		if ($$dirty.timePicker24Hour) { $$invalidate('hours', hours = [...Array(timePicker24Hour ? 23 : 11)].map((_, i) => pad(i + 1))); }
+    		if ($$dirty.timePicker24Hour) { $$invalidate('hours', hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))); }
     		if ($$dirty.minuteIncrement) { $$invalidate('minutes', minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
             pad(i * minuteIncrement)
           )); }
@@ -7216,7 +7257,7 @@
     	return child_ctx;
     }
 
-    // (311:6) {#each months as month}
+    // (358:6) {#each months as month}
     function create_each_block$5(ctx) {
     	var current;
 
@@ -7225,6 +7266,7 @@
     		disabledDates: ctx.disabledDates,
     		events: ctx.events,
     		hoverDate: ctx.hoverDate,
+    		hasSelection: ctx.hasSelection,
     		firstDayOfWeek: ctx.firstDayOfWeek,
     		isoWeekNumbers: ctx.isoWeekNumbers,
     		locale: ctx.locale,
@@ -7267,6 +7309,7 @@
     			if (changed.disabledDates) calendar_changes.disabledDates = ctx.disabledDates;
     			if (changed.events) calendar_changes.events = ctx.events;
     			if (changed.hoverDate) calendar_changes.hoverDate = ctx.hoverDate;
+    			if (changed.hasSelection) calendar_changes.hasSelection = ctx.hasSelection;
     			if (changed.firstDayOfWeek) calendar_changes.firstDayOfWeek = ctx.firstDayOfWeek;
     			if (changed.isoWeekNumbers) calendar_changes.isoWeekNumbers = ctx.isoWeekNumbers;
     			if (changed.locale) calendar_changes.locale = ctx.locale;
@@ -7306,7 +7349,7 @@
     	};
     }
 
-    // (344:2) {#if timePicker}
+    // (392:2) {#if timePicker}
     function create_if_block$4(ctx) {
     	var div, t, current;
 
@@ -7331,7 +7374,7 @@
     			t = space();
     			if (if_block) if_block.c();
     			attr(div, "class", "calendar-row");
-    			add_location(div, file$6, 344, 4, 8609);
+    			add_location(div, file$6, 392, 4, 10117);
     		},
 
     		m: function mount(target, anchor) {
@@ -7396,13 +7439,13 @@
     	};
     }
 
-    // (354:6) {#if !singlePicker}
+    // (402:6) {#if !singlePicker}
     function create_if_block_1$3(ctx) {
     	var current;
 
     	var timepicker = new TimePicker({
     		props: {
-    		dateReference: ctx.tempEndDate || ctx.hoverDate,
+    		dateReference: ctx.tempEndDate,
     		minuteIncrement: ctx.minuteIncrement,
     		secondIncrement: ctx.secondIncrement,
     		timePicker24Hour: ctx.timePicker24Hour,
@@ -7424,7 +7467,7 @@
 
     		p: function update(changed, ctx) {
     			var timepicker_changes = {};
-    			if (changed.tempEndDate || changed.hoverDate) timepicker_changes.dateReference = ctx.tempEndDate || ctx.hoverDate;
+    			if (changed.tempEndDate) timepicker_changes.dateReference = ctx.tempEndDate;
     			if (changed.minuteIncrement) timepicker_changes.minuteIncrement = ctx.minuteIncrement;
     			if (changed.secondIncrement) timepicker_changes.secondIncrement = ctx.secondIncrement;
     			if (changed.timePicker24Hour) timepicker_changes.timePicker24Hour = ctx.timePicker24Hour;
@@ -7451,7 +7494,7 @@
     }
 
     function create_fragment$6(ctx) {
-    	var div5, div0, label, t0_value = ctx.startDateReadout(), t0, t1, t2_value = ctx.endDateReadout(), t2, t3, div3, div1, t4, div2, t5, t6, div4, button0, t7_value = `<${ctx.canResetView ? '0' : '-'}>`, t7, button0_disabled_value, t8, button1, t9, button1_disabled_value, t10, button2, t11, button2_disabled_value, div5_style_value, current, dispose;
+    	var div4, div2, div0, t0, div1, t1, t2, div3, button0, t3_value = `<${ctx.canResetView ? '0' : '-'}>`, t3, button0_disabled_value, t4, button1, t5, button1_disabled_value, t6, button2, t7, button2_disabled_value, div4_style_value, div4_class_value, current, dispose;
 
     	var each_value = ctx.months;
 
@@ -7469,61 +7512,58 @@
 
     	return {
     		c: function create() {
-    			div5 = element("div");
+    			div4 = element("div");
+    			div2 = element("div");
     			div0 = element("div");
-    			label = element("label");
-    			t0 = text(t0_value);
-    			t1 = text(" to ");
-    			t2 = text(t2_value);
-    			t3 = space();
-    			div3 = element("div");
-    			div1 = element("div");
 
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t4 = space();
-    			div2 = element("div");
-    			t5 = space();
+    			t0 = space();
+    			div1 = element("div");
+    			t1 = space();
     			if (if_block) if_block.c();
-    			t6 = space();
-    			div4 = element("div");
+    			t2 = space();
+    			div3 = element("div");
     			button0 = element("button");
-    			t7 = text(t7_value);
-    			t8 = space();
+    			t3 = text(t3_value);
+    			t4 = space();
     			button1 = element("button");
-    			t9 = text("Cancel");
-    			t10 = space();
+    			t5 = text("Cancel");
+    			t6 = space();
     			button2 = element("button");
-    			t11 = text("Apply");
-    			add_location(label, file$6, 303, 4, 7594);
-    			add_location(div0, file$6, 302, 2, 7584);
-    			attr(div1, "class", "grid svelte-a51g2d");
-    			add_location(div1, file$6, 309, 4, 7777);
-    			attr(div2, "class", "full-height-scroll");
-    			add_location(div2, file$6, 340, 4, 8541);
-    			add_location(div3, file$6, 308, 2, 7767);
+    			t7 = text("Apply");
+    			attr(div0, "class", "grid svelte-19jhhvu");
+    			add_location(div0, file$6, 356, 4, 9260);
+    			attr(div1, "class", "full-height-scroll");
+    			add_location(div1, file$6, 388, 4, 10049);
+    			add_location(div2, file$6, 355, 2, 9250);
     			attr(button0, "type", "button");
     			attr(button0, "aria-label", "Show the current selection ");
     			attr(button0, "aria-controls", id);
     			button0.disabled = button0_disabled_value = !ctx.canResetView;
-    			add_location(button0, file$6, 365, 4, 9145);
+    			attr(button0, "class", "svelte-19jhhvu");
+    			add_location(button0, file$6, 413, 4, 10690);
     			attr(button1, "type", "button");
     			attr(button1, "aria-label", "Cancel the current selection and revert to previous start and\n      end dates");
     			attr(button1, "aria-controls", id);
     			button1.disabled = button1_disabled_value = !ctx.canCancel;
-    			add_location(button1, file$6, 373, 4, 9362);
+    			attr(button1, "class", "svelte-19jhhvu");
+    			add_location(button1, file$6, 421, 4, 10907);
     			attr(button2, "type", "button");
     			attr(button2, "aria-label", "Apply the current selection");
     			attr(button2, "aria-controls", id);
     			button2.disabled = button2_disabled_value = !ctx.canApply();
-    			add_location(button2, file$6, 383, 4, 9597);
-    			add_location(div4, file$6, 364, 2, 9135);
-    			attr(div5, "id", id);
-    			attr(div5, "style", div5_style_value = `width: ${ctx.maxWidth}px`);
-    			attr(div5, "class", "svelte-a51g2d");
-    			add_location(div5, file$6, 301, 0, 7540);
+    			attr(button2, "class", "svelte-19jhhvu");
+    			add_location(button2, file$6, 431, 4, 11142);
+    			set_style(div3, "justify-content", "flex-end");
+    			set_style(div3, "display", "flex");
+    			add_location(div3, file$6, 412, 2, 10630);
+    			attr(div4, "id", id);
+    			attr(div4, "style", div4_style_value = `width: ${ctx.maxWidth}px`);
+    			attr(div4, "class", div4_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-19jhhvu");
+    			add_location(div4, file$6, 348, 0, 8998);
 
     			dispose = [
     				listen(button0, "click", ctx.resetView),
@@ -7537,47 +7577,33 @@
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, div5, anchor);
-    			append(div5, div0);
-    			append(div0, label);
-    			append(label, t0);
-    			append(label, t1);
-    			append(label, t2);
-    			append(div5, t3);
-    			append(div5, div3);
-    			append(div3, div1);
+    			insert(target, div4, anchor);
+    			append(div4, div2);
+    			append(div2, div0);
 
     			for (var i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(div1, null);
+    				each_blocks[i].m(div0, null);
     			}
 
+    			append(div2, t0);
+    			append(div2, div1);
+    			append(div4, t1);
+    			if (if_block) if_block.m(div4, null);
+    			append(div4, t2);
+    			append(div4, div3);
+    			append(div3, button0);
+    			append(button0, t3);
     			append(div3, t4);
-    			append(div3, div2);
-    			append(div5, t5);
-    			if (if_block) if_block.m(div5, null);
-    			append(div5, t6);
-    			append(div5, div4);
-    			append(div4, button0);
-    			append(button0, t7);
-    			append(div4, t8);
-    			append(div4, button1);
-    			append(button1, t9);
-    			append(div4, t10);
-    			append(div4, button2);
-    			append(button2, t11);
+    			append(div3, button1);
+    			append(button1, t5);
+    			append(div3, t6);
+    			append(div3, button2);
+    			append(button2, t7);
     			current = true;
     		},
 
     		p: function update(changed, ctx) {
-    			if ((!current || changed.startDateReadout) && t0_value !== (t0_value = ctx.startDateReadout())) {
-    				set_data(t0, t0_value);
-    			}
-
-    			if ((!current || changed.endDateReadout) && t2_value !== (t2_value = ctx.endDateReadout())) {
-    				set_data(t2, t2_value);
-    			}
-
-    			if (changed.disabledDates || changed.events || changed.hoverDate || changed.firstDayOfWeek || changed.isoWeekNumbers || changed.locale || changed.maxDate || changed.minDate || changed.months || changed.monthDropdown || changed.monthFormat || changed.monthIndicator || changed.pageWidth || changed.rtl || changed.singlePicker || changed.tempEndDate || changed.tempStartDate || changed.today || changed.weekGuides || changed.weekNumbers || changed.yearDropdown || changed.onPageChange || changed.onHover || changed.onSelection || changed.onPreviousMonth || changed.onNextMonth) {
+    			if (changed.disabledDates || changed.events || changed.hoverDate || changed.hasSelection || changed.firstDayOfWeek || changed.isoWeekNumbers || changed.locale || changed.maxDate || changed.minDate || changed.months || changed.monthDropdown || changed.monthFormat || changed.monthIndicator || changed.pageWidth || changed.rtl || changed.singlePicker || changed.tempEndDate || changed.tempStartDate || changed.today || changed.weekGuides || changed.weekNumbers || changed.yearDropdown || changed.onPageChange || changed.onHover || changed.onSelection || changed.onPreviousMonth || changed.onNextMonth) {
     				each_value = ctx.months;
 
     				for (var i = 0; i < each_value.length; i += 1) {
@@ -7590,7 +7616,7 @@
     						each_blocks[i] = create_each_block$5(child_ctx);
     						each_blocks[i].c();
     						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(div1, null);
+    						each_blocks[i].m(div0, null);
     					}
     				}
 
@@ -7607,7 +7633,7 @@
     					if_block = create_if_block$4(ctx);
     					if_block.c();
     					transition_in(if_block, 1);
-    					if_block.m(div5, t6);
+    					if_block.m(div4, t2);
     				}
     			} else if (if_block) {
     				group_outros();
@@ -7617,8 +7643,8 @@
     				check_outros();
     			}
 
-    			if ((!current || changed.canResetView) && t7_value !== (t7_value = `<${ctx.canResetView ? '0' : '-'}>`)) {
-    				set_data(t7, t7_value);
+    			if ((!current || changed.canResetView) && t3_value !== (t3_value = `<${ctx.canResetView ? '0' : '-'}>`)) {
+    				set_data(t3, t3_value);
     			}
 
     			if ((!current || changed.canResetView) && button0_disabled_value !== (button0_disabled_value = !ctx.canResetView)) {
@@ -7633,8 +7659,12 @@
     				button2.disabled = button2_disabled_value;
     			}
 
-    			if ((!current || changed.maxWidth) && div5_style_value !== (div5_style_value = `width: ${ctx.maxWidth}px`)) {
-    				attr(div5, "style", div5_style_value);
+    			if ((!current || changed.maxWidth) && div4_style_value !== (div4_style_value = `width: ${ctx.maxWidth}px`)) {
+    				attr(div4, "style", div4_style_value);
+    			}
+
+    			if ((!current || changed.rtl) && div4_class_value !== (div4_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-19jhhvu")) {
+    				attr(div4, "class", div4_class_value);
     			}
     		},
 
@@ -7656,7 +7686,7 @@
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(div5);
+    				detach(div4);
     			}
 
     			destroy_each(each_blocks, detaching);
@@ -7676,11 +7706,12 @@
     function instance$6($$self, $$props, $$invalidate) {
     	
 
-      let { autoApply = false, dateFormat = "MMM dd, yyyy", monthIndicator = true, disabledDates = [], endDate = new Date(), events = [], firstDayOfWeek = "sunday", hideOnCancel = true, hideOnApply = true, isoWeekNumbers = false, locale: locale$1 = locale, maxDate = addYears(new Date(), 10), minDate = subYears(new Date(), 10), monthDropdown = true, monthFormat = "MMMM", numPages = 1, rtl = false, singlePicker = false, startDate = startOfWeek(new Date()), timePicker = true, timePicker24Hour = true, minuteIncrement = 5, secondIncrement = 5, timePickerSeconds = true, today = new Date(), weekGuides = false, weekNumbers = false, yearDropdown = true } = $$props;
+      let { autoApply = false, dateFormat = "MMM dd, yyyy", monthIndicator = true, disabledDates = [], endDate = new Date(), events = [], firstDayOfWeek = "sunday", hideOnCancel = true, hideOnApply = true, isoWeekNumbers = false, locale: locale$1 = locale, maxDate = addYears(new Date(), 10), minDate = subYears(new Date(), 10), monthDropdown = true, monthFormat = "MMMM", numPages = 1, rtl = false, singlePicker = false, startDate = startOfWeek(new Date()), timePicker = true, timePicker24Hour = true, minuteIncrement = 1, secondIncrement = 1, timePickerSeconds = true, today = new Date(), weekGuides = false, weekNumbers = false, yearDropdown = true } = $$props;
 
       let hoverDate = endDate;
       let tempEndDate = endDate;
       let tempStartDate = startDate;
+      let hasSelection = true;
       const dispatchEvent = createEventDispatcher();
       const pageWidth = cellWidth * 7;
       const pageWidthWithPadding =
@@ -7729,45 +7760,77 @@
         });
       }
 
-      console.log(tempStartDate);
-      console.log(tempEndDate);
-      console.log(hoverDate);
-      function onSelection({ detail }) {
-        console.log(detail);
-        $$invalidate('tempStartDate', tempStartDate = new Date(
-          detail.tempStartDate.getFullYear(),
-          detail.tempStartDate.getMonth(),
-          detail.tempStartDate.getDate(),
-          tempStartDate.getHours(),
-          tempStartDate.getMinutes(),
-          tempStartDate.getSeconds()
-        ));
-
-        if (detail.tempEndDate) {
-          $$invalidate('tempEndDate', tempEndDate = new Date(
-            detail.tempEndDate.getFullYear(),
-            detail.tempEndDate.getMonth(),
-            detail.tempEndDate.getDate(),
-            (tempEndDate || hoverDate).getHours(),
-            (tempEndDate || hoverDate).getMinutes(),
-            (tempEndDate || hoverDate).getSeconds()
+      function onSelection({ detail: selectedDate }) {
+        if (singlePicker) {
+          // Start and end dates are always the same on singlePicker
+          $$invalidate('tempStartDate', tempStartDate = tempEndDate = new Date(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth(),
+            selectedDate.getDate(),
+            tempStartDate.getHours(),
+            tempStartDate.getMinutes(),
+            tempStartDate.getSeconds()
+          )); $$invalidate('tempEndDate', tempEndDate);
+        } else if (hasSelection) {
+          // In range mode, if there is currently a selection and the selection event is fired
+          // the user must be selecting the startDate
+          $$invalidate('tempStartDate', tempStartDate = new Date(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth(),
+            selectedDate.getDate(),
+            tempStartDate.getHours(),
+            tempStartDate.getMinutes(),
+            tempStartDate.getSeconds()
           ));
+          $$invalidate('hasSelection', hasSelection = false);
         } else {
-          $$invalidate('tempEndDate', tempEndDate = detail.tempEndDate);
-        }
+          // In range mode, if there isn't a selection, the user must be selecting an endDate
+          // Update the start and end dates appropriately based on whether the newly selected date
+          // is before the currently selected start date
+          if (isBefore(selectedDate, tempStartDate)) {
+            $$invalidate('tempEndDate', tempEndDate = new Date(
+              tempStartDate.getFullYear(),
+              tempStartDate.getMonth(),
+              tempStartDate.getDate(),
+              tempEndDate.getHours(),
+              tempEndDate.getMinutes(),
+              tempEndDate.getSeconds()
+            ));
 
-        dispatchEvent("selection", {
-          startDate: tempStartDate,
-          endDate: tempEndDate
-        });
+            $$invalidate('tempStartDate', tempStartDate = new Date(
+              selectedDate.getFullYear(),
+              selectedDate.getMonth(),
+              selectedDate.getDate(),
+              tempStartDate.getHours(),
+              tempStartDate.getMinutes(),
+              tempStartDate.getSeconds()
+            ));
+          } else {
+            $$invalidate('tempEndDate', tempEndDate = new Date(
+              selectedDate.getFullYear(),
+              selectedDate.getMonth(),
+              selectedDate.getDate(),
+              tempEndDate.getHours(),
+              tempEndDate.getMinutes(),
+              tempEndDate.getSeconds()
+            ));
+          }
 
-        if (autoApply) {
-          apply();
+          $$invalidate('hasSelection', hasSelection = true);
+
+          dispatchEvent("selection", {
+            startDate: tempStartDate,
+            endDate: tempEndDate
+          });
+
+          if (autoApply) {
+            apply();
+          }
         }
       }
 
-      function onHover({ detail }) {
-        $$invalidate('hoverDate', hoverDate = detail.hoverDate);
+      function onHover({ detail: selectedDate }) {
+        $$invalidate('hoverDate', hoverDate = selectedDate);
       }
 
       function onPreviousMonth() {
@@ -7847,9 +7910,9 @@
     		if ('yearDropdown' in $$props) $$invalidate('yearDropdown', yearDropdown = $$props.yearDropdown);
     	};
 
-    	let canApply, canCancel, canResetView, maxWidth, months, pickerWidth, startDateReadout, endDateReadout;
+    	let canApply, canCancel, canResetView, maxWidth, months, pickerWidth;
 
-    	$$self.$$.update = ($$dirty = { timePicker: 1, timePickerSeconds: 1, tempStartDate: 1, startDate: 1, tempEndDate: 1, endDate: 1, numPages: 1, today: 1, months: 1, pickerWidth: 1, hoverDate: 1, dateFormat: 1, locale: 1 }) => {
+    	$$self.$$.update = ($$dirty = { timePicker: 1, timePickerSeconds: 1, tempStartDate: 1, startDate: 1, tempEndDate: 1, endDate: 1, numPages: 1, today: 1, months: 1, pickerWidth: 1, hasSelection: 1, hoverDate: 1, dateFormat: 1, locale: 1 }) => {
     		if ($$dirty.timePicker || $$dirty.timePickerSeconds || $$dirty.tempStartDate || $$dirty.startDate || $$dirty.tempEndDate || $$dirty.endDate) { $$invalidate('canApply', canApply = function() {
             if (timePicker) {
               if (timePickerSeconds) {
@@ -7882,24 +7945,8 @@
             pickerWidth >= maxCalsPerPage * pageWidth
               ? maxCalsPerPage * pageWidthWithPadding
               : pickerWidth); }
-    		if ($$dirty.tempEndDate || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale) { $$invalidate('startDateReadout', startDateReadout = function() {
-            if (!tempEndDate && isBefore(hoverDate, tempStartDate)) {
-              return format(hoverDate, dateFormat, { locale: locale$1 });
-            }
-        
-            return format(tempStartDate, dateFormat, { locale: locale$1 });
-          }); }
-    		if ($$dirty.tempEndDate || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale) { $$invalidate('endDateReadout', endDateReadout = function() {
-            if (!tempEndDate) {
-              if (isBefore(hoverDate, tempStartDate)) {
-                return format(tempStartDate, dateFormat, { locale: locale$1 });
-              }
-        
-              return format(hoverDate, dateFormat, { locale: locale$1 });
-            }
-        
-            return format(tempEndDate, dateFormat, { locale: locale$1 });
-          }); }
+    		if ($$dirty.hasSelection || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale) ;
+    		if ($$dirty.hasSelection || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale || $$dirty.tempEndDate) ;
     	};
 
     	return {
@@ -7934,6 +7981,7 @@
     		hoverDate,
     		tempEndDate,
     		tempStartDate,
+    		hasSelection,
     		pageWidth,
     		apply,
     		resetView,
@@ -7949,9 +7997,7 @@
     		canCancel,
     		canResetView,
     		months,
-    		maxWidth,
-    		startDateReadout,
-    		endDateReadout
+    		maxWidth
     	};
     }
 
@@ -8194,6 +8240,7 @@
     	var sdaterangepicker = new SDateRangePicker({
     		props: {
     		numPages: 2,
+    		rtl: rtl,
     		startDate: ctx.startDate,
     		endDate: ctx.endDate
     	},
@@ -8217,6 +8264,7 @@
 
     		p: function update(changed, ctx) {
     			var sdaterangepicker_changes = {};
+    			if (changed.rtl) sdaterangepicker_changes.rtl = rtl;
     			if (changed.startDate) sdaterangepicker_changes.startDate = ctx.startDate;
     			if (changed.endDate) sdaterangepicker_changes.endDate = ctx.endDate;
     			sdaterangepicker.$set(sdaterangepicker_changes);
@@ -8240,11 +8288,13 @@
     	};
     }
 
+    let rtl = false;
+
     function instance$7($$self, $$props, $$invalidate) {
     	
 
-      let startDate = new Date();
-      let endDate = addDays(new Date(), 7);
+      let startDate = startOfWeek(new Date());
+      let endDate = endOfWeek(new Date());
 
       function onApply({ detail }) {
         $$invalidate('startDate', startDate = detail.startDate);

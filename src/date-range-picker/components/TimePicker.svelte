@@ -13,7 +13,7 @@
   $: selectedMinute = roundTo(dateReference.getMinutes(), minuteIncrement);
   $: selectedSecond = roundTo(dateReference.getSeconds(), secondIncrement);
 
-  $: hours = [...Array(timePicker24Hour ? 23 : 11)].map((_, i) => pad(i + 1));
+  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
   );
@@ -32,6 +32,21 @@
     dispatchEvent("timeChange", { ...detail });
   }
 </script>
+
+<style>
+  div {
+    padding: 8px 0;
+    flex: 1;
+    justify-content: center;
+    display: flex;
+  }
+  select {
+    padding: 8px 12px;
+    background-color: transparent;
+    border-radius: 4px;
+    margin: 4px;
+  }
+</style>
 
 <div>
   <select bind:value={selectedHour} on:change={timeChange}>

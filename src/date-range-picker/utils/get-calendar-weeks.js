@@ -13,11 +13,7 @@ import { dayOffset } from "./day-offset";
 import { getDayMetaData } from "./get-day-meta-data";
 function buildWeek(startDay, getDayMetaDataParams) {
   return [0, 1, 2, 3, 4, 5, 6].map(value =>
-    getDayMetaData(
-      Object.assign(Object.assign({}, getDayMetaDataParams), {
-        date: addDays(startDay, value)
-      })
-    )
+    getDayMetaData({ ...getDayMetaDataParams, date: addDays(startDay, value) })
   );
 }
 export function getCalendarWeeks(getDayMetaDataParams) {

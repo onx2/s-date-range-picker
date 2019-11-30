@@ -13,18 +13,24 @@ import { toRange } from "./to-range";
 export function getDayMetaData(params) {
   const {
     date,
-    endDate,
+    tempEndDate,
     events,
     hoverDate,
+    hasSelection,
     month,
     singlePicker,
-    startDate,
+    tempStartDate,
     today,
     maxDate,
     minDate,
     disabledDates
   } = params;
-  const { start, end } = toRange(startDate, endDate || hoverDate);
+
+  // Sort the range asc for `isWithinInterval` function.
+  const { start, end } = toRange(
+    tempStartDate,
+    hasSelection ? tempEndDate : hoverDate
+  );
   return {
     date,
     events,

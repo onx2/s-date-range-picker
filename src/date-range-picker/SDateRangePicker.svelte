@@ -51,8 +51,8 @@
   export let startDate = startOfWeek(new Date());
   export let timePicker = true;
   export let timePicker24Hour = true;
-  export let minuteIncrement = 5;
-  export let secondIncrement = 5;
+  export let minuteIncrement = 1;
+  export let secondIncrement = 1;
   export let timePickerSeconds = true;
   export let today = new Date();
   export let weekGuides = false;
@@ -62,6 +62,7 @@
   let hoverDate = endDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
+  let hasSelection = true;
 
   /** @todo Handle minute and second increments. Round to increment */
   // onMount(function () {
@@ -111,14 +112,14 @@
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i));
   $: pickerWidth = numPages * pageWidthWithPadding;
   $: startDateReadout = function() {
-    if (!tempEndDate && isBefore(hoverDate, tempStartDate)) {
+    if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
       return format(hoverDate, dateFormat, { locale });
     }
 
     return format(tempStartDate, dateFormat, { locale });
   };
   $: endDateReadout = function() {
-    if (!tempEndDate) {
+    if (!hasSelection) {
       if (isBefore(hoverDate, tempStartDate)) {
         return format(tempStartDate, dateFormat, { locale });
       }
@@ -182,45 +183,77 @@
     });
   }
 
-  console.log(tempStartDate);
-  console.log(tempEndDate);
-  console.log(hoverDate);
-  function onSelection({ detail }) {
-    console.log(detail);
-    tempStartDate = new Date(
-      detail.tempStartDate.getFullYear(),
-      detail.tempStartDate.getMonth(),
-      detail.tempStartDate.getDate(),
-      tempStartDate.getHours(),
-      tempStartDate.getMinutes(),
-      tempStartDate.getSeconds()
-    );
-
-    if (detail.tempEndDate) {
-      tempEndDate = new Date(
-        detail.tempEndDate.getFullYear(),
-        detail.tempEndDate.getMonth(),
-        detail.tempEndDate.getDate(),
-        (tempEndDate || hoverDate).getHours(),
-        (tempEndDate || hoverDate).getMinutes(),
-        (tempEndDate || hoverDate).getSeconds()
+  function onSelection({ detail: selectedDate }) {
+    if (singlePicker) {
+      // Start and end dates are always the same on singlePicker
+      tempStartDate = tempEndDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        tempStartDate.getHours(),
+        tempStartDate.getMinutes(),
+        tempStartDate.getSeconds()
       );
+    } else if (hasSelection) {
+      // In range mode, if there is currently a selection and the selection event is fired
+      // the user must be selecting the startDate
+      tempStartDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        tempStartDate.getHours(),
+        tempStartDate.getMinutes(),
+        tempStartDate.getSeconds()
+      );
+      hasSelection = false;
     } else {
-      tempEndDate = detail.tempEndDate;
-    }
+      // In range mode, if there isn't a selection, the user must be selecting an endDate
+      // Update the start and end dates appropriately based on whether the newly selected date
+      // is before the currently selected start date
+      if (isBefore(selectedDate, tempStartDate)) {
+        tempEndDate = new Date(
+          tempStartDate.getFullYear(),
+          tempStartDate.getMonth(),
+          tempStartDate.getDate(),
+          tempEndDate.getHours(),
+          tempEndDate.getMinutes(),
+          tempEndDate.getSeconds()
+        );
 
-    dispatchEvent("selection", {
-      startDate: tempStartDate,
-      endDate: tempEndDate
-    });
+        tempStartDate = new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate(),
+          tempStartDate.getHours(),
+          tempStartDate.getMinutes(),
+          tempStartDate.getSeconds()
+        );
+      } else {
+        tempEndDate = new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate(),
+          tempEndDate.getHours(),
+          tempEndDate.getMinutes(),
+          tempEndDate.getSeconds()
+        );
+      }
 
-    if (autoApply) {
-      apply();
+      hasSelection = true;
+
+      dispatchEvent("selection", {
+        startDate: tempStartDate,
+        endDate: tempEndDate
+      });
+
+      if (autoApply) {
+        apply();
+      }
     }
   }
 
-  function onHover({ detail }) {
-    hoverDate = detail.hoverDate;
+  function onHover({ detail: selectedDate }) {
+    hoverDate = selectedDate;
   }
 
   function onPreviousMonth() {
@@ -297,15 +330,29 @@
     justify-content: center;
     align-items: center;
   }
+
+  .rtl {
+    direction: rtl;
+  }
+
+  button {
+    margin: 4px;
+    background-color: transparent;
+    border: 1px solid #999;
+    outline: 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 </style>
 
-<div {id} style={`width: ${maxWidth}px`}>
-  <div>
+<div {id} style={`width: ${maxWidth}px`} class={rtl ? 'rtl' : ''}>
+  <!-- <div>
     <label>{startDateReadout()} to {endDateReadout()}</label>
-    <!-- <button type="close" disabled={!canCancel} on:click={() => close()}>
+    <button type="close" disabled={!canCancel} on:click={() => close()}>
       x
-    </button> -->
-  </div>
+    </button>
+  </div> -->
   <div>
     <div class="grid">
       {#each months as month}
@@ -318,6 +365,7 @@
           {disabledDates}
           {events}
           {hoverDate}
+          {hasSelection}
           {firstDayOfWeek}
           {isoWeekNumbers}
           {locale}
@@ -354,7 +402,7 @@
       {#if !singlePicker}
         <TimePicker
           on:timeChange={onEndTimeChange}
-          dateReference={tempEndDate || hoverDate}
+          dateReference={tempEndDate}
           {minuteIncrement}
           {secondIncrement}
           {timePicker24Hour}
@@ -362,7 +410,7 @@
       {/if}
     </div>
   {/if}
-  <div>
+  <div style="justify-content: flex-end; display: flex;">
     <button
       type="button"
       aria-label="Show the current selection "
