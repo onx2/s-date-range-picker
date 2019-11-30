@@ -26,6 +26,8 @@
 
 <SDateRangePicker {startDate} {endDate} on:apply={onApply} />
 ```
+## Current look
+![Svelte Date Range Picker 2019-11-30](https://i.ibb.co/wSnckY9/Screenshot-from-2019-11-30-17-29-57.png)
 
 ## Todos
 - [ ] Add the missing Props / Options
@@ -36,7 +38,7 @@
 - [ ] Documentation / Demo Site
 - [x] Publish to npm
 - [ ] Mobile / touch friendly
-- [ ] Optimizations /reduce bundle size
+- [ ] Optimizations / reduce bundle size
 
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
