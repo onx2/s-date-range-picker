@@ -27,9 +27,6 @@
 <SDateRangePicker {startDate} {endDate} on:apply={onApply} />
 ```
 
-Current state of the picker (missing quite a few pieces of functionality / design)
-![Current state of date picker - WIP](https://i.ibb.co/qgrJMG7/Screenshot-from-2019-11-29-13-26-01.png)
-
 ## Todos
 - [ ] Missing Props / Options
 - [ ] Tests
