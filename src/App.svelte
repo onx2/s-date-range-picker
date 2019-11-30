@@ -18,4 +18,4 @@
   }
 </script>
 
-<SDateRangePicker numPages={4} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker numPages={2} {startDate} {endDate} on:apply={onApply} />
