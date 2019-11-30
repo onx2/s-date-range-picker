@@ -1,4 +1,12 @@
 <script>
+  /**
+   * TODO!
+   *
+   * Change the way tempEndDate is handled...
+   * It should always exists, however hoverDate should switch between an active and undefined state.
+   * This way tempEndDate can be referenced while hovering and the checks for tempEndDate === undefined
+   * can be changed to hoverDate !== undefined.
+   */
   import { createEventDispatcher } from "svelte";
   import {
     addMonths,
@@ -8,6 +16,8 @@
     endOfWeek,
     format,
     isBefore,
+    isSameMinute,
+    isSameSecond,
     isSameDay,
     isSameMonth,
     startOfWeek,
@@ -15,6 +25,7 @@
   } from "date-fns";
   import { enUS } from "date-fns/locale";
   import Calendar from "./components/Calendar.svelte";
+  import TimePicker from "./components/TimePicker.svelte";
 
   export let autoApply = false;
   export let dateFormat = "MMM dd, yyyy";
@@ -38,19 +49,26 @@
   export let rtl = false;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
-  // export let timePicker = false;
-  // export let timePicker24Hour = true;
-  // export let timePickerIncrement = 1;
-  // export let timePickerSeconds = false;
+  export let timePicker = true;
+  export let timePicker24Hour = true;
+  export let minuteIncrement = 5;
+  export let secondIncrement = 5;
+  export let timePickerSeconds = true;
   export let today = new Date();
   export let weekGuides = false;
   export let weekNumbers = false;
   export let yearDropdown = true;
 
-  let hoverDate = startDate;
+  let hoverDate = endDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
 
+  /** @todo Handle minute and second increments. Round to increment */
+  // onMount(function () {
+  //   if (timePicker) {
+  //     round to increment for minutes and seconds as applicable
+  //   }
+  // })
   const cellWidth = 44;
   const dispatchEvent = createEventDispatcher();
   const id = "s-date-range-picker";
@@ -59,10 +77,30 @@
   const pageWidthWithPadding =
     pageWidth + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
 
-  $: canApply =
-    (!isSameDay(tempStartDate, startDate) ||
-      !isSameDay(tempEndDate, endDate)) &&
-    tempEndDate;
+  $: canApply = function() {
+    if (timePicker) {
+      if (timePickerSeconds) {
+        return (
+          (!isSameSecond(tempStartDate, startDate) ||
+            !isSameSecond(tempEndDate, endDate)) &&
+          tempEndDate
+        );
+      }
+
+      return (
+        (!isSameMinute(tempStartDate, startDate) ||
+          !isSameMinute(tempEndDate, endDate)) &&
+        tempEndDate
+      );
+    }
+
+    return (
+      (!isSameDay(tempStartDate, startDate) ||
+        !isSameDay(tempEndDate, endDate)) &&
+      tempEndDate
+    );
+  };
+
   $: canCancel =
     !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate);
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
@@ -115,7 +153,7 @@
   }
 
   function resetView() {
-    const resetViewMonth = canApply ? tempStartDate : startDate;
+    const resetViewMonth = canApply() ? tempStartDate : startDate;
     months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i));
   }
 
@@ -144,9 +182,32 @@
     });
   }
 
+  console.log(tempStartDate);
+  console.log(tempEndDate);
+  console.log(hoverDate);
   function onSelection({ detail }) {
-    tempStartDate = detail.tempStartDate;
-    tempEndDate = detail.tempEndDate;
+    console.log(detail);
+    tempStartDate = new Date(
+      detail.tempStartDate.getFullYear(),
+      detail.tempStartDate.getMonth(),
+      detail.tempStartDate.getDate(),
+      tempStartDate.getHours(),
+      tempStartDate.getMinutes(),
+      tempStartDate.getSeconds()
+    );
+
+    if (detail.tempEndDate) {
+      tempEndDate = new Date(
+        detail.tempEndDate.getFullYear(),
+        detail.tempEndDate.getMonth(),
+        detail.tempEndDate.getDate(),
+        (tempEndDate || hoverDate).getHours(),
+        (tempEndDate || hoverDate).getMinutes(),
+        (tempEndDate || hoverDate).getSeconds()
+      );
+    } else {
+      tempEndDate = detail.tempEndDate;
+    }
 
     dispatchEvent("selection", {
       startDate: tempStartDate,
@@ -176,6 +237,30 @@
     } else {
       const absIncrementAmount = Math.abs(incrementAmount);
       months = months.map(mo => subMonths(mo, absIncrementAmount));
+    }
+  }
+
+  function onStartTimeChange({ detail }) {
+    tempStartDate = new Date(
+      tempStartDate.getFullYear(),
+      tempStartDate.getMonth(),
+      tempStartDate.getDate(),
+      detail.hours,
+      detail.minutes,
+      detail.seconds
+    );
+  }
+
+  function onEndTimeChange({ detail }) {
+    if (tempEndDate) {
+      tempEndDate = new Date(
+        tempEndDate.getFullYear(),
+        tempEndDate.getMonth(),
+        tempEndDate.getDate(),
+        detail.hours,
+        detail.minutes,
+        detail.seconds
+      );
     }
   }
 </script>
@@ -255,7 +340,28 @@
     </div>
     <div class="full-height-scroll" />
   </div>
-  <div>Time picker row</div>
+
+  {#if timePicker}
+    <div class="calendar-row">
+      <TimePicker
+        on:timeChange={onStartTimeChange}
+        dateReference={tempStartDate}
+        {minuteIncrement}
+        {secondIncrement}
+        {timePicker24Hour}
+        {timePickerSeconds} />
+
+      {#if !singlePicker}
+        <TimePicker
+          on:timeChange={onEndTimeChange}
+          dateReference={tempEndDate || hoverDate}
+          {minuteIncrement}
+          {secondIncrement}
+          {timePicker24Hour}
+          {timePickerSeconds} />
+      {/if}
+    </div>
+  {/if}
   <div>
     <button
       type="button"
@@ -280,7 +386,7 @@
       aria-label="Apply the current selection"
       aria-controls={id}
       on:click={apply}
-      disabled={!canApply}>
+      disabled={!canApply()}>
       Apply
     </button>
   </div>

@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import {
     addMonths,
     differenceInCalendarMonths,
@@ -10,7 +11,6 @@
     subMonths,
     isSameYear
   } from "date-fns";
-  import { createEventDispatcher } from "svelte";
   import { buildMonths, buildYears } from "../utils";
 
   export let locale;

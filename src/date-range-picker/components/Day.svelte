@@ -28,10 +28,6 @@
     margin: 0;
   }
 
-  button:disabled {
-    cursor: not-allowed;
-  }
-
   .within-selection,
   .end-date,
   .start-date {
@@ -60,12 +56,14 @@
     background-color: #1565c0;
     color: white;
   }
+
   .month-indicator {
     font-size: 0.6rem;
     margin-top: -12px;
     position: absolute;
     opacity: 0;
   }
+
   button:not(:disabled):hover .month-indicator,
   .start-date .month-indicator,
   .end-date .month-indicator {

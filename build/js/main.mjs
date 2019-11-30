@@ -1,1 +1,8266 @@
-function e(){}function t(e){return e()}function n(){return Object.create(null)}function r(e){e.forEach(t)}function a(e){return"function"==typeof e}function o(e,t){return e!=e?t==t:e!==t||e&&"object"==typeof e||"function"==typeof e}function i(e,t){e.appendChild(t)}function l(e,t,n){e.insertBefore(t,n||null)}function s(e){e.parentNode.removeChild(e)}function u(e,t){for(let n=0;n<e.length;n+=1)e[n]&&e[n].d(t)}function d(e){return document.createElement(e)}function c(e){return document.createTextNode(e)}function m(){return c(" ")}function h(e,t,n,r){return e.addEventListener(t,n,r),()=>e.removeEventListener(t,n,r)}function f(e,t,n){null==n?e.removeAttribute(t):e.setAttribute(t,n)}function g(e,t){t=""+t,e.data!==t&&(e.data=t)}function w(e,t){for(let n=0;n<e.options.length;n+=1){const r=e.options[n];if(r.__value===t)return void(r.selected=!0)}}function p(e){const t=e.querySelector(":checked")||e.options[0];return t&&t.__value}function y(e,t,n){e.classList[n?"add":"remove"](t)}let D;function v(e){D=e}function b(){const e=D;return(t,n)=>{const r=e.$$.callbacks[t];if(r){const a=function(e,t){const n=document.createEvent("CustomEvent");return n.initCustomEvent(e,!1,!1,t),n}(t,n);r.slice().forEach(t=>{t.call(e,a)})}}}function k(e,t){const n=e.$$.callbacks[t.type];n&&n.slice().forEach(e=>e(t))}const M=[],x=Promise.resolve();let T=!1;const W=[],E=[],N=[];function O(e){E.push(e)}function $(){const e=new Set;do{for(;M.length;){const e=M.shift();v(e),P(e.$$)}for(;W.length;)W.shift()();for(;E.length;){const t=E.pop();e.has(t)||(t(),e.add(t))}}while(M.length);for(;N.length;)N.pop()();T=!1}function P(e){e.fragment&&(e.update(e.dirty),r(e.before_render),e.fragment.p(e.dirty,e.ctx),e.dirty=null,e.after_render.forEach(O))}const C=new Set;let S;function F(){S={remaining:0,callbacks:[]}}function _(){S.remaining||r(S.callbacks)}function q(e,t){e&&e.i&&(C.delete(e),e.i(t))}function Y(e,t,n){if(e&&e.o){if(C.has(e))return;C.add(e),S.callbacks.push(()=>{C.delete(e),n&&(e.d(1),n())}),e.o(t)}}function I(e,t){Y(e,1,()=>{t.delete(e.key)})}function U(e,n,o){const{fragment:i,on_mount:l,on_destroy:s,after_render:u}=e.$$;i.m(n,o),O(()=>{const n=l.map(t).filter(a);s?s.push(...n):r(n),e.$$.on_mount=[]}),u.forEach(O)}function G(e,t){e.$$.fragment&&(r(e.$$.on_destroy),t&&e.$$.fragment.d(1),e.$$.on_destroy=e.$$.fragment=null,e.$$.ctx={})}function A(e,t){e.$$.dirty||(M.push(e),T||(T=!0,x.then($)),e.$$.dirty=n()),e.$$.dirty[t]=!0}function H(t,a,o,i,l,s){const u=D;v(t);const d=a.props||{},c=t.$$={fragment:null,ctx:null,props:s,update:e,not_equal:l,bound:n(),on_mount:[],on_destroy:[],before_render:[],after_render:[],context:new Map(u?u.$$.context:[]),callbacks:n(),dirty:null};let m=!1;c.ctx=o?o(t,d,(e,n)=>{c.ctx&&l(c.ctx[e],c.ctx[e]=n)&&(c.bound[e]&&c.bound[e](n),m&&A(t,e))}):d,c.update(),m=!0,r(c.before_render),c.fragment=i(c.ctx),a.target&&(a.hydrate?c.fragment.l(function(e){return Array.from(e.childNodes)}(a.target)):c.fragment.c(),a.intro&&q(t.$$.fragment),U(t,a.target,a.anchor),$()),v(u)}class R{$destroy(){G(this,1),this.$destroy=e}$on(e,t){const n=this.$$.callbacks[e]||(this.$$.callbacks[e]=[]);return n.push(t),()=>{const e=n.indexOf(t);-1!==e&&n.splice(e,1)}}$set(){}}function j(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=Object.prototype.toString.call(e);return e instanceof Date||"object"==typeof e&&"[object Date]"===t?new Date(e.getTime()):"number"==typeof e||"[object Number]"===t?new Date(e):("string"!=typeof e&&"[object String]"!==t||"undefined"==typeof console||(console.warn("Starting with v2.0.0-beta.1 date-fns doesn't accept strings as arguments. Please use `parseISO` to parse strings. See: https://git.io/fjule"),console.warn((new Error).stack)),new Date(NaN))}function B(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e).getDay();return 0===t||6===t}function z(e){if(null===e||!0===e||!1===e)return NaN;var t=Number(e);return isNaN(t)?t:t<0?Math.ceil(t):Math.floor(t)}function L(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=z(t);return n.setDate(n.getDate()+r),n}function X(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=t||{},r=n.locale,a=r&&r.options&&r.options.weekStartsOn,o=null==a?0:z(a),i=null==n.weekStartsOn?o:z(n.weekStartsOn);if(!(i>=0&&i<=6))throw new RangeError("weekStartsOn must be between 0 and 6 inclusively");var l=j(e),s=l.getDay(),u=(s<i?7:0)+s-i;return l.setDate(l.getDate()-u),l.setHours(0,0,0,0),l}function Q(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");return X(e,{weekStartsOn:1})}function V(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getFullYear(),r=new Date(0);r.setFullYear(n+1,0,4),r.setHours(0,0,0,0);var a=Q(r),o=new Date(0);o.setFullYear(n,0,4),o.setHours(0,0,0,0);var i=Q(o);return t.getTime()>=a.getTime()?n+1:t.getTime()>=i.getTime()?n:n-1}(e),n=new Date(0);return n.setFullYear(t,0,4),n.setHours(0,0,0,0),Q(n)}var J=6e4;function K(e){var t=new Date(e.getTime()),n=Math.ceil(t.getTimezoneOffset());t.setSeconds(0,0);var r=t.getTime()%J;return n*J+r}function Z(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e);return t.setHours(0,0,0,0),t}function ee(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=z(t),a=n.getMonth()+r,o=new Date(0);o.setFullYear(n.getFullYear(),a,1),o.setHours(0,0,0,0);var i=function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getFullYear(),r=t.getMonth(),a=new Date(0);return a.setFullYear(n,r+1,0),a.setHours(0,0,0,0),a.getDate()}(o);return n.setMonth(a,Math.min(i,n.getDate())),n}function te(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");return L(e,7*z(t))}function ne(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");return ee(e,12*z(t))}function re(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=Z(e),r=Z(t);return n.getTime()===r.getTime()}function ae(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return 12*(n.getFullYear()-r.getFullYear())+(n.getMonth()-r.getMonth())}var oe=6048e5;function ie(e,t,n){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var r=X(e,n),a=X(t,n),o=r.getTime()-K(r),i=a.getTime()-K(a);return Math.round((o-i)/oe)}function le(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return n.getFullYear()-r.getFullYear()}var se={lessThanXSeconds:{one:"less than a second",other:"less than {{count}} seconds"},xSeconds:{one:"1 second",other:"{{count}} seconds"},halfAMinute:"half a minute",lessThanXMinutes:{one:"less than a minute",other:"less than {{count}} minutes"},xMinutes:{one:"1 minute",other:"{{count}} minutes"},aboutXHours:{one:"about 1 hour",other:"about {{count}} hours"},xHours:{one:"1 hour",other:"{{count}} hours"},xDays:{one:"1 day",other:"{{count}} days"},aboutXMonths:{one:"about 1 month",other:"about {{count}} months"},xMonths:{one:"1 month",other:"{{count}} months"},aboutXYears:{one:"about 1 year",other:"about {{count}} years"},xYears:{one:"1 year",other:"{{count}} years"},overXYears:{one:"over 1 year",other:"over {{count}} years"},almostXYears:{one:"almost 1 year",other:"almost {{count}} years"}};function ue(e){return function(t){var n=t||{},r=n.width?String(n.width):e.defaultWidth;return e.formats[r]||e.formats[e.defaultWidth]}}var de={date:ue({formats:{full:"EEEE, MMMM do, y",long:"MMMM do, y",medium:"MMM d, y",short:"MM/dd/yyyy"},defaultWidth:"full"}),time:ue({formats:{full:"h:mm:ss a zzzz",long:"h:mm:ss a z",medium:"h:mm:ss a",short:"h:mm a"},defaultWidth:"full"}),dateTime:ue({formats:{full:"{{date}} 'at' {{time}}",long:"{{date}} 'at' {{time}}",medium:"{{date}}, {{time}}",short:"{{date}}, {{time}}"},defaultWidth:"full"})},ce={lastWeek:"'last' eeee 'at' p",yesterday:"'yesterday at' p",today:"'today at' p",tomorrow:"'tomorrow at' p",nextWeek:"eeee 'at' p",other:"P"};function me(e){return function(t,n){var r,a=n||{};if("formatting"===(a.context?String(a.context):"standalone")&&e.formattingValues){var o=e.defaultFormattingWidth||e.defaultWidth,i=a.width?String(a.width):o;r=e.formattingValues[i]||e.formattingValues[o]}else{var l=e.defaultWidth,s=a.width?String(a.width):e.defaultWidth;r=e.values[s]||e.values[l]}return r[e.argumentCallback?e.argumentCallback(t):t]}}function he(e){return function(t,n){var r=String(t),a=n||{},o=a.width,i=o&&e.matchPatterns[o]||e.matchPatterns[e.defaultMatchWidth],l=r.match(i);if(!l)return null;var s,u=l[0],d=o&&e.parsePatterns[o]||e.parsePatterns[e.defaultParseWidth];return s="[object Array]"===Object.prototype.toString.call(d)?function(e,t){for(var n=0;n<e.length;n++)if(t(e[n]))return n}(d,(function(e){return e.test(r)})):function(e,t){for(var n in e)if(e.hasOwnProperty(n)&&t(e[n]))return n}(d,(function(e){return e.test(r)})),s=e.valueCallback?e.valueCallback(s):s,{value:s=a.valueCallback?a.valueCallback(s):s,rest:r.slice(u.length)}}}var fe,ge={code:"en-US",formatDistance:function(e,t,n){var r;return n=n||{},r="string"==typeof se[e]?se[e]:1===t?se[e].one:se[e].other.replace("{{count}}",t),n.addSuffix?n.comparison>0?"in "+r:r+" ago":r},formatLong:de,formatRelative:function(e,t,n,r){return ce[e]},localize:{ordinalNumber:function(e,t){var n=Number(e),r=n%100;if(r>20||r<10)switch(r%10){case 1:return n+"st";case 2:return n+"nd";case 3:return n+"rd"}return n+"th"},era:me({values:{narrow:["B","A"],abbreviated:["BC","AD"],wide:["Before Christ","Anno Domini"]},defaultWidth:"wide"}),quarter:me({values:{narrow:["1","2","3","4"],abbreviated:["Q1","Q2","Q3","Q4"],wide:["1st quarter","2nd quarter","3rd quarter","4th quarter"]},defaultWidth:"wide",argumentCallback:function(e){return Number(e)-1}}),month:me({values:{narrow:["J","F","M","A","M","J","J","A","S","O","N","D"],abbreviated:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],wide:["January","February","March","April","May","June","July","August","September","October","November","December"]},defaultWidth:"wide"}),day:me({values:{narrow:["S","M","T","W","T","F","S"],short:["Su","Mo","Tu","We","Th","Fr","Sa"],abbreviated:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],wide:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]},defaultWidth:"wide"}),dayPeriod:me({values:{narrow:{am:"a",pm:"p",midnight:"mi",noon:"n",morning:"morning",afternoon:"afternoon",evening:"evening",night:"night"},abbreviated:{am:"AM",pm:"PM",midnight:"midnight",noon:"noon",morning:"morning",afternoon:"afternoon",evening:"evening",night:"night"},wide:{am:"a.m.",pm:"p.m.",midnight:"midnight",noon:"noon",morning:"morning",afternoon:"afternoon",evening:"evening",night:"night"}},defaultWidth:"wide",formattingValues:{narrow:{am:"a",pm:"p",midnight:"mi",noon:"n",morning:"in the morning",afternoon:"in the afternoon",evening:"in the evening",night:"at night"},abbreviated:{am:"AM",pm:"PM",midnight:"midnight",noon:"noon",morning:"in the morning",afternoon:"in the afternoon",evening:"in the evening",night:"at night"},wide:{am:"a.m.",pm:"p.m.",midnight:"midnight",noon:"noon",morning:"in the morning",afternoon:"in the afternoon",evening:"in the evening",night:"at night"}},defaultFormattingWidth:"wide"})},match:{ordinalNumber:(fe={matchPattern:/^(\d+)(th|st|nd|rd)?/i,parsePattern:/\d+/i,valueCallback:function(e){return parseInt(e,10)}},function(e,t){var n=String(e),r=t||{},a=n.match(fe.matchPattern);if(!a)return null;var o=a[0],i=n.match(fe.parsePattern);if(!i)return null;var l=fe.valueCallback?fe.valueCallback(i[0]):i[0];return{value:l=r.valueCallback?r.valueCallback(l):l,rest:n.slice(o.length)}}),era:he({matchPatterns:{narrow:/^(b|a)/i,abbreviated:/^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,wide:/^(before christ|before common era|anno domini|common era)/i},defaultMatchWidth:"wide",parsePatterns:{any:[/^b/i,/^(a|c)/i]},defaultParseWidth:"any"}),quarter:he({matchPatterns:{narrow:/^[1234]/i,abbreviated:/^q[1234]/i,wide:/^[1234](th|st|nd|rd)? quarter/i},defaultMatchWidth:"wide",parsePatterns:{any:[/1/i,/2/i,/3/i,/4/i]},defaultParseWidth:"any",valueCallback:function(e){return e+1}}),month:he({matchPatterns:{narrow:/^[jfmasond]/i,abbreviated:/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,wide:/^(january|february|march|april|may|june|july|august|september|october|november|december)/i},defaultMatchWidth:"wide",parsePatterns:{narrow:[/^j/i,/^f/i,/^m/i,/^a/i,/^m/i,/^j/i,/^j/i,/^a/i,/^s/i,/^o/i,/^n/i,/^d/i],any:[/^ja/i,/^f/i,/^mar/i,/^ap/i,/^may/i,/^jun/i,/^jul/i,/^au/i,/^s/i,/^o/i,/^n/i,/^d/i]},defaultParseWidth:"any"}),day:he({matchPatterns:{narrow:/^[smtwf]/i,short:/^(su|mo|tu|we|th|fr|sa)/i,abbreviated:/^(sun|mon|tue|wed|thu|fri|sat)/i,wide:/^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i},defaultMatchWidth:"wide",parsePatterns:{narrow:[/^s/i,/^m/i,/^t/i,/^w/i,/^t/i,/^f/i,/^s/i],any:[/^su/i,/^m/i,/^tu/i,/^w/i,/^th/i,/^f/i,/^sa/i]},defaultParseWidth:"any"}),dayPeriod:he({matchPatterns:{narrow:/^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,any:/^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i},defaultMatchWidth:"any",parsePatterns:{any:{am:/^a/i,pm:/^p/i,midnight:/^mi/i,noon:/^no/i,morning:/morning/i,afternoon:/afternoon/i,evening:/evening/i,night:/night/i}},defaultParseWidth:"any"})},options:{weekStartsOn:0,firstWeekContainsDate:1}};function we(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");return function(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e).getTime(),r=z(t);return new Date(n+r)}(e,-z(t))}function pe(e,t){for(var n=e<0?"-":"",r=Math.abs(e).toString();r.length<t;)r="0"+r;return n+r}var ye=function(e,t){var n=e.getUTCFullYear(),r=n>0?n:1-n;return pe("yy"===t?r%100:r,t.length)},De=function(e,t){var n=e.getUTCMonth();return"M"===t?String(n+1):pe(n+1,2)},ve=function(e,t){return pe(e.getUTCDate(),t.length)},be=function(e,t){return pe(e.getUTCHours()%12||12,t.length)},ke=function(e,t){return pe(e.getUTCHours(),t.length)},Me=function(e,t){return pe(e.getUTCMinutes(),t.length)},xe=function(e,t){return pe(e.getUTCSeconds(),t.length)},Te=function(e,t){var n=t.length,r=e.getUTCMilliseconds();return pe(Math.floor(r*Math.pow(10,n-3)),t.length)},We=864e5;function Ee(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getUTCDay(),r=(n<1?7:0)+n-1;return t.setUTCDate(t.getUTCDate()-r),t.setUTCHours(0,0,0,0),t}function Ne(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getUTCFullYear(),r=new Date(0);r.setUTCFullYear(n+1,0,4),r.setUTCHours(0,0,0,0);var a=Ee(r),o=new Date(0);o.setUTCFullYear(n,0,4),o.setUTCHours(0,0,0,0);var i=Ee(o);return t.getTime()>=a.getTime()?n+1:t.getTime()>=i.getTime()?n:n-1}var Oe=6048e5;function $e(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=Ee(t).getTime()-function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=Ne(e),n=new Date(0);return n.setUTCFullYear(t,0,4),n.setUTCHours(0,0,0,0),Ee(n)}(t).getTime();return Math.round(n/Oe)+1}function Pe(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=t||{},r=n.locale,a=r&&r.options&&r.options.weekStartsOn,o=null==a?0:z(a),i=null==n.weekStartsOn?o:z(n.weekStartsOn);if(!(i>=0&&i<=6))throw new RangeError("weekStartsOn must be between 0 and 6 inclusively");var l=j(e),s=l.getUTCDay(),u=(s<i?7:0)+s-i;return l.setUTCDate(l.getUTCDate()-u),l.setUTCHours(0,0,0,0),l}function Ce(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=j(e,t),r=n.getUTCFullYear(),a=t||{},o=a.locale,i=o&&o.options&&o.options.firstWeekContainsDate,l=null==i?1:z(i),s=null==a.firstWeekContainsDate?l:z(a.firstWeekContainsDate);if(!(s>=1&&s<=7))throw new RangeError("firstWeekContainsDate must be between 1 and 7 inclusively");var u=new Date(0);u.setUTCFullYear(r+1,0,s),u.setUTCHours(0,0,0,0);var d=Pe(u,t),c=new Date(0);c.setUTCFullYear(r,0,s),c.setUTCHours(0,0,0,0);var m=Pe(c,t);return n.getTime()>=d.getTime()?r+1:n.getTime()>=m.getTime()?r:r-1}var Se=6048e5;function Fe(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=j(e),r=Pe(n,t).getTime()-function(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=t||{},r=n.locale,a=r&&r.options&&r.options.firstWeekContainsDate,o=null==a?1:z(a),i=null==n.firstWeekContainsDate?o:z(n.firstWeekContainsDate),l=Ce(e,t),s=new Date(0);return s.setUTCFullYear(l,0,i),s.setUTCHours(0,0,0,0),Pe(s,t)}(n,t).getTime();return Math.round(r/Se)+1}var _e="midnight",qe="noon",Ye="morning",Ie="afternoon",Ue="evening",Ge="night",Ae={G:function(e,t,n){var r=e.getUTCFullYear()>0?1:0;switch(t){case"G":case"GG":case"GGG":return n.era(r,{width:"abbreviated"});case"GGGGG":return n.era(r,{width:"narrow"});case"GGGG":default:return n.era(r,{width:"wide"})}},y:function(e,t,n){if("yo"===t){var r=e.getUTCFullYear(),a=r>0?r:1-r;return n.ordinalNumber(a,{unit:"year"})}return ye(e,t)},Y:function(e,t,n,r){var a=Ce(e,r),o=a>0?a:1-a;return"YY"===t?pe(o%100,2):"Yo"===t?n.ordinalNumber(o,{unit:"year"}):pe(o,t.length)},R:function(e,t){return pe(Ne(e),t.length)},u:function(e,t){return pe(e.getUTCFullYear(),t.length)},Q:function(e,t,n){var r=Math.ceil((e.getUTCMonth()+1)/3);switch(t){case"Q":return String(r);case"QQ":return pe(r,2);case"Qo":return n.ordinalNumber(r,{unit:"quarter"});case"QQQ":return n.quarter(r,{width:"abbreviated",context:"formatting"});case"QQQQQ":return n.quarter(r,{width:"narrow",context:"formatting"});case"QQQQ":default:return n.quarter(r,{width:"wide",context:"formatting"})}},q:function(e,t,n){var r=Math.ceil((e.getUTCMonth()+1)/3);switch(t){case"q":return String(r);case"qq":return pe(r,2);case"qo":return n.ordinalNumber(r,{unit:"quarter"});case"qqq":return n.quarter(r,{width:"abbreviated",context:"standalone"});case"qqqqq":return n.quarter(r,{width:"narrow",context:"standalone"});case"qqqq":default:return n.quarter(r,{width:"wide",context:"standalone"})}},M:function(e,t,n){var r=e.getUTCMonth();switch(t){case"M":case"MM":return De(e,t);case"Mo":return n.ordinalNumber(r+1,{unit:"month"});case"MMM":return n.month(r,{width:"abbreviated",context:"formatting"});case"MMMMM":return n.month(r,{width:"narrow",context:"formatting"});case"MMMM":default:return n.month(r,{width:"wide",context:"formatting"})}},L:function(e,t,n){var r=e.getUTCMonth();switch(t){case"L":return String(r+1);case"LL":return pe(r+1,2);case"Lo":return n.ordinalNumber(r+1,{unit:"month"});case"LLL":return n.month(r,{width:"abbreviated",context:"standalone"});case"LLLLL":return n.month(r,{width:"narrow",context:"standalone"});case"LLLL":default:return n.month(r,{width:"wide",context:"standalone"})}},w:function(e,t,n,r){var a=Fe(e,r);return"wo"===t?n.ordinalNumber(a,{unit:"week"}):pe(a,t.length)},I:function(e,t,n){var r=$e(e);return"Io"===t?n.ordinalNumber(r,{unit:"week"}):pe(r,t.length)},d:function(e,t,n){return"do"===t?n.ordinalNumber(e.getUTCDate(),{unit:"date"}):ve(e,t)},D:function(e,t,n){var r=function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getTime();t.setUTCMonth(0,1),t.setUTCHours(0,0,0,0);var r=n-t.getTime();return Math.floor(r/We)+1}(e);return"Do"===t?n.ordinalNumber(r,{unit:"dayOfYear"}):pe(r,t.length)},E:function(e,t,n){var r=e.getUTCDay();switch(t){case"E":case"EE":case"EEE":return n.day(r,{width:"abbreviated",context:"formatting"});case"EEEEE":return n.day(r,{width:"narrow",context:"formatting"});case"EEEEEE":return n.day(r,{width:"short",context:"formatting"});case"EEEE":default:return n.day(r,{width:"wide",context:"formatting"})}},e:function(e,t,n,r){var a=e.getUTCDay(),o=(a-r.weekStartsOn+8)%7||7;switch(t){case"e":return String(o);case"ee":return pe(o,2);case"eo":return n.ordinalNumber(o,{unit:"day"});case"eee":return n.day(a,{width:"abbreviated",context:"formatting"});case"eeeee":return n.day(a,{width:"narrow",context:"formatting"});case"eeeeee":return n.day(a,{width:"short",context:"formatting"});case"eeee":default:return n.day(a,{width:"wide",context:"formatting"})}},c:function(e,t,n,r){var a=e.getUTCDay(),o=(a-r.weekStartsOn+8)%7||7;switch(t){case"c":return String(o);case"cc":return pe(o,t.length);case"co":return n.ordinalNumber(o,{unit:"day"});case"ccc":return n.day(a,{width:"abbreviated",context:"standalone"});case"ccccc":return n.day(a,{width:"narrow",context:"standalone"});case"cccccc":return n.day(a,{width:"short",context:"standalone"});case"cccc":default:return n.day(a,{width:"wide",context:"standalone"})}},i:function(e,t,n){var r=e.getUTCDay(),a=0===r?7:r;switch(t){case"i":return String(a);case"ii":return pe(a,t.length);case"io":return n.ordinalNumber(a,{unit:"day"});case"iii":return n.day(r,{width:"abbreviated",context:"formatting"});case"iiiii":return n.day(r,{width:"narrow",context:"formatting"});case"iiiiii":return n.day(r,{width:"short",context:"formatting"});case"iiii":default:return n.day(r,{width:"wide",context:"formatting"})}},a:function(e,t,n){var r=e.getUTCHours()/12>=1?"pm":"am";switch(t){case"a":case"aa":case"aaa":return n.dayPeriod(r,{width:"abbreviated",context:"formatting"});case"aaaaa":return n.dayPeriod(r,{width:"narrow",context:"formatting"});case"aaaa":default:return n.dayPeriod(r,{width:"wide",context:"formatting"})}},b:function(e,t,n){var r,a=e.getUTCHours();switch(r=12===a?qe:0===a?_e:a/12>=1?"pm":"am",t){case"b":case"bb":case"bbb":return n.dayPeriod(r,{width:"abbreviated",context:"formatting"});case"bbbbb":return n.dayPeriod(r,{width:"narrow",context:"formatting"});case"bbbb":default:return n.dayPeriod(r,{width:"wide",context:"formatting"})}},B:function(e,t,n){var r,a=e.getUTCHours();switch(r=a>=17?Ue:a>=12?Ie:a>=4?Ye:Ge,t){case"B":case"BB":case"BBB":return n.dayPeriod(r,{width:"abbreviated",context:"formatting"});case"BBBBB":return n.dayPeriod(r,{width:"narrow",context:"formatting"});case"BBBB":default:return n.dayPeriod(r,{width:"wide",context:"formatting"})}},h:function(e,t,n){if("ho"===t){var r=e.getUTCHours()%12;return 0===r&&(r=12),n.ordinalNumber(r,{unit:"hour"})}return be(e,t)},H:function(e,t,n){return"Ho"===t?n.ordinalNumber(e.getUTCHours(),{unit:"hour"}):ke(e,t)},K:function(e,t,n){var r=e.getUTCHours()%12;return"Ko"===t?n.ordinalNumber(r,{unit:"hour"}):pe(r,t.length)},k:function(e,t,n){var r=e.getUTCHours();return 0===r&&(r=24),"ko"===t?n.ordinalNumber(r,{unit:"hour"}):pe(r,t.length)},m:function(e,t,n){return"mo"===t?n.ordinalNumber(e.getUTCMinutes(),{unit:"minute"}):Me(e,t)},s:function(e,t,n){return"so"===t?n.ordinalNumber(e.getUTCSeconds(),{unit:"second"}):xe(e,t)},S:function(e,t){return Te(e,t)},X:function(e,t,n,r){var a=(r._originalDate||e).getTimezoneOffset();if(0===a)return"Z";switch(t){case"X":return Re(a);case"XXXX":case"XX":return je(a);case"XXXXX":case"XXX":default:return je(a,":")}},x:function(e,t,n,r){var a=(r._originalDate||e).getTimezoneOffset();switch(t){case"x":return Re(a);case"xxxx":case"xx":return je(a);case"xxxxx":case"xxx":default:return je(a,":")}},O:function(e,t,n,r){var a=(r._originalDate||e).getTimezoneOffset();switch(t){case"O":case"OO":case"OOO":return"GMT"+He(a,":");case"OOOO":default:return"GMT"+je(a,":")}},z:function(e,t,n,r){var a=(r._originalDate||e).getTimezoneOffset();switch(t){case"z":case"zz":case"zzz":return"GMT"+He(a,":");case"zzzz":default:return"GMT"+je(a,":")}},t:function(e,t,n,r){var a=r._originalDate||e;return pe(Math.floor(a.getTime()/1e3),t.length)},T:function(e,t,n,r){return pe((r._originalDate||e).getTime(),t.length)}};function He(e,t){var n=e>0?"-":"+",r=Math.abs(e),a=Math.floor(r/60),o=r%60;if(0===o)return n+String(a);var i=t||"";return n+String(a)+i+pe(o,2)}function Re(e,t){return e%60==0?(e>0?"-":"+")+pe(Math.abs(e)/60,2):je(e,t)}function je(e,t){var n=t||"",r=e>0?"-":"+",a=Math.abs(e);return r+pe(Math.floor(a/60),2)+n+pe(a%60,2)}function Be(e,t){switch(e){case"P":return t.date({width:"short"});case"PP":return t.date({width:"medium"});case"PPP":return t.date({width:"long"});case"PPPP":default:return t.date({width:"full"})}}function ze(e,t){switch(e){case"p":return t.time({width:"short"});case"pp":return t.time({width:"medium"});case"ppp":return t.time({width:"long"});case"pppp":default:return t.time({width:"full"})}}var Le={p:ze,P:function(e,t){var n,r=e.match(/(P+)(p+)?/),a=r[1],o=r[2];if(!o)return Be(e,t);switch(a){case"P":n=t.dateTime({width:"short"});break;case"PP":n=t.dateTime({width:"medium"});break;case"PPP":n=t.dateTime({width:"long"});break;case"PPPP":default:n=t.dateTime({width:"full"})}return n.replace("{{date}}",Be(a,t)).replace("{{time}}",ze(o,t))}},Xe=["D","DD"],Qe=["YY","YYYY"];function Ve(e){if("YYYY"===e)throw new RangeError("Use `yyyy` instead of `YYYY` for formatting years; see: https://git.io/fxCyr");if("YY"===e)throw new RangeError("Use `yy` instead of `YY` for formatting years; see: https://git.io/fxCyr");if("D"===e)throw new RangeError("Use `d` instead of `D` for formatting days of the month; see: https://git.io/fxCyr");if("DD"===e)throw new RangeError("Use `dd` instead of `DD` for formatting days of the month; see: https://git.io/fxCyr")}var Je=/[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g,Ke=/P+p+|P+|p+|''|'(''|[^'])+('|$)|./g,Ze=/^'([^]*?)'?$/,et=/''/g,tt=/[a-zA-Z]/;function nt(e,t,n){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var r=String(t),a=n||{},o=a.locale||ge,i=o.options&&o.options.firstWeekContainsDate,l=null==i?1:z(i),s=null==a.firstWeekContainsDate?l:z(a.firstWeekContainsDate);if(!(s>=1&&s<=7))throw new RangeError("firstWeekContainsDate must be between 1 and 7 inclusively");var u=o.options&&o.options.weekStartsOn,d=null==u?0:z(u),c=null==a.weekStartsOn?d:z(a.weekStartsOn);if(!(c>=0&&c<=6))throw new RangeError("weekStartsOn must be between 0 and 6 inclusively");if(!o.localize)throw new RangeError("locale must contain localize property");if(!o.formatLong)throw new RangeError("locale must contain formatLong property");var m=j(e);if(!function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e);return!isNaN(t)}(m))throw new RangeError("Invalid time value");var h=we(m,K(m)),f={firstWeekContainsDate:s,weekStartsOn:c,locale:o,_originalDate:m};return r.match(Ke).map((function(e){var t=e[0];return"p"===t||"P"===t?(0,Le[t])(e,o.formatLong,f):e})).join("").match(Je).map((function(e){if("''"===e)return"'";var t=e[0];if("'"===t)return e.match(Ze)[1].replace(et,"'");var n,r=Ae[t];if(r)return a.useAdditionalWeekYearTokens||(n=e,-1===Qe.indexOf(n))||Ve(e),!a.useAdditionalDayOfYearTokens&&function(e){return-1!==Xe.indexOf(e)}(e)&&Ve(e),r(h,e,o.localize,f);if(t.match(tt))throw new RangeError("Format string contains an unescaped latin alphabet character `"+t+"`");return e})).join("")}var rt=6048e5;function at(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=Q(t).getTime()-V(t).getTime();return Math.round(n/rt)+1}function ot(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=t||{},r=n.locale,a=r&&r.options&&r.options.firstWeekContainsDate,o=null==a?1:z(a),i=null==n.firstWeekContainsDate?o:z(n.firstWeekContainsDate),l=function(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=j(e),r=n.getFullYear(),a=t||{},o=a.locale,i=o&&o.options&&o.options.firstWeekContainsDate,l=null==i?1:z(i),s=null==a.firstWeekContainsDate?l:z(a.firstWeekContainsDate);if(!(s>=1&&s<=7))throw new RangeError("firstWeekContainsDate must be between 1 and 7 inclusively");var u=new Date(0);u.setFullYear(r+1,0,s),u.setHours(0,0,0,0);var d=X(u,t),c=new Date(0);c.setFullYear(r,0,s),c.setHours(0,0,0,0);var m=X(c,t);return n.getTime()>=d.getTime()?r+1:n.getTime()>=m.getTime()?r:r-1}(e,t),s=new Date(0);return s.setFullYear(l,0,i),s.setHours(0,0,0,0),X(s,t)}var it=6048e5;function lt(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=j(e),r=X(n,t).getTime()-ot(n,t).getTime();return Math.round(r/it)+1}function st(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return n.getTime()>r.getTime()}function ut(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return n.getTime()<r.getTime()}function dt(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return n.getFullYear()===r.getFullYear()&&n.getMonth()===r.getMonth()}function ct(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=j(e),r=j(t);return n.getFullYear()===r.getFullYear()}function mt(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");var n=t||{},r=j(e).getTime(),a=j(n.start).getTime(),o=j(n.end).getTime();if(!(a<=o))throw new RangeError("Invalid interval");return r>=a&&r<=o}function ht(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");return ee(e,-z(t))}function ft(e,t){if(arguments.length<2)throw new TypeError("2 arguments required, but only "+arguments.length+" present");return ne(e,-z(t))}function gt({month:e,monthFormat:t,locale:n}){const r=function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=new Date(0);return n.setFullYear(t.getFullYear(),0,1),n.setHours(0,0,0,0),n}(e);return[0,1,2,3,4,5,6,7,8,9,10,11].map((e,a)=>{const o=ee(r,a);return{value:o,text:nt(o,t,{locale:n})}})}function wt({firstDayOfWeek:e,locale:t}){return["sunday","monday","tuesday","wednesday","thursday","friday","saturday"].indexOf(e.toLocaleLowerCase(t))}function pt({date:e,maxDate:t,minDate:n,disabledDates:r}){return!!r.some(t=>re(e,t))||(!!ut(e,n)||!!st(e,t))}function yt({endDate:e,date:t,hoverDate:n,startDate:r}){return e?re(t,e):ut(n,r)?re(t,r):re(t,n)}function Dt({endDate:e,date:t,hoverDate:n,startDate:r}){return!e&&ut(n,r)?re(t,n):re(t,r)}function vt(e){const{date:t,endDate:n,events:r,hoverDate:a,month:o,singlePicker:i,startDate:l,today:s,maxDate:u,minDate:d,disabledDates:c}=e,{start:m,end:h}=ut(g=n||a,f=l)?{start:g,end:f}:{start:f,end:g};var f,g;return{date:t,events:r,isToday:re(t,s),isWeekend:B(t),isPrevMonth:dt(ht(o,1),t),isNextMonth:dt(ee(o,1),t),isStartDate:Dt(e),isDisabled:pt({date:t,maxDate:u,minDate:d,disabledDates:c}),isEndDate:!i&&yt(e),isWithinSelection:!i&&mt(t,{start:m,end:h})}}function bt(e,t){return[0,1,2,3,4,5,6].map(n=>vt(Object.assign(Object.assign({},t),{date:L(e,n)})))}function kt(e){const{month:t,locale:n,firstDayOfWeek:r,today:a}=e,o=wt({firstDayOfWeek:r,locale:n}),i=X(function(e){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var t=j(e),n=t.getMonth();return t.setFullYear(t.getFullYear(),n+1,0),t.setHours(23,59,59,999),t}(ht(t,1)));return function(e,t){if(arguments.length<1)throw new TypeError("1 argument required, but only "+arguments.length+" present");var n=e||{},r=j(n.start),a=j(n.end),o=a.getTime();if(!(r.getTime()<=o))throw new RangeError("Invalid interval");var i=X(r,t),l=X(a,t);i.setHours(15),l.setHours(15),o=l.getTime();for(var s=[],u=i;u.getTime()<=o;)u.setHours(0),s.push(j(u)),(u=te(u,1)).setHours(15);return s}({start:i,end:te(i,5)},{weekStartsOn:o,locale:n}).map(t=>({weeksFromToday:ie(t,a,{weekStartsOn:o,locale:n}),weekNumber:lt(t,{weekStartsOn:o,locale:n}),isoWeekNumber:at(t),daysInWeek:bt(t,e)}))}function Mt(e){var t,n,r=nt(e.day.date,"MMM",{locale:e.locale});return{c(){t=d("span"),n=c(r),f(t,"class","month-indicator svelte-oebouq")},m(e,r){l(e,t,r),i(t,n)},p(e,t){(e.day||e.locale)&&r!==(r=nt(t.day.date,"MMM",{locale:t.locale}))&&g(n,r)},d(e){e&&s(t)}}}function xt(t){var n,a,o,u,w,p,D,v,b=nt(t.day.date,"d",{locale:t.locale}),k=t.monthIndicator&&Mt(t);return{c(){n=d("div"),a=d("button"),k&&k.c(),o=m(),u=c(b),f(a,"aria-label",w=nt(t.day.date,"EEEE, MMMM co, yyyy",{locale:t.locale})),f(a,"aria-disabled",p=t.day.isDisabled),f(a,"class","calendar-cell svelte-oebouq"),a.disabled=D=t.day.isDisabled,f(n,"class","svelte-oebouq"),y(n,"rtl",t.rtl),y(n,"today",t.day.isToday),y(n,"weekend",t.day.isWeekend),y(n,"next-month",t.day.isNextMonth),y(n,"prev-month",t.day.isPrevMonth),y(n,"start-date",t.day.isStartDate),y(n,"end-date",t.day.isEndDate),y(n,"within-selection",t.day.isWithinSelection),v=[h(a,"click",t.click_handler),h(a,"mouseenter",t.mouseenter_handler),h(a,"focus",t.focus_handler)]},m(e,t){l(e,n,t),i(n,a),k&&k.m(a,null),i(a,o),i(a,u)},p(e,t){t.monthIndicator?k?k.p(e,t):((k=Mt(t)).c(),k.m(a,o)):k&&(k.d(1),k=null),(e.day||e.locale)&&b!==(b=nt(t.day.date,"d",{locale:t.locale}))&&g(u,b),(e.day||e.locale)&&w!==(w=nt(t.day.date,"EEEE, MMMM co, yyyy",{locale:t.locale}))&&f(a,"aria-label",w),e.day&&p!==(p=t.day.isDisabled)&&f(a,"aria-disabled",p),e.day&&D!==(D=t.day.isDisabled)&&(a.disabled=D),e.rtl&&y(n,"rtl",t.rtl),e.day&&(y(n,"today",t.day.isToday),y(n,"weekend",t.day.isWeekend),y(n,"next-month",t.day.isNextMonth),y(n,"prev-month",t.day.isPrevMonth),y(n,"start-date",t.day.isStartDate),y(n,"end-date",t.day.isEndDate),y(n,"within-selection",t.day.isWithinSelection))},i:e,o:e,d(e){e&&s(n),k&&k.d(),r(v)}}}function Tt(e,t,n){let{locale:r,day:a,monthIndicator:o,rtl:i}=t;return e.$set=e=>{"locale"in e&&n("locale",r=e.locale),"day"in e&&n("day",a=e.day),"monthIndicator"in e&&n("monthIndicator",o=e.monthIndicator),"rtl"in e&&n("rtl",i=e.rtl)},{locale:r,day:a,monthIndicator:o,rtl:i,click_handler:function(t){k(e,t)},mouseenter_handler:function(t){k(e,t)},focus_handler:function(t){k(e,t)}}}class Wt extends R{constructor(e){super(),H(this,e,Tt,xt,o,["locale","day","monthIndicator","rtl"])}}function Et(e,t,n){const r=Object.create(e);return r.day=t[n],r}function Nt(e){var t,n,r,a,o,u=e.weeksFromToday(e.week);return{c(){t=d("div"),n=d("span"),r=c(u),a=c("w"),f(n,"aria-label",o=`${e.week.weeksFromToday} weeks from today`),f(n,"class","svelte-mhpr0y"),f(t,"class","relative calendar-row side-width left-side svelte-mhpr0y")},m(e,o){l(e,t,o),i(t,n),i(n,r),i(n,a)},p(e,t){(e.weeksFromToday||e.week)&&u!==(u=t.weeksFromToday(t.week))&&g(r,u),e.week&&o!==(o=`${t.week.weeksFromToday} weeks from today`)&&f(n,"aria-label",o)},d(e){e&&s(t)}}}function Ot(e,t){var n,r;var a=new Wt({props:{day:t.day,locale:t.locale,monthIndicator:t.monthIndicator,rtl:t.rtl}});return a.$on("click",(function(){return t.click_handler(t)})),a.$on("mouseenter",(function(){return t.mouseenter_handler(t)})),a.$on("focus",(function(){return t.focus_handler(t)})),{key:e,first:null,c(){n=c(""),a.$$.fragment.c(),this.first=n},m(e,t){l(e,n,t),U(a,e,t),r=!0},p(e,n){t=n;var r={};e.week&&(r.day=t.day),e.locale&&(r.locale=t.locale),e.monthIndicator&&(r.monthIndicator=t.monthIndicator),e.rtl&&(r.rtl=t.rtl),a.$set(r)},i(e){r||(q(a.$$.fragment,e),r=!0)},o(e){Y(a.$$.fragment,e),r=!1},d(e){e&&s(n),G(a,e)}}}function $t(e){var t,n,r=e.weekNumbers&&Pt(e),a=e.isoWeekNumbers&&Ct(e);return{c(){t=d("div"),r&&r.c(),n=m(),a&&a.c(),f(t,"class","relative calendar-row side-width right-side svelte-mhpr0y")},m(e,o){l(e,t,o),r&&r.m(t,null),i(t,n),a&&a.m(t,null)},p(e,o){o.weekNumbers?r?r.p(e,o):((r=Pt(o)).c(),r.m(t,n)):r&&(r.d(1),r=null),o.isoWeekNumbers?a?a.p(e,o):((a=Ct(o)).c(),a.m(t,null)):a&&(a.d(1),a=null)},d(e){e&&s(t),r&&r.d(),a&&a.d()}}}function Pt(e){var t,n,r,a=e.week.weekNumber;return{c(){t=d("span"),n=c(a),f(t,"aria-label",r=`Week ${e.week.weekNumber}`),f(t,"class","svelte-mhpr0y")},m(e,r){l(e,t,r),i(t,n)},p(e,o){e.week&&a!==(a=o.week.weekNumber)&&g(n,a),e.week&&r!==(r=`Week ${o.week.weekNumber}`)&&f(t,"aria-label",r)},d(e){e&&s(t)}}}function Ct(e){var t,n,r,a,o=e.week.isoWeekNumber;return{c(){t=d("span"),n=c("i"),r=c(o),f(t,"aria-label",a=`Week ${e.week.isoWeekNumber}`),f(t,"class","svelte-mhpr0y")},m(e,a){l(e,t,a),i(t,n),i(t,r)},p(e,n){e.week&&o!==(o=n.week.isoWeekNumber)&&g(r,o),e.week&&a!==(a=`Week ${n.week.isoWeekNumber}`)&&f(t,"aria-label",a)},d(e){e&&s(t)}}}function St(e){var t,n,r,a,o,u,c=[],h=new Map,g=e.weekGuides&&e.week.weeksFromToday&&Nt(e),w=e.week.daysInWeek;const p=e=>e.day.date.toString();for(var y=0;y<w.length;y+=1){let t=Et(e,w,y),n=p(t);h.set(n,c[y]=Ot(n,t))}var D=(e.weekNumbers||e.isoWeekNumbers)&&$t(e);return{c(){for(t=d("div"),g&&g.c(),n=m(),r=d("div"),y=0;y<c.length;y+=1)c[y].c();a=m(),D&&D.c(),f(r,"class","calendar-row"),f(t,"aria-label",o=`${e.locale.code} week ${e.week.weekNumber}, ${nt(e.month,"yyyy",{locale:e.locale})}`),f(t,"class","calendar-row")},m(e,o){for(l(e,t,o),g&&g.m(t,null),i(t,n),i(t,r),y=0;y<c.length;y+=1)c[y].m(r,null);i(t,a),D&&D.m(t,null),u=!0},p(e,a){a.weekGuides&&a.week.weeksFromToday?g?g.p(e,a):((g=Nt(a)).c(),g.m(t,n)):g&&(g.d(1),g=null);const i=a.week.daysInWeek;F(),c=function(e,t,n,r,a,o,i,l,s,u,d,c){let m=e.length,h=o.length,f=m;const g={};for(;f--;)g[e[f].key]=f;const w=[],p=new Map,y=new Map;for(f=h;f--;){const e=c(a,o,f),l=n(e);let s=i.get(l);s?r&&s.p(t,e):(s=u(l,e)).c(),p.set(l,w[f]=s),l in g&&y.set(l,Math.abs(f-g[l]))}const D=new Set,v=new Set;function b(e){q(e,1),e.m(l,d),i.set(e.key,e),d=e.first,h--}for(;m&&h;){const t=w[h-1],n=e[m-1],r=t.key,a=n.key;t===n?(d=t.first,m--,h--):p.has(a)?!i.has(r)||D.has(r)?b(t):v.has(a)?m--:y.get(r)>y.get(a)?(v.add(r),b(t)):(D.add(a),m--):(s(n,i),m--)}for(;m--;){const t=e[m];p.has(t.key)||s(t,i)}for(;h;)b(w[h-1]);return w}(c,e,p,1,a,i,h,r,I,Ot,null,Et),_(),a.weekNumbers||a.isoWeekNumbers?D?D.p(e,a):((D=$t(a)).c(),D.m(t,null)):D&&(D.d(1),D=null),(!u||e.locale||e.week||e.month)&&o!==(o=`${a.locale.code} week ${a.week.weekNumber}, ${nt(a.month,"yyyy",{locale:a.locale})}`)&&f(t,"aria-label",o)},i(e){if(!u){for(var t=0;t<w.length;t+=1)q(c[t]);u=!0}},o(e){for(y=0;y<c.length;y+=1)Y(c[y]);u=!1},d(e){for(e&&s(t),g&&g.d(),y=0;y<c.length;y+=1)c[y].d();D&&D.d()}}}function Ft(e,t,n){let{locale:r,isoWeekNumbers:a,month:o,monthIndicator:i,rtl:l,singlePicker:s,tempStartDate:u,tempEndDate:d,week:c,weekGuides:m,weekNumbers:h}=t;const f=new b;function g(e){s?f("selection",{tempStartDate:e,tempEndDate:e}):u&&d?f("selection",{tempStartDate:e,tempEndDate:void 0}):ut(e,u)?f("selection",{tempStartDate:e,tempEndDate:u}):f("selection",{tempStartDate:u,tempEndDate:e})}function w(e){f("hover",{hoverDate:e})}let p;return e.$set=e=>{"locale"in e&&n("locale",r=e.locale),"isoWeekNumbers"in e&&n("isoWeekNumbers",a=e.isoWeekNumbers),"month"in e&&n("month",o=e.month),"monthIndicator"in e&&n("monthIndicator",i=e.monthIndicator),"rtl"in e&&n("rtl",l=e.rtl),"singlePicker"in e&&n("singlePicker",s=e.singlePicker),"tempStartDate"in e&&n("tempStartDate",u=e.tempStartDate),"tempEndDate"in e&&n("tempEndDate",d=e.tempEndDate),"week"in e&&n("week",c=e.week),"weekGuides"in e&&n("weekGuides",m=e.weekGuides),"weekNumbers"in e&&n("weekNumbers",h=e.weekNumbers)},n("weeksFromToday",p=function(e){return e.weeksFromToday>0?`+${e.weeksFromToday}`:e.weeksFromToday}),{locale:r,isoWeekNumbers:a,month:o,monthIndicator:i,rtl:l,singlePicker:s,tempStartDate:u,tempEndDate:d,week:c,weekGuides:m,weekNumbers:h,onClick:g,onHover:w,weeksFromToday:p,click_handler:function({day:e}){return g(e.date)},mouseenter_handler:function({day:e}){return w(e.date)},focus_handler:function({day:e}){return w(e.date)}}}class _t extends R{constructor(e){super(),H(this,e,Ft,St,o,["locale","isoWeekNumbers","month","monthIndicator","rtl","singlePicker","tempStartDate","tempEndDate","week","weekGuides","weekNumbers"])}}function qt(e,t,n){const r=Object.create(e);return r.dayOfWeek=t[n],r}function Yt(e){var t,n,r,a,o=nt(e.dayOfWeek,"eeeeee",{locale:e.locale});return{c(){t=d("span"),n=c(o),r=m(),f(t,"class","calendar-cell svelte-e9ppe7"),f(t,"aria-label",a=nt(e.dayOfWeek,"EEEE",{locale:e.locale}))},m(e,a){l(e,t,a),i(t,n),i(t,r)},p(e,r){(e.daysOfWeek||e.locale)&&o!==(o=nt(r.dayOfWeek,"eeeeee",{locale:r.locale}))&&g(n,o),(e.daysOfWeek||e.locale)&&a!==(a=nt(r.dayOfWeek,"EEEE",{locale:r.locale}))&&f(t,"aria-label",a)},d(e){e&&s(t)}}}function It(t){for(var n,r=t.daysOfWeek,a=[],o=0;o<r.length;o+=1)a[o]=Yt(qt(t,r,o));return{c(){n=d("div");for(var e=0;e<a.length;e+=1)a[e].c();f(n,"class","calendar-row")},m(e,t){l(e,n,t);for(var r=0;r<a.length;r+=1)a[r].m(n,null)},p(e,t){if(e.format||e.daysOfWeek||e.locale){r=t.daysOfWeek;for(var o=0;o<r.length;o+=1){const i=qt(t,r,o);a[o]?a[o].p(e,i):(a[o]=Yt(i),a[o].c(),a[o].m(n,null))}for(;o<a.length;o+=1)a[o].d(1);a.length=r.length}},i:e,o:e,d(e){e&&s(n),u(a,e)}}}function Ut(e,t,n){let r,{firstDayOfWeek:a,locale:o}=t;return e.$set=e=>{"firstDayOfWeek"in e&&n("firstDayOfWeek",a=e.firstDayOfWeek),"locale"in e&&n("locale",o=e.locale)},e.$$.update=(e={firstDayOfWeek:1,locale:1})=>{(e.firstDayOfWeek||e.locale)&&n("daysOfWeek",r=function({firstDayOfWeek:e,locale:t}){return[0,1,2,3,4,5,6].map(n=>L(X(new Date,{weekStartsOn:wt({firstDayOfWeek:e,locale:t})}),n))}({firstDayOfWeek:a,locale:o}))},{firstDayOfWeek:a,locale:o,daysOfWeek:r}}class Gt extends R{constructor(e){super(),H(this,e,Ut,It,o,["firstDayOfWeek","locale"])}}function At(e,t,n){const r=Object.create(e);return r.yr=t[n],r}function Ht(e,t,n){const r=Object.create(e);return r.mo=t[n],r}function Rt(e){var t,n,r=nt(e.month,"MMMM",{locale:e.locale});return{c(){t=d("span"),n=c(r)},m(e,r){l(e,t,r),i(t,n)},p(e,t){(e.month||e.locale)&&r!==(r=nt(t.month,"MMMM",{locale:t.locale}))&&g(n,r)},d(e){e&&s(t)}}}function jt(e){for(var t,n,a=e.months,o=[],i=0;i<a.length;i+=1)o[i]=Bt(Ht(e,a,i));return{c(){t=d("select");for(var r=0;r<o.length;r+=1)o[r].c();void 0===e.selectedMonth&&O(()=>e.select_change_handler.call(t)),n=[h(t,"change",e.select_change_handler),h(t,"change",e.change_handler)]},m(n,r){l(n,t,r);for(var a=0;a<o.length;a+=1)o[a].m(t,null);w(t,e.selectedMonth)},p(e,n){if(e.months||e.isSameMonth||e.month||e.isOptionDisabled){a=n.months;for(var r=0;r<a.length;r+=1){const i=Ht(n,a,r);o[r]?o[r].p(e,i):(o[r]=Bt(i),o[r].c(),o[r].m(t,null))}for(;r<o.length;r+=1)o[r].d(1);o.length=a.length}e.selectedMonth&&w(t,n.selectedMonth)},d(e){e&&s(t),u(o,e),r(n)}}}function Bt(e){var t,n,r,a,o,u=e.mo.text;return{c(){t=d("option"),n=c(u),t.__value=r=e.mo,t.value=t.__value,t.selected=a=dt(e.mo.value,e.month),t.disabled=o=e.isOptionDisabled(e.mo.value)},m(e,r){l(e,t,r),i(t,n)},p(e,i){e.months&&u!==(u=i.mo.text)&&g(n,u),e.months&&r!==(r=i.mo)&&(t.__value=r),t.value=t.__value,(e.months||e.month)&&a!==(a=dt(i.mo.value,i.month))&&(t.selected=a),(e.isOptionDisabled||e.months)&&o!==(o=i.isOptionDisabled(i.mo.value))&&(t.disabled=o)},d(e){e&&s(t)}}}function zt(e){var t,n,r=nt(e.month,"yyyy",{locale:e.locale});return{c(){t=d("span"),n=c(r)},m(e,r){l(e,t,r),i(t,n)},p(e,t){(e.month||e.locale)&&r!==(r=nt(t.month,"yyyy",{locale:t.locale}))&&g(n,r)},d(e){e&&s(t)}}}function Lt(e){for(var t,n,a=e.years,o=[],i=0;i<a.length;i+=1)o[i]=Xt(At(e,a,i));return{c(){t=d("select");for(var r=0;r<o.length;r+=1)o[r].c();void 0===e.selectedYear&&O(()=>e.select_change_handler_1.call(t)),n=[h(t,"change",e.select_change_handler_1),h(t,"change",e.change_handler_1)]},m(n,r){l(n,t,r);for(var a=0;a<o.length;a+=1)o[a].m(t,null);w(t,e.selectedYear)},p(e,n){if(e.years||e.isSameYear||e.month||e.isOptionDisabled){a=n.years;for(var r=0;r<a.length;r+=1){const i=At(n,a,r);o[r]?o[r].p(e,i):(o[r]=Xt(i),o[r].c(),o[r].m(t,null))}for(;r<o.length;r+=1)o[r].d(1);o.length=a.length}e.selectedYear&&w(t,n.selectedYear)},d(e){e&&s(t),u(o,e),r(n)}}}function Xt(e){var t,n,r,a,o,u=e.yr.text;return{c(){t=d("option"),n=c(u),t.__value=r=e.yr,t.value=t.__value,t.selected=a=ct(e.yr.value,e.month),t.disabled=o=e.isOptionDisabled(e.yr.value)},m(e,r){l(e,t,r),i(t,n)},p(e,i){e.years&&u!==(u=i.yr.text)&&g(n,u),e.years&&r!==(r=i.yr)&&(t.__value=r),t.value=t.__value,(e.years||e.month)&&a!==(a=ct(i.yr.value,i.month))&&(t.selected=a),(e.isOptionDisabled||e.years)&&o!==(o=i.isOptionDisabled(i.yr.value))&&(t.disabled=o)},d(e){e&&s(t)}}}function Qt(t){var n,a,o,u,w,p,y,D,v,b,k,M,x,T;function W(e){return e.monthDropdown?jt:Rt}var E=W(t),N=E(t);function O(e){return e.yearDropdown?Lt:zt}var $=O(t),P=$(t);return{c(){n=d("div"),a=d("button"),o=c(t.previousIcon),y=m(),D=d("span"),N.c(),v=m(),P.c(),b=m(),k=d("button"),M=c(t.nextIcon),f(a,"aria-disabled",u=!t.canNavigatePrevious),a.disabled=w=!t.canNavigatePrevious,f(a,"type","button"),f(a,"aria-label",p=`Previous month, ${nt(t.previousMonth,"MMMM yyyy",{locale:t.locale})}`),f(k,"aria-disabled",t.nextBtnDisabled),k.disabled=t.nextBtnDisabled,f(k,"type","button"),f(k,"aria-label",x=`Next month, ${nt(t.nextMonth,"MMMM yyyy",{locale:t.locale})}`),f(n,"class","svelte-1lbwxhk"),T=[h(a,"click",t.click_handler),h(k,"click",t.click_handler_1)]},m(e,t){l(e,n,t),i(n,a),i(a,o),i(n,y),i(n,D),N.m(D,null),i(D,v),P.m(D,null),i(n,b),i(n,k),i(k,M)},p(e,t){e.previousIcon&&g(o,t.previousIcon),e.canNavigatePrevious&&u!==(u=!t.canNavigatePrevious)&&f(a,"aria-disabled",u),e.canNavigatePrevious&&w!==(w=!t.canNavigatePrevious)&&(a.disabled=w),(e.previousMonth||e.locale)&&p!==(p=`Previous month, ${nt(t.previousMonth,"MMMM yyyy",{locale:t.locale})}`)&&f(a,"aria-label",p),E===(E=W(t))&&N?N.p(e,t):(N.d(1),(N=E(t))&&(N.c(),N.m(D,v))),$===($=O(t))&&P?P.p(e,t):(P.d(1),(P=$(t))&&(P.c(),P.m(D,null))),e.nextIcon&&g(M,t.nextIcon),e.nextBtnDisabled&&(f(k,"aria-disabled",t.nextBtnDisabled),k.disabled=t.nextBtnDisabled),(e.nextMonth||e.locale)&&x!==(x=`Next month, ${nt(t.nextMonth,"MMMM yyyy",{locale:t.locale})}`)&&f(k,"aria-label",x)},i:e,o:e,d(e){e&&s(n),N.d(),P.d(),r(T)}}}function Vt(e,t,n){let{locale:r,month:a,monthFormat:o,monthDropdown:i,maxDate:l,minDate:s,nextIcon:u="N",previousIcon:d="P",yearDropdown:c}=t;const m=b();let h,f,g,w,y,D,v,k,M,x,T;return e.$set=e=>{"locale"in e&&n("locale",r=e.locale),"month"in e&&n("month",a=e.month),"monthFormat"in e&&n("monthFormat",o=e.monthFormat),"monthDropdown"in e&&n("monthDropdown",i=e.monthDropdown),"maxDate"in e&&n("maxDate",l=e.maxDate),"minDate"in e&&n("minDate",s=e.minDate),"nextIcon"in e&&n("nextIcon",u=e.nextIcon),"previousIcon"in e&&n("previousIcon",d=e.previousIcon),"yearDropdown"in e&&n("yearDropdown",c=e.yearDropdown)},e.$$.update=(e={month:1,monthFormat:1,locale:1,maxDate:1,minDate:1})=>{(e.month||e.monthFormat||e.locale)&&n("selectedMonth",h={value:a,text:nt(a,o,{locale:r})}),(e.month||e.locale)&&n("selectedYear",f={value:a,text:nt(a,"yyyy",{locale:r})}),e.month&&n("previousMonth",g=ht(a,1)),e.month&&n("nextMonth",w=ee(a,1)),(e.month||e.maxDate)&&(y=st(a,l)||dt(a,l)),(e.month||e.minDate)&&(D=ut(a,s)||dt(a,s)),(e.month||e.monthFormat||e.locale)&&n("months",v=gt({month:a,monthFormat:o,locale:r})),(e.minDate||e.maxDate||e.locale)&&n("years",k=function({minDate:e,maxDate:t,locale:n}){const r=le(t,e)+1;return[...Array(r)].map((t,r)=>{const a=ne(e,r);return{value:a,text:nt(a,"yyyy",{locale:n})}})}({minDate:s,maxDate:l,locale:r})),(e.month||e.maxDate)&&n("nextBtnDisabled",M=dt(a,l)||st(a,l)),(e.month||e.minDate)&&n("canNavigatePrevious",x=st(a,s)&&!dt(a,s)),(e.minDate||e.maxDate)&&n("isOptionDisabled",T=function(e){return ut(e,s)||!dt(e,s)&&st(e,l)})},{locale:r,month:a,monthFormat:o,monthDropdown:i,maxDate:l,minDate:s,nextIcon:u,previousIcon:d,yearDropdown:c,disptachEvent:m,selectedMonth:h,selectedYear:f,previousMonth:g,nextMonth:w,months:v,years:k,nextBtnDisabled:M,canNavigatePrevious:x,isOptionDisabled:T,click_handler:function(){return m("previousMonth")},select_change_handler:function(){h=p(this),n("selectedMonth",h),n("month",a),n("monthFormat",o),n("locale",r),n("months",v),n("month",a),n("monthFormat",o),n("locale",r)},change_handler:function(){return m("pageChange",{incrementAmount:ae(h.value,a)})},select_change_handler_1:function(){f=p(this),n("selectedYear",f),n("month",a),n("locale",r),n("years",k),n("minDate",s),n("maxDate",l),n("locale",r)},change_handler_1:function(){return m("pageChange",{incrementAmount:12*le(f.value,a)})},click_handler_1:function(){return m("nextMonth")}}}class Jt extends R{constructor(e){super(),H(this,e,Vt,Qt,o,["locale","month","monthFormat","monthDropdown","maxDate","minDate","nextIcon","previousIcon","yearDropdown"])}}function Kt(e,t,n){const r=Object.create(e);return r.week=t[n],r}function Zt(e){var t,n=new _t({props:{tempEndDate:e.tempEndDate,tempStartDate:e.tempStartDate,week:e.week,singlePicker:e.singlePicker,locale:e.locale,month:e.month,monthIndicator:e.monthIndicator,rtl:e.rtl,weekGuides:e.weekGuides,weekNumbers:e.weekNumbers,isoWeekNumbers:e.isoWeekNumbers}});return n.$on("selection",e.selection_handler),n.$on("hover",e.hover_handler),{c(){n.$$.fragment.c()},m(e,r){U(n,e,r),t=!0},p(e,t){var r={};e.tempEndDate&&(r.tempEndDate=t.tempEndDate),e.tempStartDate&&(r.tempStartDate=t.tempStartDate),e.weeks&&(r.week=t.week),e.singlePicker&&(r.singlePicker=t.singlePicker),e.locale&&(r.locale=t.locale),e.month&&(r.month=t.month),e.monthIndicator&&(r.monthIndicator=t.monthIndicator),e.rtl&&(r.rtl=t.rtl),e.weekGuides&&(r.weekGuides=t.weekGuides),e.weekNumbers&&(r.weekNumbers=t.weekNumbers),e.isoWeekNumbers&&(r.isoWeekNumbers=t.isoWeekNumbers),n.$set(r)},i(e){t||(q(n.$$.fragment,e),t=!0)},o(e){Y(n.$$.fragment,e),t=!1},d(e){G(n,e)}}}function en(e){var t,n,r,a,o,c,h=new Jt({props:{locale:e.locale,month:e.month,monthDropdown:e.monthDropdown,monthFormat:e.monthFormat,maxDate:e.maxDate,minDate:e.minDate,yearDropdown:e.yearDropdown}});h.$on("pageChange",e.pageChange_handler),h.$on("previousMonth",e.previousMonth_handler),h.$on("nextMonth",e.nextMonth_handler);for(var g=new Gt({props:{firstDayOfWeek:e.firstDayOfWeek,locale:e.locale}}),w=e.weeks,p=[],y=0;y<w.length;y+=1)p[y]=Zt(Kt(e,w,y));const D=e=>Y(p[e],1,()=>{p[e]=null});return{c(){t=d("div"),h.$$.fragment.c(),n=m(),g.$$.fragment.c(),r=m();for(var i=0;i<p.length;i+=1)p[i].c();f(t,"style",a=`width: ${e.pageWidth}px; padding: ${e.padding}px;`),f(t,"class",o=(e.rtl?"rtl":"")+" svelte-ztwmp7")},m(e,a){l(e,t,a),U(h,t,null),i(t,n),U(g,t,null),i(t,r);for(var o=0;o<p.length;o+=1)p[o].m(t,null);c=!0},p(e,n){var r={};e.locale&&(r.locale=n.locale),e.month&&(r.month=n.month),e.monthDropdown&&(r.monthDropdown=n.monthDropdown),e.monthFormat&&(r.monthFormat=n.monthFormat),e.maxDate&&(r.maxDate=n.maxDate),e.minDate&&(r.minDate=n.minDate),e.yearDropdown&&(r.yearDropdown=n.yearDropdown),h.$set(r);var i={};if(e.firstDayOfWeek&&(i.firstDayOfWeek=n.firstDayOfWeek),e.locale&&(i.locale=n.locale),g.$set(i),e.tempEndDate||e.tempStartDate||e.weeks||e.singlePicker||e.locale||e.month||e.monthIndicator||e.rtl||e.weekGuides||e.weekNumbers||e.isoWeekNumbers){w=n.weeks;for(var l=0;l<w.length;l+=1){const r=Kt(n,w,l);p[l]?(p[l].p(e,r),q(p[l],1)):(p[l]=Zt(r),p[l].c(),q(p[l],1),p[l].m(t,null))}for(F();l<p.length;l+=1)D(l);_()}c&&!e.pageWidth&&!e.padding||a===(a=`width: ${n.pageWidth}px; padding: ${n.padding}px;`)||f(t,"style",a),c&&!e.rtl||o===(o=(n.rtl?"rtl":"")+" svelte-ztwmp7")||f(t,"class",o)},i(e){if(!c){q(h.$$.fragment,e),q(g.$$.fragment,e);for(var t=0;t<w.length;t+=1)q(p[t]);c=!0}},o(e){Y(h.$$.fragment,e),Y(g.$$.fragment,e),p=p.filter(Boolean);for(let e=0;e<p.length;e+=1)Y(p[e]);c=!1},d(e){e&&s(t),G(h),G(g),u(p,e)}}}function tn(e,t,n){let r,a,{disabledDates:o,events:i,hoverDate:l,firstDayOfWeek:s,isoWeekNumbers:u,locale:d,maxDate:c,minDate:m,month:h,monthDropdown:f,monthFormat:g,monthIndicator:w,pageWidth:p,rtl:y,singlePicker:D,tempEndDate:v,tempStartDate:b,today:M,weekGuides:x,weekNumbers:T,yearDropdown:W}=t;return e.$set=e=>{"disabledDates"in e&&n("disabledDates",o=e.disabledDates),"events"in e&&n("events",i=e.events),"hoverDate"in e&&n("hoverDate",l=e.hoverDate),"firstDayOfWeek"in e&&n("firstDayOfWeek",s=e.firstDayOfWeek),"isoWeekNumbers"in e&&n("isoWeekNumbers",u=e.isoWeekNumbers),"locale"in e&&n("locale",d=e.locale),"maxDate"in e&&n("maxDate",c=e.maxDate),"minDate"in e&&n("minDate",m=e.minDate),"month"in e&&n("month",h=e.month),"monthDropdown"in e&&n("monthDropdown",f=e.monthDropdown),"monthFormat"in e&&n("monthFormat",g=e.monthFormat),"monthIndicator"in e&&n("monthIndicator",w=e.monthIndicator),"pageWidth"in e&&n("pageWidth",p=e.pageWidth),"rtl"in e&&n("rtl",y=e.rtl),"singlePicker"in e&&n("singlePicker",D=e.singlePicker),"tempEndDate"in e&&n("tempEndDate",v=e.tempEndDate),"tempStartDate"in e&&n("tempStartDate",b=e.tempStartDate),"today"in e&&n("today",M=e.today),"weekGuides"in e&&n("weekGuides",x=e.weekGuides),"weekNumbers"in e&&n("weekNumbers",T=e.weekNumbers),"yearDropdown"in e&&n("yearDropdown",W=e.yearDropdown)},e.$$.update=(e={month:1,firstDayOfWeek:1,locale:1,events:1,disabledDates:1,tempStartDate:1,hoverDate:1,minDate:1,maxDate:1,today:1,tempEndDate:1,singlePicker:1,weekGuides:1,isoWeekNumbers:1,weekNumbers:1})=>{(e.month||e.firstDayOfWeek||e.locale||e.events||e.disabledDates||e.tempStartDate||e.hoverDate||e.minDate||e.maxDate||e.today||e.tempEndDate||e.singlePicker)&&n("weeks",r=kt({month:h,firstDayOfWeek:s,locale:d,events:i,disabledDates:o,startDate:b,hoverDate:l,minDate:m,maxDate:c,today:M,endDate:v,singlePicker:D})),(e.weekGuides||e.isoWeekNumbers||e.weekNumbers)&&n("padding",a=x||u||T?48:12)},{disabledDates:o,events:i,hoverDate:l,firstDayOfWeek:s,isoWeekNumbers:u,locale:d,maxDate:c,minDate:m,month:h,monthDropdown:f,monthFormat:g,monthIndicator:w,pageWidth:p,rtl:y,singlePicker:D,tempEndDate:v,tempStartDate:b,today:M,weekGuides:x,weekNumbers:T,yearDropdown:W,weeks:r,padding:a,pageChange_handler:function(t){k(e,t)},previousMonth_handler:function(t){k(e,t)},nextMonth_handler:function(t){k(e,t)},selection_handler:function(t){k(e,t)},hover_handler:function(t){k(e,t)}}}class nn extends R{constructor(e){super(),H(this,e,tn,en,o,["disabledDates","events","hoverDate","firstDayOfWeek","isoWeekNumbers","locale","maxDate","minDate","month","monthDropdown","monthFormat","monthIndicator","pageWidth","rtl","singlePicker","tempEndDate","tempStartDate","today","weekGuides","weekNumbers","yearDropdown"])}}function rn(e,t,n){const r=Object.create(e);return r.month=t[n],r}function an(e){var t,n=new nn({props:{disabledDates:e.disabledDates,events:e.events,hoverDate:e.hoverDate,firstDayOfWeek:e.firstDayOfWeek,isoWeekNumbers:e.isoWeekNumbers,locale:e.locale,maxDate:e.maxDate,minDate:e.minDate,month:e.month,monthDropdown:e.monthDropdown,monthFormat:e.monthFormat,monthIndicator:e.monthIndicator,pageWidth:e.pageWidth,rtl:e.rtl,singlePicker:e.singlePicker,tempEndDate:e.tempEndDate,tempStartDate:e.tempStartDate,today:e.today,weekGuides:e.weekGuides,weekNumbers:e.weekNumbers,yearDropdown:e.yearDropdown}});return n.$on("pageChange",e.onPageChange),n.$on("hover",e.onHover),n.$on("selection",e.onSelection),n.$on("previousMonth",e.onPreviousMonth),n.$on("nextMonth",e.onNextMonth),{c(){n.$$.fragment.c()},m(e,r){U(n,e,r),t=!0},p(e,t){var r={};e.disabledDates&&(r.disabledDates=t.disabledDates),e.events&&(r.events=t.events),e.hoverDate&&(r.hoverDate=t.hoverDate),e.firstDayOfWeek&&(r.firstDayOfWeek=t.firstDayOfWeek),e.isoWeekNumbers&&(r.isoWeekNumbers=t.isoWeekNumbers),e.locale&&(r.locale=t.locale),e.maxDate&&(r.maxDate=t.maxDate),e.minDate&&(r.minDate=t.minDate),e.months&&(r.month=t.month),e.monthDropdown&&(r.monthDropdown=t.monthDropdown),e.monthFormat&&(r.monthFormat=t.monthFormat),e.monthIndicator&&(r.monthIndicator=t.monthIndicator),e.pageWidth&&(r.pageWidth=t.pageWidth),e.rtl&&(r.rtl=t.rtl),e.singlePicker&&(r.singlePicker=t.singlePicker),e.tempEndDate&&(r.tempEndDate=t.tempEndDate),e.tempStartDate&&(r.tempStartDate=t.tempStartDate),e.today&&(r.today=t.today),e.weekGuides&&(r.weekGuides=t.weekGuides),e.weekNumbers&&(r.weekNumbers=t.weekNumbers),e.yearDropdown&&(r.yearDropdown=t.yearDropdown),n.$set(r)},i(e){t||(q(n.$$.fragment,e),t=!0)},o(e){Y(n.$$.fragment,e),t=!1},d(e){G(n,e)}}}function on(e){for(var t,n,a,o,w,p,y,D,v,b,k,M,x,T,W,E,N,O,$,P,C,S,I,U,G,A,H,R,j,B=e.startDateReadout(),z=e.endDateReadout(),L=`<${e.canResetView?"0":"-"}>`,X=e.months,Q=[],V=0;V<X.length;V+=1)Q[V]=an(rn(e,X,V));const J=e=>Y(Q[e],1,()=>{Q[e]=null});return{c(){t=d("div"),n=d("div"),a=d("label"),o=c(B),w=c(" to "),p=c(z),y=m(),D=d("div"),v=d("div");for(var r=0;r<Q.length;r+=1)Q[r].c();b=m(),k=d("div"),M=m(),(x=d("div")).textContent="Time picker row",T=m(),W=d("div"),E=d("button"),N=c(L),$=m(),P=d("button"),C=c("Cancel"),I=m(),U=d("button"),G=c("Apply"),f(v,"class","grid svelte-a51g2d"),f(k,"class","full-height-scroll"),f(E,"type","button"),f(E,"aria-label","Show the current selection "),f(E,"aria-controls",sn),E.disabled=O=!e.canResetView,f(P,"type","button"),f(P,"aria-label","Cancel the current selection and revert to previous start and\n      end dates"),f(P,"aria-controls",sn),P.disabled=S=!e.canCancel,f(U,"type","button"),f(U,"aria-label","Apply the current selection"),f(U,"aria-controls",sn),U.disabled=A=!e.canApply,f(t,"id",sn),f(t,"style",H=`width: ${e.maxWidth}px`),f(t,"class","svelte-a51g2d"),j=[h(E,"click",e.resetView),h(P,"click",e.cancel),h(U,"click",e.apply)]},m(e,r){l(e,t,r),i(t,n),i(n,a),i(a,o),i(a,w),i(a,p),i(t,y),i(t,D),i(D,v);for(var s=0;s<Q.length;s+=1)Q[s].m(v,null);i(D,b),i(D,k),i(t,M),i(t,x),i(t,T),i(t,W),i(W,E),i(E,N),i(W,$),i(W,P),i(P,C),i(W,I),i(W,U),i(U,G),R=!0},p(e,n){if(R&&!e.startDateReadout||B===(B=n.startDateReadout())||g(o,B),R&&!e.endDateReadout||z===(z=n.endDateReadout())||g(p,z),e.disabledDates||e.events||e.hoverDate||e.firstDayOfWeek||e.isoWeekNumbers||e.locale||e.maxDate||e.minDate||e.months||e.monthDropdown||e.monthFormat||e.monthIndicator||e.pageWidth||e.rtl||e.singlePicker||e.tempEndDate||e.tempStartDate||e.today||e.weekGuides||e.weekNumbers||e.yearDropdown||e.onPageChange||e.onHover||e.onSelection||e.onPreviousMonth||e.onNextMonth){X=n.months;for(var r=0;r<X.length;r+=1){const t=rn(n,X,r);Q[r]?(Q[r].p(e,t),q(Q[r],1)):(Q[r]=an(t),Q[r].c(),q(Q[r],1),Q[r].m(v,null))}for(F();r<Q.length;r+=1)J(r);_()}R&&!e.canResetView||L===(L=`<${n.canResetView?"0":"-"}>`)||g(N,L),R&&!e.canResetView||O===(O=!n.canResetView)||(E.disabled=O),R&&!e.canCancel||S===(S=!n.canCancel)||(P.disabled=S),R&&!e.canApply||A===(A=!n.canApply)||(U.disabled=A),R&&!e.maxWidth||H===(H=`width: ${n.maxWidth}px`)||f(t,"style",H)},i(e){if(!R){for(var t=0;t<X.length;t+=1)q(Q[t]);R=!0}},o(e){Q=Q.filter(Boolean);for(let e=0;e<Q.length;e+=1)Y(Q[e]);R=!1},d(e){e&&s(t),u(Q,e),r(j)}}}const ln=44,sn="s-date-range-picker",un=2;function dn(e,t,n){let{autoApply:r=!1,dateFormat:a="MMM dd, yyyy",monthIndicator:o=!0,disabledDates:i=[],endDate:l=new Date,events:s=[],firstDayOfWeek:u="sunday",hideOnCancel:d=!0,hideOnApply:c=!0,isoWeekNumbers:m=!1,locale:h=ge,maxDate:f=ne(new Date,10),minDate:g=ft(new Date,10),monthDropdown:w=!0,monthFormat:p="MMMM",numPages:y=1,rtl:D=!1,singlePicker:v=!1,startDate:k=X(new Date),today:M=new Date,weekGuides:x=!1,weekNumbers:T=!1,yearDropdown:W=!0}=t,E=k,N=l,O=k;const $=b(),P=7*ln,C=P+(x||m||T?96:24);function S(){$("hide")}function F(){(N||v)&&(c&&S(),$("apply",{startDate:O,endDate:N}))}function _(){const e=q?O:k;n("months",G=[...Array(y)].map((t,n)=>ee(e,n)))}let q,Y,I,U,G,A,H,R;return e.$set=e=>{"autoApply"in e&&n("autoApply",r=e.autoApply),"dateFormat"in e&&n("dateFormat",a=e.dateFormat),"monthIndicator"in e&&n("monthIndicator",o=e.monthIndicator),"disabledDates"in e&&n("disabledDates",i=e.disabledDates),"endDate"in e&&n("endDate",l=e.endDate),"events"in e&&n("events",s=e.events),"firstDayOfWeek"in e&&n("firstDayOfWeek",u=e.firstDayOfWeek),"hideOnCancel"in e&&n("hideOnCancel",d=e.hideOnCancel),"hideOnApply"in e&&n("hideOnApply",c=e.hideOnApply),"isoWeekNumbers"in e&&n("isoWeekNumbers",m=e.isoWeekNumbers),"locale"in e&&n("locale",h=e.locale),"maxDate"in e&&n("maxDate",f=e.maxDate),"minDate"in e&&n("minDate",g=e.minDate),"monthDropdown"in e&&n("monthDropdown",w=e.monthDropdown),"monthFormat"in e&&n("monthFormat",p=e.monthFormat),"numPages"in e&&n("numPages",y=e.numPages),"rtl"in e&&n("rtl",D=e.rtl),"singlePicker"in e&&n("singlePicker",v=e.singlePicker),"startDate"in e&&n("startDate",k=e.startDate),"today"in e&&n("today",M=e.today),"weekGuides"in e&&n("weekGuides",x=e.weekGuides),"weekNumbers"in e&&n("weekNumbers",T=e.weekNumbers),"yearDropdown"in e&&n("yearDropdown",W=e.yearDropdown)},e.$$.update=(e={tempStartDate:1,startDate:1,tempEndDate:1,endDate:1,numPages:1,today:1,months:1,pickerWidth:1,hoverDate:1,dateFormat:1,locale:1})=>{(e.tempStartDate||e.startDate||e.tempEndDate||e.endDate)&&n("canApply",q=(!re(O,k)||!re(N,l))&&N),(e.tempStartDate||e.startDate||e.tempEndDate||e.endDate)&&n("canCancel",Y=!re(O,k)||!re(N,l)),(e.numPages||e.today)&&n("months",G=[...Array(y)].map((e,t)=>ee(M,t))),(e.tempStartDate||e.months||e.tempEndDate)&&n("canResetView",I=!dt(O,G[0])&&N),e.numPages&&n("pickerWidth",A=y*C),e.pickerWidth&&n("maxWidth",U=A>=un*P?un*C:A),(e.tempEndDate||e.hoverDate||e.tempStartDate||e.dateFormat||e.locale)&&n("startDateReadout",H=function(){return!N&&ut(E,O)?nt(E,a,{locale:h}):nt(O,a,{locale:h})}),(e.tempEndDate||e.hoverDate||e.tempStartDate||e.dateFormat||e.locale)&&n("endDateReadout",R=function(){return N?nt(N,a,{locale:h}):ut(E,O)?nt(O,a,{locale:h}):nt(E,a,{locale:h})})},{autoApply:r,dateFormat:a,monthIndicator:o,disabledDates:i,endDate:l,events:s,firstDayOfWeek:u,hideOnCancel:d,hideOnApply:c,isoWeekNumbers:m,locale:h,maxDate:f,minDate:g,monthDropdown:w,monthFormat:p,numPages:y,rtl:D,singlePicker:v,startDate:k,today:M,weekGuides:x,weekNumbers:T,yearDropdown:W,hoverDate:E,tempEndDate:N,tempStartDate:O,pageWidth:P,apply:F,resetView:_,cancel:function(){n("tempStartDate",O=k),n("tempEndDate",N=l),_(),d&&S(),$("cancel",{startDate:k,endDate:l})},onSelection:function({detail:e}){n("tempStartDate",O=e.tempStartDate),n("tempEndDate",N=e.tempEndDate),$("selection",{startDate:O,endDate:N}),r&&F()},onHover:function({detail:e}){n("hoverDate",E=e.hoverDate)},onPreviousMonth:function(){n("months",G=G.map(e=>ht(e,1)))},onNextMonth:function(){n("months",G=G.map(e=>ee(e,1)))},onPageChange:function({detail:{incrementAmount:e}}){if(e>0)n("months",G=G.map(t=>ee(t,e)));else{const t=Math.abs(e);n("months",G=G.map(e=>ht(e,t)))}},canApply:q,canCancel:Y,canResetView:I,months:G,maxWidth:U,startDateReadout:H,endDateReadout:R}}export default class extends R{constructor(e){super(),H(this,e,dn,on,o,["autoApply","dateFormat","monthIndicator","disabledDates","endDate","events","firstDayOfWeek","hideOnCancel","hideOnApply","isoWeekNumbers","locale","maxDate","minDate","monthDropdown","monthFormat","numPages","rtl","singlePicker","startDate","today","weekGuides","weekNumbers","yearDropdown"])}}
+
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
+function noop() { }
+function add_location(element, file, line, column, char) {
+    element.__svelte_meta = {
+        loc: { file, line, column, char }
+    };
+}
+function run(fn) {
+    return fn();
+}
+function blank_object() {
+    return Object.create(null);
+}
+function run_all(fns) {
+    fns.forEach(run);
+}
+function is_function(thing) {
+    return typeof thing === 'function';
+}
+function safe_not_equal(a, b) {
+    return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+}
+
+function append(target, node) {
+    target.appendChild(node);
+}
+function insert(target, node, anchor) {
+    target.insertBefore(node, anchor || null);
+}
+function detach(node) {
+    node.parentNode.removeChild(node);
+}
+function destroy_each(iterations, detaching) {
+    for (let i = 0; i < iterations.length; i += 1) {
+        if (iterations[i])
+            iterations[i].d(detaching);
+    }
+}
+function element(name) {
+    return document.createElement(name);
+}
+function text(data) {
+    return document.createTextNode(data);
+}
+function space() {
+    return text(' ');
+}
+function empty() {
+    return text('');
+}
+function listen(node, event, handler, options) {
+    node.addEventListener(event, handler, options);
+    return () => node.removeEventListener(event, handler, options);
+}
+function attr(node, attribute, value) {
+    if (value == null)
+        node.removeAttribute(attribute);
+    else
+        node.setAttribute(attribute, value);
+}
+function children(element) {
+    return Array.from(element.childNodes);
+}
+function set_data(text, data) {
+    data = '' + data;
+    if (text.data !== data)
+        text.data = data;
+}
+function select_option(select, value) {
+    for (let i = 0; i < select.options.length; i += 1) {
+        const option = select.options[i];
+        if (option.__value === value) {
+            option.selected = true;
+            return;
+        }
+    }
+}
+function select_value(select) {
+    const selected_option = select.querySelector(':checked') || select.options[0];
+    return selected_option && selected_option.__value;
+}
+function toggle_class(element, name, toggle) {
+    element.classList[toggle ? 'add' : 'remove'](name);
+}
+function custom_event(type, detail) {
+    const e = document.createEvent('CustomEvent');
+    e.initCustomEvent(type, false, false, detail);
+    return e;
+}
+
+let current_component;
+function set_current_component(component) {
+    current_component = component;
+}
+function createEventDispatcher() {
+    const component = current_component;
+    return (type, detail) => {
+        const callbacks = component.$$.callbacks[type];
+        if (callbacks) {
+            // TODO are there situations where events could be dispatched
+            // in a server (non-DOM) environment?
+            const event = custom_event(type, detail);
+            callbacks.slice().forEach(fn => {
+                fn.call(component, event);
+            });
+        }
+    };
+}
+// TODO figure out if we still want to support
+// shorthand events, or if we want to implement
+// a real bubbling mechanism
+function bubble(component, event) {
+    const callbacks = component.$$.callbacks[event.type];
+    if (callbacks) {
+        callbacks.slice().forEach(fn => fn(event));
+    }
+}
+
+const dirty_components = [];
+const resolved_promise = Promise.resolve();
+let update_scheduled = false;
+const binding_callbacks = [];
+const render_callbacks = [];
+const flush_callbacks = [];
+function schedule_update() {
+    if (!update_scheduled) {
+        update_scheduled = true;
+        resolved_promise.then(flush);
+    }
+}
+function add_render_callback(fn) {
+    render_callbacks.push(fn);
+}
+function flush() {
+    const seen_callbacks = new Set();
+    do {
+        // first, call beforeUpdate functions
+        // and update components
+        while (dirty_components.length) {
+            const component = dirty_components.shift();
+            set_current_component(component);
+            update(component.$$);
+        }
+        while (binding_callbacks.length)
+            binding_callbacks.shift()();
+        // then, once components are updated, call
+        // afterUpdate functions. This may cause
+        // subsequent updates...
+        while (render_callbacks.length) {
+            const callback = render_callbacks.pop();
+            if (!seen_callbacks.has(callback)) {
+                callback();
+                // ...so guard against infinite loops
+                seen_callbacks.add(callback);
+            }
+        }
+    } while (dirty_components.length);
+    while (flush_callbacks.length) {
+        flush_callbacks.pop()();
+    }
+    update_scheduled = false;
+}
+function update($$) {
+    if ($$.fragment) {
+        $$.update($$.dirty);
+        run_all($$.before_render);
+        $$.fragment.p($$.dirty, $$.ctx);
+        $$.dirty = null;
+        $$.after_render.forEach(add_render_callback);
+    }
+}
+const outroing = new Set();
+let outros;
+function group_outros() {
+    outros = {
+        remaining: 0,
+        callbacks: []
+    };
+}
+function check_outros() {
+    if (!outros.remaining) {
+        run_all(outros.callbacks);
+    }
+}
+function transition_in(block, local) {
+    if (block && block.i) {
+        outroing.delete(block);
+        block.i(local);
+    }
+}
+function transition_out(block, local, callback) {
+    if (block && block.o) {
+        if (outroing.has(block))
+            return;
+        outroing.add(block);
+        outros.callbacks.push(() => {
+            outroing.delete(block);
+            if (callback) {
+                block.d(1);
+                callback();
+            }
+        });
+        block.o(local);
+    }
+}
+function outro_and_destroy_block(block, lookup) {
+    transition_out(block, 1, () => {
+        lookup.delete(block.key);
+    });
+}
+function update_keyed_each(old_blocks, changed, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block, next, get_context) {
+    let o = old_blocks.length;
+    let n = list.length;
+    let i = o;
+    const old_indexes = {};
+    while (i--)
+        old_indexes[old_blocks[i].key] = i;
+    const new_blocks = [];
+    const new_lookup = new Map();
+    const deltas = new Map();
+    i = n;
+    while (i--) {
+        const child_ctx = get_context(ctx, list, i);
+        const key = get_key(child_ctx);
+        let block = lookup.get(key);
+        if (!block) {
+            block = create_each_block(key, child_ctx);
+            block.c();
+        }
+        else if (dynamic) {
+            block.p(changed, child_ctx);
+        }
+        new_lookup.set(key, new_blocks[i] = block);
+        if (key in old_indexes)
+            deltas.set(key, Math.abs(i - old_indexes[key]));
+    }
+    const will_move = new Set();
+    const did_move = new Set();
+    function insert(block) {
+        transition_in(block, 1);
+        block.m(node, next);
+        lookup.set(block.key, block);
+        next = block.first;
+        n--;
+    }
+    while (o && n) {
+        const new_block = new_blocks[n - 1];
+        const old_block = old_blocks[o - 1];
+        const new_key = new_block.key;
+        const old_key = old_block.key;
+        if (new_block === old_block) {
+            // do nothing
+            next = new_block.first;
+            o--;
+            n--;
+        }
+        else if (!new_lookup.has(old_key)) {
+            // remove old block
+            destroy(old_block, lookup);
+            o--;
+        }
+        else if (!lookup.has(new_key) || will_move.has(new_key)) {
+            insert(new_block);
+        }
+        else if (did_move.has(old_key)) {
+            o--;
+        }
+        else if (deltas.get(new_key) > deltas.get(old_key)) {
+            did_move.add(new_key);
+            insert(new_block);
+        }
+        else {
+            will_move.add(old_key);
+            o--;
+        }
+    }
+    while (o--) {
+        const old_block = old_blocks[o];
+        if (!new_lookup.has(old_block.key))
+            destroy(old_block, lookup);
+    }
+    while (n)
+        insert(new_blocks[n - 1]);
+    return new_blocks;
+}
+function mount_component(component, target, anchor) {
+    const { fragment, on_mount, on_destroy, after_render } = component.$$;
+    fragment.m(target, anchor);
+    // onMount happens after the initial afterUpdate. Because
+    // afterUpdate callbacks happen in reverse order (inner first)
+    // we schedule onMount callbacks before afterUpdate callbacks
+    add_render_callback(() => {
+        const new_on_destroy = on_mount.map(run).filter(is_function);
+        if (on_destroy) {
+            on_destroy.push(...new_on_destroy);
+        }
+        else {
+            // Edge case - component was destroyed immediately,
+            // most likely as a result of a binding initialising
+            run_all(new_on_destroy);
+        }
+        component.$$.on_mount = [];
+    });
+    after_render.forEach(add_render_callback);
+}
+function destroy_component(component, detaching) {
+    if (component.$$.fragment) {
+        run_all(component.$$.on_destroy);
+        if (detaching)
+            component.$$.fragment.d(1);
+        // TODO null out other refs, including component.$$ (but need to
+        // preserve final state?)
+        component.$$.on_destroy = component.$$.fragment = null;
+        component.$$.ctx = {};
+    }
+}
+function make_dirty(component, key) {
+    if (!component.$$.dirty) {
+        dirty_components.push(component);
+        schedule_update();
+        component.$$.dirty = blank_object();
+    }
+    component.$$.dirty[key] = true;
+}
+function init(component, options, instance, create_fragment, not_equal$$1, prop_names) {
+    const parent_component = current_component;
+    set_current_component(component);
+    const props = options.props || {};
+    const $$ = component.$$ = {
+        fragment: null,
+        ctx: null,
+        // state
+        props: prop_names,
+        update: noop,
+        not_equal: not_equal$$1,
+        bound: blank_object(),
+        // lifecycle
+        on_mount: [],
+        on_destroy: [],
+        before_render: [],
+        after_render: [],
+        context: new Map(parent_component ? parent_component.$$.context : []),
+        // everything else
+        callbacks: blank_object(),
+        dirty: null
+    };
+    let ready = false;
+    $$.ctx = instance
+        ? instance(component, props, (key, value) => {
+            if ($$.ctx && not_equal$$1($$.ctx[key], $$.ctx[key] = value)) {
+                if ($$.bound[key])
+                    $$.bound[key](value);
+                if (ready)
+                    make_dirty(component, key);
+            }
+        })
+        : props;
+    $$.update();
+    ready = true;
+    run_all($$.before_render);
+    $$.fragment = create_fragment($$.ctx);
+    if (options.target) {
+        if (options.hydrate) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            $$.fragment.l(children(options.target));
+        }
+        else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            $$.fragment.c();
+        }
+        if (options.intro)
+            transition_in(component.$$.fragment);
+        mount_component(component, options.target, options.anchor);
+        flush();
+    }
+    set_current_component(parent_component);
+}
+class SvelteComponent {
+    $destroy() {
+        destroy_component(this, 1);
+        this.$destroy = noop;
+    }
+    $on(type, callback) {
+        const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+        callbacks.push(callback);
+        return () => {
+            const index = callbacks.indexOf(callback);
+            if (index !== -1)
+                callbacks.splice(index, 1);
+        };
+    }
+    $set() {
+        // overridden by instance, if it has props
+    }
+}
+class SvelteComponentDev extends SvelteComponent {
+    constructor(options) {
+        if (!options || (!options.target && !options.$$inline)) {
+            throw new Error(`'target' is a required option`);
+        }
+        super();
+    }
+    $destroy() {
+        super.$destroy();
+        this.$destroy = () => {
+            console.warn(`Component was already destroyed`); // eslint-disable-line no-console
+        };
+    }
+}
+
+/**
+ * @name toDate
+ * @category Common Helpers
+ * @summary Convert the given argument to an instance of Date.
+ *
+ * @description
+ * Convert the given argument to an instance of Date.
+ *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If the argument is none of the above, the function returns Invalid Date.
+ *
+ * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
+ *
+ * @param {Date|Number} argument - the value to convert
+ * @returns {Date} the parsed date in the local time zone
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // Clone the date:
+ * const result = toDate(new Date(2014, 1, 11, 11, 30, 30))
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Convert the timestamp to date:
+ * const result = toDate(1392098430000)
+ * //=> Tue Feb 11 2014 11:30:30
+ */
+function toDate(argument) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var argStr = Object.prototype.toString.call(argument); // Clone the date
+
+  if (argument instanceof Date || typeof argument === 'object' && argStr === '[object Date]') {
+    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
+    return new Date(argument.getTime());
+  } else if (typeof argument === 'number' || argStr === '[object Number]') {
+    return new Date(argument);
+  } else {
+    if ((typeof argument === 'string' || argStr === '[object String]') && typeof console !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.warn("Starting with v2.0.0-beta.1 date-fns doesn't accept strings as arguments. Please use `parseISO` to parse strings. See: https://git.io/fjule"); // eslint-disable-next-line no-console
+
+      console.warn(new Error().stack);
+    }
+
+    return new Date(NaN);
+  }
+}
+
+/**
+ * @name isWeekend
+ * @category Weekday Helpers
+ * @summary Does the given date fall on a weekend?
+ *
+ * @description
+ * Does the given date fall on a weekend?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to check
+ * @returns {Boolean} the date falls on a weekend
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // Does 5 October 2014 fall on a weekend?
+ * var result = isWeekend(new Date(2014, 9, 5))
+ * //=> true
+ */
+
+function isWeekend(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var day = date.getDay();
+  return day === 0 || day === 6;
+}
+
+function toInteger(dirtyNumber) {
+  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
+    return NaN;
+  }
+
+  var number = Number(dirtyNumber);
+
+  if (isNaN(number)) {
+    return number;
+  }
+
+  return number < 0 ? Math.ceil(number) : Math.floor(number);
+}
+
+/**
+ * @name addDays
+ * @category Day Helpers
+ * @summary Add the specified number of days to the given date.
+ *
+ * @description
+ * Add the specified number of days to the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of days to be added
+ * @returns {Date} the new date with the days added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 10 days to 1 September 2014:
+ * var result = addDays(new Date(2014, 8, 1), 10)
+ * //=> Thu Sep 11 2014 00:00:00
+ */
+
+function addDays(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var amount = toInteger(dirtyAmount);
+  date.setDate(date.getDate() + amount);
+  return date;
+}
+
+/**
+ * @name addMilliseconds
+ * @category Millisecond Helpers
+ * @summary Add the specified number of milliseconds to the given date.
+ *
+ * @description
+ * Add the specified number of milliseconds to the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be added
+ * @returns {Date} the new date with the milliseconds added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
+ * var result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:30.750
+ */
+
+function addMilliseconds(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var timestamp = toDate(dirtyDate).getTime();
+  var amount = toInteger(dirtyAmount);
+  return new Date(timestamp + amount);
+}
+
+/**
+ * @name startOfWeek
+ * @category Week Helpers
+ * @summary Return the start of a week for the given date.
+ *
+ * @description
+ * Return the start of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @returns {Date} the start of a week
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ *
+ * @example
+ * // The start of a week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sun Aug 31 2014 00:00:00
+ *
+ * @example
+ * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+
+function startOfWeek(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+
+  var date = toDate(dirtyDate);
+  var day = date.getDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setDate(date.getDate() - diff);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+/**
+ * @name startOfISOWeek
+ * @category ISO Week Helpers
+ * @summary Return the start of an ISO week for the given date.
+ *
+ * @description
+ * Return the start of an ISO week for the given date.
+ * The result will be in the local timezone.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of an ISO week
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of an ISO week for 2 September 2014 11:55:00:
+ * var result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+
+function startOfISOWeek(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  return startOfWeek(dirtyDate, {
+    weekStartsOn: 1
+  });
+}
+
+/**
+ * @name getISOWeekYear
+ * @category ISO Week-Numbering Year Helpers
+ * @summary Get the ISO week-numbering year of the given date.
+ *
+ * @description
+ * Get the ISO week-numbering year of the given date,
+ * which always starts 3 days before the year's first Thursday.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * - The function was renamed from `getISOYear` to `getISOWeekYear`.
+ *   "ISO week year" is short for [ISO week-numbering year](https://en.wikipedia.org/wiki/ISO_week_date).
+ *   This change makes the name consistent with
+ *   locale-dependent week-numbering year helpers, e.g., `getWeekYear`.
+ *
+ * @param {Date|Number} date - the given date
+ * @returns {Number} the ISO week-numbering year
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // Which ISO-week numbering year is 2 January 2005?
+ * var result = getISOWeekYear(new Date(2005, 0, 2))
+ * //=> 2004
+ */
+
+function getISOWeekYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var year = date.getFullYear();
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
+  var startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear);
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
+  var startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+/**
+ * @name startOfISOWeekYear
+ * @category ISO Week-Numbering Year Helpers
+ * @summary Return the start of an ISO week-numbering year for the given date.
+ *
+ * @description
+ * Return the start of an ISO week-numbering year,
+ * which always starts 3 days before the year's first Thursday.
+ * The result will be in the local timezone.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of an ISO week-numbering year
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of an ISO week-numbering year for 2 July 2005:
+ * var result = startOfISOWeekYear(new Date(2005, 6, 2))
+ * //=> Mon Jan 03 2005 00:00:00
+ */
+
+function startOfISOWeekYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var year = getISOWeekYear(dirtyDate);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setFullYear(year, 0, 4);
+  fourthOfJanuary.setHours(0, 0, 0, 0);
+  var date = startOfISOWeek(fourthOfJanuary);
+  return date;
+}
+
+var MILLISECONDS_IN_MINUTE = 60000;
+/**
+ * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
+ * They usually appear for dates that denote time before the timezones were introduced
+ * (e.g. for 'Europe/Prague' timezone the offset is GMT+00:57:44 before 1 October 1891
+ * and GMT+01:00:00 after that date)
+ *
+ * Date#getTimezoneOffset returns the offset in minutes and would return 57 for the example above,
+ * which would lead to incorrect calculations.
+ *
+ * This function returns the timezone offset in milliseconds that takes seconds in account.
+ */
+
+function getTimezoneOffsetInMilliseconds(dirtyDate) {
+  var date = new Date(dirtyDate.getTime());
+  var baseTimezoneOffset = Math.ceil(date.getTimezoneOffset());
+  date.setSeconds(0, 0);
+  var millisecondsPartOfTimezoneOffset = date.getTime() % MILLISECONDS_IN_MINUTE;
+  return baseTimezoneOffset * MILLISECONDS_IN_MINUTE + millisecondsPartOfTimezoneOffset;
+}
+
+/**
+ * @name startOfDay
+ * @category Day Helpers
+ * @summary Return the start of a day for the given date.
+ *
+ * @description
+ * Return the start of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of a day
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of a day for 2 September 2014 11:55:00:
+ * var result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 00:00:00
+ */
+
+function startOfDay(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+/**
+ * @name getDaysInMonth
+ * @category Month Helpers
+ * @summary Get the number of days in a month of the given date.
+ *
+ * @description
+ * Get the number of days in a month of the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the given date
+ * @returns {Number} the number of days in a month
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // How many days are in February 2000?
+ * var result = getDaysInMonth(new Date(2000, 1))
+ * //=> 29
+ */
+
+function getDaysInMonth(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var year = date.getFullYear();
+  var monthIndex = date.getMonth();
+  var lastDayOfMonth = new Date(0);
+  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+  lastDayOfMonth.setHours(0, 0, 0, 0);
+  return lastDayOfMonth.getDate();
+}
+
+/**
+ * @name addMonths
+ * @category Month Helpers
+ * @summary Add the specified number of months to the given date.
+ *
+ * @description
+ * Add the specified number of months to the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of months to be added
+ * @returns {Date} the new date with the months added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 5 months to 1 September 2014:
+ * var result = addMonths(new Date(2014, 8, 1), 5)
+ * //=> Sun Feb 01 2015 00:00:00
+ */
+
+function addMonths(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var amount = toInteger(dirtyAmount);
+  var desiredMonth = date.getMonth() + amount;
+  var dateWithDesiredMonth = new Date(0);
+  dateWithDesiredMonth.setFullYear(date.getFullYear(), desiredMonth, 1);
+  dateWithDesiredMonth.setHours(0, 0, 0, 0);
+  var daysInMonth = getDaysInMonth(dateWithDesiredMonth); // Set the last day of the new month
+  // if the original date was the last day of the longer month
+
+  date.setMonth(desiredMonth, Math.min(daysInMonth, date.getDate()));
+  return date;
+}
+
+/**
+ * @name addWeeks
+ * @category Week Helpers
+ * @summary Add the specified number of weeks to the given date.
+ *
+ * @description
+ * Add the specified number of week to the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of weeks to be added
+ * @returns {Date} the new date with the weeks added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 4 weeks to 1 September 2014:
+ * var result = addWeeks(new Date(2014, 8, 1), 4)
+ * //=> Mon Sep 29 2014 00:00:00
+ */
+
+function addWeeks(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = toInteger(dirtyAmount);
+  var days = amount * 7;
+  return addDays(dirtyDate, days);
+}
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of years to be added
+ * @returns {Date} the new date with the years added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * var result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+
+function addYears(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = toInteger(dirtyAmount);
+  return addMonths(dirtyDate, amount * 12);
+}
+
+/**
+ * @name isValid
+ * @category Common Helpers
+ * @summary Is the given date valid?
+ *
+ * @description
+ * Returns false if argument is Invalid Date and true otherwise.
+ * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * Invalid Date is a Date, whose time value is NaN.
+ *
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * - Now `isValid` doesn't throw an exception
+ *   if the first argument is not an instance of Date.
+ *   Instead, argument is converted beforehand using `toDate`.
+ *
+ *   Examples:
+ *
+ *   | `isValid` argument        | Before v2.0.0 | v2.0.0 onward |
+ *   |---------------------------|---------------|---------------|
+ *   | `new Date()`              | `true`        | `true`        |
+ *   | `new Date('2016-01-01')`  | `true`        | `true`        |
+ *   | `new Date('')`            | `false`       | `false`       |
+ *   | `new Date(1488370835081)` | `true`        | `true`        |
+ *   | `new Date(NaN)`           | `false`       | `false`       |
+ *   | `'2016-01-01'`            | `TypeError`   | `false`       |
+ *   | `''`                      | `TypeError`   | `false`       |
+ *   | `1488370835081`           | `TypeError`   | `true`        |
+ *   | `NaN`                     | `TypeError`   | `false`       |
+ *
+ *   We introduce this change to make *date-fns* consistent with ECMAScript behavior
+ *   that try to coerce arguments to the expected type
+ *   (which is also the case with other *date-fns* functions).
+ *
+ * @param {*} date - the date to check
+ * @returns {Boolean} the date is valid
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // For the valid date:
+ * var result = isValid(new Date(2014, 1, 31))
+ * //=> true
+ *
+ * @example
+ * // For the value, convertable into a date:
+ * var result = isValid(1393804800000)
+ * //=> true
+ *
+ * @example
+ * // For the invalid date:
+ * var result = isValid(new Date(''))
+ * //=> false
+ */
+
+function isValid(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  return !isNaN(date);
+}
+
+/**
+ * @name isSameDay
+ * @category Day Helpers
+ * @summary Are the given dates in the same day?
+ *
+ * @description
+ * Are the given dates in the same day?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the first date to check
+ * @param {Date|Number} dateRight - the second date to check
+ * @returns {Boolean} the dates are in the same day
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
+ * var result = isSameDay(new Date(2014, 8, 4, 6, 0), new Date(2014, 8, 4, 18, 0))
+ * //=> true
+ */
+
+function isSameDay(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeftStartOfDay = startOfDay(dirtyDateLeft);
+  var dateRightStartOfDay = startOfDay(dirtyDateRight);
+  return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime();
+}
+
+/**
+ * @name differenceInCalendarMonths
+ * @category Month Helpers
+ * @summary Get the number of calendar months between the given dates.
+ *
+ * @description
+ * Get the number of calendar months between the given dates.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the later date
+ * @param {Date|Number} dateRight - the earlier date
+ * @returns {Number} the number of calendar months
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // How many calendar months are between 31 January 2014 and 1 September 2014?
+ * var result = differenceInCalendarMonths(
+ *   new Date(2014, 8, 1),
+ *   new Date(2014, 0, 31)
+ * )
+ * //=> 8
+ */
+
+function differenceInCalendarMonths(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
+  var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
+  return yearDiff * 12 + monthDiff;
+}
+
+var MILLISECONDS_IN_WEEK = 604800000;
+/**
+ * @name differenceInCalendarWeeks
+ * @category Week Helpers
+ * @summary Get the number of calendar weeks between the given dates.
+ *
+ * @description
+ * Get the number of calendar weeks between the given dates.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the later date
+ * @param {Date|Number} dateRight - the earlier date
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @returns {Number} the number of calendar weeks
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ *
+ * @example
+ * // How many calendar weeks are between 5 July 2014 and 20 July 2014?
+ * var result = differenceInCalendarWeeks(
+ *   new Date(2014, 6, 20),
+ *   new Date(2014, 6, 5)
+ * )
+ * //=> 3
+ *
+ * @example
+ * // If the week starts on Monday,
+ * // how many calendar weeks are between 5 July 2014 and 20 July 2014?
+ * var result = differenceInCalendarWeeks(
+ *   new Date(2014, 6, 20),
+ *   new Date(2014, 6, 5),
+ *   { weekStartsOn: 1 }
+ * )
+ * //=> 2
+ */
+
+function differenceInCalendarWeeks(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var startOfWeekLeft = startOfWeek(dirtyDateLeft, dirtyOptions);
+  var startOfWeekRight = startOfWeek(dirtyDateRight, dirtyOptions);
+  var timestampLeft = startOfWeekLeft.getTime() - getTimezoneOffsetInMilliseconds(startOfWeekLeft);
+  var timestampRight = startOfWeekRight.getTime() - getTimezoneOffsetInMilliseconds(startOfWeekRight); // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+
+  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_WEEK);
+}
+
+/**
+ * @name differenceInCalendarYears
+ * @category Year Helpers
+ * @summary Get the number of calendar years between the given dates.
+ *
+ * @description
+ * Get the number of calendar years between the given dates.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the later date
+ * @param {Date|Number} dateRight - the earlier date
+ * @returns {Number} the number of calendar years
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // How many calendar years are between 31 December 2013 and 11 February 2015?
+ * var result = differenceInCalendarYears(
+ *   new Date(2015, 1, 11),
+ *   new Date(2013, 11, 31)
+ * )
+ * //=> 2
+ */
+
+function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  return dateLeft.getFullYear() - dateRight.getFullYear();
+}
+
+/**
+ * @name eachWeekOfInterval
+ * @category Interval Helpers
+ * @summary Return the array of weeks within the specified time interval.
+ *
+ * @description
+ * Return the array of weeks within the specified time interval.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Interval} interval - the interval. See [Interval]{@link docs/types/Interval}
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @returns {Date[]} the array with starts of weeks from the week of the interval start to the week of the interval end
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.weekStartsOn` must be 0, 1, ..., 6
+ * @throws {RangeError} The start of an interval cannot be after its end
+ * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ *
+ * @example
+ * // Each week within interval 6 October 2014 - 23 November 2014:
+ * var result = eachWeekOfInterval({
+ *   start: new Date(2014, 9, 6),
+ *   end: new Date(2014, 10, 23)
+ * })
+ * //=> [
+ * //   Sun Oct 05 2014 00:00:00,
+ * //   Sun Oct 12 2014 00:00:00,
+ * //   Sun Oct 19 2014 00:00:00,
+ * //   Sun Oct 26 2014 00:00:00,
+ * //   Sun Nov 02 2014 00:00:00,
+ * //   Sun Nov 09 2014 00:00:00,
+ * //   Sun Nov 16 2014 00:00:00,
+ * //   Sun Nov 23 2014 00:00:00
+ * // ]
+ */
+
+function eachWeekOfInterval(dirtyInterval, options) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var interval = dirtyInterval || {};
+  var startDate = toDate(interval.start);
+  var endDate = toDate(interval.end);
+  var endTime = endDate.getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
+
+  if (!(startDate.getTime() <= endTime)) {
+    throw new RangeError('Invalid interval');
+  }
+
+  var startDateWeek = startOfWeek(startDate, options);
+  var endDateWeek = startOfWeek(endDate, options); // Some timezones switch DST at midnight, making start of day unreliable in these timezones, 3pm is a safe bet
+
+  startDateWeek.setHours(15);
+  endDateWeek.setHours(15);
+  endTime = endDateWeek.getTime();
+  var weeks = [];
+  var currentWeek = startDateWeek;
+
+  while (currentWeek.getTime() <= endTime) {
+    currentWeek.setHours(0);
+    weeks.push(toDate(currentWeek));
+    currentWeek = addWeeks(currentWeek, 1);
+    currentWeek.setHours(15);
+  }
+
+  return weeks;
+}
+
+/**
+ * @name endOfMonth
+ * @category Month Helpers
+ * @summary Return the end of a month for the given date.
+ *
+ * @description
+ * Return the end of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the end of a month
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The end of a month for 2 September 2014 11:55:00:
+ * var result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 30 2014 23:59:59.999
+ */
+
+function endOfMonth(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var month = date.getMonth();
+  date.setFullYear(date.getFullYear(), month + 1, 0);
+  date.setHours(23, 59, 59, 999);
+  return date;
+}
+
+/**
+ * @name startOfYear
+ * @category Year Helpers
+ * @summary Return the start of a year for the given date.
+ *
+ * @description
+ * Return the start of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of a year
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of a year for 2 September 2014 11:55:00:
+ * var result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+ * //=> Wed Jan 01 2014 00:00:00
+ */
+
+function startOfYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var cleanDate = toDate(dirtyDate);
+  var date = new Date(0);
+  date.setFullYear(cleanDate.getFullYear(), 0, 1);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+var formatDistanceLocale = {
+  lessThanXSeconds: {
+    one: 'less than a second',
+    other: 'less than {{count}} seconds'
+  },
+  xSeconds: {
+    one: '1 second',
+    other: '{{count}} seconds'
+  },
+  halfAMinute: 'half a minute',
+  lessThanXMinutes: {
+    one: 'less than a minute',
+    other: 'less than {{count}} minutes'
+  },
+  xMinutes: {
+    one: '1 minute',
+    other: '{{count}} minutes'
+  },
+  aboutXHours: {
+    one: 'about 1 hour',
+    other: 'about {{count}} hours'
+  },
+  xHours: {
+    one: '1 hour',
+    other: '{{count}} hours'
+  },
+  xDays: {
+    one: '1 day',
+    other: '{{count}} days'
+  },
+  aboutXMonths: {
+    one: 'about 1 month',
+    other: 'about {{count}} months'
+  },
+  xMonths: {
+    one: '1 month',
+    other: '{{count}} months'
+  },
+  aboutXYears: {
+    one: 'about 1 year',
+    other: 'about {{count}} years'
+  },
+  xYears: {
+    one: '1 year',
+    other: '{{count}} years'
+  },
+  overXYears: {
+    one: 'over 1 year',
+    other: 'over {{count}} years'
+  },
+  almostXYears: {
+    one: 'almost 1 year',
+    other: 'almost {{count}} years'
+  }
+};
+function formatDistance(token, count, options) {
+  options = options || {};
+  var result;
+
+  if (typeof formatDistanceLocale[token] === 'string') {
+    result = formatDistanceLocale[token];
+  } else if (count === 1) {
+    result = formatDistanceLocale[token].one;
+  } else {
+    result = formatDistanceLocale[token].other.replace('{{count}}', count);
+  }
+
+  if (options.addSuffix) {
+    if (options.comparison > 0) {
+      return 'in ' + result;
+    } else {
+      return result + ' ago';
+    }
+  }
+
+  return result;
+}
+
+function buildFormatLongFn(args) {
+  return function (dirtyOptions) {
+    var options = dirtyOptions || {};
+    var width = options.width ? String(options.width) : args.defaultWidth;
+    var format = args.formats[width] || args.formats[args.defaultWidth];
+    return format;
+  };
+}
+
+var dateFormats = {
+  full: 'EEEE, MMMM do, y',
+  long: 'MMMM do, y',
+  medium: 'MMM d, y',
+  short: 'MM/dd/yyyy'
+};
+var timeFormats = {
+  full: 'h:mm:ss a zzzz',
+  long: 'h:mm:ss a z',
+  medium: 'h:mm:ss a',
+  short: 'h:mm a'
+};
+var dateTimeFormats = {
+  full: "{{date}} 'at' {{time}}",
+  long: "{{date}} 'at' {{time}}",
+  medium: '{{date}}, {{time}}',
+  short: '{{date}}, {{time}}'
+};
+var formatLong = {
+  date: buildFormatLongFn({
+    formats: dateFormats,
+    defaultWidth: 'full'
+  }),
+  time: buildFormatLongFn({
+    formats: timeFormats,
+    defaultWidth: 'full'
+  }),
+  dateTime: buildFormatLongFn({
+    formats: dateTimeFormats,
+    defaultWidth: 'full'
+  })
+};
+
+var formatRelativeLocale = {
+  lastWeek: "'last' eeee 'at' p",
+  yesterday: "'yesterday at' p",
+  today: "'today at' p",
+  tomorrow: "'tomorrow at' p",
+  nextWeek: "eeee 'at' p",
+  other: 'P'
+};
+function formatRelative(token, _date, _baseDate, _options) {
+  return formatRelativeLocale[token];
+}
+
+function buildLocalizeFn(args) {
+  return function (dirtyIndex, dirtyOptions) {
+    var options = dirtyOptions || {};
+    var context = options.context ? String(options.context) : 'standalone';
+    var valuesArray;
+
+    if (context === 'formatting' && args.formattingValues) {
+      var defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
+      var width = options.width ? String(options.width) : defaultWidth;
+      valuesArray = args.formattingValues[width] || args.formattingValues[defaultWidth];
+    } else {
+      var _defaultWidth = args.defaultWidth;
+
+      var _width = options.width ? String(options.width) : args.defaultWidth;
+
+      valuesArray = args.values[_width] || args.values[_defaultWidth];
+    }
+
+    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
+    return valuesArray[index];
+  };
+}
+
+var eraValues = {
+  narrow: ['B', 'A'],
+  abbreviated: ['BC', 'AD'],
+  wide: ['Before Christ', 'Anno Domini']
+};
+var quarterValues = {
+  narrow: ['1', '2', '3', '4'],
+  abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter'] // Note: in English, the names of days of the week and months are capitalized.
+  // If you are making a new locale based on this one, check if the same is true for the language you're working on.
+  // Generally, formatted dates should look like they are in the middle of a sentence,
+  // e.g. in Spanish language the weekdays and months should be in the lowercase.
+
+};
+var monthValues = {
+  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+var dayValues = {
+  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+var dayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  }
+};
+var formattingDayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  }
+};
+
+function ordinalNumber(dirtyNumber, _dirtyOptions) {
+  var number = Number(dirtyNumber); // If ordinal numbers depend on context, for example,
+  // if they are different for different grammatical genders,
+  // use `options.unit`:
+  //
+  //   var options = dirtyOptions || {}
+  //   var unit = String(options.unit)
+  //
+  // where `unit` can be 'year', 'quarter', 'month', 'week', 'date', 'dayOfYear',
+  // 'day', 'hour', 'minute', 'second'
+
+  var rem100 = number % 100;
+
+  if (rem100 > 20 || rem100 < 10) {
+    switch (rem100 % 10) {
+      case 1:
+        return number + 'st';
+
+      case 2:
+        return number + 'nd';
+
+      case 3:
+        return number + 'rd';
+    }
+  }
+
+  return number + 'th';
+}
+
+var localize = {
+  ordinalNumber: ordinalNumber,
+  era: buildLocalizeFn({
+    values: eraValues,
+    defaultWidth: 'wide'
+  }),
+  quarter: buildLocalizeFn({
+    values: quarterValues,
+    defaultWidth: 'wide',
+    argumentCallback: function (quarter) {
+      return Number(quarter) - 1;
+    }
+  }),
+  month: buildLocalizeFn({
+    values: monthValues,
+    defaultWidth: 'wide'
+  }),
+  day: buildLocalizeFn({
+    values: dayValues,
+    defaultWidth: 'wide'
+  }),
+  dayPeriod: buildLocalizeFn({
+    values: dayPeriodValues,
+    defaultWidth: 'wide',
+    formattingValues: formattingDayPeriodValues,
+    defaultFormattingWidth: 'wide'
+  })
+};
+
+function buildMatchPatternFn(args) {
+  return function (dirtyString, dirtyOptions) {
+    var string = String(dirtyString);
+    var options = dirtyOptions || {};
+    var matchResult = string.match(args.matchPattern);
+
+    if (!matchResult) {
+      return null;
+    }
+
+    var matchedString = matchResult[0];
+    var parseResult = string.match(args.parsePattern);
+
+    if (!parseResult) {
+      return null;
+    }
+
+    var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
+    value = options.valueCallback ? options.valueCallback(value) : value;
+    return {
+      value: value,
+      rest: string.slice(matchedString.length)
+    };
+  };
+}
+
+function buildMatchFn(args) {
+  return function (dirtyString, dirtyOptions) {
+    var string = String(dirtyString);
+    var options = dirtyOptions || {};
+    var width = options.width;
+    var matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
+    var matchResult = string.match(matchPattern);
+
+    if (!matchResult) {
+      return null;
+    }
+
+    var matchedString = matchResult[0];
+    var parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
+    var value;
+
+    if (Object.prototype.toString.call(parsePatterns) === '[object Array]') {
+      value = findIndex(parsePatterns, function (pattern) {
+        return pattern.test(string);
+      });
+    } else {
+      value = findKey(parsePatterns, function (pattern) {
+        return pattern.test(string);
+      });
+    }
+
+    value = args.valueCallback ? args.valueCallback(value) : value;
+    value = options.valueCallback ? options.valueCallback(value) : value;
+    return {
+      value: value,
+      rest: string.slice(matchedString.length)
+    };
+  };
+}
+
+function findKey(object, predicate) {
+  for (var key in object) {
+    if (object.hasOwnProperty(key) && predicate(object[key])) {
+      return key;
+    }
+  }
+}
+
+function findIndex(array, predicate) {
+  for (var key = 0; key < array.length; key++) {
+    if (predicate(array[key])) {
+      return key;
+    }
+  }
+}
+
+var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
+var parseOrdinalNumberPattern = /\d+/i;
+var matchEraPatterns = {
+  narrow: /^(b|a)/i,
+  abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
+  wide: /^(before christ|before common era|anno domini|common era)/i
+};
+var parseEraPatterns = {
+  any: [/^b/i, /^(a|c)/i]
+};
+var matchQuarterPatterns = {
+  narrow: /^[1234]/i,
+  abbreviated: /^q[1234]/i,
+  wide: /^[1234](th|st|nd|rd)? quarter/i
+};
+var parseQuarterPatterns = {
+  any: [/1/i, /2/i, /3/i, /4/i]
+};
+var matchMonthPatterns = {
+  narrow: /^[jfmasond]/i,
+  abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
+  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
+};
+var parseMonthPatterns = {
+  narrow: [/^j/i, /^f/i, /^m/i, /^a/i, /^m/i, /^j/i, /^j/i, /^a/i, /^s/i, /^o/i, /^n/i, /^d/i],
+  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
+};
+var matchDayPatterns = {
+  narrow: /^[smtwf]/i,
+  short: /^(su|mo|tu|we|th|fr|sa)/i,
+  abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
+  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+};
+var parseDayPatterns = {
+  narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+};
+var matchDayPeriodPatterns = {
+  narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+};
+var parseDayPeriodPatterns = {
+  any: {
+    am: /^a/i,
+    pm: /^p/i,
+    midnight: /^mi/i,
+    noon: /^no/i,
+    morning: /morning/i,
+    afternoon: /afternoon/i,
+    evening: /evening/i,
+    night: /night/i
+  }
+};
+var match = {
+  ordinalNumber: buildMatchPatternFn({
+    matchPattern: matchOrdinalNumberPattern,
+    parsePattern: parseOrdinalNumberPattern,
+    valueCallback: function (value) {
+      return parseInt(value, 10);
+    }
+  }),
+  era: buildMatchFn({
+    matchPatterns: matchEraPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseEraPatterns,
+    defaultParseWidth: 'any'
+  }),
+  quarter: buildMatchFn({
+    matchPatterns: matchQuarterPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseQuarterPatterns,
+    defaultParseWidth: 'any',
+    valueCallback: function (index) {
+      return index + 1;
+    }
+  }),
+  month: buildMatchFn({
+    matchPatterns: matchMonthPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseMonthPatterns,
+    defaultParseWidth: 'any'
+  }),
+  day: buildMatchFn({
+    matchPatterns: matchDayPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseDayPatterns,
+    defaultParseWidth: 'any'
+  }),
+  dayPeriod: buildMatchFn({
+    matchPatterns: matchDayPeriodPatterns,
+    defaultMatchWidth: 'any',
+    parsePatterns: parseDayPeriodPatterns,
+    defaultParseWidth: 'any'
+  })
+};
+
+/**
+ * @type {Locale}
+ * @category Locales
+ * @summary English locale (United States).
+ * @language English
+ * @iso-639-2 eng
+ * @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
+ * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
+ */
+
+var locale = {
+  code: 'en-US',
+  formatDistance: formatDistance,
+  formatLong: formatLong,
+  formatRelative: formatRelative,
+  localize: localize,
+  match: match,
+  options: {
+    weekStartsOn: 0
+    /* Sunday */
+    ,
+    firstWeekContainsDate: 1
+  }
+};
+
+/**
+ * @name subMilliseconds
+ * @category Millisecond Helpers
+ * @summary Subtract the specified number of milliseconds from the given date.
+ *
+ * @description
+ * Subtract the specified number of milliseconds from the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be subtracted
+ * @returns {Date} the new date with the milliseconds subtracted
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
+ * var result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:29.250
+ */
+
+function subMilliseconds(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = toInteger(dirtyAmount);
+  return addMilliseconds(dirtyDate, -amount);
+}
+
+function addLeadingZeros(number, targetLength) {
+  var sign = number < 0 ? '-' : '';
+  var output = Math.abs(number).toString();
+
+  while (output.length < targetLength) {
+    output = '0' + output;
+  }
+
+  return sign + output;
+}
+
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* |                                |
+ * |  d  | Day of month                   |  D  |                                |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  y  | Year (abs)                     |  Y  |                                |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ */
+
+var formatters = {
+  // Year
+  y: function (date, token) {
+    // From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_tokens
+    // | Year     |     y | yy |   yyy |  yyyy | yyyyy |
+    // |----------|-------|----|-------|-------|-------|
+    // | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
+    // | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
+    // | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
+    // | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
+    // | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
+    var signedYear = date.getUTCFullYear(); // Returns 1 for 1 BC (which is year 0 in JavaScript)
+
+    var year = signedYear > 0 ? signedYear : 1 - signedYear;
+    return addLeadingZeros(token === 'yy' ? year % 100 : year, token.length);
+  },
+  // Month
+  M: function (date, token) {
+    var month = date.getUTCMonth();
+    return token === 'M' ? String(month + 1) : addLeadingZeros(month + 1, 2);
+  },
+  // Day of the month
+  d: function (date, token) {
+    return addLeadingZeros(date.getUTCDate(), token.length);
+  },
+  // AM or PM
+  a: function (date, token) {
+    var dayPeriodEnumValue = date.getUTCHours() / 12 >= 1 ? 'pm' : 'am';
+
+    switch (token) {
+      case 'a':
+      case 'aa':
+      case 'aaa':
+        return dayPeriodEnumValue.toUpperCase();
+
+      case 'aaaaa':
+        return dayPeriodEnumValue[0];
+
+      case 'aaaa':
+      default:
+        return dayPeriodEnumValue === 'am' ? 'a.m.' : 'p.m.';
+    }
+  },
+  // Hour [1-12]
+  h: function (date, token) {
+    return addLeadingZeros(date.getUTCHours() % 12 || 12, token.length);
+  },
+  // Hour [0-23]
+  H: function (date, token) {
+    return addLeadingZeros(date.getUTCHours(), token.length);
+  },
+  // Minute
+  m: function (date, token) {
+    return addLeadingZeros(date.getUTCMinutes(), token.length);
+  },
+  // Second
+  s: function (date, token) {
+    return addLeadingZeros(date.getUTCSeconds(), token.length);
+  },
+  // Fraction of second
+  S: function (date, token) {
+    var numberOfDigits = token.length;
+    var milliseconds = date.getUTCMilliseconds();
+    var fractionalSeconds = Math.floor(milliseconds * Math.pow(10, numberOfDigits - 3));
+    return addLeadingZeros(fractionalSeconds, token.length);
+  }
+};
+
+var MILLISECONDS_IN_DAY = 86400000; // This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function getUTCDayOfYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var timestamp = date.getTime();
+  date.setUTCMonth(0, 1);
+  date.setUTCHours(0, 0, 0, 0);
+  var startOfYearTimestamp = date.getTime();
+  var difference = timestamp - startOfYearTimestamp;
+  return Math.floor(difference / MILLISECONDS_IN_DAY) + 1;
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function startOfUTCISOWeek(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var weekStartsOn = 1;
+  var date = toDate(dirtyDate);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function getUTCISOWeekYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var year = date.getUTCFullYear();
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = startOfUTCISOWeek(fourthOfJanuaryOfNextYear);
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = startOfUTCISOWeek(fourthOfJanuaryOfThisYear);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function startOfUTCISOWeekYear(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var year = getUTCISOWeekYear(dirtyDate);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setUTCFullYear(year, 0, 4);
+  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+  var date = startOfUTCISOWeek(fourthOfJanuary);
+  return date;
+}
+
+var MILLISECONDS_IN_WEEK$1 = 604800000; // This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function getUTCISOWeek(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var diff = startOfUTCISOWeek(date).getTime() - startOfUTCISOWeekYear(date).getTime(); // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+
+  return Math.round(diff / MILLISECONDS_IN_WEEK$1) + 1;
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function startOfUTCWeek(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+
+  var date = toDate(dirtyDate);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function getUTCWeekYear(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var year = date.getUTCFullYear();
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale && locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : toInteger(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
+  }
+
+  var firstWeekOfNextYear = new Date(0);
+  firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
+  firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = startOfUTCWeek(firstWeekOfNextYear, dirtyOptions);
+  var firstWeekOfThisYear = new Date(0);
+  firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = startOfUTCWeek(firstWeekOfThisYear, dirtyOptions);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function startOfUTCWeekYear(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale && locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : toInteger(options.firstWeekContainsDate);
+  var year = getUTCWeekYear(dirtyDate, dirtyOptions);
+  var firstWeek = new Date(0);
+  firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeek.setUTCHours(0, 0, 0, 0);
+  var date = startOfUTCWeek(firstWeek, dirtyOptions);
+  return date;
+}
+
+var MILLISECONDS_IN_WEEK$2 = 604800000; // This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+
+function getUTCWeek(dirtyDate, options) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var diff = startOfUTCWeek(date, options).getTime() - startOfUTCWeekYear(date, options).getTime(); // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+
+  return Math.round(diff / MILLISECONDS_IN_WEEK$2) + 1;
+}
+
+var dayPeriodEnum = {
+  am: 'am',
+  pm: 'pm',
+  midnight: 'midnight',
+  noon: 'noon',
+  morning: 'morning',
+  afternoon: 'afternoon',
+  evening: 'evening',
+  night: 'night'
+  /*
+   * |     | Unit                           |     | Unit                           |
+   * |-----|--------------------------------|-----|--------------------------------|
+   * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+   * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+   * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+   * |  d  | Day of month                   |  D  | Day of year                    |
+   * |  e  | Local day of week              |  E  | Day of week                    |
+   * |  f  |                                |  F* | Day of week in month           |
+   * |  g* | Modified Julian day            |  G  | Era                            |
+   * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+   * |  i! | ISO day of week                |  I! | ISO week of year               |
+   * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+   * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+   * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+   * |  m  | Minute                         |  M  | Month                          |
+   * |  n  |                                |  N  |                                |
+   * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
+   * |  p! | Long localized time            |  P! | Long localized date            |
+   * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+   * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+   * |  s  | Second                         |  S  | Fraction of second             |
+   * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+   * |  u  | Extended year                  |  U* | Cyclic year                    |
+   * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+   * |  w  | Local week of year             |  W* | Week of month                  |
+   * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+   * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+   * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+   *
+   * Letters marked by * are not implemented but reserved by Unicode standard.
+   *
+   * Letters marked by ! are non-standard, but implemented by date-fns:
+   * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
+   * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+   *   i.e. 7 for Sunday, 1 for Monday, etc.
+   * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+   * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+   *   `R` is supposed to be used in conjunction with `I` and `i`
+   *   for universal ISO week-numbering date, whereas
+   *   `Y` is supposed to be used in conjunction with `w` and `e`
+   *   for week-numbering date specific to the locale.
+   * - `P` is long localized date format
+   * - `p` is long localized time format
+   */
+
+};
+var formatters$1 = {
+  // Era
+  G: function (date, token, localize) {
+    var era = date.getUTCFullYear() > 0 ? 1 : 0;
+
+    switch (token) {
+      // AD, BC
+      case 'G':
+      case 'GG':
+      case 'GGG':
+        return localize.era(era, {
+          width: 'abbreviated'
+        });
+      // A, B
+
+      case 'GGGGG':
+        return localize.era(era, {
+          width: 'narrow'
+        });
+      // Anno Domini, Before Christ
+
+      case 'GGGG':
+      default:
+        return localize.era(era, {
+          width: 'wide'
+        });
+    }
+  },
+  // Year
+  y: function (date, token, localize) {
+    // Ordinal number
+    if (token === 'yo') {
+      var signedYear = date.getUTCFullYear(); // Returns 1 for 1 BC (which is year 0 in JavaScript)
+
+      var year = signedYear > 0 ? signedYear : 1 - signedYear;
+      return localize.ordinalNumber(year, {
+        unit: 'year'
+      });
+    }
+
+    return formatters.y(date, token);
+  },
+  // Local week-numbering year
+  Y: function (date, token, localize, options) {
+    var signedWeekYear = getUTCWeekYear(date, options); // Returns 1 for 1 BC (which is year 0 in JavaScript)
+
+    var weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear; // Two digit year
+
+    if (token === 'YY') {
+      var twoDigitYear = weekYear % 100;
+      return addLeadingZeros(twoDigitYear, 2);
+    } // Ordinal number
+
+
+    if (token === 'Yo') {
+      return localize.ordinalNumber(weekYear, {
+        unit: 'year'
+      });
+    } // Padding
+
+
+    return addLeadingZeros(weekYear, token.length);
+  },
+  // ISO week-numbering year
+  R: function (date, token) {
+    var isoWeekYear = getUTCISOWeekYear(date); // Padding
+
+    return addLeadingZeros(isoWeekYear, token.length);
+  },
+  // Extended year. This is a single number designating the year of this calendar system.
+  // The main difference between `y` and `u` localizers are B.C. years:
+  // | Year | `y` | `u` |
+  // |------|-----|-----|
+  // | AC 1 |   1 |   1 |
+  // | BC 1 |   1 |   0 |
+  // | BC 2 |   2 |  -1 |
+  // Also `yy` always returns the last two digits of a year,
+  // while `uu` pads single digit years to 2 characters and returns other years unchanged.
+  u: function (date, token) {
+    var year = date.getUTCFullYear();
+    return addLeadingZeros(year, token.length);
+  },
+  // Quarter
+  Q: function (date, token, localize) {
+    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+
+    switch (token) {
+      // 1, 2, 3, 4
+      case 'Q':
+        return String(quarter);
+      // 01, 02, 03, 04
+
+      case 'QQ':
+        return addLeadingZeros(quarter, 2);
+      // 1st, 2nd, 3rd, 4th
+
+      case 'Qo':
+        return localize.ordinalNumber(quarter, {
+          unit: 'quarter'
+        });
+      // Q1, Q2, Q3, Q4
+
+      case 'QQQ':
+        return localize.quarter(quarter, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+
+      case 'QQQQQ':
+        return localize.quarter(quarter, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+      // 1st quarter, 2nd quarter, ...
+
+      case 'QQQQ':
+      default:
+        return localize.quarter(quarter, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // Stand-alone quarter
+  q: function (date, token, localize) {
+    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+
+    switch (token) {
+      // 1, 2, 3, 4
+      case 'q':
+        return String(quarter);
+      // 01, 02, 03, 04
+
+      case 'qq':
+        return addLeadingZeros(quarter, 2);
+      // 1st, 2nd, 3rd, 4th
+
+      case 'qo':
+        return localize.ordinalNumber(quarter, {
+          unit: 'quarter'
+        });
+      // Q1, Q2, Q3, Q4
+
+      case 'qqq':
+        return localize.quarter(quarter, {
+          width: 'abbreviated',
+          context: 'standalone'
+        });
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+
+      case 'qqqqq':
+        return localize.quarter(quarter, {
+          width: 'narrow',
+          context: 'standalone'
+        });
+      // 1st quarter, 2nd quarter, ...
+
+      case 'qqqq':
+      default:
+        return localize.quarter(quarter, {
+          width: 'wide',
+          context: 'standalone'
+        });
+    }
+  },
+  // Month
+  M: function (date, token, localize) {
+    var month = date.getUTCMonth();
+
+    switch (token) {
+      case 'M':
+      case 'MM':
+        return formatters.M(date, token);
+      // 1st, 2nd, ..., 12th
+
+      case 'Mo':
+        return localize.ordinalNumber(month + 1, {
+          unit: 'month'
+        });
+      // Jan, Feb, ..., Dec
+
+      case 'MMM':
+        return localize.month(month, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+      // J, F, ..., D
+
+      case 'MMMMM':
+        return localize.month(month, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+      // January, February, ..., December
+
+      case 'MMMM':
+      default:
+        return localize.month(month, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // Stand-alone month
+  L: function (date, token, localize) {
+    var month = date.getUTCMonth();
+
+    switch (token) {
+      // 1, 2, ..., 12
+      case 'L':
+        return String(month + 1);
+      // 01, 02, ..., 12
+
+      case 'LL':
+        return addLeadingZeros(month + 1, 2);
+      // 1st, 2nd, ..., 12th
+
+      case 'Lo':
+        return localize.ordinalNumber(month + 1, {
+          unit: 'month'
+        });
+      // Jan, Feb, ..., Dec
+
+      case 'LLL':
+        return localize.month(month, {
+          width: 'abbreviated',
+          context: 'standalone'
+        });
+      // J, F, ..., D
+
+      case 'LLLLL':
+        return localize.month(month, {
+          width: 'narrow',
+          context: 'standalone'
+        });
+      // January, February, ..., December
+
+      case 'LLLL':
+      default:
+        return localize.month(month, {
+          width: 'wide',
+          context: 'standalone'
+        });
+    }
+  },
+  // Local week of year
+  w: function (date, token, localize, options) {
+    var week = getUTCWeek(date, options);
+
+    if (token === 'wo') {
+      return localize.ordinalNumber(week, {
+        unit: 'week'
+      });
+    }
+
+    return addLeadingZeros(week, token.length);
+  },
+  // ISO week of year
+  I: function (date, token, localize) {
+    var isoWeek = getUTCISOWeek(date);
+
+    if (token === 'Io') {
+      return localize.ordinalNumber(isoWeek, {
+        unit: 'week'
+      });
+    }
+
+    return addLeadingZeros(isoWeek, token.length);
+  },
+  // Day of the month
+  d: function (date, token, localize) {
+    if (token === 'do') {
+      return localize.ordinalNumber(date.getUTCDate(), {
+        unit: 'date'
+      });
+    }
+
+    return formatters.d(date, token);
+  },
+  // Day of year
+  D: function (date, token, localize) {
+    var dayOfYear = getUTCDayOfYear(date);
+
+    if (token === 'Do') {
+      return localize.ordinalNumber(dayOfYear, {
+        unit: 'dayOfYear'
+      });
+    }
+
+    return addLeadingZeros(dayOfYear, token.length);
+  },
+  // Day of week
+  E: function (date, token, localize) {
+    var dayOfWeek = date.getUTCDay();
+
+    switch (token) {
+      // Tue
+      case 'E':
+      case 'EE':
+      case 'EEE':
+        return localize.day(dayOfWeek, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+      // T
+
+      case 'EEEEE':
+        return localize.day(dayOfWeek, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+      // Tu
+
+      case 'EEEEEE':
+        return localize.day(dayOfWeek, {
+          width: 'short',
+          context: 'formatting'
+        });
+      // Tuesday
+
+      case 'EEEE':
+      default:
+        return localize.day(dayOfWeek, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // Local day of week
+  e: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    var localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
+
+    switch (token) {
+      // Numerical value (Nth day of week with current locale or weekStartsOn)
+      case 'e':
+        return String(localDayOfWeek);
+      // Padded numerical value
+
+      case 'ee':
+        return addLeadingZeros(localDayOfWeek, 2);
+      // 1st, 2nd, ..., 7th
+
+      case 'eo':
+        return localize.ordinalNumber(localDayOfWeek, {
+          unit: 'day'
+        });
+
+      case 'eee':
+        return localize.day(dayOfWeek, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+      // T
+
+      case 'eeeee':
+        return localize.day(dayOfWeek, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+      // Tu
+
+      case 'eeeeee':
+        return localize.day(dayOfWeek, {
+          width: 'short',
+          context: 'formatting'
+        });
+      // Tuesday
+
+      case 'eeee':
+      default:
+        return localize.day(dayOfWeek, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // Stand-alone local day of week
+  c: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    var localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
+
+    switch (token) {
+      // Numerical value (same as in `e`)
+      case 'c':
+        return String(localDayOfWeek);
+      // Padded numerical value
+
+      case 'cc':
+        return addLeadingZeros(localDayOfWeek, token.length);
+      // 1st, 2nd, ..., 7th
+
+      case 'co':
+        return localize.ordinalNumber(localDayOfWeek, {
+          unit: 'day'
+        });
+
+      case 'ccc':
+        return localize.day(dayOfWeek, {
+          width: 'abbreviated',
+          context: 'standalone'
+        });
+      // T
+
+      case 'ccccc':
+        return localize.day(dayOfWeek, {
+          width: 'narrow',
+          context: 'standalone'
+        });
+      // Tu
+
+      case 'cccccc':
+        return localize.day(dayOfWeek, {
+          width: 'short',
+          context: 'standalone'
+        });
+      // Tuesday
+
+      case 'cccc':
+      default:
+        return localize.day(dayOfWeek, {
+          width: 'wide',
+          context: 'standalone'
+        });
+    }
+  },
+  // ISO day of week
+  i: function (date, token, localize) {
+    var dayOfWeek = date.getUTCDay();
+    var isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+    switch (token) {
+      // 2
+      case 'i':
+        return String(isoDayOfWeek);
+      // 02
+
+      case 'ii':
+        return addLeadingZeros(isoDayOfWeek, token.length);
+      // 2nd
+
+      case 'io':
+        return localize.ordinalNumber(isoDayOfWeek, {
+          unit: 'day'
+        });
+      // Tue
+
+      case 'iii':
+        return localize.day(dayOfWeek, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+      // T
+
+      case 'iiiii':
+        return localize.day(dayOfWeek, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+      // Tu
+
+      case 'iiiiii':
+        return localize.day(dayOfWeek, {
+          width: 'short',
+          context: 'formatting'
+        });
+      // Tuesday
+
+      case 'iiii':
+      default:
+        return localize.day(dayOfWeek, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // AM or PM
+  a: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue = hours / 12 >= 1 ? 'pm' : 'am';
+
+    switch (token) {
+      case 'a':
+      case 'aa':
+      case 'aaa':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+
+      case 'aaaaa':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+
+      case 'aaaa':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // AM, PM, midnight, noon
+  b: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue;
+
+    if (hours === 12) {
+      dayPeriodEnumValue = dayPeriodEnum.noon;
+    } else if (hours === 0) {
+      dayPeriodEnumValue = dayPeriodEnum.midnight;
+    } else {
+      dayPeriodEnumValue = hours / 12 >= 1 ? 'pm' : 'am';
+    }
+
+    switch (token) {
+      case 'b':
+      case 'bb':
+      case 'bbb':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+
+      case 'bbbbb':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+
+      case 'bbbb':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // in the morning, in the afternoon, in the evening, at night
+  B: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue;
+
+    if (hours >= 17) {
+      dayPeriodEnumValue = dayPeriodEnum.evening;
+    } else if (hours >= 12) {
+      dayPeriodEnumValue = dayPeriodEnum.afternoon;
+    } else if (hours >= 4) {
+      dayPeriodEnumValue = dayPeriodEnum.morning;
+    } else {
+      dayPeriodEnumValue = dayPeriodEnum.night;
+    }
+
+    switch (token) {
+      case 'B':
+      case 'BB':
+      case 'BBB':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'abbreviated',
+          context: 'formatting'
+        });
+
+      case 'BBBBB':
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'narrow',
+          context: 'formatting'
+        });
+
+      case 'BBBB':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {
+          width: 'wide',
+          context: 'formatting'
+        });
+    }
+  },
+  // Hour [1-12]
+  h: function (date, token, localize) {
+    if (token === 'ho') {
+      var hours = date.getUTCHours() % 12;
+      if (hours === 0) hours = 12;
+      return localize.ordinalNumber(hours, {
+        unit: 'hour'
+      });
+    }
+
+    return formatters.h(date, token);
+  },
+  // Hour [0-23]
+  H: function (date, token, localize) {
+    if (token === 'Ho') {
+      return localize.ordinalNumber(date.getUTCHours(), {
+        unit: 'hour'
+      });
+    }
+
+    return formatters.H(date, token);
+  },
+  // Hour [0-11]
+  K: function (date, token, localize) {
+    var hours = date.getUTCHours() % 12;
+
+    if (token === 'Ko') {
+      return localize.ordinalNumber(hours, {
+        unit: 'hour'
+      });
+    }
+
+    return addLeadingZeros(hours, token.length);
+  },
+  // Hour [1-24]
+  k: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    if (hours === 0) hours = 24;
+
+    if (token === 'ko') {
+      return localize.ordinalNumber(hours, {
+        unit: 'hour'
+      });
+    }
+
+    return addLeadingZeros(hours, token.length);
+  },
+  // Minute
+  m: function (date, token, localize) {
+    if (token === 'mo') {
+      return localize.ordinalNumber(date.getUTCMinutes(), {
+        unit: 'minute'
+      });
+    }
+
+    return formatters.m(date, token);
+  },
+  // Second
+  s: function (date, token, localize) {
+    if (token === 'so') {
+      return localize.ordinalNumber(date.getUTCSeconds(), {
+        unit: 'second'
+      });
+    }
+
+    return formatters.s(date, token);
+  },
+  // Fraction of second
+  S: function (date, token) {
+    return formatters.S(date, token);
+  },
+  // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
+  X: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    if (timezoneOffset === 0) {
+      return 'Z';
+    }
+
+    switch (token) {
+      // Hours and optional minutes
+      case 'X':
+        return formatTimezoneWithOptionalMinutes(timezoneOffset);
+      // Hours, minutes and optional seconds without `:` delimiter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `XX`
+
+      case 'XXXX':
+      case 'XX':
+        // Hours and minutes without `:` delimiter
+        return formatTimezone(timezoneOffset);
+      // Hours, minutes and optional seconds with `:` delimiter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `XXX`
+
+      case 'XXXXX':
+      case 'XXX': // Hours and minutes with `:` delimiter
+
+      default:
+        return formatTimezone(timezoneOffset, ':');
+    }
+  },
+  // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
+  x: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Hours and optional minutes
+      case 'x':
+        return formatTimezoneWithOptionalMinutes(timezoneOffset);
+      // Hours, minutes and optional seconds without `:` delimiter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `xx`
+
+      case 'xxxx':
+      case 'xx':
+        // Hours and minutes without `:` delimiter
+        return formatTimezone(timezoneOffset);
+      // Hours, minutes and optional seconds with `:` delimiter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `xxx`
+
+      case 'xxxxx':
+      case 'xxx': // Hours and minutes with `:` delimiter
+
+      default:
+        return formatTimezone(timezoneOffset, ':');
+    }
+  },
+  // Timezone (GMT)
+  O: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Short
+      case 'O':
+      case 'OO':
+      case 'OOO':
+        return 'GMT' + formatTimezoneShort(timezoneOffset, ':');
+      // Long
+
+      case 'OOOO':
+      default:
+        return 'GMT' + formatTimezone(timezoneOffset, ':');
+    }
+  },
+  // Timezone (specific non-location)
+  z: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Short
+      case 'z':
+      case 'zz':
+      case 'zzz':
+        return 'GMT' + formatTimezoneShort(timezoneOffset, ':');
+      // Long
+
+      case 'zzzz':
+      default:
+        return 'GMT' + formatTimezone(timezoneOffset, ':');
+    }
+  },
+  // Seconds timestamp
+  t: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timestamp = Math.floor(originalDate.getTime() / 1000);
+    return addLeadingZeros(timestamp, token.length);
+  },
+  // Milliseconds timestamp
+  T: function (date, token, _localize, options) {
+    var originalDate = options._originalDate || date;
+    var timestamp = originalDate.getTime();
+    return addLeadingZeros(timestamp, token.length);
+  }
+};
+
+function formatTimezoneShort(offset, dirtyDelimiter) {
+  var sign = offset > 0 ? '-' : '+';
+  var absOffset = Math.abs(offset);
+  var hours = Math.floor(absOffset / 60);
+  var minutes = absOffset % 60;
+
+  if (minutes === 0) {
+    return sign + String(hours);
+  }
+
+  var delimiter = dirtyDelimiter || '';
+  return sign + String(hours) + delimiter + addLeadingZeros(minutes, 2);
+}
+
+function formatTimezoneWithOptionalMinutes(offset, dirtyDelimiter) {
+  if (offset % 60 === 0) {
+    var sign = offset > 0 ? '-' : '+';
+    return sign + addLeadingZeros(Math.abs(offset) / 60, 2);
+  }
+
+  return formatTimezone(offset, dirtyDelimiter);
+}
+
+function formatTimezone(offset, dirtyDelimiter) {
+  var delimiter = dirtyDelimiter || '';
+  var sign = offset > 0 ? '-' : '+';
+  var absOffset = Math.abs(offset);
+  var hours = addLeadingZeros(Math.floor(absOffset / 60), 2);
+  var minutes = addLeadingZeros(absOffset % 60, 2);
+  return sign + hours + delimiter + minutes;
+}
+
+function dateLongFormatter(pattern, formatLong) {
+  switch (pattern) {
+    case 'P':
+      return formatLong.date({
+        width: 'short'
+      });
+
+    case 'PP':
+      return formatLong.date({
+        width: 'medium'
+      });
+
+    case 'PPP':
+      return formatLong.date({
+        width: 'long'
+      });
+
+    case 'PPPP':
+    default:
+      return formatLong.date({
+        width: 'full'
+      });
+  }
+}
+
+function timeLongFormatter(pattern, formatLong) {
+  switch (pattern) {
+    case 'p':
+      return formatLong.time({
+        width: 'short'
+      });
+
+    case 'pp':
+      return formatLong.time({
+        width: 'medium'
+      });
+
+    case 'ppp':
+      return formatLong.time({
+        width: 'long'
+      });
+
+    case 'pppp':
+    default:
+      return formatLong.time({
+        width: 'full'
+      });
+  }
+}
+
+function dateTimeLongFormatter(pattern, formatLong) {
+  var matchResult = pattern.match(/(P+)(p+)?/);
+  var datePattern = matchResult[1];
+  var timePattern = matchResult[2];
+
+  if (!timePattern) {
+    return dateLongFormatter(pattern, formatLong);
+  }
+
+  var dateTimeFormat;
+
+  switch (datePattern) {
+    case 'P':
+      dateTimeFormat = formatLong.dateTime({
+        width: 'short'
+      });
+      break;
+
+    case 'PP':
+      dateTimeFormat = formatLong.dateTime({
+        width: 'medium'
+      });
+      break;
+
+    case 'PPP':
+      dateTimeFormat = formatLong.dateTime({
+        width: 'long'
+      });
+      break;
+
+    case 'PPPP':
+    default:
+      dateTimeFormat = formatLong.dateTime({
+        width: 'full'
+      });
+      break;
+  }
+
+  return dateTimeFormat.replace('{{date}}', dateLongFormatter(datePattern, formatLong)).replace('{{time}}', timeLongFormatter(timePattern, formatLong));
+}
+
+var longFormatters = {
+  p: timeLongFormatter,
+  P: dateTimeLongFormatter
+};
+
+var protectedDayOfYearTokens = ['D', 'DD'];
+var protectedWeekYearTokens = ['YY', 'YYYY'];
+function isProtectedDayOfYearToken(token) {
+  return protectedDayOfYearTokens.indexOf(token) !== -1;
+}
+function isProtectedWeekYearToken(token) {
+  return protectedWeekYearTokens.indexOf(token) !== -1;
+}
+function throwProtectedError(token) {
+  if (token === 'YYYY') {
+    throw new RangeError('Use `yyyy` instead of `YYYY` for formatting years; see: https://git.io/fxCyr');
+  } else if (token === 'YY') {
+    throw new RangeError('Use `yy` instead of `YY` for formatting years; see: https://git.io/fxCyr');
+  } else if (token === 'D') {
+    throw new RangeError('Use `d` instead of `D` for formatting days of the month; see: https://git.io/fxCyr');
+  } else if (token === 'DD') {
+    throw new RangeError('Use `dd` instead of `DD` for formatting days of the month; see: https://git.io/fxCyr');
+  }
+}
+
+// - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
+//   (one of the certain letters followed by `o`)
+// - (\w)\1* matches any sequences of the same letter
+// - '' matches two quote characters in a row
+// - '(''|[^'])+('|$) matches anything surrounded by two quote characters ('),
+//   except a single quote symbol, which ends the sequence.
+//   Two quote characters do not end the sequence.
+//   If there is no matching single quote
+//   then the sequence will continue until the end of the string.
+// - . matches any single character unmatched by previous parts of the RegExps
+
+var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g; // This RegExp catches symbols escaped by quotes, and also
+// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
+
+var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+var escapedStringRegExp = /^'([^]*?)'?$/;
+var doubleQuoteRegExp = /''/g;
+var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+/**
+ * @name format
+ * @category Common Helpers
+ * @summary Format the date.
+ *
+ * @description
+ * Return the formatted date string in the given format. The result may vary by locale.
+ *
+ * > ⚠️ Please note that the `format` tokens differ from Moment.js and other libraries.
+ * > See: https://git.io/fxCyr
+ *
+ * The characters wrapped between two single quotes characters (') are escaped.
+ * Two single quotes in a row, whether inside or outside a quoted sequence, represent a 'real' single quote.
+ * (see the last example)
+ *
+ * Format of the string is based on Unicode Technical Standard #35:
+ * https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+ * with a few additions (see note 7 below the table).
+ *
+ * Accepted patterns:
+ * | Unit                            | Pattern | Result examples                   | Notes |
+ * |---------------------------------|---------|-----------------------------------|-------|
+ * | Era                             | G..GGG  | AD, BC                            |       |
+ * |                                 | GGGG    | Anno Domini, Before Christ        | 2     |
+ * |                                 | GGGGG   | A, B                              |       |
+ * | Calendar year                   | y       | 44, 1, 1900, 2017                 | 5     |
+ * |                                 | yo      | 44th, 1st, 0th, 17th              | 5,7   |
+ * |                                 | yy      | 44, 01, 00, 17                    | 5     |
+ * |                                 | yyy     | 044, 001, 1900, 2017              | 5     |
+ * |                                 | yyyy    | 0044, 0001, 1900, 2017            | 5     |
+ * |                                 | yyyyy   | ...                               | 3,5   |
+ * | Local week-numbering year       | Y       | 44, 1, 1900, 2017                 | 5     |
+ * |                                 | Yo      | 44th, 1st, 1900th, 2017th         | 5,7   |
+ * |                                 | YY      | 44, 01, 00, 17                    | 5,8   |
+ * |                                 | YYY     | 044, 001, 1900, 2017              | 5     |
+ * |                                 | YYYY    | 0044, 0001, 1900, 2017            | 5,8   |
+ * |                                 | YYYYY   | ...                               | 3,5   |
+ * | ISO week-numbering year         | R       | -43, 0, 1, 1900, 2017             | 5,7   |
+ * |                                 | RR      | -43, 00, 01, 1900, 2017           | 5,7   |
+ * |                                 | RRR     | -043, 000, 001, 1900, 2017        | 5,7   |
+ * |                                 | RRRR    | -0043, 0000, 0001, 1900, 2017     | 5,7   |
+ * |                                 | RRRRR   | ...                               | 3,5,7 |
+ * | Extended year                   | u       | -43, 0, 1, 1900, 2017             | 5     |
+ * |                                 | uu      | -43, 01, 1900, 2017               | 5     |
+ * |                                 | uuu     | -043, 001, 1900, 2017             | 5     |
+ * |                                 | uuuu    | -0043, 0001, 1900, 2017           | 5     |
+ * |                                 | uuuuu   | ...                               | 3,5   |
+ * | Quarter (formatting)            | Q       | 1, 2, 3, 4                        |       |
+ * |                                 | Qo      | 1st, 2nd, 3rd, 4th                | 7     |
+ * |                                 | QQ      | 01, 02, 03, 04                    |       |
+ * |                                 | QQQ     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 | QQQQ    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 | QQQQQ   | 1, 2, 3, 4                        | 4     |
+ * | Quarter (stand-alone)           | q       | 1, 2, 3, 4                        |       |
+ * |                                 | qo      | 1st, 2nd, 3rd, 4th                | 7     |
+ * |                                 | qq      | 01, 02, 03, 04                    |       |
+ * |                                 | qqq     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 | qqqq    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 | qqqqq   | 1, 2, 3, 4                        | 4     |
+ * | Month (formatting)              | M       | 1, 2, ..., 12                     |       |
+ * |                                 | Mo      | 1st, 2nd, ..., 12th               | 7     |
+ * |                                 | MM      | 01, 02, ..., 12                   |       |
+ * |                                 | MMM     | Jan, Feb, ..., Dec                |       |
+ * |                                 | MMMM    | January, February, ..., December  | 2     |
+ * |                                 | MMMMM   | J, F, ..., D                      |       |
+ * | Month (stand-alone)             | L       | 1, 2, ..., 12                     |       |
+ * |                                 | Lo      | 1st, 2nd, ..., 12th               | 7     |
+ * |                                 | LL      | 01, 02, ..., 12                   |       |
+ * |                                 | LLL     | Jan, Feb, ..., Dec                |       |
+ * |                                 | LLLL    | January, February, ..., December  | 2     |
+ * |                                 | LLLLL   | J, F, ..., D                      |       |
+ * | Local week of year              | w       | 1, 2, ..., 53                     |       |
+ * |                                 | wo      | 1st, 2nd, ..., 53th               | 7     |
+ * |                                 | ww      | 01, 02, ..., 53                   |       |
+ * | ISO week of year                | I       | 1, 2, ..., 53                     | 7     |
+ * |                                 | Io      | 1st, 2nd, ..., 53th               | 7     |
+ * |                                 | II      | 01, 02, ..., 53                   | 7     |
+ * | Day of month                    | d       | 1, 2, ..., 31                     |       |
+ * |                                 | do      | 1st, 2nd, ..., 31st               | 7     |
+ * |                                 | dd      | 01, 02, ..., 31                   |       |
+ * | Day of year                     | D       | 1, 2, ..., 365, 366               | 9     |
+ * |                                 | Do      | 1st, 2nd, ..., 365th, 366th       | 7     |
+ * |                                 | DD      | 01, 02, ..., 365, 366             | 9     |
+ * |                                 | DDD     | 001, 002, ..., 365, 366           |       |
+ * |                                 | DDDD    | ...                               | 3     |
+ * | Day of week (formatting)        | E..EEE  | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | EEEE    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | EEEEE   | M, T, W, T, F, S, S               |       |
+ * |                                 | EEEEEE  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | ISO day of week (formatting)    | i       | 1, 2, 3, ..., 7                   | 7     |
+ * |                                 | io      | 1st, 2nd, ..., 7th                | 7     |
+ * |                                 | ii      | 01, 02, ..., 07                   | 7     |
+ * |                                 | iii     | Mon, Tue, Wed, ..., Su            | 7     |
+ * |                                 | iiii    | Monday, Tuesday, ..., Sunday      | 2,7   |
+ * |                                 | iiiii   | M, T, W, T, F, S, S               | 7     |
+ * |                                 | iiiiii  | Mo, Tu, We, Th, Fr, Su, Sa        | 7     |
+ * | Local day of week (formatting)  | e       | 2, 3, 4, ..., 1                   |       |
+ * |                                 | eo      | 2nd, 3rd, ..., 1st                | 7     |
+ * |                                 | ee      | 02, 03, ..., 01                   |       |
+ * |                                 | eee     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | eeee    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | eeeee   | M, T, W, T, F, S, S               |       |
+ * |                                 | eeeeee  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | Local day of week (stand-alone) | c       | 2, 3, 4, ..., 1                   |       |
+ * |                                 | co      | 2nd, 3rd, ..., 1st                | 7     |
+ * |                                 | cc      | 02, 03, ..., 01                   |       |
+ * |                                 | ccc     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | cccc    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | ccccc   | M, T, W, T, F, S, S               |       |
+ * |                                 | cccccc  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | AM, PM                          | a..aaa  | AM, PM                            |       |
+ * |                                 | aaaa    | a.m., p.m.                        | 2     |
+ * |                                 | aaaaa   | a, p                              |       |
+ * | AM, PM, noon, midnight          | b..bbb  | AM, PM, noon, midnight            |       |
+ * |                                 | bbbb    | a.m., p.m., noon, midnight        | 2     |
+ * |                                 | bbbbb   | a, p, n, mi                       |       |
+ * | Flexible day period             | B..BBB  | at night, in the morning, ...     |       |
+ * |                                 | BBBB    | at night, in the morning, ...     | 2     |
+ * |                                 | BBBBB   | at night, in the morning, ...     |       |
+ * | Hour [1-12]                     | h       | 1, 2, ..., 11, 12                 |       |
+ * |                                 | ho      | 1st, 2nd, ..., 11th, 12th         | 7     |
+ * |                                 | hh      | 01, 02, ..., 11, 12               |       |
+ * | Hour [0-23]                     | H       | 0, 1, 2, ..., 23                  |       |
+ * |                                 | Ho      | 0th, 1st, 2nd, ..., 23rd          | 7     |
+ * |                                 | HH      | 00, 01, 02, ..., 23               |       |
+ * | Hour [0-11]                     | K       | 1, 2, ..., 11, 0                  |       |
+ * |                                 | Ko      | 1st, 2nd, ..., 11th, 0th          | 7     |
+ * |                                 | KK      | 1, 2, ..., 11, 0                  |       |
+ * | Hour [1-24]                     | k       | 24, 1, 2, ..., 23                 |       |
+ * |                                 | ko      | 24th, 1st, 2nd, ..., 23rd         | 7     |
+ * |                                 | kk      | 24, 01, 02, ..., 23               |       |
+ * | Minute                          | m       | 0, 1, ..., 59                     |       |
+ * |                                 | mo      | 0th, 1st, ..., 59th               | 7     |
+ * |                                 | mm      | 00, 01, ..., 59                   |       |
+ * | Second                          | s       | 0, 1, ..., 59                     |       |
+ * |                                 | so      | 0th, 1st, ..., 59th               | 7     |
+ * |                                 | ss      | 00, 01, ..., 59                   |       |
+ * | Fraction of second              | S       | 0, 1, ..., 9                      |       |
+ * |                                 | SS      | 00, 01, ..., 99                   |       |
+ * |                                 | SSS     | 000, 0001, ..., 999               |       |
+ * |                                 | SSSS    | ...                               | 3     |
+ * | Timezone (ISO-8601 w/ Z)        | X       | -08, +0530, Z                     |       |
+ * |                                 | XX      | -0800, +0530, Z                   |       |
+ * |                                 | XXX     | -08:00, +05:30, Z                 |       |
+ * |                                 | XXXX    | -0800, +0530, Z, +123456          | 2     |
+ * |                                 | XXXXX   | -08:00, +05:30, Z, +12:34:56      |       |
+ * | Timezone (ISO-8601 w/o Z)       | x       | -08, +0530, +00                   |       |
+ * |                                 | xx      | -0800, +0530, +0000               |       |
+ * |                                 | xxx     | -08:00, +05:30, +00:00            | 2     |
+ * |                                 | xxxx    | -0800, +0530, +0000, +123456      |       |
+ * |                                 | xxxxx   | -08:00, +05:30, +00:00, +12:34:56 |       |
+ * | Timezone (GMT)                  | O...OOO | GMT-8, GMT+5:30, GMT+0            |       |
+ * |                                 | OOOO    | GMT-08:00, GMT+05:30, GMT+00:00   | 2     |
+ * | Timezone (specific non-locat.)  | z...zzz | GMT-8, GMT+5:30, GMT+0            | 6     |
+ * |                                 | zzzz    | GMT-08:00, GMT+05:30, GMT+00:00   | 2,6   |
+ * | Seconds timestamp               | t       | 512969520                         | 7     |
+ * |                                 | tt      | ...                               | 3,7   |
+ * | Milliseconds timestamp          | T       | 512969520900                      | 7     |
+ * |                                 | TT      | ...                               | 3,7   |
+ * | Long localized date             | P       | 05/29/1453                        | 7     |
+ * |                                 | PP      | May 29, 1453                      | 7     |
+ * |                                 | PPP     | May 29th, 1453                    | 7     |
+ * |                                 | PPPP    | Sunday, May 29th, 1453            | 2,7   |
+ * | Long localized time             | p       | 12:00 AM                          | 7     |
+ * |                                 | pp      | 12:00:00 AM                       | 7     |
+ * |                                 | ppp     | 12:00:00 AM GMT+2                 | 7     |
+ * |                                 | pppp    | 12:00:00 AM GMT+02:00             | 2,7   |
+ * | Combination of date and time    | Pp      | 05/29/1453, 12:00 AM              | 7     |
+ * |                                 | PPpp    | May 29, 1453, 12:00:00 AM         | 7     |
+ * |                                 | PPPppp  | May 29th, 1453 at ...             | 7     |
+ * |                                 | PPPPpppp| Sunday, May 29th, 1453 at ...     | 2,7   |
+ * Notes:
+ * 1. "Formatting" units (e.g. formatting quarter) in the default en-US locale
+ *    are the same as "stand-alone" units, but are different in some languages.
+ *    "Formatting" units are declined according to the rules of the language
+ *    in the context of a date. "Stand-alone" units are always nominative singular:
+ *
+ *    `format(new Date(2017, 10, 6), 'do LLLL', {locale: cs}) //=> '6. listopad'`
+ *
+ *    `format(new Date(2017, 10, 6), 'do MMMM', {locale: cs}) //=> '6. listopadu'`
+ *
+ * 2. Any sequence of the identical letters is a pattern, unless it is escaped by
+ *    the single quote characters (see below).
+ *    If the sequence is longer than listed in table (e.g. `EEEEEEEEEEE`)
+ *    the output will be the same as default pattern for this unit, usually
+ *    the longest one (in case of ISO weekdays, `EEEE`). Default patterns for units
+ *    are marked with "2" in the last column of the table.
+ *
+ *    `format(new Date(2017, 10, 6), 'MMM') //=> 'Nov'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMM') //=> 'November'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMM') //=> 'N'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMMM') //=> 'November'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMMMM') //=> 'November'`
+ *
+ * 3. Some patterns could be unlimited length (such as `yyyyyyyy`).
+ *    The output will be padded with zeros to match the length of the pattern.
+ *
+ *    `format(new Date(2017, 10, 6), 'yyyyyyyy') //=> '00002017'`
+ *
+ * 4. `QQQQQ` and `qqqqq` could be not strictly numerical in some locales.
+ *    These tokens represent the shortest form of the quarter.
+ *
+ * 5. The main difference between `y` and `u` patterns are B.C. years:
+ *
+ *    | Year | `y` | `u` |
+ *    |------|-----|-----|
+ *    | AC 1 |   1 |   1 |
+ *    | BC 1 |   1 |   0 |
+ *    | BC 2 |   2 |  -1 |
+ *
+ *    Also `yy` always returns the last two digits of a year,
+ *    while `uu` pads single digit years to 2 characters and returns other years unchanged:
+ *
+ *    | Year | `yy` | `uu` |
+ *    |------|------|------|
+ *    | 1    |   01 |   01 |
+ *    | 14   |   14 |   14 |
+ *    | 376  |   76 |  376 |
+ *    | 1453 |   53 | 1453 |
+ *
+ *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
+ *    except local week-numbering years are dependent on `options.weekStartsOn`
+ *    and `options.firstWeekContainsDate` (compare [getISOWeekYear]{@link https://date-fns.org/docs/getISOWeekYear}
+ *    and [getWeekYear]{@link https://date-fns.org/docs/getWeekYear}).
+ *
+ * 6. Specific non-location timezones are currently unavailable in `date-fns`,
+ *    so right now these tokens fall back to GMT timezones.
+ *
+ * 7. These patterns are not in the Unicode Technical Standard #35:
+ *    - `i`: ISO day of week
+ *    - `I`: ISO week of year
+ *    - `R`: ISO week-numbering year
+ *    - `t`: seconds timestamp
+ *    - `T`: milliseconds timestamp
+ *    - `o`: ordinal number modifier
+ *    - `P`: long localized date
+ *    - `p`: long localized time
+ *
+ * 8. `YY` and `YYYY` tokens represent week-numbering years but they are often confused with years.
+ *    You should enable `options.useAdditionalWeekYearTokens` to use them. See: https://git.io/fxCyr
+ *
+ * 9. `D` and `DD` tokens represent days of the year but they are ofthen confused with days of the month.
+ *    You should enable `options.useAdditionalDayOfYearTokens` to use them. See: https://git.io/fxCyr
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * - The second argument is now required for the sake of explicitness.
+ *
+ *   ```javascript
+ *   // Before v2.0.0
+ *   format(new Date(2016, 0, 1))
+ *
+ *   // v2.0.0 onward
+ *   format(new Date(2016, 0, 1), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
+ *   ```
+ *
+ * - New format string API for `format` function
+ *   which is based on [Unicode Technical Standard #35](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
+ *   See [this post](https://blog.date-fns.org/post/unicode-tokens-in-date-fns-v2-sreatyki91jg) for more details.
+ *
+ * - Characters are now escaped using single quote symbols (`'`) instead of square brackets.
+ *
+ * @param {Date|Number} date - the original date
+ * @param {String} format - the string of tokens
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {Number} [options.firstWeekContainsDate=1] - the day of January, which is
+ * @param {Boolean} [options.useAdditionalWeekYearTokens=false] - if true, allows usage of the week-numbering year tokens `YY` and `YYYY`;
+ *   see: https://git.io/fxCyr
+ * @param {Boolean} [options.useAdditionalDayOfYearTokens=false] - if true, allows usage of the day of year tokens `D` and `DD`;
+ *   see: https://git.io/fxCyr
+ * @returns {String} the formatted date string
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `date` must not be Invalid Date
+ * @throws {RangeError} `options.locale` must contain `localize` property
+ * @throws {RangeError} `options.locale` must contain `formatLong` property
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @throws {RangeError} use `yyyy` instead of `YYYY` for formatting years; see: https://git.io/fxCyr
+ * @throws {RangeError} use `yy` instead of `YY` for formatting years; see: https://git.io/fxCyr
+ * @throws {RangeError} use `d` instead of `D` for formatting days of the month; see: https://git.io/fxCyr
+ * @throws {RangeError} use `dd` instead of `DD` for formatting days of the month; see: https://git.io/fxCyr
+ * @throws {RangeError} format string contains an unescaped latin alphabet character
+ *
+ * @example
+ * // Represent 11 February 2014 in middle-endian format:
+ * var result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
+ * //=> '02/11/2014'
+ *
+ * @example
+ * // Represent 2 July 2014 in Esperanto:
+ * import { eoLocale } from 'date-fns/locale/eo'
+ * var result = format(new Date(2014, 6, 2), "do 'de' MMMM yyyy", {
+ *   locale: eoLocale
+ * })
+ * //=> '2-a de julio 2014'
+ *
+ * @example
+ * // Escape string by single quote characters:
+ * var result = format(new Date(2014, 6, 2, 15), "h 'o''clock'")
+ * //=> "3 o'clock"
+ */
+
+function format(dirtyDate, dirtyFormatStr, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var formatStr = String(dirtyFormatStr);
+  var options = dirtyOptions || {};
+  var locale$1 = options.locale || locale;
+  var localeFirstWeekContainsDate = locale$1.options && locale$1.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : toInteger(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
+  }
+
+  var localeWeekStartsOn = locale$1.options && locale$1.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+
+  if (!locale$1.localize) {
+    throw new RangeError('locale must contain localize property');
+  }
+
+  if (!locale$1.formatLong) {
+    throw new RangeError('locale must contain formatLong property');
+  }
+
+  var originalDate = toDate(dirtyDate);
+
+  if (!isValid(originalDate)) {
+    throw new RangeError('Invalid time value');
+  } // Convert the date in system timezone to the same date in UTC+00:00 timezone.
+  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
+  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
+
+
+  var timezoneOffset = getTimezoneOffsetInMilliseconds(originalDate);
+  var utcDate = subMilliseconds(originalDate, timezoneOffset);
+  var formatterOptions = {
+    firstWeekContainsDate: firstWeekContainsDate,
+    weekStartsOn: weekStartsOn,
+    locale: locale$1,
+    _originalDate: originalDate
+  };
+  var result = formatStr.match(longFormattingTokensRegExp).map(function (substring) {
+    var firstCharacter = substring[0];
+
+    if (firstCharacter === 'p' || firstCharacter === 'P') {
+      var longFormatter = longFormatters[firstCharacter];
+      return longFormatter(substring, locale$1.formatLong, formatterOptions);
+    }
+
+    return substring;
+  }).join('').match(formattingTokensRegExp).map(function (substring) {
+    // Replace two single quote characters with one single quote character
+    if (substring === "''") {
+      return "'";
+    }
+
+    var firstCharacter = substring[0];
+
+    if (firstCharacter === "'") {
+      return cleanEscapedString(substring);
+    }
+
+    var formatter = formatters$1[firstCharacter];
+
+    if (formatter) {
+      if (!options.useAdditionalWeekYearTokens && isProtectedWeekYearToken(substring)) {
+        throwProtectedError(substring);
+      }
+
+      if (!options.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(substring)) {
+        throwProtectedError(substring);
+      }
+
+      return formatter(utcDate, substring, locale$1.localize, formatterOptions);
+    }
+
+    if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
+      throw new RangeError('Format string contains an unescaped latin alphabet character `' + firstCharacter + '`');
+    }
+
+    return substring;
+  }).join('');
+  return result;
+}
+
+function cleanEscapedString(input) {
+  return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'");
+}
+
+var MILLISECONDS_IN_WEEK$3 = 604800000;
+/**
+ * @name getISOWeek
+ * @category ISO Week Helpers
+ * @summary Get the ISO week of the given date.
+ *
+ * @description
+ * Get the ISO week of the given date.
+ *
+ * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the given date
+ * @returns {Number} the ISO week
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // Which week of the ISO-week numbering year is 2 January 2005?
+ * var result = getISOWeek(new Date(2005, 0, 2))
+ * //=> 53
+ */
+
+function getISOWeek(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var diff = startOfISOWeek(date).getTime() - startOfISOWeekYear(date).getTime(); // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+
+  return Math.round(diff / MILLISECONDS_IN_WEEK$3) + 1;
+}
+
+/**
+ * @name getWeekYear
+ * @category Week-Numbering Year Helpers
+ * @summary Get the local week-numbering year of the given date.
+ *
+ * @description
+ * Get the local week-numbering year of the given date.
+ * The exact calculation depends on the values of
+ * `options.weekStartsOn` (which is the index of the first day of the week)
+ * and `options.firstWeekContainsDate` (which is the day of January, which is always in
+ * the first week of the week-numbering year)
+ *
+ * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the given date
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
+ * @returns {Number} the local week-numbering year
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ *
+ * @example
+ * // Which week numbering year is 26 December 2004 with the default settings?
+ * var result = getWeekYear(new Date(2004, 11, 26))
+ * //=> 2005
+ *
+ * @example
+ * // Which week numbering year is 26 December 2004 if week starts on Saturday?
+ * var result = getWeekYear(new Date(2004, 11, 26), { weekStartsOn: 6 })
+ * //=> 2004
+ *
+ * @example
+ * // Which week numbering year is 26 December 2004 if the first week contains 4 January?
+ * var result = getWeekYear(new Date(2004, 11, 26), { firstWeekContainsDate: 4 })
+ * //=> 2004
+ */
+
+function getWeekYear(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var year = date.getFullYear();
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale && locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : toInteger(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
+  }
+
+  var firstWeekOfNextYear = new Date(0);
+  firstWeekOfNextYear.setFullYear(year + 1, 0, firstWeekContainsDate);
+  firstWeekOfNextYear.setHours(0, 0, 0, 0);
+  var startOfNextYear = startOfWeek(firstWeekOfNextYear, dirtyOptions);
+  var firstWeekOfThisYear = new Date(0);
+  firstWeekOfThisYear.setFullYear(year, 0, firstWeekContainsDate);
+  firstWeekOfThisYear.setHours(0, 0, 0, 0);
+  var startOfThisYear = startOfWeek(firstWeekOfThisYear, dirtyOptions);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+/**
+ * @name startOfWeekYear
+ * @category Week-Numbering Year Helpers
+ * @summary Return the start of a local week-numbering year for the given date.
+ *
+ * @description
+ * Return the start of a local week-numbering year.
+ * The exact calculation depends on the values of
+ * `options.weekStartsOn` (which is the index of the first day of the week)
+ * and `options.firstWeekContainsDate` (which is the day of January, which is always in
+ * the first week of the week-numbering year)
+ *
+ * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
+ * @returns {Date} the start of a week-numbering year
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ *
+ * @example
+ * // The start of an a week-numbering year for 2 July 2005 with default settings:
+ * var result = startOfWeekYear(new Date(2005, 6, 2))
+ * //=> Sun Dec 26 2004 00:00:00
+ *
+ * @example
+ * // The start of a week-numbering year for 2 July 2005
+ * // if Monday is the first day of week
+ * // and 4 January is always in the first week of the year:
+ * var result = startOfWeekYear(new Date(2005, 6, 2), {
+ *   weekStartsOn: 1,
+ *   firstWeekContainsDate: 4
+ * })
+ * //=> Mon Jan 03 2005 00:00:00
+ */
+
+function startOfWeekYear(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale && locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : toInteger(options.firstWeekContainsDate);
+  var year = getWeekYear(dirtyDate, dirtyOptions);
+  var firstWeek = new Date(0);
+  firstWeek.setFullYear(year, 0, firstWeekContainsDate);
+  firstWeek.setHours(0, 0, 0, 0);
+  var date = startOfWeek(firstWeek, dirtyOptions);
+  return date;
+}
+
+var MILLISECONDS_IN_WEEK$4 = 604800000;
+/**
+ * @name getWeek
+ * @category Week Helpers
+ * @summary Get the local week index of the given date.
+ *
+ * @description
+ * Get the local week index of the given date.
+ * The exact calculation depends on the values of
+ * `options.weekStartsOn` (which is the index of the first day of the week)
+ * and `options.firstWeekContainsDate` (which is the day of January, which is always in
+ * the first week of the week-numbering year)
+ *
+ * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the given date
+ * @param {Object} [options] - an object with options.
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
+ * @returns {Number} the week
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ *
+ * @example
+ * // Which week of the local week numbering year is 2 January 2005 with default options?
+ * var result = getISOWeek(new Date(2005, 0, 2))
+ * //=> 2
+ *
+ * // Which week of the local week numbering year is 2 January 2005,
+ * // if Monday is the first day of the week,
+ * // and the first week of the year always contains 4 January?
+ * var result = getISOWeek(new Date(2005, 0, 2), {
+ *   weekStartsOn: 1,
+ *   firstWeekContainsDate: 4
+ * })
+ * //=> 53
+ */
+
+function getWeek(dirtyDate, options) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var diff = startOfWeek(date, options).getTime() - startOfWeekYear(date, options).getTime(); // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+
+  return Math.round(diff / MILLISECONDS_IN_WEEK$4) + 1;
+}
+
+/**
+ * @name isAfter
+ * @category Common Helpers
+ * @summary Is the first date after the second one?
+ *
+ * @description
+ * Is the first date after the second one?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date that should be after the other one to return true
+ * @param {Date|Number} dateToCompare - the date to compare with
+ * @returns {Boolean} the first date is after the second date
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Is 10 July 1989 after 11 February 1987?
+ * var result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> true
+ */
+
+function isAfter(dirtyDate, dirtyDateToCompare) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var dateToCompare = toDate(dirtyDateToCompare);
+  return date.getTime() > dateToCompare.getTime();
+}
+
+/**
+ * @name isBefore
+ * @category Common Helpers
+ * @summary Is the first date before the second one?
+ *
+ * @description
+ * Is the first date before the second one?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date that should be before the other one to return true
+ * @param {Date|Number} dateToCompare - the date to compare with
+ * @returns {Boolean} the first date is before the second date
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Is 10 July 1989 before 11 February 1987?
+ * var result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> false
+ */
+
+function isBefore(dirtyDate, dirtyDateToCompare) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  var dateToCompare = toDate(dirtyDateToCompare);
+  return date.getTime() < dateToCompare.getTime();
+}
+
+/**
+ * @name startOfMinute
+ * @category Minute Helpers
+ * @summary Return the start of a minute for the given date.
+ *
+ * @description
+ * Return the start of a minute for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of a minute
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of a minute for 1 December 2014 22:15:45.400:
+ * var result = startOfMinute(new Date(2014, 11, 1, 22, 15, 45, 400))
+ * //=> Mon Dec 01 2014 22:15:00
+ */
+
+function startOfMinute(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  date.setSeconds(0, 0);
+  return date;
+}
+
+/**
+ * @name isSameMinute
+ * @category Minute Helpers
+ * @summary Are the given dates in the same minute?
+ *
+ * @description
+ * Are the given dates in the same minute?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the first date to check
+ * @param {Date|Number} dateRight - the second date to check
+ * @returns {Boolean} the dates are in the same minute
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Are 4 September 2014 06:30:00 and 4 September 2014 06:30:15
+ * // in the same minute?
+ * var result = isSameMinute(
+ *   new Date(2014, 8, 4, 6, 30),
+ *   new Date(2014, 8, 4, 6, 30, 15)
+ * )
+ * //=> true
+ */
+
+function isSameMinute(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeftStartOfMinute = startOfMinute(dirtyDateLeft);
+  var dateRightStartOfMinute = startOfMinute(dirtyDateRight);
+  return dateLeftStartOfMinute.getTime() === dateRightStartOfMinute.getTime();
+}
+
+/**
+ * @name isSameMonth
+ * @category Month Helpers
+ * @summary Are the given dates in the same month?
+ *
+ * @description
+ * Are the given dates in the same month?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the first date to check
+ * @param {Date|Number} dateRight - the second date to check
+ * @returns {Boolean} the dates are in the same month
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Are 2 September 2014 and 25 September 2014 in the same month?
+ * var result = isSameMonth(new Date(2014, 8, 2), new Date(2014, 8, 25))
+ * //=> true
+ */
+
+function isSameMonth(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  return dateLeft.getFullYear() === dateRight.getFullYear() && dateLeft.getMonth() === dateRight.getMonth();
+}
+
+/**
+ * @name startOfSecond
+ * @category Second Helpers
+ * @summary Return the start of a second for the given date.
+ *
+ * @description
+ * Return the start of a second for the given date.
+ * The result will be in the local timezone.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the start of a second
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The start of a second for 1 December 2014 22:15:45.400:
+ * var result = startOfSecond(new Date(2014, 11, 1, 22, 15, 45, 400))
+ * //=> Mon Dec 01 2014 22:15:45.000
+ */
+
+function startOfSecond(dirtyDate) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = toDate(dirtyDate);
+  date.setMilliseconds(0);
+  return date;
+}
+
+/**
+ * @name isSameSecond
+ * @category Second Helpers
+ * @summary Are the given dates in the same second?
+ *
+ * @description
+ * Are the given dates in the same second?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the first date to check
+ * @param {Date|Number} dateRight - the second date to check
+ * @returns {Boolean} the dates are in the same second
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Are 4 September 2014 06:30:15.000 and 4 September 2014 06:30.15.500
+ * // in the same second?
+ * var result = isSameSecond(
+ *   new Date(2014, 8, 4, 6, 30, 15),
+ *   new Date(2014, 8, 4, 6, 30, 15, 500)
+ * )
+ * //=> true
+ */
+
+function isSameSecond(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeftStartOfSecond = startOfSecond(dirtyDateLeft);
+  var dateRightStartOfSecond = startOfSecond(dirtyDateRight);
+  return dateLeftStartOfSecond.getTime() === dateRightStartOfSecond.getTime();
+}
+
+/**
+ * @name isSameYear
+ * @category Year Helpers
+ * @summary Are the given dates in the same year?
+ *
+ * @description
+ * Are the given dates in the same year?
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} dateLeft - the first date to check
+ * @param {Date|Number} dateRight - the second date to check
+ * @returns {Boolean} the dates are in the same year
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Are 2 September 2014 and 25 September 2014 in the same year?
+ * var result = isSameYear(new Date(2014, 8, 2), new Date(2014, 8, 25))
+ * //=> true
+ */
+
+function isSameYear(dirtyDateLeft, dirtyDateRight) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  return dateLeft.getFullYear() === dateRight.getFullYear();
+}
+
+/**
+ * @name isWithinInterval
+ * @category Interval Helpers
+ * @summary Is the given date within the interval?
+ *
+ * @description
+ * Is the given date within the interval? (Including start and end.)
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * - The function was renamed from `isWithinRange` to `isWithinInterval`.
+ *   This change was made to mirror the use of the word "interval" in standard ISO 8601:2004 terminology:
+ *
+ *   ```
+ *   2.1.3
+ *   time interval
+ *   part of the time axis limited by two instants
+ *   ```
+ *
+ *   Also, this function now accepts an object with `start` and `end` properties
+ *   instead of two arguments as an interval.
+ *   This function now throws `RangeError` if the start of the interval is after its end
+ *   or if any date in the interval is `Invalid Date`.
+ *
+ *   ```javascript
+ *   // Before v2.0.0
+ *
+ *   isWithinRange(
+ *     new Date(2014, 0, 3),
+ *     new Date(2014, 0, 1), new Date(2014, 0, 7)
+ *   )
+ *
+ *   // v2.0.0 onward
+ *
+ *   isWithinInterval(
+ *     new Date(2014, 0, 3),
+ *     { start: new Date(2014, 0, 1), end: new Date(2014, 0, 7) }
+ *   )
+ *   ```
+ *
+ * @param {Date|Number} date - the date to check
+ * @param {Interval} interval - the interval to check
+ * @returns {Boolean} the date is within the interval
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} The start of an interval cannot be after its end
+ * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ *
+ * @example
+ * // For the date within the interval:
+ * isWithinInterval(new Date(2014, 0, 3), {
+ *   start: new Date(2014, 0, 1),
+ *   end: new Date(2014, 0, 7)
+ * })
+ * //=> true
+ *
+ * @example
+ * // For the date outside of the interval:
+ * isWithinInterval(new Date(2014, 0, 10), {
+ *   start: new Date(2014, 0, 1),
+ *   end: new Date(2014, 0, 7)
+ * })
+ * //=> false
+ *
+ * @example
+ * // For date equal to interval start:
+ * isWithinInterval(date, { start, end: date }) // => true
+ *
+ * @example
+ * // For date equal to interval end:
+ * isWithinInterval(date, { start: date, end }) // => true
+ */
+
+function isWithinInterval(dirtyDate, dirtyInterval) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var interval = dirtyInterval || {};
+  var time = toDate(dirtyDate).getTime();
+  var startTime = toDate(interval.start).getTime();
+  var endTime = toDate(interval.end).getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
+
+  if (!(startTime <= endTime)) {
+    throw new RangeError('Invalid interval');
+  }
+
+  return time >= startTime && time <= endTime;
+}
+
+/**
+ * @name subMonths
+ * @category Month Helpers
+ * @summary Subtract the specified number of months from the given date.
+ *
+ * @description
+ * Subtract the specified number of months from the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of months to be subtracted
+ * @returns {Date} the new date with the months subtracted
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Subtract 5 months from 1 February 2015:
+ * var result = subMonths(new Date(2015, 1, 1), 5)
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+
+function subMonths(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = toInteger(dirtyAmount);
+  return addMonths(dirtyDate, -amount);
+}
+
+/**
+ * @name subYears
+ * @category Year Helpers
+ * @summary Subtract the specified number of years from the given date.
+ *
+ * @description
+ * Subtract the specified number of years from the given date.
+ *
+ * ### v2.0.0 breaking changes:
+ *
+ * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of years to be subtracted
+ * @returns {Date} the new date with the years subtracted
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Subtract 5 years from 1 September 2014:
+ * var result = subYears(new Date(2014, 8, 1), 5)
+ * //=> Tue Sep 01 2009 00:00:00
+ */
+
+function subYears(dirtyDate, dirtyAmount) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = toInteger(dirtyAmount);
+  return addYears(dirtyDate, -amount);
+}
+
+/* src/date-range-picker/components/Day.svelte generated by Svelte v3.5.3 */
+
+const file = "src/date-range-picker/components/Day.svelte";
+
+// (107:4) {#if monthIndicator}
+function create_if_block(ctx) {
+	var span, t_value = format(ctx.day.date, 'MMM', { locale: ctx.locale }), t;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t = text(t_value);
+			attr(span, "class", "month-indicator svelte-1uv81t1");
+			add_location(span, file, 107, 6, 1886);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.day || changed.locale) && t_value !== (t_value = format(ctx.day.date, 'MMM', { locale: ctx.locale }))) {
+				set_data(t, t_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	var div, button, t0, t1_value = format(ctx.day.date, 'd', { locale: ctx.locale }), t1, button_aria_label_value, button_aria_disabled_value, button_disabled_value, dispose;
+
+	var if_block = (ctx.monthIndicator) && create_if_block(ctx);
+
+	return {
+		c: function create() {
+			div = element("div");
+			button = element("button");
+			if (if_block) if_block.c();
+			t0 = space();
+			t1 = text(t1_value);
+			attr(button, "aria-label", button_aria_label_value = format(ctx.day.date, 'EEEE, MMMM co, yyyy', { locale: ctx.locale }));
+			attr(button, "aria-disabled", button_aria_disabled_value = ctx.day.isDisabled);
+			attr(button, "class", "calendar-cell svelte-1uv81t1");
+			button.disabled = button_disabled_value = ctx.day.isDisabled;
+			add_location(button, file, 98, 2, 1642);
+			attr(div, "class", "svelte-1uv81t1");
+			toggle_class(div, "rtl", ctx.rtl);
+			toggle_class(div, "today", ctx.day.isToday);
+			toggle_class(div, "weekend", ctx.day.isWeekend);
+			toggle_class(div, "next-month", ctx.day.isNextMonth);
+			toggle_class(div, "prev-month", ctx.day.isPrevMonth);
+			toggle_class(div, "start-date", ctx.day.isStartDate);
+			toggle_class(div, "end-date", ctx.day.isEndDate);
+			toggle_class(div, "within-selection", ctx.day.isWithinSelection);
+			add_location(div, file, 89, 0, 1369);
+
+			dispose = [
+				listen(button, "click", ctx.click_handler),
+				listen(button, "mouseenter", ctx.mouseenter_handler),
+				listen(button, "focus", ctx.focus_handler)
+			];
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			append(div, button);
+			if (if_block) if_block.m(button, null);
+			append(button, t0);
+			append(button, t1);
+		},
+
+		p: function update(changed, ctx) {
+			if (ctx.monthIndicator) {
+				if (if_block) {
+					if_block.p(changed, ctx);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(button, t0);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+
+			if ((changed.day || changed.locale) && t1_value !== (t1_value = format(ctx.day.date, 'd', { locale: ctx.locale }))) {
+				set_data(t1, t1_value);
+			}
+
+			if ((changed.day || changed.locale) && button_aria_label_value !== (button_aria_label_value = format(ctx.day.date, 'EEEE, MMMM co, yyyy', { locale: ctx.locale }))) {
+				attr(button, "aria-label", button_aria_label_value);
+			}
+
+			if ((changed.day) && button_aria_disabled_value !== (button_aria_disabled_value = ctx.day.isDisabled)) {
+				attr(button, "aria-disabled", button_aria_disabled_value);
+			}
+
+			if ((changed.day) && button_disabled_value !== (button_disabled_value = ctx.day.isDisabled)) {
+				button.disabled = button_disabled_value;
+			}
+
+			if (changed.rtl) {
+				toggle_class(div, "rtl", ctx.rtl);
+			}
+
+			if (changed.day) {
+				toggle_class(div, "today", ctx.day.isToday);
+				toggle_class(div, "weekend", ctx.day.isWeekend);
+				toggle_class(div, "next-month", ctx.day.isNextMonth);
+				toggle_class(div, "prev-month", ctx.day.isPrevMonth);
+				toggle_class(div, "start-date", ctx.day.isStartDate);
+				toggle_class(div, "end-date", ctx.day.isEndDate);
+				toggle_class(div, "within-selection", ctx.day.isWithinSelection);
+			}
+		},
+
+		i: noop,
+		o: noop,
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			if (if_block) if_block.d();
+			run_all(dispose);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let { locale, day, monthIndicator, rtl } = $$props;
+
+	const writable_props = ['locale', 'day', 'monthIndicator', 'rtl'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Day> was created with unknown prop '${key}'`);
+	});
+
+	function click_handler(event) {
+		bubble($$self, event);
+	}
+
+	function mouseenter_handler(event) {
+		bubble($$self, event);
+	}
+
+	function focus_handler(event) {
+		bubble($$self, event);
+	}
+
+	$$self.$set = $$props => {
+		if ('locale' in $$props) $$invalidate('locale', locale = $$props.locale);
+		if ('day' in $$props) $$invalidate('day', day = $$props.day);
+		if ('monthIndicator' in $$props) $$invalidate('monthIndicator', monthIndicator = $$props.monthIndicator);
+		if ('rtl' in $$props) $$invalidate('rtl', rtl = $$props.rtl);
+	};
+
+	return {
+		locale,
+		day,
+		monthIndicator,
+		rtl,
+		click_handler,
+		mouseenter_handler,
+		focus_handler
+	};
+}
+
+class Day extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance, create_fragment, safe_not_equal, ["locale", "day", "monthIndicator", "rtl"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.locale === undefined && !('locale' in props)) {
+			console.warn("<Day> was created without expected prop 'locale'");
+		}
+		if (ctx.day === undefined && !('day' in props)) {
+			console.warn("<Day> was created without expected prop 'day'");
+		}
+		if (ctx.monthIndicator === undefined && !('monthIndicator' in props)) {
+			console.warn("<Day> was created without expected prop 'monthIndicator'");
+		}
+		if (ctx.rtl === undefined && !('rtl' in props)) {
+			console.warn("<Day> was created without expected prop 'rtl'");
+		}
+	}
+
+	get locale() {
+		throw new Error("<Day>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<Day>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get day() {
+		throw new Error("<Day>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set day(value) {
+		throw new Error("<Day>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthIndicator() {
+		throw new Error("<Day>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthIndicator(value) {
+		throw new Error("<Day>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get rtl() {
+		throw new Error("<Day>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set rtl(value) {
+		throw new Error("<Day>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/date-range-picker/components/Week.svelte generated by Svelte v3.5.3 */
+
+const file$1 = "src/date-range-picker/components/Week.svelte";
+
+function get_each_context(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.day = list[i];
+	return child_ctx;
+}
+
+// (90:2) {#if weekGuides && week.weeksFromToday}
+function create_if_block_3(ctx) {
+	var div, span, t0_value = ctx.weeksFromToday(ctx.week), t0, t1, span_aria_label_value;
+
+	return {
+		c: function create() {
+			div = element("div");
+			span = element("span");
+			t0 = text(t0_value);
+			t1 = text("w");
+			attr(span, "aria-label", span_aria_label_value = `${ctx.week.weeksFromToday} weeks from today`);
+			attr(span, "class", "svelte-mhpr0y");
+			add_location(span, file$1, 91, 6, 1866);
+			attr(div, "class", "relative calendar-row side-width left-side svelte-mhpr0y");
+			add_location(div, file$1, 90, 4, 1803);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			append(div, span);
+			append(span, t0);
+			append(span, t1);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.weeksFromToday || changed.week) && t0_value !== (t0_value = ctx.weeksFromToday(ctx.week))) {
+				set_data(t0, t0_value);
+			}
+
+			if ((changed.week) && span_aria_label_value !== (span_aria_label_value = `${ctx.week.weeksFromToday} weeks from today`)) {
+				attr(span, "aria-label", span_aria_label_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+		}
+	};
+}
+
+// (99:4) {#each week.daysInWeek as day (day.date.toString())}
+function create_each_block(key_1, ctx) {
+	var first, current;
+
+	function click_handler() {
+		return ctx.click_handler(ctx);
+	}
+
+	function mouseenter_handler() {
+		return ctx.mouseenter_handler(ctx);
+	}
+
+	function focus_handler() {
+		return ctx.focus_handler(ctx);
+	}
+
+	var day = new Day({
+		props: {
+		day: ctx.day,
+		locale: ctx.locale,
+		monthIndicator: ctx.monthIndicator,
+		rtl: ctx.rtl
+	},
+		$$inline: true
+	});
+	day.$on("click", click_handler);
+	day.$on("mouseenter", mouseenter_handler);
+	day.$on("focus", focus_handler);
+
+	return {
+		key: key_1,
+
+		first: null,
+
+		c: function create() {
+			first = empty();
+			day.$$.fragment.c();
+			this.first = first;
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, first, anchor);
+			mount_component(day, target, anchor);
+			current = true;
+		},
+
+		p: function update(changed, new_ctx) {
+			ctx = new_ctx;
+			var day_changes = {};
+			if (changed.week) day_changes.day = ctx.day;
+			if (changed.locale) day_changes.locale = ctx.locale;
+			if (changed.monthIndicator) day_changes.monthIndicator = ctx.monthIndicator;
+			if (changed.rtl) day_changes.rtl = ctx.rtl;
+			day.$set(day_changes);
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(day.$$.fragment, local);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(day.$$.fragment, local);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(first);
+			}
+
+			destroy_component(day, detaching);
+		}
+	};
+}
+
+// (110:2) {#if weekNumbers || isoWeekNumbers}
+function create_if_block$1(ctx) {
+	var div, t;
+
+	var if_block0 = (ctx.weekNumbers) && create_if_block_2(ctx);
+
+	var if_block1 = (ctx.isoWeekNumbers) && create_if_block_1(ctx);
+
+	return {
+		c: function create() {
+			div = element("div");
+			if (if_block0) if_block0.c();
+			t = space();
+			if (if_block1) if_block1.c();
+			attr(div, "class", "relative calendar-row side-width right-side svelte-mhpr0y");
+			add_location(div, file$1, 110, 4, 2361);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			if (if_block0) if_block0.m(div, null);
+			append(div, t);
+			if (if_block1) if_block1.m(div, null);
+		},
+
+		p: function update(changed, ctx) {
+			if (ctx.weekNumbers) {
+				if (if_block0) {
+					if_block0.p(changed, ctx);
+				} else {
+					if_block0 = create_if_block_2(ctx);
+					if_block0.c();
+					if_block0.m(div, t);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (ctx.isoWeekNumbers) {
+				if (if_block1) {
+					if_block1.p(changed, ctx);
+				} else {
+					if_block1 = create_if_block_1(ctx);
+					if_block1.c();
+					if_block1.m(div, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+		}
+	};
+}
+
+// (112:6) {#if weekNumbers}
+function create_if_block_2(ctx) {
+	var span, t_value = ctx.week.weekNumber, t, span_aria_label_value;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t = text(t_value);
+			attr(span, "aria-label", span_aria_label_value = `Week ${ctx.week.weekNumber}`);
+			attr(span, "class", "svelte-mhpr0y");
+			add_location(span, file$1, 112, 8, 2451);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.week) && t_value !== (t_value = ctx.week.weekNumber)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.week) && span_aria_label_value !== (span_aria_label_value = `Week ${ctx.week.weekNumber}`)) {
+				attr(span, "aria-label", span_aria_label_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+// (115:6) {#if isoWeekNumbers}
+function create_if_block_1(ctx) {
+	var span, t0, t1_value = ctx.week.isoWeekNumber, t1, span_aria_label_value;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t0 = text("i");
+			t1 = text(t1_value);
+			attr(span, "aria-label", span_aria_label_value = `Week ${ctx.week.isoWeekNumber}`);
+			attr(span, "class", "svelte-mhpr0y");
+			add_location(span, file$1, 115, 8, 2568);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t0);
+			append(span, t1);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.week) && t1_value !== (t1_value = ctx.week.isoWeekNumber)) {
+				set_data(t1, t1_value);
+			}
+
+			if ((changed.week) && span_aria_label_value !== (span_aria_label_value = `Week ${ctx.week.isoWeekNumber}`)) {
+				attr(span, "aria-label", span_aria_label_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+function create_fragment$1(ctx) {
+	var div1, t0, div0, each_blocks = [], each_1_lookup = new Map(), t1, div1_aria_label_value, current;
+
+	var if_block0 = (ctx.weekGuides && ctx.week.weeksFromToday) && create_if_block_3(ctx);
+
+	var each_value = ctx.week.daysInWeek;
+
+	const get_key = ctx => ctx.day.date.toString();
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		let child_ctx = get_each_context(ctx, each_value, i);
+		let key = get_key(child_ctx);
+		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
+	}
+
+	var if_block1 = (ctx.weekNumbers || ctx.isoWeekNumbers) && create_if_block$1(ctx);
+
+	return {
+		c: function create() {
+			div1 = element("div");
+			if (if_block0) if_block0.c();
+			t0 = space();
+			div0 = element("div");
+
+			for (i = 0; i < each_blocks.length; i += 1) each_blocks[i].c();
+
+			t1 = space();
+			if (if_block1) if_block1.c();
+			attr(div0, "class", "calendar-row");
+			add_location(div0, file$1, 97, 2, 1996);
+			attr(div1, "aria-label", div1_aria_label_value = `${ctx.locale.code} week ${ctx.week.weekNumber}, ${format(ctx.month, 'yyyy', {
+    locale: ctx.locale
+  })}`);
+			attr(div1, "class", "calendar-row");
+			add_location(div1, file$1, 83, 0, 1627);
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div1, anchor);
+			if (if_block0) if_block0.m(div1, null);
+			append(div1, t0);
+			append(div1, div0);
+
+			for (i = 0; i < each_blocks.length; i += 1) each_blocks[i].m(div0, null);
+
+			append(div1, t1);
+			if (if_block1) if_block1.m(div1, null);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			if (ctx.weekGuides && ctx.week.weeksFromToday) {
+				if (if_block0) {
+					if_block0.p(changed, ctx);
+				} else {
+					if_block0 = create_if_block_3(ctx);
+					if_block0.c();
+					if_block0.m(div1, t0);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			const each_value = ctx.week.daysInWeek;
+
+			group_outros();
+			each_blocks = update_keyed_each(each_blocks, changed, get_key, 1, ctx, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block, null, get_each_context);
+			check_outros();
+
+			if (ctx.weekNumbers || ctx.isoWeekNumbers) {
+				if (if_block1) {
+					if_block1.p(changed, ctx);
+				} else {
+					if_block1 = create_if_block$1(ctx);
+					if_block1.c();
+					if_block1.m(div1, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if ((!current || changed.locale || changed.week || changed.month) && div1_aria_label_value !== (div1_aria_label_value = `${ctx.locale.code} week ${ctx.week.weekNumber}, ${format(ctx.month, 'yyyy', {
+    locale: ctx.locale
+  })}`)) {
+				attr(div1, "aria-label", div1_aria_label_value);
+			}
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			for (var i = 0; i < each_value.length; i += 1) transition_in(each_blocks[i]);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			for (i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div1);
+			}
+
+			if (if_block0) if_block0.d();
+
+			for (i = 0; i < each_blocks.length; i += 1) each_blocks[i].d();
+
+			if (if_block1) if_block1.d();
+		}
+	};
+}
+
+function instance$1($$self, $$props, $$invalidate) {
+	
+
+  let { locale, isoWeekNumbers, month, monthIndicator, rtl, singlePicker, tempStartDate, tempEndDate, week, weekGuides, weekNumbers } = $$props;
+
+  const dispatchEvent = new createEventDispatcher();
+
+  function onClick(date) {
+    if (singlePicker) {
+      dispatchEvent("selection", { tempStartDate: date, tempEndDate: date });
+    } else if (tempStartDate && tempEndDate) {
+      dispatchEvent("selection", {
+        tempStartDate: date,
+        tempEndDate: undefined
+      });
+    } else {
+      if (isBefore(date, tempStartDate)) {
+        dispatchEvent("selection", {
+          tempStartDate: date,
+          tempEndDate: tempStartDate
+        });
+      } else {
+        dispatchEvent("selection", { tempStartDate, tempEndDate: date });
+      }
+    }
+  }
+
+  function onHover(hoverDate) {
+    dispatchEvent("hover", { hoverDate });
+  }
+
+	const writable_props = ['locale', 'isoWeekNumbers', 'month', 'monthIndicator', 'rtl', 'singlePicker', 'tempStartDate', 'tempEndDate', 'week', 'weekGuides', 'weekNumbers'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Week> was created with unknown prop '${key}'`);
+	});
+
+	function click_handler({ day }) {
+		return onClick(day.date);
+	}
+
+	function mouseenter_handler({ day }) {
+		return onHover(day.date);
+	}
+
+	function focus_handler({ day }) {
+		return onHover(day.date);
+	}
+
+	$$self.$set = $$props => {
+		if ('locale' in $$props) $$invalidate('locale', locale = $$props.locale);
+		if ('isoWeekNumbers' in $$props) $$invalidate('isoWeekNumbers', isoWeekNumbers = $$props.isoWeekNumbers);
+		if ('month' in $$props) $$invalidate('month', month = $$props.month);
+		if ('monthIndicator' in $$props) $$invalidate('monthIndicator', monthIndicator = $$props.monthIndicator);
+		if ('rtl' in $$props) $$invalidate('rtl', rtl = $$props.rtl);
+		if ('singlePicker' in $$props) $$invalidate('singlePicker', singlePicker = $$props.singlePicker);
+		if ('tempStartDate' in $$props) $$invalidate('tempStartDate', tempStartDate = $$props.tempStartDate);
+		if ('tempEndDate' in $$props) $$invalidate('tempEndDate', tempEndDate = $$props.tempEndDate);
+		if ('week' in $$props) $$invalidate('week', week = $$props.week);
+		if ('weekGuides' in $$props) $$invalidate('weekGuides', weekGuides = $$props.weekGuides);
+		if ('weekNumbers' in $$props) $$invalidate('weekNumbers', weekNumbers = $$props.weekNumbers);
+	};
+
+	let weeksFromToday;
+
+	$$invalidate('weeksFromToday', weeksFromToday = function(week) {
+        if (week.weeksFromToday > 0) {
+          return `+${week.weeksFromToday}`;
+        }
+    
+        return week.weeksFromToday;
+      });
+
+	return {
+		locale,
+		isoWeekNumbers,
+		month,
+		monthIndicator,
+		rtl,
+		singlePicker,
+		tempStartDate,
+		tempEndDate,
+		week,
+		weekGuides,
+		weekNumbers,
+		onClick,
+		onHover,
+		weeksFromToday,
+		click_handler,
+		mouseenter_handler,
+		focus_handler
+	};
+}
+
+class Week extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["locale", "isoWeekNumbers", "month", "monthIndicator", "rtl", "singlePicker", "tempStartDate", "tempEndDate", "week", "weekGuides", "weekNumbers"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.locale === undefined && !('locale' in props)) {
+			console.warn("<Week> was created without expected prop 'locale'");
+		}
+		if (ctx.isoWeekNumbers === undefined && !('isoWeekNumbers' in props)) {
+			console.warn("<Week> was created without expected prop 'isoWeekNumbers'");
+		}
+		if (ctx.month === undefined && !('month' in props)) {
+			console.warn("<Week> was created without expected prop 'month'");
+		}
+		if (ctx.monthIndicator === undefined && !('monthIndicator' in props)) {
+			console.warn("<Week> was created without expected prop 'monthIndicator'");
+		}
+		if (ctx.rtl === undefined && !('rtl' in props)) {
+			console.warn("<Week> was created without expected prop 'rtl'");
+		}
+		if (ctx.singlePicker === undefined && !('singlePicker' in props)) {
+			console.warn("<Week> was created without expected prop 'singlePicker'");
+		}
+		if (ctx.tempStartDate === undefined && !('tempStartDate' in props)) {
+			console.warn("<Week> was created without expected prop 'tempStartDate'");
+		}
+		if (ctx.tempEndDate === undefined && !('tempEndDate' in props)) {
+			console.warn("<Week> was created without expected prop 'tempEndDate'");
+		}
+		if (ctx.week === undefined && !('week' in props)) {
+			console.warn("<Week> was created without expected prop 'week'");
+		}
+		if (ctx.weekGuides === undefined && !('weekGuides' in props)) {
+			console.warn("<Week> was created without expected prop 'weekGuides'");
+		}
+		if (ctx.weekNumbers === undefined && !('weekNumbers' in props)) {
+			console.warn("<Week> was created without expected prop 'weekNumbers'");
+		}
+	}
+
+	get locale() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get isoWeekNumbers() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set isoWeekNumbers(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get month() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set month(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthIndicator() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthIndicator(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get rtl() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set rtl(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get singlePicker() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set singlePicker(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get tempStartDate() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set tempStartDate(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get tempEndDate() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set tempEndDate(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get week() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set week(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekGuides() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekGuides(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekNumbers() {
+		throw new Error("<Week>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekNumbers(value) {
+		throw new Error("<Week>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+function buildMonths({ month, monthFormat, locale }) {
+  const thisJanuary = startOfYear(month);
+
+  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((_, i) => {
+    const value = addMonths(thisJanuary, i);
+
+    return { value, text: format(value, monthFormat, { locale }) };
+  });
+}
+
+function buildYears({ minDate, maxDate, locale }) {
+  const numYears = differenceInCalendarYears(maxDate, minDate) + 1;
+  return [...Array(numYears)].map((_, i) => {
+    const value = addYears(minDate, i);
+    return { value, text: format(value, "yyyy", { locale }) };
+  });
+}
+
+function dayOffset({ firstDayOfWeek, locale }) {
+  return [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday"
+  ].indexOf(firstDayOfWeek.toLocaleLowerCase(locale));
+}
+
+function isDisabled({ date, maxDate, minDate, disabledDates }) {
+  if (disabledDates.some(disabledDate => isSameDay(date, disabledDate))) {
+    return true;
+  }
+  if (isBefore(date, minDate)) {
+    return true;
+  }
+  if (isAfter(date, maxDate)) {
+    return true;
+  }
+  return false;
+}
+
+function isEndDate({ endDate, date, hoverDate, startDate }) {
+  if (endDate) {
+    return isSameDay(date, endDate);
+  }
+  if (isBefore(hoverDate, startDate)) {
+    return isSameDay(date, startDate);
+  }
+  return isSameDay(date, hoverDate);
+}
+
+function isStartDate({ endDate, date, hoverDate, startDate }) {
+  if (!endDate) {
+    if (isBefore(hoverDate, startDate)) {
+      return isSameDay(date, hoverDate);
+    }
+  }
+  return isSameDay(date, startDate);
+}
+
+function toRange(dateLeft, dateRight) {
+  if (isBefore(dateRight, dateLeft)) {
+    return {
+      start: dateRight,
+      end: dateLeft
+    };
+  }
+  return {
+    start: dateLeft,
+    end: dateRight
+  };
+}
+
+function getDayMetaData(params) {
+  const {
+    date,
+    endDate,
+    events,
+    hoverDate,
+    month,
+    singlePicker,
+    startDate,
+    today,
+    maxDate,
+    minDate,
+    disabledDates
+  } = params;
+  const { start, end } = toRange(startDate, endDate || hoverDate);
+  return {
+    date,
+    events,
+    isToday: isSameDay(date, today),
+    isWeekend: isWeekend(date),
+    isPrevMonth: isSameMonth(subMonths(month, 1), date),
+    isNextMonth: isSameMonth(addMonths(month, 1), date),
+    isStartDate: isStartDate(params),
+    isDisabled: isDisabled({ date, maxDate, minDate, disabledDates }),
+    // Used only in range mode
+    isEndDate: !singlePicker ? isEndDate(params) : false,
+    isWithinSelection: !singlePicker
+      ? isWithinInterval(date, { start, end })
+      : false
+  };
+}
+
+function buildWeek(startDay, getDayMetaDataParams) {
+  return [0, 1, 2, 3, 4, 5, 6].map(value =>
+    getDayMetaData(
+      Object.assign(Object.assign({}, getDayMetaDataParams), {
+        date: addDays(startDay, value)
+      })
+    )
+  );
+}
+function getCalendarWeeks(getDayMetaDataParams) {
+  const { month, locale, firstDayOfWeek, today } = getDayMetaDataParams;
+  const weekStartsOn = dayOffset({ firstDayOfWeek, locale });
+  const start = startOfWeek(endOfMonth(subMonths(month, 1)));
+  return eachWeekOfInterval(
+    {
+      start,
+      end: addWeeks(start, 5)
+    },
+    { weekStartsOn, locale }
+  ).map(date => ({
+    weeksFromToday: differenceInCalendarWeeks(date, today, {
+      weekStartsOn,
+      locale
+    }),
+    weekNumber: getWeek(date, { weekStartsOn, locale }),
+    isoWeekNumber: getISOWeek(date),
+    daysInWeek: buildWeek(date, getDayMetaDataParams)
+  }));
+}
+
+function getDaysOfWeek({ firstDayOfWeek, locale }) {
+  return [0, 1, 2, 3, 4, 5, 6].map(value =>
+    addDays(
+      startOfWeek(new Date(), {
+        weekStartsOn: dayOffset({ firstDayOfWeek, locale })
+      }),
+      value
+    )
+  );
+}
+
+function pad(n) {
+  return n < 10 ? `0${n}` : n;
+}
+
+function roundTo(n, p) {
+  return Math.round(n / p) * p;
+}
+
+/* src/date-range-picker/components/DaysOfWeek.svelte generated by Svelte v3.5.3 */
+
+const file$2 = "src/date-range-picker/components/DaysOfWeek.svelte";
+
+function get_each_context$1(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.dayOfWeek = list[i];
+	return child_ctx;
+}
+
+// (19:2) {#each daysOfWeek as dayOfWeek}
+function create_each_block$1(ctx) {
+	var span, t0_value = format(ctx.dayOfWeek, 'eeeeee', { locale: ctx.locale }), t0, t1, span_aria_label_value;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t0 = text(t0_value);
+			t1 = space();
+			attr(span, "class", "calendar-cell svelte-e9ppe7");
+			attr(span, "aria-label", span_aria_label_value = format(ctx.dayOfWeek, 'EEEE', { locale: ctx.locale }));
+			add_location(span, file$2, 19, 4, 350);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t0);
+			append(span, t1);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.daysOfWeek || changed.locale) && t0_value !== (t0_value = format(ctx.dayOfWeek, 'eeeeee', { locale: ctx.locale }))) {
+				set_data(t0, t0_value);
+			}
+
+			if ((changed.daysOfWeek || changed.locale) && span_aria_label_value !== (span_aria_label_value = format(ctx.dayOfWeek, 'EEEE', { locale: ctx.locale }))) {
+				attr(span, "aria-label", span_aria_label_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+function create_fragment$2(ctx) {
+	var div;
+
+	var each_value = ctx.daysOfWeek;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+	}
+
+	return {
+		c: function create() {
+			div = element("div");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+			attr(div, "class", "calendar-row");
+			add_location(div, file$2, 17, 0, 285);
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div, null);
+			}
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.format || changed.daysOfWeek || changed.locale) {
+				each_value = ctx.daysOfWeek;
+
+				for (var i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$1(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+					} else {
+						each_blocks[i] = create_each_block$1(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(div, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+				each_blocks.length = each_value.length;
+			}
+		},
+
+		i: noop,
+		o: noop,
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			destroy_each(each_blocks, detaching);
+		}
+	};
+}
+
+function instance$2($$self, $$props, $$invalidate) {
+	
+
+  let { firstDayOfWeek, locale } = $$props;
+
+	const writable_props = ['firstDayOfWeek', 'locale'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<DaysOfWeek> was created with unknown prop '${key}'`);
+	});
+
+	$$self.$set = $$props => {
+		if ('firstDayOfWeek' in $$props) $$invalidate('firstDayOfWeek', firstDayOfWeek = $$props.firstDayOfWeek);
+		if ('locale' in $$props) $$invalidate('locale', locale = $$props.locale);
+	};
+
+	let daysOfWeek;
+
+	$$self.$$.update = ($$dirty = { firstDayOfWeek: 1, locale: 1 }) => {
+		if ($$dirty.firstDayOfWeek || $$dirty.locale) { $$invalidate('daysOfWeek', daysOfWeek = getDaysOfWeek({ firstDayOfWeek, locale })); }
+	};
+
+	return { firstDayOfWeek, locale, daysOfWeek };
+}
+
+class DaysOfWeek extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$2, create_fragment$2, safe_not_equal, ["firstDayOfWeek", "locale"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.firstDayOfWeek === undefined && !('firstDayOfWeek' in props)) {
+			console.warn("<DaysOfWeek> was created without expected prop 'firstDayOfWeek'");
+		}
+		if (ctx.locale === undefined && !('locale' in props)) {
+			console.warn("<DaysOfWeek> was created without expected prop 'locale'");
+		}
+	}
+
+	get firstDayOfWeek() {
+		throw new Error("<DaysOfWeek>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set firstDayOfWeek(value) {
+		throw new Error("<DaysOfWeek>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get locale() {
+		throw new Error("<DaysOfWeek>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<DaysOfWeek>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/date-range-picker/components/Controls.svelte generated by Svelte v3.5.3 */
+
+const file$3 = "src/date-range-picker/components/Controls.svelte";
+
+function get_each_context$2(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.yr = list[i];
+	return child_ctx;
+}
+
+function get_each_context_1(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.mo = list[i];
+	return child_ctx;
+}
+
+// (92:4) {:else}
+function create_else_block_1(ctx) {
+	var span, t_value = format(ctx.month, 'MMMM', { locale: ctx.locale }), t;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t = text(t_value);
+			add_location(span, file$3, 92, 6, 2465);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.month || changed.locale) && t_value !== (t_value = format(ctx.month, 'MMMM', { locale: ctx.locale }))) {
+				set_data(t, t_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+// (74:4) {#if monthDropdown}
+function create_if_block_1$1(ctx) {
+	var select, dispose;
+
+	var each_value_1 = ctx.months;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value_1.length; i += 1) {
+		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+	}
+
+	return {
+		c: function create() {
+			select = element("select");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+			if (ctx.selectedMonth === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
+			add_location(select, file$3, 74, 6, 1961);
+
+			dispose = [
+				listen(select, "change", ctx.select_change_handler),
+				listen(select, "change", ctx.change_handler)
+			];
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, select, anchor);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(select, null);
+			}
+
+			select_option(select, ctx.selectedMonth);
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.months || changed.isSameMonth || changed.month || changed.isOptionDisabled) {
+				each_value_1 = ctx.months;
+
+				for (var i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+					} else {
+						each_blocks[i] = create_each_block_1(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(select, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+				each_blocks.length = each_value_1.length;
+			}
+
+			if (changed.selectedMonth) select_option(select, ctx.selectedMonth);
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(select);
+			}
+
+			destroy_each(each_blocks, detaching);
+
+			run_all(dispose);
+		}
+	};
+}
+
+// (83:8) {#each months as mo}
+function create_each_block_1(ctx) {
+	var option, t_value = ctx.mo.text, t, option_value_value, option_selected_value, option_disabled_value;
+
+	return {
+		c: function create() {
+			option = element("option");
+			t = text(t_value);
+			option.__value = option_value_value = ctx.mo;
+			option.value = option.__value;
+			option.selected = option_selected_value = isSameMonth(ctx.mo.value, ctx.month);
+			option.disabled = option_disabled_value = ctx.isOptionDisabled(ctx.mo.value);
+			add_location(option, file$3, 83, 10, 2239);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, option, anchor);
+			append(option, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.months) && t_value !== (t_value = ctx.mo.text)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.months) && option_value_value !== (option_value_value = ctx.mo)) {
+				option.__value = option_value_value;
+			}
+
+			option.value = option.__value;
+
+			if ((changed.months || changed.month) && option_selected_value !== (option_selected_value = isSameMonth(ctx.mo.value, ctx.month))) {
+				option.selected = option_selected_value;
+			}
+
+			if ((changed.isOptionDisabled || changed.months) && option_disabled_value !== (option_disabled_value = ctx.isOptionDisabled(ctx.mo.value))) {
+				option.disabled = option_disabled_value;
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(option);
+			}
+		}
+	};
+}
+
+// (111:4) {:else}
+function create_else_block(ctx) {
+	var span, t_value = format(ctx.month, 'yyyy', { locale: ctx.locale }), t;
+
+	return {
+		c: function create() {
+			span = element("span");
+			t = text(t_value);
+			add_location(span, file$3, 111, 6, 3029);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.month || changed.locale) && t_value !== (t_value = format(ctx.month, 'yyyy', { locale: ctx.locale }))) {
+				set_data(t, t_value);
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(span);
+			}
+		}
+	};
+}
+
+// (95:4) {#if yearDropdown}
+function create_if_block$2(ctx) {
+	var select, dispose;
+
+	var each_value = ctx.years;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+	}
+
+	return {
+		c: function create() {
+			select = element("select");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+			if (ctx.selectedYear === void 0) add_render_callback(() => ctx.select_change_handler_1.call(select));
+			add_location(select, file$3, 95, 6, 2553);
+
+			dispose = [
+				listen(select, "change", ctx.select_change_handler_1),
+				listen(select, "change", ctx.change_handler_1)
+			];
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, select, anchor);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(select, null);
+			}
+
+			select_option(select, ctx.selectedYear);
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.years || changed.isSameYear || changed.month || changed.isOptionDisabled) {
+				each_value = ctx.years;
+
+				for (var i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$2(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+					} else {
+						each_blocks[i] = create_each_block$2(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(select, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+				each_blocks.length = each_value.length;
+			}
+
+			if (changed.selectedYear) select_option(select, ctx.selectedYear);
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(select);
+			}
+
+			destroy_each(each_blocks, detaching);
+
+			run_all(dispose);
+		}
+	};
+}
+
+// (102:8) {#each years as yr}
+function create_each_block$2(ctx) {
+	var option, t_value = ctx.yr.text, t, option_value_value, option_selected_value, option_disabled_value;
+
+	return {
+		c: function create() {
+			option = element("option");
+			t = text(t_value);
+			option.__value = option_value_value = ctx.yr;
+			option.value = option.__value;
+			option.selected = option_selected_value = isSameYear(ctx.yr.value, ctx.month);
+			option.disabled = option_disabled_value = ctx.isOptionDisabled(ctx.yr.value);
+			add_location(option, file$3, 102, 10, 2804);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, option, anchor);
+			append(option, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.years) && t_value !== (t_value = ctx.yr.text)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.years) && option_value_value !== (option_value_value = ctx.yr)) {
+				option.__value = option_value_value;
+			}
+
+			option.value = option.__value;
+
+			if ((changed.years || changed.month) && option_selected_value !== (option_selected_value = isSameYear(ctx.yr.value, ctx.month))) {
+				option.selected = option_selected_value;
+			}
+
+			if ((changed.isOptionDisabled || changed.years) && option_disabled_value !== (option_disabled_value = ctx.isOptionDisabled(ctx.yr.value))) {
+				option.disabled = option_disabled_value;
+			}
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(option);
+			}
+		}
+	};
+}
+
+function create_fragment$3(ctx) {
+	var div, button0, t0, button0_aria_disabled_value, button0_disabled_value, button0_aria_label_value, t1, span, t2, t3, button1, t4, button1_aria_label_value, dispose;
+
+	function select_block_type(ctx) {
+		if (ctx.monthDropdown) return create_if_block_1$1;
+		return create_else_block_1;
+	}
+
+	var current_block_type = select_block_type(ctx);
+	var if_block0 = current_block_type(ctx);
+
+	function select_block_type_1(ctx) {
+		if (ctx.yearDropdown) return create_if_block$2;
+		return create_else_block;
+	}
+
+	var current_block_type_1 = select_block_type_1(ctx);
+	var if_block1 = current_block_type_1(ctx);
+
+	return {
+		c: function create() {
+			div = element("div");
+			button0 = element("button");
+			t0 = text(ctx.previousIcon);
+			t1 = space();
+			span = element("span");
+			if_block0.c();
+			t2 = space();
+			if_block1.c();
+			t3 = space();
+			button1 = element("button");
+			t4 = text(ctx.nextIcon);
+			attr(button0, "aria-disabled", button0_aria_disabled_value = !ctx.canNavigatePrevious);
+			button0.disabled = button0_disabled_value = !ctx.canNavigatePrevious;
+			attr(button0, "type", "button");
+			attr(button0, "aria-label", button0_aria_label_value = `Previous month, ${format(ctx.previousMonth, 'MMMM yyyy', {
+      locale: ctx.locale
+    })}`);
+			add_location(button0, file$3, 62, 2, 1640);
+			add_location(span, file$3, 72, 2, 1924);
+			attr(button1, "aria-disabled", ctx.nextBtnDisabled);
+			button1.disabled = ctx.nextBtnDisabled;
+			attr(button1, "type", "button");
+			attr(button1, "aria-label", button1_aria_label_value = `Next month, ${format(ctx.nextMonth, 'MMMM yyyy', { locale: ctx.locale })}`);
+			add_location(button1, file$3, 114, 2, 3100);
+			attr(div, "class", "svelte-1lbwxhk");
+			add_location(div, file$3, 61, 0, 1632);
+
+			dispose = [
+				listen(button0, "click", ctx.click_handler),
+				listen(button1, "click", ctx.click_handler_1)
+			];
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			append(div, button0);
+			append(button0, t0);
+			append(div, t1);
+			append(div, span);
+			if_block0.m(span, null);
+			append(span, t2);
+			if_block1.m(span, null);
+			append(div, t3);
+			append(div, button1);
+			append(button1, t4);
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.previousIcon) {
+				set_data(t0, ctx.previousIcon);
+			}
+
+			if ((changed.canNavigatePrevious) && button0_aria_disabled_value !== (button0_aria_disabled_value = !ctx.canNavigatePrevious)) {
+				attr(button0, "aria-disabled", button0_aria_disabled_value);
+			}
+
+			if ((changed.canNavigatePrevious) && button0_disabled_value !== (button0_disabled_value = !ctx.canNavigatePrevious)) {
+				button0.disabled = button0_disabled_value;
+			}
+
+			if ((changed.previousMonth || changed.locale) && button0_aria_label_value !== (button0_aria_label_value = `Previous month, ${format(ctx.previousMonth, 'MMMM yyyy', {
+      locale: ctx.locale
+    })}`)) {
+				attr(button0, "aria-label", button0_aria_label_value);
+			}
+
+			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
+				if_block0.p(changed, ctx);
+			} else {
+				if_block0.d(1);
+				if_block0 = current_block_type(ctx);
+				if (if_block0) {
+					if_block0.c();
+					if_block0.m(span, t2);
+				}
+			}
+
+			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx)) && if_block1) {
+				if_block1.p(changed, ctx);
+			} else {
+				if_block1.d(1);
+				if_block1 = current_block_type_1(ctx);
+				if (if_block1) {
+					if_block1.c();
+					if_block1.m(span, null);
+				}
+			}
+
+			if (changed.nextIcon) {
+				set_data(t4, ctx.nextIcon);
+			}
+
+			if (changed.nextBtnDisabled) {
+				attr(button1, "aria-disabled", ctx.nextBtnDisabled);
+				button1.disabled = ctx.nextBtnDisabled;
+			}
+
+			if ((changed.nextMonth || changed.locale) && button1_aria_label_value !== (button1_aria_label_value = `Next month, ${format(ctx.nextMonth, 'MMMM yyyy', { locale: ctx.locale })}`)) {
+				attr(button1, "aria-label", button1_aria_label_value);
+			}
+		},
+
+		i: noop,
+		o: noop,
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			if_block0.d();
+			if_block1.d();
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$3($$self, $$props, $$invalidate) {
+	
+
+  let { locale, month, monthFormat, monthDropdown, maxDate, minDate, nextIcon = "N", previousIcon = "P", yearDropdown } = $$props;
+
+  const disptachEvent = createEventDispatcher();
+
+	const writable_props = ['locale', 'month', 'monthFormat', 'monthDropdown', 'maxDate', 'minDate', 'nextIcon', 'previousIcon', 'yearDropdown'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Controls> was created with unknown prop '${key}'`);
+	});
+
+	function click_handler() {
+		return disptachEvent('previousMonth');
+	}
+
+	function select_change_handler() {
+		selectedMonth = select_value(this);
+		$$invalidate('selectedMonth', selectedMonth), $$invalidate('month', month), $$invalidate('monthFormat', monthFormat), $$invalidate('locale', locale);
+		$$invalidate('months', months), $$invalidate('month', month), $$invalidate('monthFormat', monthFormat), $$invalidate('locale', locale);
+	}
+
+	function change_handler() {
+		return disptachEvent('pageChange', {
+	            incrementAmount: differenceInCalendarMonths(
+	              selectedMonth.value,
+	              month
+	            )
+	          });
+	}
+
+	function select_change_handler_1() {
+		selectedYear = select_value(this);
+		$$invalidate('selectedYear', selectedYear), $$invalidate('month', month), $$invalidate('locale', locale);
+		$$invalidate('years', years), $$invalidate('minDate', minDate), $$invalidate('maxDate', maxDate), $$invalidate('locale', locale);
+	}
+
+	function change_handler_1() {
+		return disptachEvent('pageChange', {
+	            incrementAmount:
+	              differenceInCalendarYears(selectedYear.value, month) * 12
+	          });
+	}
+
+	function click_handler_1() {
+		return disptachEvent('nextMonth');
+	}
+
+	$$self.$set = $$props => {
+		if ('locale' in $$props) $$invalidate('locale', locale = $$props.locale);
+		if ('month' in $$props) $$invalidate('month', month = $$props.month);
+		if ('monthFormat' in $$props) $$invalidate('monthFormat', monthFormat = $$props.monthFormat);
+		if ('monthDropdown' in $$props) $$invalidate('monthDropdown', monthDropdown = $$props.monthDropdown);
+		if ('maxDate' in $$props) $$invalidate('maxDate', maxDate = $$props.maxDate);
+		if ('minDate' in $$props) $$invalidate('minDate', minDate = $$props.minDate);
+		if ('nextIcon' in $$props) $$invalidate('nextIcon', nextIcon = $$props.nextIcon);
+		if ('previousIcon' in $$props) $$invalidate('previousIcon', previousIcon = $$props.previousIcon);
+		if ('yearDropdown' in $$props) $$invalidate('yearDropdown', yearDropdown = $$props.yearDropdown);
+	};
+
+	let selectedMonth, selectedYear, previousMonth, nextMonth, isMaxDate, isMinDate, months, years, nextBtnDisabled, canNavigatePrevious, isOptionDisabled;
+
+	$$self.$$.update = ($$dirty = { month: 1, monthFormat: 1, locale: 1, maxDate: 1, minDate: 1 }) => {
+		if ($$dirty.month || $$dirty.monthFormat || $$dirty.locale) { $$invalidate('selectedMonth', selectedMonth = {
+        value: month,
+        text: format(month, monthFormat, { locale })
+      }); }
+		if ($$dirty.month || $$dirty.locale) { $$invalidate('selectedYear', selectedYear = { value: month, text: format(month, "yyyy", { locale }) }); }
+		if ($$dirty.month) { $$invalidate('previousMonth', previousMonth = subMonths(month, 1)); }
+		if ($$dirty.month) { $$invalidate('nextMonth', nextMonth = addMonths(month, 1)); }
+		if ($$dirty.month || $$dirty.maxDate) { isMaxDate = isAfter(month, maxDate) || isSameMonth(month, maxDate); }
+		if ($$dirty.month || $$dirty.minDate) { isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate); }
+		if ($$dirty.month || $$dirty.monthFormat || $$dirty.locale) { $$invalidate('months', months = buildMonths({ month, monthFormat, locale })); }
+		if ($$dirty.minDate || $$dirty.maxDate || $$dirty.locale) { $$invalidate('years', years = buildYears({ minDate, maxDate, locale })); }
+		if ($$dirty.month || $$dirty.maxDate) { $$invalidate('nextBtnDisabled', nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate)); }
+		if ($$dirty.month || $$dirty.minDate) { $$invalidate('canNavigatePrevious', canNavigatePrevious =
+        isAfter(month, minDate) && !isSameMonth(month, minDate)); }
+		if ($$dirty.minDate || $$dirty.maxDate) { $$invalidate('isOptionDisabled', isOptionDisabled = function(mo) {
+        return (
+          isBefore(mo, minDate) ||
+          (!isSameMonth(mo, minDate) && isAfter(mo, maxDate))
+        );
+      }); }
+	};
+
+	return {
+		locale,
+		month,
+		monthFormat,
+		monthDropdown,
+		maxDate,
+		minDate,
+		nextIcon,
+		previousIcon,
+		yearDropdown,
+		disptachEvent,
+		selectedMonth,
+		selectedYear,
+		previousMonth,
+		nextMonth,
+		months,
+		years,
+		nextBtnDisabled,
+		canNavigatePrevious,
+		isOptionDisabled,
+		click_handler,
+		select_change_handler,
+		change_handler,
+		select_change_handler_1,
+		change_handler_1,
+		click_handler_1
+	};
+}
+
+class Controls extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, ["locale", "month", "monthFormat", "monthDropdown", "maxDate", "minDate", "nextIcon", "previousIcon", "yearDropdown"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.locale === undefined && !('locale' in props)) {
+			console.warn("<Controls> was created without expected prop 'locale'");
+		}
+		if (ctx.month === undefined && !('month' in props)) {
+			console.warn("<Controls> was created without expected prop 'month'");
+		}
+		if (ctx.monthFormat === undefined && !('monthFormat' in props)) {
+			console.warn("<Controls> was created without expected prop 'monthFormat'");
+		}
+		if (ctx.monthDropdown === undefined && !('monthDropdown' in props)) {
+			console.warn("<Controls> was created without expected prop 'monthDropdown'");
+		}
+		if (ctx.maxDate === undefined && !('maxDate' in props)) {
+			console.warn("<Controls> was created without expected prop 'maxDate'");
+		}
+		if (ctx.minDate === undefined && !('minDate' in props)) {
+			console.warn("<Controls> was created without expected prop 'minDate'");
+		}
+		if (ctx.yearDropdown === undefined && !('yearDropdown' in props)) {
+			console.warn("<Controls> was created without expected prop 'yearDropdown'");
+		}
+	}
+
+	get locale() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get month() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set month(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthFormat() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthFormat(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthDropdown() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthDropdown(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get maxDate() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set maxDate(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get minDate() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set minDate(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get nextIcon() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set nextIcon(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get previousIcon() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set previousIcon(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get yearDropdown() {
+		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set yearDropdown(value) {
+		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/date-range-picker/components/Calendar.svelte generated by Svelte v3.5.3 */
+
+const file$4 = "src/date-range-picker/components/Calendar.svelte";
+
+function get_each_context$3(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.week = list[i];
+	return child_ctx;
+}
+
+// (68:2) {#each weeks as week}
+function create_each_block$3(ctx) {
+	var current;
+
+	var week = new Week({
+		props: {
+		tempEndDate: ctx.tempEndDate,
+		tempStartDate: ctx.tempStartDate,
+		week: ctx.week,
+		singlePicker: ctx.singlePicker,
+		locale: ctx.locale,
+		month: ctx.month,
+		monthIndicator: ctx.monthIndicator,
+		rtl: ctx.rtl,
+		weekGuides: ctx.weekGuides,
+		weekNumbers: ctx.weekNumbers,
+		isoWeekNumbers: ctx.isoWeekNumbers
+	},
+		$$inline: true
+	});
+	week.$on("selection", ctx.selection_handler);
+	week.$on("hover", ctx.hover_handler);
+
+	return {
+		c: function create() {
+			week.$$.fragment.c();
+		},
+
+		m: function mount(target, anchor) {
+			mount_component(week, target, anchor);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var week_changes = {};
+			if (changed.tempEndDate) week_changes.tempEndDate = ctx.tempEndDate;
+			if (changed.tempStartDate) week_changes.tempStartDate = ctx.tempStartDate;
+			if (changed.weeks) week_changes.week = ctx.week;
+			if (changed.singlePicker) week_changes.singlePicker = ctx.singlePicker;
+			if (changed.locale) week_changes.locale = ctx.locale;
+			if (changed.month) week_changes.month = ctx.month;
+			if (changed.monthIndicator) week_changes.monthIndicator = ctx.monthIndicator;
+			if (changed.rtl) week_changes.rtl = ctx.rtl;
+			if (changed.weekGuides) week_changes.weekGuides = ctx.weekGuides;
+			if (changed.weekNumbers) week_changes.weekNumbers = ctx.weekNumbers;
+			if (changed.isoWeekNumbers) week_changes.isoWeekNumbers = ctx.isoWeekNumbers;
+			week.$set(week_changes);
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(week.$$.fragment, local);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(week.$$.fragment, local);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			destroy_component(week, detaching);
+		}
+	};
+}
+
+function create_fragment$4(ctx) {
+	var div, t0, t1, div_style_value, div_class_value, current;
+
+	var controls = new Controls({
+		props: {
+		locale: ctx.locale,
+		month: ctx.month,
+		monthDropdown: ctx.monthDropdown,
+		monthFormat: ctx.monthFormat,
+		maxDate: ctx.maxDate,
+		minDate: ctx.minDate,
+		yearDropdown: ctx.yearDropdown
+	},
+		$$inline: true
+	});
+	controls.$on("pageChange", ctx.pageChange_handler);
+	controls.$on("previousMonth", ctx.previousMonth_handler);
+	controls.$on("nextMonth", ctx.nextMonth_handler);
+
+	var daysofweek = new DaysOfWeek({
+		props: {
+		firstDayOfWeek: ctx.firstDayOfWeek,
+		locale: ctx.locale
+	},
+		$$inline: true
+	});
+
+	var each_value = ctx.weeks;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, () => {
+		each_blocks[i] = null;
+	});
+
+	return {
+		c: function create() {
+			div = element("div");
+			controls.$$.fragment.c();
+			t0 = space();
+			daysofweek.$$.fragment.c();
+			t1 = space();
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+			attr(div, "style", div_style_value = `width: ${ctx.pageWidth}px; padding: ${ctx.padding}px;`);
+			attr(div, "class", div_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-ztwmp7");
+			add_location(div, file$4, 52, 0, 1090);
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			mount_component(controls, div, null);
+			append(div, t0);
+			mount_component(daysofweek, div, null);
+			append(div, t1);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div, null);
+			}
+
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var controls_changes = {};
+			if (changed.locale) controls_changes.locale = ctx.locale;
+			if (changed.month) controls_changes.month = ctx.month;
+			if (changed.monthDropdown) controls_changes.monthDropdown = ctx.monthDropdown;
+			if (changed.monthFormat) controls_changes.monthFormat = ctx.monthFormat;
+			if (changed.maxDate) controls_changes.maxDate = ctx.maxDate;
+			if (changed.minDate) controls_changes.minDate = ctx.minDate;
+			if (changed.yearDropdown) controls_changes.yearDropdown = ctx.yearDropdown;
+			controls.$set(controls_changes);
+
+			var daysofweek_changes = {};
+			if (changed.firstDayOfWeek) daysofweek_changes.firstDayOfWeek = ctx.firstDayOfWeek;
+			if (changed.locale) daysofweek_changes.locale = ctx.locale;
+			daysofweek.$set(daysofweek_changes);
+
+			if (changed.tempEndDate || changed.tempStartDate || changed.weeks || changed.singlePicker || changed.locale || changed.month || changed.monthIndicator || changed.rtl || changed.weekGuides || changed.weekNumbers || changed.isoWeekNumbers) {
+				each_value = ctx.weeks;
+
+				for (var i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$3(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block$3(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(div, null);
+					}
+				}
+
+				group_outros();
+				for (; i < each_blocks.length; i += 1) out(i);
+				check_outros();
+			}
+
+			if ((!current || changed.pageWidth || changed.padding) && div_style_value !== (div_style_value = `width: ${ctx.pageWidth}px; padding: ${ctx.padding}px;`)) {
+				attr(div, "style", div_style_value);
+			}
+
+			if ((!current || changed.rtl) && div_class_value !== (div_class_value = "" + (ctx.rtl ? 'rtl' : '') + " svelte-ztwmp7")) {
+				attr(div, "class", div_class_value);
+			}
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(controls.$$.fragment, local);
+
+			transition_in(daysofweek.$$.fragment, local);
+
+			for (var i = 0; i < each_value.length; i += 1) transition_in(each_blocks[i]);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(controls.$$.fragment, local);
+			transition_out(daysofweek.$$.fragment, local);
+
+			each_blocks = each_blocks.filter(Boolean);
+			for (let i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			destroy_component(controls, );
+
+			destroy_component(daysofweek, );
+
+			destroy_each(each_blocks, detaching);
+		}
+	};
+}
+
+function instance$4($$self, $$props, $$invalidate) {
+	
+
+  let { disabledDates, events, hoverDate, firstDayOfWeek, isoWeekNumbers, locale, maxDate, minDate, month, monthDropdown, monthFormat, monthIndicator, pageWidth, rtl, singlePicker, tempEndDate, tempStartDate, today, weekGuides, weekNumbers, yearDropdown } = $$props;
+
+	const writable_props = ['disabledDates', 'events', 'hoverDate', 'firstDayOfWeek', 'isoWeekNumbers', 'locale', 'maxDate', 'minDate', 'month', 'monthDropdown', 'monthFormat', 'monthIndicator', 'pageWidth', 'rtl', 'singlePicker', 'tempEndDate', 'tempStartDate', 'today', 'weekGuides', 'weekNumbers', 'yearDropdown'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Calendar> was created with unknown prop '${key}'`);
+	});
+
+	function pageChange_handler(event) {
+		bubble($$self, event);
+	}
+
+	function previousMonth_handler(event) {
+		bubble($$self, event);
+	}
+
+	function nextMonth_handler(event) {
+		bubble($$self, event);
+	}
+
+	function selection_handler(event) {
+		bubble($$self, event);
+	}
+
+	function hover_handler(event) {
+		bubble($$self, event);
+	}
+
+	$$self.$set = $$props => {
+		if ('disabledDates' in $$props) $$invalidate('disabledDates', disabledDates = $$props.disabledDates);
+		if ('events' in $$props) $$invalidate('events', events = $$props.events);
+		if ('hoverDate' in $$props) $$invalidate('hoverDate', hoverDate = $$props.hoverDate);
+		if ('firstDayOfWeek' in $$props) $$invalidate('firstDayOfWeek', firstDayOfWeek = $$props.firstDayOfWeek);
+		if ('isoWeekNumbers' in $$props) $$invalidate('isoWeekNumbers', isoWeekNumbers = $$props.isoWeekNumbers);
+		if ('locale' in $$props) $$invalidate('locale', locale = $$props.locale);
+		if ('maxDate' in $$props) $$invalidate('maxDate', maxDate = $$props.maxDate);
+		if ('minDate' in $$props) $$invalidate('minDate', minDate = $$props.minDate);
+		if ('month' in $$props) $$invalidate('month', month = $$props.month);
+		if ('monthDropdown' in $$props) $$invalidate('monthDropdown', monthDropdown = $$props.monthDropdown);
+		if ('monthFormat' in $$props) $$invalidate('monthFormat', monthFormat = $$props.monthFormat);
+		if ('monthIndicator' in $$props) $$invalidate('monthIndicator', monthIndicator = $$props.monthIndicator);
+		if ('pageWidth' in $$props) $$invalidate('pageWidth', pageWidth = $$props.pageWidth);
+		if ('rtl' in $$props) $$invalidate('rtl', rtl = $$props.rtl);
+		if ('singlePicker' in $$props) $$invalidate('singlePicker', singlePicker = $$props.singlePicker);
+		if ('tempEndDate' in $$props) $$invalidate('tempEndDate', tempEndDate = $$props.tempEndDate);
+		if ('tempStartDate' in $$props) $$invalidate('tempStartDate', tempStartDate = $$props.tempStartDate);
+		if ('today' in $$props) $$invalidate('today', today = $$props.today);
+		if ('weekGuides' in $$props) $$invalidate('weekGuides', weekGuides = $$props.weekGuides);
+		if ('weekNumbers' in $$props) $$invalidate('weekNumbers', weekNumbers = $$props.weekNumbers);
+		if ('yearDropdown' in $$props) $$invalidate('yearDropdown', yearDropdown = $$props.yearDropdown);
+	};
+
+	let weeks, padding;
+
+	$$self.$$.update = ($$dirty = { month: 1, firstDayOfWeek: 1, locale: 1, events: 1, disabledDates: 1, tempStartDate: 1, hoverDate: 1, minDate: 1, maxDate: 1, today: 1, tempEndDate: 1, singlePicker: 1, weekGuides: 1, isoWeekNumbers: 1, weekNumbers: 1 }) => {
+		if ($$dirty.month || $$dirty.firstDayOfWeek || $$dirty.locale || $$dirty.events || $$dirty.disabledDates || $$dirty.tempStartDate || $$dirty.hoverDate || $$dirty.minDate || $$dirty.maxDate || $$dirty.today || $$dirty.tempEndDate || $$dirty.singlePicker) { $$invalidate('weeks', weeks = getCalendarWeeks({
+        month,
+        firstDayOfWeek,
+        locale,
+        events,
+        disabledDates,
+        startDate: tempStartDate,
+        hoverDate,
+        minDate,
+        maxDate,
+        today,
+        endDate: tempEndDate,
+        singlePicker
+      })); }
+		if ($$dirty.weekGuides || $$dirty.isoWeekNumbers || $$dirty.weekNumbers) { $$invalidate('padding', padding = !weekGuides && !isoWeekNumbers && !weekNumbers ? 12 : 48); }
+	};
+
+	return {
+		disabledDates,
+		events,
+		hoverDate,
+		firstDayOfWeek,
+		isoWeekNumbers,
+		locale,
+		maxDate,
+		minDate,
+		month,
+		monthDropdown,
+		monthFormat,
+		monthIndicator,
+		pageWidth,
+		rtl,
+		singlePicker,
+		tempEndDate,
+		tempStartDate,
+		today,
+		weekGuides,
+		weekNumbers,
+		yearDropdown,
+		weeks,
+		padding,
+		pageChange_handler,
+		previousMonth_handler,
+		nextMonth_handler,
+		selection_handler,
+		hover_handler
+	};
+}
+
+class Calendar extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$4, create_fragment$4, safe_not_equal, ["disabledDates", "events", "hoverDate", "firstDayOfWeek", "isoWeekNumbers", "locale", "maxDate", "minDate", "month", "monthDropdown", "monthFormat", "monthIndicator", "pageWidth", "rtl", "singlePicker", "tempEndDate", "tempStartDate", "today", "weekGuides", "weekNumbers", "yearDropdown"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.disabledDates === undefined && !('disabledDates' in props)) {
+			console.warn("<Calendar> was created without expected prop 'disabledDates'");
+		}
+		if (ctx.events === undefined && !('events' in props)) {
+			console.warn("<Calendar> was created without expected prop 'events'");
+		}
+		if (ctx.hoverDate === undefined && !('hoverDate' in props)) {
+			console.warn("<Calendar> was created without expected prop 'hoverDate'");
+		}
+		if (ctx.firstDayOfWeek === undefined && !('firstDayOfWeek' in props)) {
+			console.warn("<Calendar> was created without expected prop 'firstDayOfWeek'");
+		}
+		if (ctx.isoWeekNumbers === undefined && !('isoWeekNumbers' in props)) {
+			console.warn("<Calendar> was created without expected prop 'isoWeekNumbers'");
+		}
+		if (ctx.locale === undefined && !('locale' in props)) {
+			console.warn("<Calendar> was created without expected prop 'locale'");
+		}
+		if (ctx.maxDate === undefined && !('maxDate' in props)) {
+			console.warn("<Calendar> was created without expected prop 'maxDate'");
+		}
+		if (ctx.minDate === undefined && !('minDate' in props)) {
+			console.warn("<Calendar> was created without expected prop 'minDate'");
+		}
+		if (ctx.month === undefined && !('month' in props)) {
+			console.warn("<Calendar> was created without expected prop 'month'");
+		}
+		if (ctx.monthDropdown === undefined && !('monthDropdown' in props)) {
+			console.warn("<Calendar> was created without expected prop 'monthDropdown'");
+		}
+		if (ctx.monthFormat === undefined && !('monthFormat' in props)) {
+			console.warn("<Calendar> was created without expected prop 'monthFormat'");
+		}
+		if (ctx.monthIndicator === undefined && !('monthIndicator' in props)) {
+			console.warn("<Calendar> was created without expected prop 'monthIndicator'");
+		}
+		if (ctx.pageWidth === undefined && !('pageWidth' in props)) {
+			console.warn("<Calendar> was created without expected prop 'pageWidth'");
+		}
+		if (ctx.rtl === undefined && !('rtl' in props)) {
+			console.warn("<Calendar> was created without expected prop 'rtl'");
+		}
+		if (ctx.singlePicker === undefined && !('singlePicker' in props)) {
+			console.warn("<Calendar> was created without expected prop 'singlePicker'");
+		}
+		if (ctx.tempEndDate === undefined && !('tempEndDate' in props)) {
+			console.warn("<Calendar> was created without expected prop 'tempEndDate'");
+		}
+		if (ctx.tempStartDate === undefined && !('tempStartDate' in props)) {
+			console.warn("<Calendar> was created without expected prop 'tempStartDate'");
+		}
+		if (ctx.today === undefined && !('today' in props)) {
+			console.warn("<Calendar> was created without expected prop 'today'");
+		}
+		if (ctx.weekGuides === undefined && !('weekGuides' in props)) {
+			console.warn("<Calendar> was created without expected prop 'weekGuides'");
+		}
+		if (ctx.weekNumbers === undefined && !('weekNumbers' in props)) {
+			console.warn("<Calendar> was created without expected prop 'weekNumbers'");
+		}
+		if (ctx.yearDropdown === undefined && !('yearDropdown' in props)) {
+			console.warn("<Calendar> was created without expected prop 'yearDropdown'");
+		}
+	}
+
+	get disabledDates() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set disabledDates(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get events() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set events(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get hoverDate() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set hoverDate(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get firstDayOfWeek() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set firstDayOfWeek(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get isoWeekNumbers() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set isoWeekNumbers(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get locale() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get maxDate() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set maxDate(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get minDate() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set minDate(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get month() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set month(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthDropdown() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthDropdown(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthFormat() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthFormat(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthIndicator() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthIndicator(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get pageWidth() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set pageWidth(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get rtl() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set rtl(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get singlePicker() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set singlePicker(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get tempEndDate() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set tempEndDate(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get tempStartDate() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set tempStartDate(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get today() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set today(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekGuides() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekGuides(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekNumbers() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekNumbers(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get yearDropdown() {
+		throw new Error("<Calendar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set yearDropdown(value) {
+		throw new Error("<Calendar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/date-range-picker/components/TimePicker.svelte generated by Svelte v3.5.3 */
+
+const file$5 = "src/date-range-picker/components/TimePicker.svelte";
+
+function get_each_context$4(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.second = list[i];
+	return child_ctx;
+}
+
+function get_each_context_1$1(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.minute = list[i];
+	return child_ctx;
+}
+
+function get_each_context_2(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.hour = list[i];
+	return child_ctx;
+}
+
+// (38:4) {#each hours as hour}
+function create_each_block_2(ctx) {
+	var option, t_value = ctx.hour, t, option_value_value;
+
+	return {
+		c: function create() {
+			option = element("option");
+			t = text(t_value);
+			option.__value = option_value_value = ctx.hour;
+			option.value = option.__value;
+			add_location(option, file$5, 38, 6, 1143);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, option, anchor);
+			append(option, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.hours) && t_value !== (t_value = ctx.hour)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.hours) && option_value_value !== (option_value_value = ctx.hour)) {
+				option.__value = option_value_value;
+			}
+
+			option.value = option.__value;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(option);
+			}
+		}
+	};
+}
+
+// (43:4) {#each minutes as minute}
+function create_each_block_1$1(ctx) {
+	var option, t_value = ctx.minute, t, option_value_value;
+
+	return {
+		c: function create() {
+			option = element("option");
+			t = text(t_value);
+			option.__value = option_value_value = ctx.minute;
+			option.value = option.__value;
+			add_location(option, file$5, 43, 6, 1302);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, option, anchor);
+			append(option, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.minutes) && t_value !== (t_value = ctx.minute)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.minutes) && option_value_value !== (option_value_value = ctx.minute)) {
+				option.__value = option_value_value;
+			}
+
+			option.value = option.__value;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(option);
+			}
+		}
+	};
+}
+
+// (47:2) {#if timePickerSeconds}
+function create_if_block_1$2(ctx) {
+	var select, dispose;
+
+	var each_value = ctx.seconds;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
+	}
+
+	return {
+		c: function create() {
+			select = element("select");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+			if (ctx.selectedSecond === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
+			add_location(select, file$5, 47, 4, 1397);
+
+			dispose = [
+				listen(select, "change", ctx.select_change_handler),
+				listen(select, "change", ctx.timeChange)
+			];
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, select, anchor);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(select, null);
+			}
+
+			select_option(select, ctx.selectedSecond);
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.seconds) {
+				each_value = ctx.seconds;
+
+				for (var i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$4(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+					} else {
+						each_blocks[i] = create_each_block$4(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(select, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+				each_blocks.length = each_value.length;
+			}
+
+			if (changed.selectedSecond) select_option(select, ctx.selectedSecond);
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(select);
+			}
+
+			destroy_each(each_blocks, detaching);
+
+			run_all(dispose);
+		}
+	};
+}
+
+// (49:6) {#each seconds as second}
+function create_each_block$4(ctx) {
+	var option, t_value = ctx.second, t, option_value_value;
+
+	return {
+		c: function create() {
+			option = element("option");
+			t = text(t_value);
+			option.__value = option_value_value = ctx.second;
+			option.value = option.__value;
+			add_location(option, file$5, 49, 8, 1497);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, option, anchor);
+			append(option, t);
+		},
+
+		p: function update(changed, ctx) {
+			if ((changed.seconds) && t_value !== (t_value = ctx.second)) {
+				set_data(t, t_value);
+			}
+
+			if ((changed.seconds) && option_value_value !== (option_value_value = ctx.second)) {
+				option.__value = option_value_value;
+			}
+
+			option.value = option.__value;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(option);
+			}
+		}
+	};
+}
+
+// (55:2) {#if !timePicker24Hour}
+function create_if_block$3(ctx) {
+	var select, option0, option1;
+
+	return {
+		c: function create() {
+			select = element("select");
+			option0 = element("option");
+			option0.textContent = "AM";
+			option1 = element("option");
+			option1.textContent = "PM";
+			option0.__value = "AM";
+			option0.value = option0.__value;
+			add_location(option0, file$5, 56, 6, 1620);
+			option1.__value = "PM";
+			option1.value = option1.__value;
+			add_location(option1, file$5, 57, 6, 1657);
+			add_location(select, file$5, 55, 4, 1605);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, select, anchor);
+			append(select, option0);
+			append(select, option1);
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(select);
+			}
+		}
+	};
+}
+
+function create_fragment$5(ctx) {
+	var div, select0, t0, select1, t1, t2, dispose;
+
+	var each_value_2 = ctx.hours;
+
+	var each_blocks_1 = [];
+
+	for (var i = 0; i < each_value_2.length; i += 1) {
+		each_blocks_1[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+	}
+
+	var each_value_1 = ctx.minutes;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value_1.length; i += 1) {
+		each_blocks[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
+	}
+
+	var if_block0 = (ctx.timePickerSeconds) && create_if_block_1$2(ctx);
+
+	var if_block1 = (!ctx.timePicker24Hour) && create_if_block$3();
+
+	return {
+		c: function create() {
+			div = element("div");
+			select0 = element("select");
+
+			for (var i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t0 = space();
+			select1 = element("select");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			t1 = space();
+			if (if_block0) if_block0.c();
+			t2 = space();
+			if (if_block1) if_block1.c();
+			if (ctx.selectedHour === void 0) add_render_callback(() => ctx.select0_change_handler.call(select0));
+			add_location(select0, file$5, 36, 2, 1053);
+			if (ctx.selectedMinute === void 0) add_render_callback(() => ctx.select1_change_handler.call(select1));
+			add_location(select1, file$5, 41, 2, 1206);
+			add_location(div, file$5, 35, 0, 1045);
+
+			dispose = [
+				listen(select0, "change", ctx.select0_change_handler),
+				listen(select0, "change", ctx.timeChange),
+				listen(select1, "change", ctx.select1_change_handler),
+				listen(select1, "change", ctx.timeChange)
+			];
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			append(div, select0);
+
+			for (var i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(select0, null);
+			}
+
+			select_option(select0, ctx.selectedHour);
+
+			append(div, t0);
+			append(div, select1);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(select1, null);
+			}
+
+			select_option(select1, ctx.selectedMinute);
+
+			append(div, t1);
+			if (if_block0) if_block0.m(div, null);
+			append(div, t2);
+			if (if_block1) if_block1.m(div, null);
+		},
+
+		p: function update(changed, ctx) {
+			if (changed.hours) {
+				each_value_2 = ctx.hours;
+
+				for (var i = 0; i < each_value_2.length; i += 1) {
+					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(changed, child_ctx);
+					} else {
+						each_blocks_1[i] = create_each_block_2(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(select0, null);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+				each_blocks_1.length = each_value_2.length;
+			}
+
+			if (changed.selectedHour) select_option(select0, ctx.selectedHour);
+
+			if (changed.minutes) {
+				each_value_1 = ctx.minutes;
+
+				for (var i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1$1(ctx, each_value_1, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+					} else {
+						each_blocks[i] = create_each_block_1$1(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(select1, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+				each_blocks.length = each_value_1.length;
+			}
+
+			if (changed.selectedMinute) select_option(select1, ctx.selectedMinute);
+
+			if (ctx.timePickerSeconds) {
+				if (if_block0) {
+					if_block0.p(changed, ctx);
+				} else {
+					if_block0 = create_if_block_1$2(ctx);
+					if_block0.c();
+					if_block0.m(div, t2);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (!ctx.timePicker24Hour) {
+				if (!if_block1) {
+					if_block1 = create_if_block$3();
+					if_block1.c();
+					if_block1.m(div, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+		},
+
+		i: noop,
+		o: noop,
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			destroy_each(each_blocks_1, detaching);
+
+			destroy_each(each_blocks, detaching);
+
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$5($$self, $$props, $$invalidate) {
+	
+  let { minuteIncrement, secondIncrement, timePicker24Hour, timePickerSeconds, dateReference } = $$props;
+
+  const dispatchEvent = createEventDispatcher();
+
+  /** @todo Handle am/pm times */
+  function timeChange() {
+    const detail = {
+      hours: selectedHour,
+      minutes: selectedMinute
+    };
+    detail.seconds = timePickerSeconds ? selectedSecond : 0;
+
+    dispatchEvent("timeChange", { ...detail });
+  }
+
+	const writable_props = ['minuteIncrement', 'secondIncrement', 'timePicker24Hour', 'timePickerSeconds', 'dateReference'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<TimePicker> was created with unknown prop '${key}'`);
+	});
+
+	function select0_change_handler() {
+		selectedHour = select_value(this);
+		$$invalidate('selectedHour', selectedHour), $$invalidate('dateReference', dateReference);
+		$$invalidate('hours', hours), $$invalidate('timePicker24Hour', timePicker24Hour);
+	}
+
+	function select1_change_handler() {
+		selectedMinute = select_value(this);
+		$$invalidate('selectedMinute', selectedMinute), $$invalidate('dateReference', dateReference), $$invalidate('minuteIncrement', minuteIncrement);
+		$$invalidate('minutes', minutes), $$invalidate('minuteIncrement', minuteIncrement);
+	}
+
+	function select_change_handler() {
+		selectedSecond = select_value(this);
+		$$invalidate('selectedSecond', selectedSecond), $$invalidate('dateReference', dateReference), $$invalidate('secondIncrement', secondIncrement);
+		$$invalidate('seconds', seconds), $$invalidate('secondIncrement', secondIncrement);
+	}
+
+	$$self.$set = $$props => {
+		if ('minuteIncrement' in $$props) $$invalidate('minuteIncrement', minuteIncrement = $$props.minuteIncrement);
+		if ('secondIncrement' in $$props) $$invalidate('secondIncrement', secondIncrement = $$props.secondIncrement);
+		if ('timePicker24Hour' in $$props) $$invalidate('timePicker24Hour', timePicker24Hour = $$props.timePicker24Hour);
+		if ('timePickerSeconds' in $$props) $$invalidate('timePickerSeconds', timePickerSeconds = $$props.timePickerSeconds);
+		if ('dateReference' in $$props) $$invalidate('dateReference', dateReference = $$props.dateReference);
+	};
+
+	let selectedHour, selectedMinute, selectedSecond, hours, minutes, seconds;
+
+	$$self.$$.update = ($$dirty = { dateReference: 1, minuteIncrement: 1, secondIncrement: 1, timePicker24Hour: 1 }) => {
+		if ($$dirty.dateReference) { $$invalidate('selectedHour', selectedHour = dateReference.getHours()); }
+		if ($$dirty.dateReference || $$dirty.minuteIncrement) { $$invalidate('selectedMinute', selectedMinute = roundTo(dateReference.getMinutes(), minuteIncrement)); }
+		if ($$dirty.dateReference || $$dirty.secondIncrement) { $$invalidate('selectedSecond', selectedSecond = roundTo(dateReference.getSeconds(), secondIncrement)); }
+		if ($$dirty.timePicker24Hour) { $$invalidate('hours', hours = [...Array(timePicker24Hour ? 23 : 11)].map((_, i) => pad(i + 1))); }
+		if ($$dirty.minuteIncrement) { $$invalidate('minutes', minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
+        pad(i * minuteIncrement)
+      )); }
+		if ($$dirty.secondIncrement) { $$invalidate('seconds', seconds = [...Array(60 / secondIncrement)].map((_, i) =>
+        pad(i * secondIncrement)
+      )); }
+	};
+
+	return {
+		minuteIncrement,
+		secondIncrement,
+		timePicker24Hour,
+		timePickerSeconds,
+		dateReference,
+		timeChange,
+		selectedHour,
+		selectedMinute,
+		selectedSecond,
+		hours,
+		minutes,
+		seconds,
+		select0_change_handler,
+		select1_change_handler,
+		select_change_handler
+	};
+}
+
+class TimePicker extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$5, create_fragment$5, safe_not_equal, ["minuteIncrement", "secondIncrement", "timePicker24Hour", "timePickerSeconds", "dateReference"]);
+
+		const { ctx } = this.$$;
+		const props = options.props || {};
+		if (ctx.minuteIncrement === undefined && !('minuteIncrement' in props)) {
+			console.warn("<TimePicker> was created without expected prop 'minuteIncrement'");
+		}
+		if (ctx.secondIncrement === undefined && !('secondIncrement' in props)) {
+			console.warn("<TimePicker> was created without expected prop 'secondIncrement'");
+		}
+		if (ctx.timePicker24Hour === undefined && !('timePicker24Hour' in props)) {
+			console.warn("<TimePicker> was created without expected prop 'timePicker24Hour'");
+		}
+		if (ctx.timePickerSeconds === undefined && !('timePickerSeconds' in props)) {
+			console.warn("<TimePicker> was created without expected prop 'timePickerSeconds'");
+		}
+		if (ctx.dateReference === undefined && !('dateReference' in props)) {
+			console.warn("<TimePicker> was created without expected prop 'dateReference'");
+		}
+	}
+
+	get minuteIncrement() {
+		throw new Error("<TimePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set minuteIncrement(value) {
+		throw new Error("<TimePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get secondIncrement() {
+		throw new Error("<TimePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set secondIncrement(value) {
+		throw new Error("<TimePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get timePicker24Hour() {
+		throw new Error("<TimePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set timePicker24Hour(value) {
+		throw new Error("<TimePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get timePickerSeconds() {
+		throw new Error("<TimePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set timePickerSeconds(value) {
+		throw new Error("<TimePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get dateReference() {
+		throw new Error("<TimePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set dateReference(value) {
+		throw new Error("<TimePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/date-range-picker/SDateRangePicker.svelte generated by Svelte v3.5.3 */
+
+const file$6 = "src/date-range-picker/SDateRangePicker.svelte";
+
+function get_each_context$5(ctx, list, i) {
+	const child_ctx = Object.create(ctx);
+	child_ctx.month = list[i];
+	return child_ctx;
+}
+
+// (311:6) {#each months as month}
+function create_each_block$5(ctx) {
+	var current;
+
+	var calendar = new Calendar({
+		props: {
+		disabledDates: ctx.disabledDates,
+		events: ctx.events,
+		hoverDate: ctx.hoverDate,
+		firstDayOfWeek: ctx.firstDayOfWeek,
+		isoWeekNumbers: ctx.isoWeekNumbers,
+		locale: ctx.locale,
+		maxDate: ctx.maxDate,
+		minDate: ctx.minDate,
+		month: ctx.month,
+		monthDropdown: ctx.monthDropdown,
+		monthFormat: ctx.monthFormat,
+		monthIndicator: ctx.monthIndicator,
+		pageWidth: ctx.pageWidth,
+		rtl: ctx.rtl,
+		singlePicker: ctx.singlePicker,
+		tempEndDate: ctx.tempEndDate,
+		tempStartDate: ctx.tempStartDate,
+		today: ctx.today,
+		weekGuides: ctx.weekGuides,
+		weekNumbers: ctx.weekNumbers,
+		yearDropdown: ctx.yearDropdown
+	},
+		$$inline: true
+	});
+	calendar.$on("pageChange", ctx.onPageChange);
+	calendar.$on("hover", ctx.onHover);
+	calendar.$on("selection", ctx.onSelection);
+	calendar.$on("previousMonth", ctx.onPreviousMonth);
+	calendar.$on("nextMonth", ctx.onNextMonth);
+
+	return {
+		c: function create() {
+			calendar.$$.fragment.c();
+		},
+
+		m: function mount(target, anchor) {
+			mount_component(calendar, target, anchor);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var calendar_changes = {};
+			if (changed.disabledDates) calendar_changes.disabledDates = ctx.disabledDates;
+			if (changed.events) calendar_changes.events = ctx.events;
+			if (changed.hoverDate) calendar_changes.hoverDate = ctx.hoverDate;
+			if (changed.firstDayOfWeek) calendar_changes.firstDayOfWeek = ctx.firstDayOfWeek;
+			if (changed.isoWeekNumbers) calendar_changes.isoWeekNumbers = ctx.isoWeekNumbers;
+			if (changed.locale) calendar_changes.locale = ctx.locale;
+			if (changed.maxDate) calendar_changes.maxDate = ctx.maxDate;
+			if (changed.minDate) calendar_changes.minDate = ctx.minDate;
+			if (changed.months) calendar_changes.month = ctx.month;
+			if (changed.monthDropdown) calendar_changes.monthDropdown = ctx.monthDropdown;
+			if (changed.monthFormat) calendar_changes.monthFormat = ctx.monthFormat;
+			if (changed.monthIndicator) calendar_changes.monthIndicator = ctx.monthIndicator;
+			if (changed.pageWidth) calendar_changes.pageWidth = ctx.pageWidth;
+			if (changed.rtl) calendar_changes.rtl = ctx.rtl;
+			if (changed.singlePicker) calendar_changes.singlePicker = ctx.singlePicker;
+			if (changed.tempEndDate) calendar_changes.tempEndDate = ctx.tempEndDate;
+			if (changed.tempStartDate) calendar_changes.tempStartDate = ctx.tempStartDate;
+			if (changed.today) calendar_changes.today = ctx.today;
+			if (changed.weekGuides) calendar_changes.weekGuides = ctx.weekGuides;
+			if (changed.weekNumbers) calendar_changes.weekNumbers = ctx.weekNumbers;
+			if (changed.yearDropdown) calendar_changes.yearDropdown = ctx.yearDropdown;
+			calendar.$set(calendar_changes);
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(calendar.$$.fragment, local);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(calendar.$$.fragment, local);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			destroy_component(calendar, detaching);
+		}
+	};
+}
+
+// (344:2) {#if timePicker}
+function create_if_block$4(ctx) {
+	var div, t, current;
+
+	var timepicker = new TimePicker({
+		props: {
+		dateReference: ctx.tempStartDate,
+		minuteIncrement: ctx.minuteIncrement,
+		secondIncrement: ctx.secondIncrement,
+		timePicker24Hour: ctx.timePicker24Hour,
+		timePickerSeconds: ctx.timePickerSeconds
+	},
+		$$inline: true
+	});
+	timepicker.$on("timeChange", ctx.onStartTimeChange);
+
+	var if_block = (!ctx.singlePicker) && create_if_block_1$3(ctx);
+
+	return {
+		c: function create() {
+			div = element("div");
+			timepicker.$$.fragment.c();
+			t = space();
+			if (if_block) if_block.c();
+			attr(div, "class", "calendar-row");
+			add_location(div, file$6, 344, 4, 8609);
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div, anchor);
+			mount_component(timepicker, div, null);
+			append(div, t);
+			if (if_block) if_block.m(div, null);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var timepicker_changes = {};
+			if (changed.tempStartDate) timepicker_changes.dateReference = ctx.tempStartDate;
+			if (changed.minuteIncrement) timepicker_changes.minuteIncrement = ctx.minuteIncrement;
+			if (changed.secondIncrement) timepicker_changes.secondIncrement = ctx.secondIncrement;
+			if (changed.timePicker24Hour) timepicker_changes.timePicker24Hour = ctx.timePicker24Hour;
+			if (changed.timePickerSeconds) timepicker_changes.timePickerSeconds = ctx.timePickerSeconds;
+			timepicker.$set(timepicker_changes);
+
+			if (!ctx.singlePicker) {
+				if (if_block) {
+					if_block.p(changed, ctx);
+					transition_in(if_block, 1);
+				} else {
+					if_block = create_if_block_1$3(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(div, null);
+				}
+			} else if (if_block) {
+				group_outros();
+				transition_out(if_block, 1, () => {
+					if_block = null;
+				});
+				check_outros();
+			}
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(timepicker.$$.fragment, local);
+
+			transition_in(if_block);
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(timepicker.$$.fragment, local);
+			transition_out(if_block);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div);
+			}
+
+			destroy_component(timepicker, );
+
+			if (if_block) if_block.d();
+		}
+	};
+}
+
+// (354:6) {#if !singlePicker}
+function create_if_block_1$3(ctx) {
+	var current;
+
+	var timepicker = new TimePicker({
+		props: {
+		dateReference: ctx.tempEndDate || ctx.hoverDate,
+		minuteIncrement: ctx.minuteIncrement,
+		secondIncrement: ctx.secondIncrement,
+		timePicker24Hour: ctx.timePicker24Hour,
+		timePickerSeconds: ctx.timePickerSeconds
+	},
+		$$inline: true
+	});
+	timepicker.$on("timeChange", ctx.onEndTimeChange);
+
+	return {
+		c: function create() {
+			timepicker.$$.fragment.c();
+		},
+
+		m: function mount(target, anchor) {
+			mount_component(timepicker, target, anchor);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var timepicker_changes = {};
+			if (changed.tempEndDate || changed.hoverDate) timepicker_changes.dateReference = ctx.tempEndDate || ctx.hoverDate;
+			if (changed.minuteIncrement) timepicker_changes.minuteIncrement = ctx.minuteIncrement;
+			if (changed.secondIncrement) timepicker_changes.secondIncrement = ctx.secondIncrement;
+			if (changed.timePicker24Hour) timepicker_changes.timePicker24Hour = ctx.timePicker24Hour;
+			if (changed.timePickerSeconds) timepicker_changes.timePickerSeconds = ctx.timePickerSeconds;
+			timepicker.$set(timepicker_changes);
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(timepicker.$$.fragment, local);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(timepicker.$$.fragment, local);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			destroy_component(timepicker, detaching);
+		}
+	};
+}
+
+function create_fragment$6(ctx) {
+	var div5, div0, label, t0_value = ctx.startDateReadout(), t0, t1, t2_value = ctx.endDateReadout(), t2, t3, div3, div1, t4, div2, t5, t6, div4, button0, t7_value = `<${ctx.canResetView ? '0' : '-'}>`, t7, button0_disabled_value, t8, button1, t9, button1_disabled_value, t10, button2, t11, button2_disabled_value, div5_style_value, current, dispose;
+
+	var each_value = ctx.months;
+
+	var each_blocks = [];
+
+	for (var i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$5(get_each_context$5(ctx, each_value, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, () => {
+		each_blocks[i] = null;
+	});
+
+	var if_block = (ctx.timePicker) && create_if_block$4(ctx);
+
+	return {
+		c: function create() {
+			div5 = element("div");
+			div0 = element("div");
+			label = element("label");
+			t0 = text(t0_value);
+			t1 = text(" to ");
+			t2 = text(t2_value);
+			t3 = space();
+			div3 = element("div");
+			div1 = element("div");
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			t4 = space();
+			div2 = element("div");
+			t5 = space();
+			if (if_block) if_block.c();
+			t6 = space();
+			div4 = element("div");
+			button0 = element("button");
+			t7 = text(t7_value);
+			t8 = space();
+			button1 = element("button");
+			t9 = text("Cancel");
+			t10 = space();
+			button2 = element("button");
+			t11 = text("Apply");
+			add_location(label, file$6, 303, 4, 7594);
+			add_location(div0, file$6, 302, 2, 7584);
+			attr(div1, "class", "grid svelte-a51g2d");
+			add_location(div1, file$6, 309, 4, 7777);
+			attr(div2, "class", "full-height-scroll");
+			add_location(div2, file$6, 340, 4, 8541);
+			add_location(div3, file$6, 308, 2, 7767);
+			attr(button0, "type", "button");
+			attr(button0, "aria-label", "Show the current selection ");
+			attr(button0, "aria-controls", id);
+			button0.disabled = button0_disabled_value = !ctx.canResetView;
+			add_location(button0, file$6, 365, 4, 9145);
+			attr(button1, "type", "button");
+			attr(button1, "aria-label", "Cancel the current selection and revert to previous start and\n      end dates");
+			attr(button1, "aria-controls", id);
+			button1.disabled = button1_disabled_value = !ctx.canCancel;
+			add_location(button1, file$6, 373, 4, 9362);
+			attr(button2, "type", "button");
+			attr(button2, "aria-label", "Apply the current selection");
+			attr(button2, "aria-controls", id);
+			button2.disabled = button2_disabled_value = !ctx.canApply();
+			add_location(button2, file$6, 383, 4, 9597);
+			add_location(div4, file$6, 364, 2, 9135);
+			attr(div5, "id", id);
+			attr(div5, "style", div5_style_value = `width: ${ctx.maxWidth}px`);
+			attr(div5, "class", "svelte-a51g2d");
+			add_location(div5, file$6, 301, 0, 7540);
+
+			dispose = [
+				listen(button0, "click", ctx.resetView),
+				listen(button1, "click", ctx.cancel),
+				listen(button2, "click", ctx.apply)
+			];
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			insert(target, div5, anchor);
+			append(div5, div0);
+			append(div0, label);
+			append(label, t0);
+			append(label, t1);
+			append(label, t2);
+			append(div5, t3);
+			append(div5, div3);
+			append(div3, div1);
+
+			for (var i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div1, null);
+			}
+
+			append(div3, t4);
+			append(div3, div2);
+			append(div5, t5);
+			if (if_block) if_block.m(div5, null);
+			append(div5, t6);
+			append(div5, div4);
+			append(div4, button0);
+			append(button0, t7);
+			append(div4, t8);
+			append(div4, button1);
+			append(button1, t9);
+			append(div4, t10);
+			append(div4, button2);
+			append(button2, t11);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			if ((!current || changed.startDateReadout) && t0_value !== (t0_value = ctx.startDateReadout())) {
+				set_data(t0, t0_value);
+			}
+
+			if ((!current || changed.endDateReadout) && t2_value !== (t2_value = ctx.endDateReadout())) {
+				set_data(t2, t2_value);
+			}
+
+			if (changed.disabledDates || changed.events || changed.hoverDate || changed.firstDayOfWeek || changed.isoWeekNumbers || changed.locale || changed.maxDate || changed.minDate || changed.months || changed.monthDropdown || changed.monthFormat || changed.monthIndicator || changed.pageWidth || changed.rtl || changed.singlePicker || changed.tempEndDate || changed.tempStartDate || changed.today || changed.weekGuides || changed.weekNumbers || changed.yearDropdown || changed.onPageChange || changed.onHover || changed.onSelection || changed.onPreviousMonth || changed.onNextMonth) {
+				each_value = ctx.months;
+
+				for (var i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$5(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(changed, child_ctx);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block$5(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(div1, null);
+					}
+				}
+
+				group_outros();
+				for (; i < each_blocks.length; i += 1) out(i);
+				check_outros();
+			}
+
+			if (ctx.timePicker) {
+				if (if_block) {
+					if_block.p(changed, ctx);
+					transition_in(if_block, 1);
+				} else {
+					if_block = create_if_block$4(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(div5, t6);
+				}
+			} else if (if_block) {
+				group_outros();
+				transition_out(if_block, 1, () => {
+					if_block = null;
+				});
+				check_outros();
+			}
+
+			if ((!current || changed.canResetView) && t7_value !== (t7_value = `<${ctx.canResetView ? '0' : '-'}>`)) {
+				set_data(t7, t7_value);
+			}
+
+			if ((!current || changed.canResetView) && button0_disabled_value !== (button0_disabled_value = !ctx.canResetView)) {
+				button0.disabled = button0_disabled_value;
+			}
+
+			if ((!current || changed.canCancel) && button1_disabled_value !== (button1_disabled_value = !ctx.canCancel)) {
+				button1.disabled = button1_disabled_value;
+			}
+
+			if ((!current || changed.canApply) && button2_disabled_value !== (button2_disabled_value = !ctx.canApply())) {
+				button2.disabled = button2_disabled_value;
+			}
+
+			if ((!current || changed.maxWidth) && div5_style_value !== (div5_style_value = `width: ${ctx.maxWidth}px`)) {
+				attr(div5, "style", div5_style_value);
+			}
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			for (var i = 0; i < each_value.length; i += 1) transition_in(each_blocks[i]);
+
+			transition_in(if_block);
+			current = true;
+		},
+
+		o: function outro(local) {
+			each_blocks = each_blocks.filter(Boolean);
+			for (let i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
+			transition_out(if_block);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			if (detaching) {
+				detach(div5);
+			}
+
+			destroy_each(each_blocks, detaching);
+
+			if (if_block) if_block.d();
+			run_all(dispose);
+		}
+	};
+}
+
+const cellWidth = 44;
+
+const id = "s-date-range-picker";
+
+const maxCalsPerPage = 2;
+
+function instance$6($$self, $$props, $$invalidate) {
+	
+
+  let { autoApply = false, dateFormat = "MMM dd, yyyy", monthIndicator = true, disabledDates = [], endDate = new Date(), events = [], firstDayOfWeek = "sunday", hideOnCancel = true, hideOnApply = true, isoWeekNumbers = false, locale: locale$1 = locale, maxDate = addYears(new Date(), 10), minDate = subYears(new Date(), 10), monthDropdown = true, monthFormat = "MMMM", numPages = 1, rtl = false, singlePicker = false, startDate = startOfWeek(new Date()), timePicker = true, timePicker24Hour = true, minuteIncrement = 5, secondIncrement = 5, timePickerSeconds = true, today = new Date(), weekGuides = false, weekNumbers = false, yearDropdown = true } = $$props;
+
+  let hoverDate = endDate;
+  let tempEndDate = endDate;
+  let tempStartDate = startDate;
+  const dispatchEvent = createEventDispatcher();
+  const pageWidth = cellWidth * 7;
+  const pageWidthWithPadding =
+    pageWidth + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
+
+  function hide() {
+    dispatchEvent("hide");
+  }
+
+  function apply() {
+    if (!tempEndDate && !singlePicker) {
+      return;
+    }
+
+    if (hideOnApply) {
+      hide();
+    }
+
+    dispatchEvent("apply", {
+      startDate: tempStartDate,
+      endDate: tempEndDate
+    });
+  }
+
+  function resetView() {
+    const resetViewMonth = canApply() ? tempStartDate : startDate;
+    $$invalidate('months', months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i)));
+  }
+
+  function resetState() {
+    $$invalidate('tempStartDate', tempStartDate = startDate);
+    $$invalidate('tempEndDate', tempEndDate = endDate);
+  }
+
+  function cancel() {
+    resetState();
+    resetView();
+
+    if (hideOnCancel) {
+      hide();
+    }
+
+    dispatchEvent("cancel", {
+      startDate,
+      endDate
+    });
+  }
+
+  console.log(tempStartDate);
+  console.log(tempEndDate);
+  console.log(hoverDate);
+  function onSelection({ detail }) {
+    console.log(detail);
+    $$invalidate('tempStartDate', tempStartDate = new Date(
+      detail.tempStartDate.getFullYear(),
+      detail.tempStartDate.getMonth(),
+      detail.tempStartDate.getDate(),
+      tempStartDate.getHours(),
+      tempStartDate.getMinutes(),
+      tempStartDate.getSeconds()
+    ));
+
+    if (detail.tempEndDate) {
+      $$invalidate('tempEndDate', tempEndDate = new Date(
+        detail.tempEndDate.getFullYear(),
+        detail.tempEndDate.getMonth(),
+        detail.tempEndDate.getDate(),
+        (tempEndDate || hoverDate).getHours(),
+        (tempEndDate || hoverDate).getMinutes(),
+        (tempEndDate || hoverDate).getSeconds()
+      ));
+    } else {
+      $$invalidate('tempEndDate', tempEndDate = detail.tempEndDate);
+    }
+
+    dispatchEvent("selection", {
+      startDate: tempStartDate,
+      endDate: tempEndDate
+    });
+
+    if (autoApply) {
+      apply();
+    }
+  }
+
+  function onHover({ detail }) {
+    $$invalidate('hoverDate', hoverDate = detail.hoverDate);
+  }
+
+  function onPreviousMonth() {
+    $$invalidate('months', months = months.map(mo => subMonths(mo, 1)));
+  }
+
+  function onNextMonth() {
+    $$invalidate('months', months = months.map(mo => addMonths(mo, 1)));
+  }
+
+  function onPageChange({ detail: { incrementAmount } }) {
+    if (incrementAmount > 0) {
+      $$invalidate('months', months = months.map(mo => addMonths(mo, incrementAmount)));
+    } else {
+      const absIncrementAmount = Math.abs(incrementAmount);
+      $$invalidate('months', months = months.map(mo => subMonths(mo, absIncrementAmount)));
+    }
+  }
+
+  function onStartTimeChange({ detail }) {
+    $$invalidate('tempStartDate', tempStartDate = new Date(
+      tempStartDate.getFullYear(),
+      tempStartDate.getMonth(),
+      tempStartDate.getDate(),
+      detail.hours,
+      detail.minutes,
+      detail.seconds
+    ));
+  }
+
+  function onEndTimeChange({ detail }) {
+    if (tempEndDate) {
+      $$invalidate('tempEndDate', tempEndDate = new Date(
+        tempEndDate.getFullYear(),
+        tempEndDate.getMonth(),
+        tempEndDate.getDate(),
+        detail.hours,
+        detail.minutes,
+        detail.seconds
+      ));
+    }
+  }
+
+	const writable_props = ['autoApply', 'dateFormat', 'monthIndicator', 'disabledDates', 'endDate', 'events', 'firstDayOfWeek', 'hideOnCancel', 'hideOnApply', 'isoWeekNumbers', 'locale', 'maxDate', 'minDate', 'monthDropdown', 'monthFormat', 'numPages', 'rtl', 'singlePicker', 'startDate', 'timePicker', 'timePicker24Hour', 'minuteIncrement', 'secondIncrement', 'timePickerSeconds', 'today', 'weekGuides', 'weekNumbers', 'yearDropdown'];
+	Object.keys($$props).forEach(key => {
+		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<SDateRangePicker> was created with unknown prop '${key}'`);
+	});
+
+	$$self.$set = $$props => {
+		if ('autoApply' in $$props) $$invalidate('autoApply', autoApply = $$props.autoApply);
+		if ('dateFormat' in $$props) $$invalidate('dateFormat', dateFormat = $$props.dateFormat);
+		if ('monthIndicator' in $$props) $$invalidate('monthIndicator', monthIndicator = $$props.monthIndicator);
+		if ('disabledDates' in $$props) $$invalidate('disabledDates', disabledDates = $$props.disabledDates);
+		if ('endDate' in $$props) $$invalidate('endDate', endDate = $$props.endDate);
+		if ('events' in $$props) $$invalidate('events', events = $$props.events);
+		if ('firstDayOfWeek' in $$props) $$invalidate('firstDayOfWeek', firstDayOfWeek = $$props.firstDayOfWeek);
+		if ('hideOnCancel' in $$props) $$invalidate('hideOnCancel', hideOnCancel = $$props.hideOnCancel);
+		if ('hideOnApply' in $$props) $$invalidate('hideOnApply', hideOnApply = $$props.hideOnApply);
+		if ('isoWeekNumbers' in $$props) $$invalidate('isoWeekNumbers', isoWeekNumbers = $$props.isoWeekNumbers);
+		if ('locale' in $$props) $$invalidate('locale', locale$1 = $$props.locale);
+		if ('maxDate' in $$props) $$invalidate('maxDate', maxDate = $$props.maxDate);
+		if ('minDate' in $$props) $$invalidate('minDate', minDate = $$props.minDate);
+		if ('monthDropdown' in $$props) $$invalidate('monthDropdown', monthDropdown = $$props.monthDropdown);
+		if ('monthFormat' in $$props) $$invalidate('monthFormat', monthFormat = $$props.monthFormat);
+		if ('numPages' in $$props) $$invalidate('numPages', numPages = $$props.numPages);
+		if ('rtl' in $$props) $$invalidate('rtl', rtl = $$props.rtl);
+		if ('singlePicker' in $$props) $$invalidate('singlePicker', singlePicker = $$props.singlePicker);
+		if ('startDate' in $$props) $$invalidate('startDate', startDate = $$props.startDate);
+		if ('timePicker' in $$props) $$invalidate('timePicker', timePicker = $$props.timePicker);
+		if ('timePicker24Hour' in $$props) $$invalidate('timePicker24Hour', timePicker24Hour = $$props.timePicker24Hour);
+		if ('minuteIncrement' in $$props) $$invalidate('minuteIncrement', minuteIncrement = $$props.minuteIncrement);
+		if ('secondIncrement' in $$props) $$invalidate('secondIncrement', secondIncrement = $$props.secondIncrement);
+		if ('timePickerSeconds' in $$props) $$invalidate('timePickerSeconds', timePickerSeconds = $$props.timePickerSeconds);
+		if ('today' in $$props) $$invalidate('today', today = $$props.today);
+		if ('weekGuides' in $$props) $$invalidate('weekGuides', weekGuides = $$props.weekGuides);
+		if ('weekNumbers' in $$props) $$invalidate('weekNumbers', weekNumbers = $$props.weekNumbers);
+		if ('yearDropdown' in $$props) $$invalidate('yearDropdown', yearDropdown = $$props.yearDropdown);
+	};
+
+	let canApply, canCancel, canResetView, maxWidth, months, pickerWidth, startDateReadout, endDateReadout;
+
+	$$self.$$.update = ($$dirty = { timePicker: 1, timePickerSeconds: 1, tempStartDate: 1, startDate: 1, tempEndDate: 1, endDate: 1, numPages: 1, today: 1, months: 1, pickerWidth: 1, hoverDate: 1, dateFormat: 1, locale: 1 }) => {
+		if ($$dirty.timePicker || $$dirty.timePickerSeconds || $$dirty.tempStartDate || $$dirty.startDate || $$dirty.tempEndDate || $$dirty.endDate) { $$invalidate('canApply', canApply = function() {
+        if (timePicker) {
+          if (timePickerSeconds) {
+            return (
+              (!isSameSecond(tempStartDate, startDate) ||
+                !isSameSecond(tempEndDate, endDate)) &&
+              tempEndDate
+            );
+          }
+    
+          return (
+            (!isSameMinute(tempStartDate, startDate) ||
+              !isSameMinute(tempEndDate, endDate)) &&
+            tempEndDate
+          );
+        }
+    
+        return (
+          (!isSameDay(tempStartDate, startDate) ||
+            !isSameDay(tempEndDate, endDate)) &&
+          tempEndDate
+        );
+      }); }
+		if ($$dirty.tempStartDate || $$dirty.startDate || $$dirty.tempEndDate || $$dirty.endDate) { $$invalidate('canCancel', canCancel =
+        !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)); }
+		if ($$dirty.numPages || $$dirty.today) { $$invalidate('months', months = [...Array(numPages)].map((_, i) => addMonths(today, i))); }
+		if ($$dirty.tempStartDate || $$dirty.months || $$dirty.tempEndDate) { $$invalidate('canResetView', canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate); }
+		if ($$dirty.numPages) { $$invalidate('pickerWidth', pickerWidth = numPages * pageWidthWithPadding); }
+		if ($$dirty.pickerWidth) { $$invalidate('maxWidth', maxWidth =
+        pickerWidth >= maxCalsPerPage * pageWidth
+          ? maxCalsPerPage * pageWidthWithPadding
+          : pickerWidth); }
+		if ($$dirty.tempEndDate || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale) { $$invalidate('startDateReadout', startDateReadout = function() {
+        if (!tempEndDate && isBefore(hoverDate, tempStartDate)) {
+          return format(hoverDate, dateFormat, { locale: locale$1 });
+        }
+    
+        return format(tempStartDate, dateFormat, { locale: locale$1 });
+      }); }
+		if ($$dirty.tempEndDate || $$dirty.hoverDate || $$dirty.tempStartDate || $$dirty.dateFormat || $$dirty.locale) { $$invalidate('endDateReadout', endDateReadout = function() {
+        if (!tempEndDate) {
+          if (isBefore(hoverDate, tempStartDate)) {
+            return format(tempStartDate, dateFormat, { locale: locale$1 });
+          }
+    
+          return format(hoverDate, dateFormat, { locale: locale$1 });
+        }
+    
+        return format(tempEndDate, dateFormat, { locale: locale$1 });
+      }); }
+	};
+
+	return {
+		autoApply,
+		dateFormat,
+		monthIndicator,
+		disabledDates,
+		endDate,
+		events,
+		firstDayOfWeek,
+		hideOnCancel,
+		hideOnApply,
+		isoWeekNumbers,
+		locale: locale$1,
+		maxDate,
+		minDate,
+		monthDropdown,
+		monthFormat,
+		numPages,
+		rtl,
+		singlePicker,
+		startDate,
+		timePicker,
+		timePicker24Hour,
+		minuteIncrement,
+		secondIncrement,
+		timePickerSeconds,
+		today,
+		weekGuides,
+		weekNumbers,
+		yearDropdown,
+		hoverDate,
+		tempEndDate,
+		tempStartDate,
+		pageWidth,
+		apply,
+		resetView,
+		cancel,
+		onSelection,
+		onHover,
+		onPreviousMonth,
+		onNextMonth,
+		onPageChange,
+		onStartTimeChange,
+		onEndTimeChange,
+		canApply,
+		canCancel,
+		canResetView,
+		months,
+		maxWidth,
+		startDateReadout,
+		endDateReadout
+	};
+}
+
+class SDateRangePicker extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$6, create_fragment$6, safe_not_equal, ["autoApply", "dateFormat", "monthIndicator", "disabledDates", "endDate", "events", "firstDayOfWeek", "hideOnCancel", "hideOnApply", "isoWeekNumbers", "locale", "maxDate", "minDate", "monthDropdown", "monthFormat", "numPages", "rtl", "singlePicker", "startDate", "timePicker", "timePicker24Hour", "minuteIncrement", "secondIncrement", "timePickerSeconds", "today", "weekGuides", "weekNumbers", "yearDropdown"]);
+	}
+
+	get autoApply() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set autoApply(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get dateFormat() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set dateFormat(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthIndicator() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthIndicator(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get disabledDates() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set disabledDates(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get endDate() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set endDate(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get events() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set events(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get firstDayOfWeek() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set firstDayOfWeek(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get hideOnCancel() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set hideOnCancel(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get hideOnApply() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set hideOnApply(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get isoWeekNumbers() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set isoWeekNumbers(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get locale() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set locale(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get maxDate() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set maxDate(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get minDate() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set minDate(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthDropdown() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthDropdown(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get monthFormat() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set monthFormat(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get numPages() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set numPages(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get rtl() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set rtl(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get singlePicker() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set singlePicker(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get startDate() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set startDate(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get timePicker() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set timePicker(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get timePicker24Hour() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set timePicker24Hour(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get minuteIncrement() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set minuteIncrement(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get secondIncrement() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set secondIncrement(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get timePickerSeconds() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set timePickerSeconds(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get today() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set today(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekGuides() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekGuides(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get weekNumbers() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set weekNumbers(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	get yearDropdown() {
+		throw new Error("<SDateRangePicker>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set yearDropdown(value) {
+		throw new Error("<SDateRangePicker>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+}
+
+/* src/App.svelte generated by Svelte v3.5.3 */
+
+function create_fragment$7(ctx) {
+	var current;
+
+	var sdaterangepicker = new SDateRangePicker({
+		props: {
+		numPages: 2,
+		startDate: ctx.startDate,
+		endDate: ctx.endDate
+	},
+		$$inline: true
+	});
+	sdaterangepicker.$on("apply", ctx.onApply);
+
+	return {
+		c: function create() {
+			sdaterangepicker.$$.fragment.c();
+		},
+
+		l: function claim(nodes) {
+			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+		},
+
+		m: function mount(target, anchor) {
+			mount_component(sdaterangepicker, target, anchor);
+			current = true;
+		},
+
+		p: function update(changed, ctx) {
+			var sdaterangepicker_changes = {};
+			if (changed.startDate) sdaterangepicker_changes.startDate = ctx.startDate;
+			if (changed.endDate) sdaterangepicker_changes.endDate = ctx.endDate;
+			sdaterangepicker.$set(sdaterangepicker_changes);
+		},
+
+		i: function intro(local) {
+			if (current) return;
+			transition_in(sdaterangepicker.$$.fragment, local);
+
+			current = true;
+		},
+
+		o: function outro(local) {
+			transition_out(sdaterangepicker.$$.fragment, local);
+			current = false;
+		},
+
+		d: function destroy(detaching) {
+			destroy_component(sdaterangepicker, detaching);
+		}
+	};
+}
+
+function instance$7($$self, $$props, $$invalidate) {
+	
+
+  let startDate = new Date();
+  let endDate = addDays(new Date(), 7);
+
+  function onApply({ detail }) {
+    $$invalidate('startDate', startDate = detail.startDate);
+    $$invalidate('endDate', endDate = detail.endDate);
+    console.log("apply", detail);
+  }
+
+	return { startDate, endDate, onApply };
+}
+
+class App extends SvelteComponentDev {
+	constructor(options) {
+		super(options);
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, []);
+	}
+}
+
+const target = document.body;
+
+const app = new App({
+  target,
+  props: {}
+});
+
+export { app, target };

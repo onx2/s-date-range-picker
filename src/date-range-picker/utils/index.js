@@ -7,6 +7,8 @@ import { getDaysOfWeek } from "./get-days-of-week";
 import { isDisabled } from "./is-disabled";
 import { isEndDate } from "./is-end-date";
 import { isStartDate } from "./is-start-date";
+import { pad } from "./pad";
+import { roundTo } from "./round-to";
 import { toRange } from "./to-range";
 
 export {
@@ -19,5 +21,7 @@ export {
   isDisabled,
   isEndDate,
   isStartDate,
+  pad,
+  roundTo,
   toRange
 };
