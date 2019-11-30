@@ -1,6 +1,6 @@
 {
   "name": "s-date-range-picker",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A date range picker built with Svelte",
   "keywords": [
     "svelte",
@@ -24,9 +24,9 @@
   "scripts": {
     "cleanup": "rimraf ./build",
     "test": "cross-env NODE_ENV=test jest",
-    "prepublishOnly": "npm run build",
-    "serve": "npm run cleanup && cross-env NODE_ENV=development rollup --config --watch",
-    "build": "npm run cleanup && cross-env NODE_ENV=production rollup --config"
+    "prepublishOnly": "yarn build",
+    "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
+    "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
   },
   "dependencies": {
     "date-fns": "2.8.1"

@@ -1,0 +1,8 @@
+.circleci
+.rpt2_cache
+yarn-error.log
+.tool-versions
+svelte-jest.js
+svelte.config.js
+tsconfig.json
+tsconfig.test.json
