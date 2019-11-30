@@ -1,6 +1,6 @@
 {
   "name": "s-date-range-picker",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A date range picker built with Svelte",
   "keywords": [
     "svelte",
