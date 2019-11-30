@@ -1,4 +1,4 @@
-import App from "./app.svelte";
+import App from "./App.svelte";
 
 export const target = document.body;
 

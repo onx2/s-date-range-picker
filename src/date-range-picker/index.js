@@ -1,3 +1,3 @@
-import SDateRangePicker from "./s-date-range-picker.svelte";
+import SDateRangePicker from "./SDateRangePicker.svelte";
 
 export default SDateRangePicker;

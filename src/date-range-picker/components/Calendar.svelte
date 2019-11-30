@@ -1,8 +1,8 @@
 <script>
   import { getCalendarWeeks, dayOffset } from "../utils";
-  import Week from "./week.svelte";
-  import DaysOfWeek from "./days-of-week.svelte";
-  import Controls from "./controls.svelte";
+  import Week from "./Week.svelte";
+  import DaysOfWeek from "./DaysOfWeek.svelte";
+  import Controls from "./Controls.svelte";
 
   export let disabledDates;
   export let events;

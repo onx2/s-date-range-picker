@@ -14,7 +14,7 @@
     subMonths
   } from "date-fns";
   import { enUS } from "date-fns/locale";
-  import Calendar from "./components/calendar.svelte";
+  import Calendar from "./components/Calendar.svelte";
 
   export let autoApply = false;
   export let dateFormat = "MMM dd, yyyy";

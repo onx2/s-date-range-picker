@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { isBefore, format } from "date-fns";
-  import Day from "./day.svelte";
+  import Day from "./Day.svelte";
 
   export let locale;
   export let isoWeekNumbers;
