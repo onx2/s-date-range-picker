@@ -8,8 +8,8 @@
 
 - npm: `npm i s-date-range-picker`
 - yarn: `yarn add s-date-range-picker`
+
 ```
-// App.svelte
 <script>
   import SDateRangePicker from "s-date-range-picker";
   
@@ -33,12 +33,10 @@
 - [ ] Linter
 - [ ] Styling
 - [ ] Show & hide functionality _(probably in the form of a button w/ popover)_
-- [x] ~Add TypeScript configuration~ TBD
-- [ ] ~Convert to TypeScript~ TBD
 - [ ] Documentation / Demo Site
 - [x] Publish to npm
 - [ ] Mobile / touch friendly
-- [ ] Optimizations where applicable
+- [ ] Optimizations /reduce bundle size
 
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
@@ -47,6 +45,7 @@
 - Install dpendencies: `yarn`
 - Run dev web server: `yarn serve`
 - Run tests: `yarn test` _(No tests yet)_
+- Run linter: `yarn lint` _(No linter yet)_
 
 ## API
 
