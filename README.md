@@ -28,13 +28,13 @@
 ```
 
 ## Todos
-- [ ] Missing Props / Options
+- [ ] Add the missing Props / Options
 - [ ] Tests
 - [ ] Linter
-- [x] Add TypeScript configuration
-- [ ] Convert to TypeScript
+- [x] ~Add TypeScript configuration~ TBD
+- [ ] ~Convert to TypeScript~ TBD
 - [ ] Documentation / Demo Site
-- [ ] Publish to npm
+- [x] Publish to npm
 - [ ] Mobile / touch friendly
 
 ## Development
