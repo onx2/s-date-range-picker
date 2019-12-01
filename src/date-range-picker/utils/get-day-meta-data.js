@@ -41,7 +41,7 @@ export function getDayMetaData(params) {
     isStartDate: isStartDate(params),
     isDisabled: isDisabled({ date, maxDate, minDate, disabledDates }),
     // Used only in range mode
-    isEndDate: !singlePicker ? isEndDate(params) : false,
+    isEndDate: isEndDate(params),
     isWithinSelection: !singlePicker
       ? isWithinInterval(date, { start, end })
       : false
