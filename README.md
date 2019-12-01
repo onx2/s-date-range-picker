@@ -95,11 +95,11 @@
 
 ### Events
 
-- `show` Fired after the picker has been shown
-- `hide` Fired after the picker has been hidden
-- `selection` Fired when a selection is made (start or end date has been chosen)
-- `cancel` Fired when the "Cancel" button is clicked
-- `apply` Fired when the "Apply" button is clicked
+- [ ] `show` Fired after the picker has been shown
+- [ ] `hide` Fired after the picker has been hidden
+- [x] `selection` Fired when a selection is made (start or end date has been chosen)
+- [x] `cancel` Fired when the "Cancel" button is clicked
+- [x] `apply` Fired when the "Apply" button is clicked
 
 ___
 
