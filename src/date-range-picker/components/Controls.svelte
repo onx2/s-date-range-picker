@@ -9,7 +9,8 @@
     isBefore,
     isSameMonth,
     subMonths,
-    isSameYear
+    isSameYear,
+    isWithinInterval
   } from "date-fns";
   import { buildMonths, buildYears } from "../utils";
 
@@ -19,8 +20,8 @@
   export let monthDropdown;
   export let maxDate;
   export let minDate;
-  export let nextIcon = "N";
-  export let previousIcon = "P";
+  export let nextIcon = "";
+  export let prevIcon = "&#9666;";
   export let yearDropdown;
 
   const disptachEvent = createEventDispatcher();
@@ -30,7 +31,7 @@
     text: format(month, monthFormat, { locale })
   };
   $: selectedYear = { value: month, text: format(month, "yyyy", { locale }) };
-  $: previousMonth = subMonths(month, 1);
+  $: prevMonth = subMonths(month, 1);
   $: nextMonth = addMonths(month, 1);
   $: isMaxDate = isAfter(month, maxDate) || isSameMonth(month, maxDate);
   $: isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate);
@@ -58,11 +59,11 @@
     aria-disabled={prevBtnDisabled}
     disabled={prevBtnDisabled}
     type="button"
-    on:click={() => disptachEvent('previousMonth')}
-    aria-label={`Previous month, ${format(previousMonth, 'MMMM yyyy', {
+    on:click={() => disptachEvent('prevMonth')}
+    aria-label={`Previous month, ${format(prevMonth, 'MMMM yyyy', {
       locale
     })}`}>
-    {previousIcon}
+    &#9666;
   </button>
   <span>
     {#if monthDropdown}
@@ -115,6 +116,6 @@
     type="button"
     on:click={() => disptachEvent('nextMonth')}
     aria-label={`Next month, ${format(nextMonth, 'MMMM yyyy', { locale })}`}>
-    {nextIcon}
+    &#9656;
   </button>
 </div>

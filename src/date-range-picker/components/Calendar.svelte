@@ -53,7 +53,7 @@
 <div style={`width: ${pageWidth}px;`}>
   <Controls
     on:pageChange
-    on:previousMonth
+    on:prevMonth
     on:nextMonth
     {locale}
     {month}

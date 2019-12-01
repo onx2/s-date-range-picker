@@ -20,7 +20,7 @@
 </script>
 
 <SDateRangePicker
-  numPages={1}
+  numPages={2}
   weekGuides={true}
   weekNumbers={true}
   isoWeekNumbers={true}

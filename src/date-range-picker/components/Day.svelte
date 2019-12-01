@@ -23,7 +23,6 @@
 
   button {
     background-color: transparent;
-    cursor: pointer;
     border-radius: 100%;
     outline: 0;
     border: 0;

@@ -29,8 +29,8 @@
   export let endDate = endOfWeek(new Date());
   export let events = [];
   export let firstDayOfWeek = "sunday";
-  export let hideOnCancel = true;
-  export let hideOnApply = true;
+  // export let hideOnCancel = true;
+  // export let hideOnApply = true;
   export let isoWeekNumbers = false;
   export let locale = enUS;
   export let maxDate = addYears(new Date(), 10);
@@ -45,9 +45,11 @@
   export let startDate = startOfWeek(new Date());
   export let timePicker = true;
   export let timePicker24Hour = true;
-  export let minuteIncrement = 5;
+  export let minuteIncrement = 1;
   export let secondIncrement = 1;
   export let timePickerSeconds = true;
+  export let prevIcon = false;
+  export let nextIcon = false;
   export let today = new Date();
   export let weekGuides = false;
   export let weekNumbers = false;
@@ -150,27 +152,31 @@
     }
   });
 
-  function show() {
-    dispatchEvent("show");
-  }
+  // function show() {
+  //   dispatchEvent("show");
+  // }
 
-  function hide() {
-    dispatchEvent("hide");
-  }
+  // function hide() {
+  //   dispatchEvent("hide");
+  // }
 
   function apply() {
     if (!tempEndDate && !singlePicker) {
       return;
     }
 
-    if (hideOnApply) {
-      hide();
-    }
+    // if (hideOnApply) {
+    //   hide();
+    // }
 
     dispatchEvent("apply", {
       startDate: tempStartDate,
       endDate: tempEndDate
     });
+  }
+
+  function goToToday() {
+    months = [...Array(numPages)].map((_, i) => addMonths(new Date(), i));
   }
 
   function resetView() {
@@ -187,16 +193,16 @@
   function close() {
     resetState();
     resetView();
-    hide();
+    // hide();
   }
 
   function cancel() {
     resetState();
     resetView();
 
-    if (hideOnCancel) {
-      hide();
-    }
+    // if (hideOnCancel) {
+    //   hide();
+    // }
 
     dispatchEvent("cancel", {
       startDate,
@@ -277,7 +283,7 @@
     hoverDate = detail;
   }
 
-  function onPreviousMonth() {
+  function onPrevMonth() {
     months = months.map(mo => subMonths(mo, 1));
   }
 
@@ -335,11 +341,17 @@
   #s-date-range-picker {
     font-size: 18px;
     margin: 2em;
+    background-color: #fff;
     border: 1px solid #d5d5d5;
     border-radius: 6px;
     padding: 1em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .grid {
@@ -375,7 +387,12 @@
   .rtl {
     direction: rtl;
   }
-
+  #s-date-range-picker :global(button) {
+    cursor: pointer;
+  }
+  #s-date-range-picker :global(button:disabled) {
+    cursor: not-allowed;
+  }
   button {
     margin: 4px;
     background-color: transparent;
@@ -383,7 +400,6 @@
     outline: 0;
     padding: 8px 12px;
     border-radius: 4px;
-    cursor: pointer;
   }
 
   button:disabled {
@@ -392,11 +408,11 @@
 </style>
 
 <div {id} style={`width: ${maxWidth}px`} class={rtl ? 'rtl' : ''}>
-  <div>
+  <div class="label-row">
     <label>{startDateReadout()} to {endDateReadout()}</label>
-    <button type="close" disabled={!canApply()} on:click={() => close()}>
+    <!-- <button type="close" disabled={!canApply()} on:click={() => close()}>
       x
-    </button>
+    </button> -->
   </div>
   <div>
     <div class="grid">
@@ -405,7 +421,7 @@
           on:pageChange={onPageChange}
           on:hover={onHover}
           on:selection={onSelection}
-          on:previousMonth={onPreviousMonth}
+          on:prevMonth={onPrevMonth}
           on:nextMonth={onNextMonth}
           {disabledDates}
           {events}
@@ -459,16 +475,21 @@
     <button
       type="button"
       aria-label="Show the current selection "
-      aria-controls={id}
+      on:click={goToToday}
+      disabled={isSameMonth(new Date(), months[0])}>
+      Today
+    </button>
+    <button
+      type="button"
+      aria-label="Show the current selection "
       on:click={resetView}
       disabled={!canResetView}>
-      {`<${canResetView ? '0' : '-'}>`}
+      &#8602;
     </button>
     <button
       type="button"
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
-      aria-controls={id}
       on:click={cancel}
       disabled={!canApply()}>
       Cancel
@@ -477,7 +498,6 @@
     <button
       type="button"
       aria-label="Apply the current selection"
-      aria-controls={id}
       on:click={apply}
       disabled={!canApply()}>
       Apply

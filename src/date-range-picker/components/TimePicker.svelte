@@ -29,7 +29,6 @@
     };
     detail.seconds = timePickerSeconds ? selectedSecond : 0;
 
-    console.log(detail);
     dispatchEvent("timeChange", detail);
   }
 </script>
@@ -62,10 +61,10 @@
     </select>
   {/if}
 
-  {#if !timePicker24Hour}
+  <!-- {#if !timePicker24Hour}
     <select class="select">
       <option value="AM">AM</option>
       <option value="PM">PM</option>
     </select>
-  {/if}
+  {/if} -->
 </div>
