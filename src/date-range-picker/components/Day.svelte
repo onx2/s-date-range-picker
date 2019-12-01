@@ -22,6 +22,7 @@
     border: 0;
     padding: 0;
     margin: 0;
+    overflow: hidden;
   }
 
   .within-selection,

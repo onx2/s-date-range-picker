@@ -54,7 +54,7 @@
 ### Props / Options
 
 - [x] `autoApply` (boolean)
-- [x] `dateFormat` (string)
+- [x] `dateFormat` (string) [options](https://date-fns.org/v2.8.1/docs/format)
 - [ ] `disabled` (boolean)
 - [x] `disabledDates` (Date[])
 - [x] `endDate` (Date)
@@ -68,7 +68,7 @@
 - [ ] `maxSpan` (number) - in days
 - [x] `minDate` (Date)
 - [x] `monthDropdown` (boolean)
-- [x] `monthFormat` (string)
+- [x] `monthFormat` (string) [options](https://date-fns.org/v2.8.1/docs/format)
 - [ ] `predefinedRanges` (Date[])
 - [x] `rtl` (boolean)
 - [x] `singlePicker` (boolean)
@@ -81,7 +81,13 @@
 - [x] `weekGuides` (boolean)
 - [x] `weekNumbers` (boolean)
 - [x] `yearDropdown` (boolean)
-
+- [x] `applyBtnText` (string)
+- [x] `cancelBtnText` (string)
+- [x] `todayBtnText` (string)
+- [x] `todayBtn` (boolean)
+- [x] `resetViewBtnText` (string)
+- [x] `resetViewBtn` (boolean)
+- [x] `id` (string)
 ### Events
 
 - `show` Fired after the picker has been shown

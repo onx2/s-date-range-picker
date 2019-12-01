@@ -19,4 +19,4 @@
   }
 </script>
 
-<SDateRangePicker locale={arDZ} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker locale={enUS} {startDate} {endDate} on:apply={onApply} />

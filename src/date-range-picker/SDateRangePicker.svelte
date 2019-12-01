@@ -30,9 +30,8 @@
   export let firstDayOfWeek = "sunday";
   // export let hideOnCancel = true;
   // export let hideOnApply = true;
-  export let isoWeekNumbers = false;
+  export let isoWeekNumbers = true;
   export let locale;
-  window.__locale__ = locale;
   export let maxDate = addYears(new Date(), 10);
   // export let maxSpan = null;
   export let minDate = subYears(new Date(), 10);
@@ -51,8 +50,8 @@
   export let prevIcon = "&#9666;";
   export let nextIcon = "&#9656;";
   export let today = new Date();
-  export let weekGuides = false;
-  export let weekNumbers = false;
+  export let weekGuides = true;
+  export let weekNumbers = true;
   export let yearDropdown = true;
   export let applyBtnText = "Apply";
   export let cancelBtnText = "Cancel";
@@ -72,6 +71,9 @@
   const maxCalsPerPage = 2;
   const pageWidth = cellWidth * 7;
   const pageWidthWithPadding = pageWidth + 96;
+
+  // Used for the date-fns format abstraction, localeFormat
+  window.__locale__ = locale;
 
   $: canApply = function() {
     if (timePicker) {
@@ -139,22 +141,6 @@
         roundDown(endDate.getMinutes(), minuteIncrement),
         roundDown(endDate.getSeconds(), secondIncrement)
       );
-
-      if (
-        !isSameSecond(tempStartDate, startDate) ||
-        !isSameSecond(tempEndDate, endDate)
-      ) {
-        console.warn(`
-          startDate or endDate is not rounded to the proper minute / second increment. This will lead to
-          an inconsistency between the internal state and external state. The "Cancel" and "Apply" button will render
-          as enabled. 
-
-          startDate=${startDate}
-          endDate=${endDate}
-          minuteIncrement=${minuteIncrement}
-          secondIncrement=${secondIncrement}
-        `);
-      }
     }
   });
 
