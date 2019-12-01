@@ -26,17 +26,17 @@
 
 <SDateRangePicker {startDate} {endDate} on:apply={onApply} />
 ```
-## Current look
-![Svelte Date Range Picker 2019-11-30](https://i.ibb.co/wSnckY9/Screenshot-from-2019-11-30-17-29-57.png)
+## Screenshot (defaults)
+![Svelte Date Range Picker 2019-11-30](https://i.ibb.co/fktvn56/Screenshot-from-2019-12-01-17-47-59.png)
 
 ## Todos
+- [x] Publish to npm
 - [ ] Add the missing Props / Options
 - [ ] Tests
 - [ ] Linter
 - [ ] Styling
 - [ ] Show & hide functionality _(probably in the form of a button w/ popover)_
 - [ ] Documentation / Demo Site
-- [x] Publish to npm
 - [ ] Mobile / touch friendly
 - [ ] Optimizations / reduce bundle size
 
@@ -52,42 +52,47 @@
 ## API
 
 ### Props / Options
+**Implemented but still being reviewed / developed**
+- [x] `autoApply = false` (boolean)
+- [x] `dateFormat = "MMM dd, yyyy"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
+- [x] `disabledDates = []` (Date[])
+- [x] `endDate = endOfWeek(new Date())` (Date)
+- [x] `firstDayOfWeek = "sunday"` (string)
+- [x] `hideOnCancel = false` (boolean)
+- [x] `hideOnApply = false` (boolean)
+- [x] `isoWeekNumbers = false` (boolean)
+- [x] `locale = undefined` (Locale) `date-fns` defaults to the system locale.
+- [x] `maxDate = addYears(new Date(), 10)` (Date)
+- [x] `minDate = subYears(new Date(), 10)` (Date)
+- [x] `monthDropdown = false` (boolean)
+- [x] `monthFormat = "MMMM"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
+- [x] `rtl = false` (boolean)
+- [x] `singlePicker = false` (boolean)
+- [x] `startDate = startOfWeek(new Date())` (Date)
+- [x] `timePicker = false` (boolean)
+- [x] `timePickerIncrement = 1` (number)
+- [x] `timePickerSeconds = false` (boolean)
+- [x] `today = new Date()` (Date) Used as a reference in `predefinedRanges` and for underlining in calendar
+- [x] `prevIcon = "&#9666;"` (html | string) - ◂
+- [x] `nextIcon = "&#9656;"` (html | string) - ▸
+- [x] `weekGuides = false` (boolean) Distance in calendar weeks from today
+- [x] `weekNumbers = false` (boolean) Local week numbers
+- [x] `yearDropdown = false` (boolean)
+- [x] `applyBtnText = "Apply"` (string)
+- [x] `cancelBtnText = "Camcel"` (string)
+- [x] `todayBtnText = "Today"` (string)
+- [x] `todayBtn = false` (boolean)
+- [x] `resetViewBtnText = "&#8602;"` (html | string) - ↚
+- [x] `resetViewBtn = false` (boolean)
+- [x] `id = "s-date-range-picker-" + Math.random()` (string)
 
-- [x] `autoApply` (boolean)
-- [x] `dateFormat` (string) [options](https://date-fns.org/v2.8.1/docs/format)
-- [ ] `disabled` (boolean)
-- [x] `disabledDates` (Date[])
-- [x] `endDate` (Date)
-- [ ] `events` (Date[])
-- [x] `firstDayOfWeek` (string)
-- [x] `hideOnCancel` (boolean)
-- [x] `hideOnApply` (boolean)
-- [x] `isoWeekNumbers` (boolean)
-- [x] `locale` (Locale)
-- [x] `maxDate` (Date)
-- [ ] `maxSpan` (number) - in days
-- [x] `minDate` (Date)
-- [x] `monthDropdown` (boolean)
-- [x] `monthFormat` (string) [options](https://date-fns.org/v2.8.1/docs/format)
-- [ ] `predefinedRanges` (Date[])
-- [x] `rtl` (boolean)
-- [x] `singlePicker` (boolean)
-- [x] `startDate` (Date)
-- [x] `timePicker` (boolean)
-- [ ] `timePicker24Hour` (boolean)
-- [x] `timePickerIncrement` (number)
-- [x] `timePickerSeconds` (boolean)
-- [x] `today` (Date)
-- [x] `weekGuides` (boolean)
-- [x] `weekNumbers` (boolean)
-- [x] `yearDropdown` (boolean)
-- [x] `applyBtnText` (string)
-- [x] `cancelBtnText` (string)
-- [x] `todayBtnText` (string)
-- [x] `todayBtn` (boolean)
-- [x] `resetViewBtnText` (string)
-- [x] `resetViewBtn` (boolean)
-- [x] `id` (string)
+**Not implemented - todo**
+- [ ] `timePicker24Hour = true` (boolean)
+- [ ] `predefinedRanges = []` (Date[])
+- [ ] `maxSpan = Infinity` (number)
+- [ ] `events = []` (Date[])
+- [ ] `disabled = false` (boolean)
+
 ### Events
 
 - `show` Fired after the picker has been shown
