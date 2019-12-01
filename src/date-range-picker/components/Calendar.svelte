@@ -19,6 +19,8 @@
   export let monthIndicator;
   export let pageWidth;
   export let rtl;
+  export let prevIcon;
+  export let nextIcon;
   export let singlePicker;
   export let tempEndDate;
   export let tempStartDate;
@@ -55,6 +57,8 @@
     on:pageChange
     on:prevMonth
     on:nextMonth
+    {prevIcon}
+    {nextIcon}
     {locale}
     {month}
     {monthDropdown}
@@ -67,8 +71,6 @@
     <Week
       on:selection
       on:hover
-      {tempEndDate}
-      {tempStartDate}
       {week}
       {singlePicker}
       {locale}

@@ -7,9 +7,6 @@
   export let month;
   export let monthIndicator;
   export let rtl;
-  export let singlePicker;
-  export let tempStartDate;
-  export let tempEndDate;
   export let week;
   export let weekGuides;
   export let weekNumbers;

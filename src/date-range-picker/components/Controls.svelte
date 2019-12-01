@@ -20,8 +20,8 @@
   export let monthDropdown;
   export let maxDate;
   export let minDate;
-  export let nextIcon = "";
-  export let prevIcon = "&#9666;";
+  export let nextIcon;
+  export let prevIcon;
   export let yearDropdown;
 
   const disptachEvent = createEventDispatcher();
@@ -63,7 +63,7 @@
     aria-label={`Previous month, ${format(prevMonth, 'MMMM yyyy', {
       locale
     })}`}>
-    &#9666;
+    {@html prevIcon}
   </button>
   <span>
     {#if monthDropdown}
@@ -116,6 +116,6 @@
     type="button"
     on:click={() => disptachEvent('nextMonth')}
     aria-label={`Next month, ${format(nextMonth, 'MMMM yyyy', { locale })}`}>
-    &#9656;
+    {@html nextIcon}
   </button>
 </div>

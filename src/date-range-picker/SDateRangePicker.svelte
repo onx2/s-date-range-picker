@@ -48,8 +48,8 @@
   export let minuteIncrement = 1;
   export let secondIncrement = 1;
   export let timePickerSeconds = true;
-  export let prevIcon = false;
-  export let nextIcon = false;
+  export let prevIcon = "&#9666;";
+  export let nextIcon = "&#9656;";
   export let today = new Date();
   export let weekGuides = false;
   export let weekNumbers = false;
@@ -423,6 +423,8 @@
           on:selection={onSelection}
           on:prevMonth={onPrevMonth}
           on:nextMonth={onNextMonth}
+          {prevIcon}
+          {nextIcon}
           {disabledDates}
           {events}
           {hoverDate}
