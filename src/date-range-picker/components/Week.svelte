@@ -1,8 +1,8 @@
 <script>
   import { isBefore, format } from "date-fns";
   import Day from "./Day.svelte";
+  import { localeFormat } from "../utils";
 
-  export let locale;
   export let isoWeekNumbers;
   export let month;
   export let monthIndicator;
@@ -51,11 +51,7 @@
   }
 </style>
 
-<div
-  aria-label={`${locale.code} week ${week.weekNumber}, ${format(month, 'yyyy', {
-    locale
-  })}`}
-  class="calendar-row">
+<div aria-label={`${localeFormat(month, 'yyyy')}`} class="calendar-row">
 
   {#if weekGuides && week.weeksFromToday}
     <div class="relative calendar-row side-width left-side">
@@ -67,7 +63,7 @@
 
   <div class="calendar-row">
     {#each week.daysInWeek as day (day.date.toString())}
-      <Day {day} {locale} {monthIndicator} {rtl} on:selection on:hover />
+      <Day {day} {monthIndicator} {rtl} on:selection on:hover />
     {/each}
   </div>
   {#if weekNumbers || isoWeekNumbers}

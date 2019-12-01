@@ -17,8 +17,8 @@ const buildWeek = (startDay, getDayMetaDataParams) =>
   );
 
 export function getCalendarWeeks(getDayMetaDataParams) {
-  const { month, locale, firstDayOfWeek, today } = getDayMetaDataParams;
-  const weekStartsOn = dayOffset({ firstDayOfWeek, locale });
+  const { month, firstDayOfWeek, today } = getDayMetaDataParams;
+  const weekStartsOn = dayOffset({ firstDayOfWeek });
   const start = startOfWeek(endOfMonth(subMonths(month, 1)));
 
   return eachWeekOfInterval(
@@ -26,13 +26,13 @@ export function getCalendarWeeks(getDayMetaDataParams) {
       start,
       end: addWeeks(start, 5)
     },
-    { weekStartsOn, locale }
+    { weekStartsOn, locale: __locale__ }
   ).map(date => ({
     weeksFromToday: differenceInCalendarWeeks(date, today, {
       weekStartsOn,
-      locale
+      locale: __locale__
     }),
-    weekNumber: getWeek(date, { weekStartsOn, locale }),
+    weekNumber: getWeek(date, { weekStartsOn }),
     isoWeekNumber: getISOWeek(date),
     daysInWeek: buildWeek(date, getDayMetaDataParams)
   }));

@@ -1,11 +1,9 @@
 <script>
-  import { format } from "date-fns";
-  import { getDaysOfWeek } from "../utils";
+  import { getDaysOfWeek, localeFormat } from "../utils";
 
   export let firstDayOfWeek;
-  export let locale;
 
-  $: daysOfWeek = getDaysOfWeek({ firstDayOfWeek, locale });
+  $: daysOfWeek = getDaysOfWeek({ firstDayOfWeek });
 </script>
 
 <style>
@@ -17,10 +15,8 @@
 
 <div class="calendar-row">
   {#each daysOfWeek as dayOfWeek}
-    <span
-      class="calendar-cell"
-      aria-label={format(dayOfWeek, 'EEEE', { locale })}>
-      {format(dayOfWeek, 'eeeeee', { locale })}
+    <span class="calendar-cell" aria-label={localeFormat(dayOfWeek, 'EEEE')}>
+      {localeFormat(dayOfWeek, 'eeeeee')}
     </span>
   {/each}
 </div>

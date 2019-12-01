@@ -1,14 +1,8 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import {
-    format,
-    isSameMonth,
-    isSameDay,
-    startOfWeek,
-    endOfWeek
-  } from "date-fns";
+  import { isSameMonth, isSameDay, startOfWeek, endOfWeek } from "date-fns";
+  import { localeFormat } from "../utils";
 
-  export let locale;
   export let day;
   export let monthIndicator;
   export let rtl;
@@ -99,7 +93,7 @@
   class:end-date={day.isEndDate}
   class:within-selection={day.isWithinSelection}>
   <button
-    aria-label={format(day.date, 'EEEE, MMMM co, yyyy', { locale })}
+    aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     aria-disabled={day.isDisabled}
     class="calendar-cell"
     disabled={day.isDisabled}
@@ -107,8 +101,8 @@
     on:mouseenter={() => dispatchEvent('hover', day.date)}
     on:focus={() => dispatchEvent('hover', day.date)}>
     {#if monthIndicator}
-      <span class="month-indicator">{format(day.date, 'MMM', { locale })}</span>
+      <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
     {/if}
-    {format(day.date, 'd', { locale })}
+    {localeFormat(day.date, 'd')}
   </button>
 </div>

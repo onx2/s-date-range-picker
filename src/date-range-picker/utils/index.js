@@ -10,6 +10,7 @@ import { isStartDate } from "./is-start-date";
 import { pad } from "./pad";
 import { roundDown } from "./round-down";
 import { toRange } from "./to-range";
+import { localeFormat } from "./locale-format";
 
 export {
   buildMonths,
@@ -21,6 +22,7 @@ export {
   isDisabled,
   isEndDate,
   isStartDate,
+  localeFormat,
   pad,
   roundDown,
   toRange

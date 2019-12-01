@@ -6,11 +6,11 @@
    * reactivity, rather than using foobar.$on() and foobar.$set()
    */
   import { endOfWeek, startOfWeek } from "date-fns";
+  import { enUS, arDZ } from "date-fns/locale";
   import SDateRangePicker from "./date-range-picker/SDateRangePicker.svelte";
 
   let startDate = startOfWeek(new Date());
   let endDate = endOfWeek(new Date());
-  let rtl = false;
 
   function onApply({ detail }) {
     startDate = detail.startDate;
@@ -19,12 +19,4 @@
   }
 </script>
 
-<SDateRangePicker
-  numPages={2}
-  weekGuides={true}
-  weekNumbers={true}
-  isoWeekNumbers={true}
-  {rtl}
-  {startDate}
-  {endDate}
-  on:apply={onApply} />
+<SDateRangePicker locale={arDZ} {startDate} {endDate} on:apply={onApply} />

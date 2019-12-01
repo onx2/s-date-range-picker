@@ -4,7 +4,6 @@
     addMonths,
     differenceInCalendarMonths,
     differenceInCalendarYears,
-    format,
     isAfter,
     isBefore,
     isSameMonth,
@@ -12,9 +11,8 @@
     isSameYear,
     isWithinInterval
   } from "date-fns";
-  import { buildMonths, buildYears } from "../utils";
+  import { buildMonths, buildYears, localeFormat } from "../utils";
 
-  export let locale;
   export let month;
   export let monthFormat;
   export let monthDropdown;
@@ -28,15 +26,15 @@
 
   $: selectedMonth = {
     value: month,
-    text: format(month, monthFormat, { locale })
+    text: localeFormat(month, monthFormat)
   };
-  $: selectedYear = { value: month, text: format(month, "yyyy", { locale }) };
+  $: selectedYear = { value: month, text: localeFormat(month, "yyyy") };
   $: prevMonth = subMonths(month, 1);
   $: nextMonth = addMonths(month, 1);
   $: isMaxDate = isAfter(month, maxDate) || isSameMonth(month, maxDate);
   $: isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate);
-  $: months = buildMonths({ month, monthFormat, locale });
-  $: years = buildYears({ minDate, maxDate, locale });
+  $: months = buildMonths({ month, monthFormat });
+  $: years = buildYears({ minDate, maxDate });
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
   $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
 
@@ -60,9 +58,7 @@
     disabled={prevBtnDisabled}
     type="button"
     on:click={() => disptachEvent('prevMonth')}
-    aria-label={`Previous month, ${format(prevMonth, 'MMMM yyyy', {
-      locale
-    })}`}>
+    aria-label={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}>
     {@html prevIcon}
   </button>
   <span>
@@ -86,7 +82,7 @@
         {/each}
       </select>
     {:else}
-      <span>{format(month, 'MMMM', { locale })}</span>
+      <small>{localeFormat(month, 'MMMM')}</small>
     {/if}
     {#if yearDropdown}
       <select
@@ -106,7 +102,7 @@
         {/each}
       </select>
     {:else}
-      <span>{format(month, 'yyyy', { locale })}</span>
+      <small>{localeFormat(month, 'yyyy')}</small>
     {/if}
   </span>
   <button
@@ -115,7 +111,7 @@
     disabled={nextBtnDisabled}
     type="button"
     on:click={() => disptachEvent('nextMonth')}
-    aria-label={`Next month, ${format(nextMonth, 'MMMM yyyy', { locale })}`}>
+    aria-label={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}>
     {@html nextIcon}
   </button>
 </div>

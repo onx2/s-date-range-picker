@@ -10,7 +10,6 @@
   export let hoverDate;
   export let firstDayOfWeek;
   export let isoWeekNumbers;
-  export let locale;
   export let maxDate;
   export let minDate;
   export let month;
@@ -32,7 +31,6 @@
   $: weeks = getCalendarWeeks({
     month,
     firstDayOfWeek,
-    locale,
     events,
     disabledDates,
     tempStartDate,
@@ -59,21 +57,18 @@
     on:nextMonth
     {prevIcon}
     {nextIcon}
-    {locale}
     {month}
     {monthDropdown}
     {monthFormat}
     {maxDate}
     {minDate}
     {yearDropdown} />
-  <DaysOfWeek {firstDayOfWeek} {locale} />
+  <DaysOfWeek {firstDayOfWeek} />
   {#each weeks as week}
     <Week
       on:selection
       on:hover
       {week}
-      {singlePicker}
-      {locale}
       {month}
       {monthIndicator}
       {rtl}

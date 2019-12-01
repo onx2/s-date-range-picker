@@ -16,8 +16,7 @@
     startOfWeek,
     subMonths
   } from "date-fns";
-  import { enUS } from "date-fns/locale";
-  import { roundDown } from "./utils";
+  import { roundDown, localeFormat } from "./utils";
   import Calendar from "./components/Calendar.svelte";
   import TimePicker from "./components/TimePicker.svelte";
 
@@ -32,7 +31,8 @@
   // export let hideOnCancel = true;
   // export let hideOnApply = true;
   export let isoWeekNumbers = false;
-  export let locale = enUS;
+  export let locale;
+  window.__locale__ = locale;
   export let maxDate = addYears(new Date(), 10);
   // export let maxSpan = null;
   export let minDate = subYears(new Date(), 10);
@@ -54,15 +54,21 @@
   export let weekGuides = false;
   export let weekNumbers = false;
   export let yearDropdown = true;
+  export let applyBtnText = "Apply";
+  export let cancelBtnText = "Cancel";
+  export let todayBtnText = "Today";
+  export let todayBtn = true;
+  export let resetViewBtnText = "&#8602";
+  export let resetViewBtn = true;
+  export let id = `s-date-range-picker-${Math.random()}`;
 
   let hoverDate = endDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
   let hasSelection = true;
 
-  const cellWidth = 44;
   const dispatchEvent = createEventDispatcher();
-  const id = "s-date-range-picker";
+  const cellWidth = 44;
   const maxCalsPerPage = 2;
   const pageWidth = cellWidth * 7;
   const pageWidthWithPadding = pageWidth + 96;
@@ -96,21 +102,21 @@
   $: pickerWidth = numPages * pageWidthWithPadding;
   $: startDateReadout = function() {
     if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-      return format(hoverDate, dateFormat, { locale });
+      return localeFormat(hoverDate, dateFormat);
     }
 
-    return format(tempStartDate, dateFormat, { locale });
+    return localeFormat(tempStartDate, dateFormat);
   };
   $: endDateReadout = function() {
     if (!hasSelection) {
       if (isBefore(hoverDate, tempStartDate)) {
-        return format(tempStartDate, dateFormat, { locale });
+        return localeFormat(tempStartDate, dateFormat);
       }
 
-      return format(hoverDate, dateFormat, { locale });
+      return localeFormat(hoverDate, dateFormat);
     }
 
-    return format(tempEndDate, dateFormat, { locale });
+    return localeFormat(tempEndDate, dateFormat);
   };
 
   // Round and set the hover data temp start & end dates based on start & end date props
@@ -161,10 +167,6 @@
   // }
 
   function apply() {
-    if (!tempEndDate && !singlePicker) {
-      return;
-    }
-
     // if (hideOnApply) {
     //   hide();
     // }
@@ -211,16 +213,18 @@
   }
 
   function onSelection({ detail }) {
+    const newEndDate = new Date(
+      detail.getFullYear(),
+      detail.getMonth(),
+      detail.getDate(),
+      tempEndDate.getHours(),
+      tempEndDate.getMinutes(),
+      tempEndDate.getSeconds()
+    );
+
     if (singlePicker) {
       // Start and end dates are always the same on singlePicker
-      tempStartDate = tempEndDate = new Date(
-        detail.getFullYear(),
-        detail.getMonth(),
-        detail.getDate(),
-        tempStartDate.getHours(),
-        tempStartDate.getMinutes(),
-        tempStartDate.getSeconds()
-      );
+      tempStartDate = tempEndDate = newEndDate;
     } else if (hasSelection) {
       // In range mode, if there is currently a selection and the selection
       // event is fired the user must be selecting the startDate
@@ -237,33 +241,11 @@
       // In range mode, if there isn't a selection, the user must be selecting an endDate
       // Update the start and end dates appropriately based on whether the newly selected date
       // is before the currently selected start date
-      if (isBefore(detail, tempStartDate)) {
-        tempEndDate = new Date(
-          tempStartDate.getFullYear(),
-          tempStartDate.getMonth(),
-          tempStartDate.getDate(),
-          tempEndDate.getHours(),
-          tempEndDate.getMinutes(),
-          tempEndDate.getSeconds()
-        );
-
-        tempStartDate = new Date(
-          detail.getFullYear(),
-          detail.getMonth(),
-          detail.getDate(),
-          tempStartDate.getHours(),
-          tempStartDate.getMinutes(),
-          tempStartDate.getSeconds()
-        );
+      if (isBefore(newEndDate, tempStartDate)) {
+        tempEndDate = tempStartDate;
+        tempStartDate = newEndDate;
       } else {
-        tempEndDate = new Date(
-          detail.getFullYear(),
-          detail.getMonth(),
-          detail.getDate(),
-          tempEndDate.getHours(),
-          tempEndDate.getMinutes(),
-          tempEndDate.getSeconds()
-        );
+        tempEndDate = newEndDate;
       }
 
       hasSelection = true;
@@ -273,7 +255,7 @@
         endDate: tempEndDate
       });
 
-      if (autoApply) {
+      if (autoApply && canApply) {
         apply();
       }
     }
@@ -338,7 +320,7 @@
 </script>
 
 <style>
-  #s-date-range-picker {
+  .s-date-range-picker {
     font-size: 18px;
     margin: 2em;
     background-color: #fff;
@@ -348,6 +330,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
+
   .label-row {
     display: flex;
     justify-content: space-between;
@@ -360,14 +343,14 @@
     flex-direction: row;
   }
 
-  #s-date-range-picker :global(.calendar-row) {
+  .s-date-range-picker :global(.calendar-row) {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
   }
 
-  #s-date-range-picker :global(.calendar-cell) {
+  .s-date-range-picker :global(.calendar-cell) {
     width: 44px;
     height: 44px;
     position: relative;
@@ -376,7 +359,7 @@
     align-items: center;
   }
 
-  #s-date-range-picker :global(.select) {
+  .s-date-range-picker :global(.select) {
     padding: 8px 12px;
     background-color: transparent;
     border-radius: 4px;
@@ -387,10 +370,10 @@
   .rtl {
     direction: rtl;
   }
-  #s-date-range-picker :global(button) {
+  .s-date-range-picker :global(button) {
     cursor: pointer;
   }
-  #s-date-range-picker :global(button:disabled) {
+  .s-date-range-picker :global(button:disabled) {
     cursor: not-allowed;
   }
   button {
@@ -407,7 +390,10 @@
   }
 </style>
 
-<div {id} style={`width: ${maxWidth}px`} class={rtl ? 'rtl' : ''}>
+<div
+  {id}
+  style={`width: ${maxWidth}px`}
+  class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}>
   <div class="label-row">
     <label>{startDateReadout()} to {endDateReadout()}</label>
     <!-- <button type="close" disabled={!canApply()} on:click={() => close()}>
@@ -431,7 +417,6 @@
           {hasSelection}
           {firstDayOfWeek}
           {isoWeekNumbers}
-          {locale}
           {maxDate}
           {minDate}
           {month}
@@ -474,27 +459,31 @@
     </div>
   {/if}
   <div style="justify-content: flex-end; display: flex;">
-    <button
-      type="button"
-      aria-label="Show the current selection "
-      on:click={goToToday}
-      disabled={isSameMonth(new Date(), months[0])}>
-      Today
-    </button>
-    <button
-      type="button"
-      aria-label="Show the current selection "
-      on:click={resetView}
-      disabled={!canResetView}>
-      &#8602;
-    </button>
+    {#if todayBtn}
+      <button
+        type="button"
+        aria-label="Show the current selection "
+        on:click={goToToday}
+        disabled={isSameMonth(new Date(), months[0])}>
+        {todayBtnText}
+      </button>
+    {/if}
+    {#if resetViewBtn}
+      <button
+        type="button"
+        aria-label="Show the current selection "
+        on:click={resetView}
+        disabled={!canResetView}>
+        {@html resetViewBtnText}
+      </button>
+    {/if}
     <button
       type="button"
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
       on:click={cancel}
       disabled={!canApply()}>
-      Cancel
+      {cancelBtnText}
     </button>
 
     <button
@@ -502,7 +491,7 @@
       aria-label="Apply the current selection"
       on:click={apply}
       disabled={!canApply()}>
-      Apply
+      {applyBtnText}
     </button>
   </div>
 </div>
