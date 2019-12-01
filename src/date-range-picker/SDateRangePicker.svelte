@@ -76,6 +76,10 @@
   window.__locale__ = locale;
 
   $: canApply = function() {
+    if (!hasSelection) {
+      return false;
+    }
+
     if (timePicker) {
       if (timePickerSeconds) {
         return (
@@ -153,6 +157,9 @@
   // }
 
   function apply() {
+    if (!canApply()) {
+      return;
+    }
     // if (hideOnApply) {
     //   hide();
     // }
@@ -241,7 +248,7 @@
         endDate: tempEndDate
       });
 
-      if (autoApply && canApply) {
+      if (autoApply) {
         apply();
       }
     }
@@ -302,6 +309,9 @@
     } else {
       tempEndDate = newDate;
     }
+  }
+  function foo() {
+    console.log("foo");
   }
 </script>
 
@@ -366,7 +376,6 @@
     margin: 4px;
     background-color: transparent;
     border: 1px solid #d5d5d5;
-    outline: 0;
     padding: 8px 12px;
     border-radius: 4px;
   }
@@ -376,7 +385,8 @@
   }
 </style>
 
-<div
+<form
+  on:submit|preventDefault={foo}
   {id}
   style={`width: ${maxWidth}px`}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}>
@@ -395,6 +405,7 @@
           on:selection={onSelection}
           on:prevMonth={onPrevMonth}
           on:nextMonth={onNextMonth}
+          on:apply={apply}
           {prevIcon}
           {nextIcon}
           {disabledDates}
@@ -468,16 +479,17 @@
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
       on:click={cancel}
+      aria-disabled={!canApply()}
       disabled={!canApply()}>
       {cancelBtnText}
     </button>
 
     <button
-      type="button"
       aria-label="Apply the current selection"
       on:click={apply}
+      aria-disabled={!canApply()}
       disabled={!canApply()}>
       {applyBtnText}
     </button>
   </div>
-</div>
+</form>

@@ -68,6 +68,7 @@
     <Week
       on:selection
       on:hover
+      on:apply
       {week}
       {month}
       {monthIndicator}

@@ -8,6 +8,13 @@
   export let rtl;
 
   const dispatchEvent = createEventDispatcher();
+
+  function onKeydown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      dispatchEvent("apply");
+    }
+  }
 </script>
 
 <style>
@@ -23,6 +30,10 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+  }
+  button:focus {
+    box-shadow: 0 0 4px #1565c0;
+    border: 1px inset #1565c0;
   }
 
   .within-selection,
@@ -94,10 +105,12 @@
   class:end-date={day.isEndDate}
   class:within-selection={day.isWithinSelection}>
   <button
+    type="button"
     aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     aria-disabled={day.isDisabled}
     class="calendar-cell"
     disabled={day.isDisabled}
+    on:keydown={onKeydown}
     on:click={() => dispatchEvent('selection', day.date)}
     on:mouseenter={() => dispatchEvent('hover', day.date)}
     on:focus={() => dispatchEvent('hover', day.date)}>

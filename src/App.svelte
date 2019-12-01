@@ -30,6 +30,9 @@
     endDate = detail.endDate;
     console.log("apply", detail);
   }
+  function onSubmit() {
+    console.log("onSubmit");
+  }
 </script>
 
 <SDateRangePicker
@@ -42,3 +45,8 @@
   {startDate}
   {endDate}
   on:apply={onApply} />
+
+<form on:submit|preventDefault={onSubmit}>
+  <input type="text" />
+  <button>submit</button>
+</form>

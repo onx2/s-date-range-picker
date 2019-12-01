@@ -63,7 +63,7 @@
 
   <div class="calendar-row">
     {#each week.daysInWeek as day (day.date.toString())}
-      <Day {day} {monthIndicator} {rtl} on:selection on:hover />
+      <Day {day} {monthIndicator} {rtl} on:selection on:hover on:apply />
     {/each}
   </div>
   {#if weekNumbers || isoWeekNumbers}
