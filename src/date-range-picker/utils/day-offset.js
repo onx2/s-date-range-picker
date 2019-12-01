@@ -1,5 +1,5 @@
-export function dayOffset({ firstDayOfWeek, locale }) {
-  return [
+export const dayOffset = ({ firstDayOfWeek, locale }) =>
+  [
     "sunday",
     "monday",
     "tuesday",
@@ -8,4 +8,3 @@ export function dayOffset({ firstDayOfWeek, locale }) {
     "friday",
     "saturday"
   ].indexOf(firstDayOfWeek.toLocaleLowerCase(locale));
-}

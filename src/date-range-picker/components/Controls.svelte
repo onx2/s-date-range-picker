@@ -36,19 +36,12 @@
   $: isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate);
   $: months = buildMonths({ month, monthFormat, locale });
   $: years = buildYears({ minDate, maxDate, locale });
-
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
-  // $: canNavigateNext = isBefore(month, maxDate) && !isSameMonth(month, maxDate);
+  $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
 
-  $: canNavigatePrevious =
-    isAfter(month, minDate) && !isSameMonth(month, minDate);
-
-  $: isOptionDisabled = function(mo) {
-    return (
-      isBefore(mo, minDate) ||
-      (!isSameMonth(mo, minDate) && isAfter(mo, maxDate))
-    );
-  };
+  $: isOptionDisabled = mo =>
+    isBefore(mo, minDate) ||
+    (!isSameMonth(mo, minDate) && isAfter(mo, maxDate));
 </script>
 
 <style>
@@ -62,8 +55,8 @@
 <div>
   <button
     class="select"
-    aria-disabled={!canNavigatePrevious}
-    disabled={!canNavigatePrevious}
+    aria-disabled={prevBtnDisabled}
+    disabled={prevBtnDisabled}
     type="button"
     on:click={() => disptachEvent('previousMonth')}
     aria-label={`Previous month, ${format(previousMonth, 'MMMM yyyy', {

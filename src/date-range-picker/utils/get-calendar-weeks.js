@@ -11,15 +11,16 @@ import {
 } from "date-fns";
 import { dayOffset } from "./day-offset";
 import { getDayMetaData } from "./get-day-meta-data";
-function buildWeek(startDay, getDayMetaDataParams) {
-  return [0, 1, 2, 3, 4, 5, 6].map(value =>
+const buildWeek = (startDay, getDayMetaDataParams) =>
+  [0, 1, 2, 3, 4, 5, 6].map(value =>
     getDayMetaData({ ...getDayMetaDataParams, date: addDays(startDay, value) })
   );
-}
+
 export function getCalendarWeeks(getDayMetaDataParams) {
   const { month, locale, firstDayOfWeek, today } = getDayMetaDataParams;
   const weekStartsOn = dayOffset({ firstDayOfWeek, locale });
   const start = startOfWeek(endOfMonth(subMonths(month, 1)));
+
   return eachWeekOfInterval(
     {
       start,

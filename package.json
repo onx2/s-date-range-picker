@@ -17,13 +17,13 @@
   "private": false,
   "main": "build/js/main.js",
   "module": "build/js/main.mjs",
+  "svelte": "./src/date-range-picker/index.js",
   "license": "MIT",
   "author": "Jeff Rooks <rooksjj@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/onx2/svelte-date-range-picker"
   },
-  "svelte": "./src/date-range-picker/index.js",
   "scripts": {
     "cleanup": "rimraf ./build",
     "test": "cross-env NODE_ENV=test jest",

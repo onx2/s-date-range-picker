@@ -25,7 +25,7 @@ const plugins = [
   svelte({
     dev: isProd ? false : true,
     extensions: [".svelte"],
-    preprocess: require("./svelte.config.js").preprocess,
+    // preprocess: require("./svelte.config.js").preprocess,
     css: isTest ? false : css => css.write("build/css/style.css")
   }),
   resolve({ browser: true }),
@@ -33,9 +33,7 @@ const plugins = [
     template: "src/index.html",
     dest: "build",
     filename: "index.html"
-  }),
-  // Output bundle sizes to console
-  bundleSize()
+  })
 ];
 
 if (isDev) {
@@ -52,7 +50,9 @@ if (isDev) {
   );
 } else if (isProd) {
   // Minify
-  plugins.push(terser({ sourcemap: true }));
+  plugins.push(terser({ sourcemap: true, mangle: true }));
+  // Output bundle sizes to console
+  plugins.push(bundleSize());
 }
 
 export default {

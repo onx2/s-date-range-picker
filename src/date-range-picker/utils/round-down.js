@@ -1,3 +1,1 @@
-export function roundDown(n, p) {
-  return Math.floor(n / p) * p;
-}
+export const roundDown = (n, p) => Math.floor(n / p) * p;
