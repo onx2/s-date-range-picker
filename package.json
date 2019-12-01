@@ -66,7 +66,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "./src/**/*.{js,jsx,ts,tsx}",
+      "./src/**/*.{js,ts}",
       "!**/*.d.ts"
     ],
     "testMatch": [
@@ -75,15 +75,13 @@
     ],
     "testEnvironment": "jsdom",
     "transform": {
-      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.ts$": "ts-jest",
       "^.+\\.js$": "babel-jest",
       "^.+\\.svelte$": "./svelte-jest.js"
     },
     "moduleFileExtensions": [
       "ts",
-      "tsx",
       "js",
-      "jsx",
       "json",
       "node",
       "mjs",

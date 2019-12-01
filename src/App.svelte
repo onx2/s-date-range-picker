@@ -19,4 +19,12 @@
   }
 </script>
 
-<SDateRangePicker numPages={2} {rtl} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker
+  numPages={1}
+  weekGuides={true}
+  weekNumbers={true}
+  isoWeekNumbers={true}
+  {rtl}
+  {startDate}
+  {endDate}
+  on:apply={onApply} />

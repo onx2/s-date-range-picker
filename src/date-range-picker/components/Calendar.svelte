@@ -42,11 +42,15 @@
     tempEndDate,
     singlePicker
   });
-
-  $: padding = !weekGuides && !isoWeekNumbers && !weekNumbers ? 12 : 48;
 </script>
 
-<div style={`width: ${pageWidth}px; padding: ${padding}px;`}>
+<style>
+  div {
+    padding: 12px 48px;
+  }
+</style>
+
+<div style={`width: ${pageWidth}px;`}>
   <Controls
     on:pageChange
     on:previousMonth

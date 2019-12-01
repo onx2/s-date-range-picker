@@ -26,7 +26,7 @@
   export let monthIndicator = true;
   // export let disabled = false;
   export let disabledDates = [];
-  export let endDate = new Date();
+  export let endDate = endOfWeek(new Date());
   export let events = [];
   export let firstDayOfWeek = "sunday";
   export let hideOnCancel = true;
@@ -58,50 +58,12 @@
   let tempStartDate = startDate;
   let hasSelection = true;
 
-  onMount(function() {
-    if (timePicker) {
-      tempStartDate = new Date(
-        startDate.getFullYear(),
-        startDate.getMonth(),
-        startDate.getDate(),
-        startDate.getHours(),
-        roundDown(startDate.getMinutes(), minuteIncrement),
-        roundDown(startDate.getSeconds(), secondIncrement)
-      );
-
-      tempEndDate = hoverDate = new Date(
-        endDate.getFullYear(),
-        endDate.getMonth(),
-        endDate.getDate(),
-        endDate.getHours(),
-        roundDown(endDate.getMinutes(), minuteIncrement),
-        roundDown(endDate.getSeconds(), secondIncrement)
-      );
-
-      if (
-        !isSameSecond(tempStartDate, startDate) ||
-        !isSameSecond(tempEndDate, endDate)
-      ) {
-        console.warn(`
-          startDate or endDate is not rounded to the proper minute / second increment. This will lead to
-          an inconsistency between the internal state and external state. The "Cancel" and "Apply" button will render
-          as enabled. 
-
-          startDate=${startDate}
-          endDate=${endDate}
-          minuteIncrement=${minuteIncrement}
-          secondIncrement=${secondIncrement}
-        `);
-      }
-    }
-  });
   const cellWidth = 44;
   const dispatchEvent = createEventDispatcher();
   const id = "s-date-range-picker";
   const maxCalsPerPage = 2;
   const pageWidth = cellWidth * 7;
-  const pageWidthWithPadding =
-    pageWidth + (!weekGuides && !isoWeekNumbers && !weekNumbers ? 24 : 96);
+  const pageWidthWithPadding = pageWidth + 96;
 
   $: canApply = function() {
     if (timePicker) {
@@ -148,6 +110,45 @@
 
     return format(tempEndDate, dateFormat, { locale });
   };
+
+  // Round and set the hover data temp start & end dates based on start & end date props
+  onMount(function() {
+    if (timePicker) {
+      tempStartDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate(),
+        startDate.getHours(),
+        roundDown(startDate.getMinutes(), minuteIncrement),
+        roundDown(startDate.getSeconds(), secondIncrement)
+      );
+
+      tempEndDate = hoverDate = new Date(
+        endDate.getFullYear(),
+        endDate.getMonth(),
+        endDate.getDate(),
+        endDate.getHours(),
+        roundDown(endDate.getMinutes(), minuteIncrement),
+        roundDown(endDate.getSeconds(), secondIncrement)
+      );
+
+      if (
+        !isSameSecond(tempStartDate, startDate) ||
+        !isSameSecond(tempEndDate, endDate)
+      ) {
+        console.warn(`
+          startDate or endDate is not rounded to the proper minute / second increment. This will lead to
+          an inconsistency between the internal state and external state. The "Cancel" and "Apply" button will render
+          as enabled. 
+
+          startDate=${startDate}
+          endDate=${endDate}
+          minuteIncrement=${minuteIncrement}
+          secondIncrement=${secondIncrement}
+        `);
+      }
+    }
+  });
 
   function show() {
     dispatchEvent("show");
@@ -203,13 +204,13 @@
     });
   }
 
-  function onSelection({ detail: selectedDate }) {
+  function onSelection({ detail }) {
     if (singlePicker) {
       // Start and end dates are always the same on singlePicker
       tempStartDate = tempEndDate = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate(),
+        detail.getFullYear(),
+        detail.getMonth(),
+        detail.getDate(),
         tempStartDate.getHours(),
         tempStartDate.getMinutes(),
         tempStartDate.getSeconds()
@@ -218,9 +219,9 @@
       // In range mode, if there is currently a selection and the selection
       // event is fired the user must be selecting the startDate
       tempStartDate = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate(),
+        detail.getFullYear(),
+        detail.getMonth(),
+        detail.getDate(),
         tempStartDate.getHours(),
         tempStartDate.getMinutes(),
         tempStartDate.getSeconds()
@@ -230,7 +231,7 @@
       // In range mode, if there isn't a selection, the user must be selecting an endDate
       // Update the start and end dates appropriately based on whether the newly selected date
       // is before the currently selected start date
-      if (isBefore(selectedDate, tempStartDate)) {
+      if (isBefore(detail, tempStartDate)) {
         tempEndDate = new Date(
           tempStartDate.getFullYear(),
           tempStartDate.getMonth(),
@@ -241,18 +242,18 @@
         );
 
         tempStartDate = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth(),
-          selectedDate.getDate(),
+          detail.getFullYear(),
+          detail.getMonth(),
+          detail.getDate(),
           tempStartDate.getHours(),
           tempStartDate.getMinutes(),
           tempStartDate.getSeconds()
         );
       } else {
         tempEndDate = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth(),
-          selectedDate.getDate(),
+          detail.getFullYear(),
+          detail.getMonth(),
+          detail.getDate(),
           tempEndDate.getHours(),
           tempEndDate.getMinutes(),
           tempEndDate.getSeconds()
@@ -272,8 +273,8 @@
     }
   }
 
-  function onHover({ detail: selectedDate }) {
-    hoverDate = selectedDate;
+  function onHover({ detail }) {
+    hoverDate = detail;
   }
 
   function onPreviousMonth() {
@@ -368,7 +369,7 @@
     background-color: transparent;
     border-radius: 4px;
     border: 1px solid #d5d5d5;
-    margin: 4px;
+    margin: 1px;
     cursor: pointer;
   }
   .rtl {
@@ -391,12 +392,12 @@
 </style>
 
 <div {id} style={`width: ${maxWidth}px`} class={rtl ? 'rtl' : ''}>
-  <!-- <div>
+  <div>
     <label>{startDateReadout()} to {endDateReadout()}</label>
     <button type="close" disabled={!canApply()} on:click={() => close()}>
       x
     </button>
-  </div> -->
+  </div>
   <div>
     <div class="grid">
       {#each months as month}
