@@ -7224,7 +7224,7 @@ function create_if_block_2$1(ctx) {
 			t = space();
 			if (if_block) if_block.c();
 			attr(div, "class", "calendar-row");
-			add_location(div, file$6, 426, 4, 10708);
+			add_location(div, file$6, 426, 4, 10718);
 		},
 
 		m: function mount(target, anchor) {
@@ -7355,7 +7355,7 @@ function create_if_block_1$2(ctx) {
 			attr(button, "aria-label", "Show the current selection ");
 			button.disabled = button_disabled_value = isSameMonth(new ctx.Date(), ctx.months[0]);
 			attr(button, "class", "svelte-w8r76m");
-			add_location(button, file$6, 448, 6, 11302);
+			add_location(button, file$6, 448, 6, 11312);
 			dispose = listen(button, "click", ctx.goToToday);
 		},
 
@@ -7395,7 +7395,7 @@ function create_if_block$4(ctx) {
 			attr(button, "aria-label", "Show the current selection ");
 			button.disabled = button_disabled_value = !ctx.canResetView;
 			attr(button, "class", "svelte-w8r76m");
-			add_location(button, file$6, 457, 6, 11543);
+			add_location(button, file$6, 457, 6, 11553);
 			dispose = listen(button, "click", ctx.resetView);
 		},
 
@@ -7476,31 +7476,31 @@ function create_fragment$6(ctx) {
 			t10 = space();
 			button1 = element("button");
 			t11 = text(ctx.applyBtnText);
-			add_location(label, file$6, 383, 4, 9652);
+			add_location(label, file$6, 383, 4, 9662);
 			attr(div0, "class", "label-row svelte-w8r76m");
-			add_location(div0, file$6, 382, 2, 9624);
+			add_location(div0, file$6, 382, 2, 9634);
 			attr(div1, "class", "grid svelte-w8r76m");
-			add_location(div1, file$6, 389, 4, 9836);
+			add_location(div1, file$6, 389, 4, 9846);
 			attr(div2, "class", "full-height-scroll");
-			add_location(div2, file$6, 422, 4, 10640);
-			add_location(div3, file$6, 388, 2, 9826);
+			add_location(div2, file$6, 422, 4, 10650);
+			add_location(div3, file$6, 388, 2, 9836);
 			attr(button0, "type", "button");
 			attr(button0, "aria-label", "Cancel the current selection and revert to previous start and\n      end dates");
 			button0.disabled = button0_disabled_value = !ctx.canApply();
 			attr(button0, "class", "svelte-w8r76m");
-			add_location(button0, file$6, 465, 4, 11748);
+			add_location(button0, file$6, 465, 4, 11758);
 			attr(button1, "type", "button");
 			attr(button1, "aria-label", "Apply the current selection");
 			button1.disabled = button1_disabled_value = !ctx.canApply();
 			attr(button1, "class", "svelte-w8r76m");
-			add_location(button1, file$6, 474, 4, 11968);
+			add_location(button1, file$6, 474, 4, 11978);
 			set_style(div4, "justify-content", "flex-end");
 			set_style(div4, "display", "flex");
-			add_location(div4, file$6, 446, 2, 11221);
+			add_location(div4, file$6, 446, 2, 11231);
 			attr(div5, "id", ctx.id);
 			attr(div5, "style", div5_style_value = `width: ${ctx.maxWidth}px`);
 			attr(div5, "class", div5_class_value = "" + (ctx.rtl ? 'rtl s-date-range-picker' : 's-date-range-picker') + " svelte-w8r76m");
-			add_location(div5, file$6, 378, 0, 9510);
+			add_location(div5, file$6, 378, 0, 9520);
 
 			dispose = [
 				listen(button0, "click", ctx.cancel),
@@ -7687,7 +7687,7 @@ const maxCalsPerPage = 2;
 function instance$6($$self, $$props, $$invalidate) {
 	
 
-  let { autoApply = false, dateFormat = "MMM dd, yyyy", monthIndicator = true, disabledDates = [], endDate = endOfWeek(new Date()), events = [], firstDayOfWeek = "sunday", isoWeekNumbers = true, locale, maxDate = addYears(new Date(), 10), minDate = subYears(new Date(), 10), monthDropdown = true, monthFormat = "MMMM", numPages = 1, rtl = false, singlePicker = false, startDate = startOfWeek(new Date()), timePicker = true, timePicker24Hour = true, minuteIncrement = 1, secondIncrement = 1, timePickerSeconds = true, prevIcon = "&#9666;", nextIcon = "&#9656;", today = new Date(), weekGuides = true, weekNumbers = true, yearDropdown = true, applyBtnText = "Apply", cancelBtnText = "Cancel", todayBtnText = "Today", todayBtn = true, resetViewBtnText = "&#8602", resetViewBtn = true, id = `s-date-range-picker-${Math.random()}` } = $$props;
+  let { autoApply = false, dateFormat = "MMM dd, yyyy", monthIndicator = true, disabledDates = [], endDate = endOfWeek(new Date()), events = [], firstDayOfWeek = "sunday", isoWeekNumbers = false, locale, maxDate = addYears(new Date(), 10), minDate = subYears(new Date(), 10), monthDropdown = false, monthFormat = "MMMM", numPages = 1, rtl = false, singlePicker = false, startDate = startOfWeek(new Date()), timePicker = false, timePicker24Hour = true, minuteIncrement = 1, secondIncrement = 1, timePickerSeconds = false, prevIcon = "&#9666;", nextIcon = "&#9656;", today = new Date(), weekGuides = false, weekNumbers = false, yearDropdown = false, applyBtnText = "Apply", cancelBtnText = "Cancel", todayBtnText = "Today", todayBtn = false, resetViewBtnText = "&#8602;", resetViewBtn = false, id = `s-date-range-picker-${Math.random()}` } = $$props;
 
   let hoverDate = endDate;
   let tempEndDate = endDate;
