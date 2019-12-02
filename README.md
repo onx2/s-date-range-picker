@@ -39,6 +39,7 @@
 - [ ] Documentation / Demo Site
 - [ ] Mobile / touch friendly
 - [ ] Optimizations / reduce bundle size
+- [ ] Accessibility review / updates
 
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
