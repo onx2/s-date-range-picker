@@ -58,6 +58,7 @@
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
   export let timePicker = false;
+  export let timePickerControls = true;
   export let timePicker24Hour = true;
   export let timePickerSeconds = false;
   export let today = new Date();
@@ -456,19 +457,33 @@
         {minuteIncrement}
         on:timeChange={onStartTimeChange}
         {secondIncrement}
+        {timePickerControls}
         {timePicker24Hour}
         {timePickerSeconds} />
 
-      {#if !singlePicker}
+      {#if !singlePicker && numPages >= 2}
         <TimePicker
           dateReference={tempEndDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}
+          {timePickerControls}
           {timePicker24Hour}
           {timePickerSeconds} />
       {/if}
     </div>
+    {#if timePicker && !singlePicker && numPages === 1}
+      <div class="row">
+        <TimePicker
+          dateReference={tempEndDate}
+          {minuteIncrement}
+          on:timeChange={onEndTimeChange}
+          {secondIncrement}
+          {timePickerControls}
+          {timePicker24Hour}
+          {timePickerSeconds} />
+      </div>
+    {/if}
   {/if}
   <div class="justify-end">
     {#if todayBtn}

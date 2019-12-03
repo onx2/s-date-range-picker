@@ -6,6 +6,7 @@
   export let dateReference;
   export let minuteIncrement;
   export let secondIncrement;
+  export let timePickerControls;
   export let timePicker24Hour;
   export let timePickerSeconds;
 
@@ -54,7 +55,7 @@
 
 <style>
   div {
-    padding: 6px 0 12px 0;
+    padding: 0 0 6px 0;
     flex: 1;
     justify-content: center;
     display: flex;
@@ -62,15 +63,17 @@
 </style>
 
 <div>
-  <button
-    aria-disabled={isFirstAvailableTime}
-    aria-label="First available time"
-    class="form-field"
-    disabled={isFirstAvailableTime}
-    on:click={timeChangeStartOfDay}
-    type="button">
-    {@html '&#8643;'}
-  </button>
+  {#if timePickerControls}
+    <button
+      aria-disabled={isFirstAvailableTime}
+      aria-label="First available time"
+      class="form-field"
+      disabled={isFirstAvailableTime}
+      on:click={timeChangeStartOfDay}
+      type="button">
+      {@html '&#8643;'}
+    </button>
+  {/if}
   <select bind:value={selectedHour} class="form-field" on:change={timeChange}>
     {#each hours as hour}
       <option value={parseInt(hour)}>{hour}</option>
@@ -99,13 +102,15 @@
     </select>
   {/if} -->
 
-  <button
-    aria-disabled={isLastAvailableTime}
-    aria-label="Last available time"
-    class="form-field"
-    disabled={isLastAvailableTime}
-    on:click={timeChangeEndOfDay}
-    type="button">
-    {@html '&#8638;'}
-  </button>
+  {#if timePickerControls}
+    <button
+      aria-disabled={isLastAvailableTime}
+      aria-label="Last available time"
+      class="form-field"
+      disabled={isLastAvailableTime}
+      on:click={timeChangeEndOfDay}
+      type="button">
+      {@html '&#8638;'}
+    </button>
+  {/if}
 </div>

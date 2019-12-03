@@ -43,7 +43,6 @@
   {yearDropdown}
   {resetViewBtn}
   {todayBtn}
-  {numPages}
   {locale}
   {startDate}
   {endDate}
