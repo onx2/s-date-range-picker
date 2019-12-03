@@ -11,7 +11,7 @@
   export let weekGuides;
   export let weekNumbers;
 
-  $: weeksFromToday = function(week) {
+  $: weeksFromToday = week => {
     if (week.weeksFromToday > 0) {
       return `+${week.weeksFromToday}`;
     }

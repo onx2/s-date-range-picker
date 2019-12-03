@@ -33,8 +33,8 @@
   $: nextMonth = addMonths(month, 1);
   $: isMaxDate = isAfter(month, maxDate) || isSameMonth(month, maxDate);
   $: isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate);
-  $: months = buildMonths({ month, monthFormat });
-  $: years = buildYears({ minDate, maxDate });
+  $: months = buildMonths(month, monthFormat);
+  $: years = buildYears(minDate, maxDate);
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
   $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
 
@@ -53,7 +53,7 @@
 
 <div>
   <button
-    class="select"
+    class="form-field"
     aria-disabled={prevBtnDisabled}
     disabled={prevBtnDisabled}
     type="button"
@@ -64,7 +64,7 @@
   <span>
     {#if monthDropdown}
       <select
-        class="select"
+        class="form-field"
         bind:value={selectedMonth}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount: differenceInCalendarMonths(
@@ -86,7 +86,7 @@
     {/if}
     {#if yearDropdown}
       <select
-        class="select"
+        class="form-field"
         bind:value={selectedYear}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
@@ -106,7 +106,7 @@
     {/if}
   </span>
   <button
-    class="select"
+    class="form-field"
     aria-disabled={nextBtnDisabled}
     disabled={nextBtnDisabled}
     type="button"

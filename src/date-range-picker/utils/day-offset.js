@@ -1,4 +1,10 @@
-export const dayOffset = ({ firstDayOfWeek }) =>
+/**
+ *
+ * @param {string} firstDayOfWeek
+ *
+ * @returns {number} - 0 | 1 | 2 | 3 | 4 | 5 | 6
+ */
+export const dayOffset = firstDayOfWeek =>
   [
     "sunday",
     "monday",

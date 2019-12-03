@@ -3,7 +3,7 @@
 
   export let firstDayOfWeek;
 
-  $: daysOfWeek = getDaysOfWeek({ firstDayOfWeek });
+  $: daysOfWeek = getDaysOfWeek(firstDayOfWeek);
 </script>
 
 <style>

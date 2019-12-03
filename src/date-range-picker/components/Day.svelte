@@ -1,6 +1,12 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { isSameMonth, isSameDay, startOfWeek, endOfWeek } from "date-fns";
+  import {
+    isSameMonth,
+    isSameDay,
+    startOfWeek,
+    parseISO,
+    endOfWeek
+  } from "date-fns";
   import { localeFormat } from "../utils";
 
   export let day;
@@ -9,12 +15,12 @@
 
   const dispatchEvent = createEventDispatcher();
 
-  function onKeydown(e) {
+  const onKeydown = e => {
     if (e.key === "Enter") {
       e.preventDefault();
       dispatchEvent("apply");
     }
-  }
+  };
 </script>
 
 <style>
@@ -31,9 +37,9 @@
     margin: 0;
     overflow: hidden;
   }
+
   button:focus {
     box-shadow: 0 0 4px #1565c0;
-    border: 1px inset #1565c0;
   }
 
   .within-selection,

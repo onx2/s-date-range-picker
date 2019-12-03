@@ -24,29 +24,24 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
+  let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2;
 
   function onApply({ detail }) {
     startDate = detail.startDate;
     endDate = detail.endDate;
     console.log("apply", detail);
   }
-  function onSubmit() {
-    console.log("onSubmit");
-  }
 </script>
 
 <SDateRangePicker
   {singlePicker}
+  timePicker
   {monthDropdown}
   {yearDropdown}
   {resetViewBtn}
   {todayBtn}
+  {numPages}
   {locale}
   {startDate}
   {endDate}
   on:apply={onApply} />
-
-<form on:submit|preventDefault={onSubmit}>
-  <input type="text" />
-  <button>submit</button>
-</form>

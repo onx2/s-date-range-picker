@@ -10,7 +10,41 @@ import { isDisabled } from "./is-disabled";
 import { isEndDate } from "./is-end-date";
 import { isStartDate } from "./is-start-date";
 import { toRange } from "./to-range";
-export function getDayMetaData(params) {
+
+/**
+ *
+ * @typedef {Object} Day
+ * @prop {Date} date
+ * @prop {Array} events
+ * @prop {boolean} isToday
+ * @prop {boolean} isWeekend
+ * @prop {boolean} isPrevMonth
+ * @prop {boolean} isNextMonth
+ * @prop {boolean} isStartDate
+ * @prop {boolean} isDisabled
+ * @prop {boolean} isEndDate
+ * @prop {boolean} isWithinSelection
+ */
+
+/**
+ *
+ * @param {Object} params
+ * @prop {Date} date
+ * @prop {Date} tempEndDate
+ * @prop {Date[]} events
+ * @prop {Date} hoverDate
+ * @prop {boolean} hasSelection
+ * @prop {Date} month
+ * @prop {boolean} singlePicker
+ * @prop {Date} tempStartDate
+ * @prop {Date} today
+ * @prop {Date} maxDate
+ * @prop {Date} minDate
+ * @prop {Date[]} disabledDates
+ *
+ * @returns {Day}
+ */
+export const getDayMetaData = params => {
   const {
     date,
     tempEndDate,
@@ -46,4 +80,4 @@ export function getDayMetaData(params) {
       ? isWithinInterval(date, { start, end })
       : false
   };
-}
+};

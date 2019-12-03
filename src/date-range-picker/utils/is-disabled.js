@@ -1,6 +1,17 @@
 import { isAfter, isBefore, isSameDay } from "date-fns";
 
-export function isDisabled({ date, maxDate, minDate, disabledDates }) {
+/**
+ *
+ * @param {Object}
+ * @property {boolean} hasSelection
+ * @property {Date} date
+ * @property {Date} maxDate
+ * @property {Date} minDate
+ * @property {Date[]} disabledDates
+ *
+ * @returns {boolean}
+ */
+export const isDisabled = ({ date, maxDate, minDate, disabledDates }) => {
   if (disabledDates.some(disabledDate => isSameDay(date, disabledDate))) {
     return true;
   }
@@ -14,4 +25,4 @@ export function isDisabled({ date, maxDate, minDate, disabledDates }) {
   }
 
   return false;
-}
+};

@@ -1,4 +1,13 @@
 <script>
+  /**
+   * @todo Question: Can this component be divided up into separate components?
+   * And if so, should it be?
+   *
+   * Potential splitting: single vs range, slim vs full (could remove a significant amount of constality)
+   *
+   * The TimePicker component could potentially be split out into a separate package that is imported.
+   * If it were themeable, it may be easier / make more sense to split it out.
+   */
   import { createEventDispatcher, onMount } from "svelte";
   import {
     addMonths,
@@ -23,22 +32,17 @@
   export let autoApply = false;
   export let dateFormat = "MMM dd, yyyy";
   export let monthIndicator = true;
-  // export let disabled = false;
   export let disabledDates = [];
   export let endDate = endOfWeek(new Date());
   export let events = [];
   export let firstDayOfWeek = "sunday";
-  // export let hideOnCancel = true;
-  // export let hideOnApply = true;
   export let isoWeekNumbers = false;
   export let locale;
   export let maxDate = addYears(new Date(), 10);
-  // export let maxSpan = null;
   export let minDate = subYears(new Date(), 10);
   export let monthDropdown = false;
   export let monthFormat = "MMMM";
   export let numPages = 1;
-  // export let predefinedRanges = [];
   export let rtl = false;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
@@ -60,6 +64,11 @@
   export let resetViewBtnText = "&#8602;";
   export let resetViewBtn = false;
   export let id = `s-date-range-picker-${Math.random()}`;
+  // export let disabled = false;
+  // export let hideOnCancel = true;
+  // export let hideOnApply = true;
+  // export let maxSpan = null;
+  // export let predefinedRanges = [];
 
   let hoverDate = endDate;
   let tempEndDate = endDate;
@@ -73,9 +82,10 @@
   const pageWidthWithPadding = pageWidth + 96;
 
   // Used for the date-fns format abstraction, localeFormat
+  /** @todo This might be better placed into a store. */
   window.__locale__ = locale;
 
-  $: canApply = function() {
+  $: canApply = () => {
     if (!hasSelection) {
       return false;
     }
@@ -106,14 +116,14 @@
       : pickerWidth;
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i));
   $: pickerWidth = numPages * pageWidthWithPadding;
-  $: startDateReadout = function() {
+  $: startDateReadout = () => {
     if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
       return localeFormat(hoverDate, dateFormat);
     }
 
     return localeFormat(tempStartDate, dateFormat);
   };
-  $: endDateReadout = function() {
+  $: endDateReadout = () => {
     if (!hasSelection) {
       if (isBefore(hoverDate, tempStartDate)) {
         return localeFormat(tempStartDate, dateFormat);
@@ -126,7 +136,7 @@
   };
 
   // Round and set the hover data temp start & end dates based on start & end date props
-  onMount(function() {
+  onMount(() => {
     if (timePicker) {
       tempStartDate = new Date(
         startDate.getFullYear(),
@@ -148,15 +158,15 @@
     }
   });
 
-  // function show() {
+  // const show() =>{
   //   dispatchEvent("show");
   // }
 
-  // function hide() {
+  // const hide() =>{
   //   dispatchEvent("hide");
   // }
 
-  function apply() {
+  const apply = () => {
     if (!canApply()) {
       return;
     }
@@ -168,30 +178,30 @@
       startDate: tempStartDate,
       endDate: tempEndDate
     });
-  }
+  };
 
-  function goToToday() {
+  const goToToday = () => {
     months = [...Array(numPages)].map((_, i) => addMonths(new Date(), i));
-  }
+  };
 
-  function resetView() {
+  const resetView = () => {
     const resetViewMonth = canApply() ? tempStartDate : startDate;
     months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i));
-  }
+  };
 
-  function resetState() {
+  const resetState = () => {
     tempStartDate = startDate;
     tempEndDate = endDate;
     hasSelection = true;
-  }
+  };
 
-  function close() {
+  const close = () => {
     resetState();
     resetView();
     // hide();
-  }
+  };
 
-  function cancel() {
+  const cancel = () => {
     resetState();
     resetView();
 
@@ -203,9 +213,9 @@
       startDate,
       endDate
     });
-  }
+  };
 
-  function onSelection({ detail }) {
+  const onSelection = ({ detail }) => {
     const newEndDate = new Date(
       detail.getFullYear(),
       detail.getMonth(),
@@ -220,7 +230,7 @@
       tempStartDate = tempEndDate = newEndDate;
     } else if (hasSelection) {
       // In range mode, if there is currently a selection and the selection
-      // event is fired the user must be selecting the startDate
+      // event is fired the user must be selecting the start date
       tempStartDate = new Date(
         detail.getFullYear(),
         detail.getMonth(),
@@ -231,12 +241,11 @@
       );
       hasSelection = false;
     } else {
-      // In range mode, if there isn't a selection, the user must be selecting an endDate
-      // Update the start and end dates appropriately based on whether the newly selected date
-      // is before the currently selected start date
+      // In range mode, if there isn't a selection, the user must be selecting an end date
+      // Sorting - Swap start and end dates when the end date is before the start date
       if (isBefore(newEndDate, tempStartDate)) {
         tempEndDate = tempStartDate;
-        tempStartDate = newEndDate;
+        tempStartDate = !timePicker ? startOfDay(newEndDate) : newEndDate;
       } else {
         tempEndDate = newEndDate;
       }
@@ -252,30 +261,30 @@
         apply();
       }
     }
-  }
+  };
 
-  function onHover({ detail }) {
+  const onHover = ({ detail }) => {
     hoverDate = detail;
-  }
+  };
 
-  function onPrevMonth() {
+  const onPrevMonth = () => {
     months = months.map(mo => subMonths(mo, 1));
-  }
+  };
 
-  function onNextMonth() {
+  const onNextMonth = () => {
     months = months.map(mo => addMonths(mo, 1));
-  }
+  };
 
-  function onPageChange({ detail: { incrementAmount } }) {
+  const onPageChange = ({ detail: { incrementAmount } }) => {
     if (incrementAmount > 0) {
       months = months.map(mo => addMonths(mo, incrementAmount));
     } else {
       const absIncrementAmount = Math.abs(incrementAmount);
       months = months.map(mo => subMonths(mo, absIncrementAmount));
     }
-  }
+  };
 
-  function onStartTimeChange({ detail }) {
+  const onStartTimeChange = ({ detail }) => {
     const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),
@@ -291,9 +300,9 @@
     } else {
       tempStartDate = newDate;
     }
-  }
+  };
 
-  function onEndTimeChange({ detail }) {
+  const onEndTimeChange = ({ detail }) => {
     const newDate = new Date(
       tempEndDate.getFullYear(),
       tempEndDate.getMonth(),
@@ -309,10 +318,7 @@
     } else {
       tempEndDate = newDate;
     }
-  }
-  function foo() {
-    console.log("foo");
-  }
+  };
 </script>
 
 <style>
@@ -355,7 +361,7 @@
     align-items: center;
   }
 
-  .s-date-range-picker :global(.select) {
+  .s-date-range-picker :global(.form-field) {
     padding: 8px 12px;
     background-color: transparent;
     border-radius: 4px;
@@ -372,21 +378,10 @@
   .s-date-range-picker :global(button:disabled) {
     cursor: not-allowed;
   }
-  button {
-    margin: 4px;
-    background-color: transparent;
-    border: 1px solid #d5d5d5;
-    padding: 8px 12px;
-    border-radius: 4px;
-  }
-
-  button:disabled {
-    cursor: not-allowed;
-  }
 </style>
 
 <form
-  on:submit|preventDefault={foo}
+  on:submit|preventDefault={apply}
   {id}
   style={`width: ${maxWidth}px`}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}>
@@ -436,6 +431,7 @@
 
   {#if timePicker}
     <div class="calendar-row">
+
       <TimePicker
         on:timeChange={onStartTimeChange}
         dateReference={tempStartDate}
@@ -458,6 +454,7 @@
   <div style="justify-content: flex-end; display: flex;">
     {#if todayBtn}
       <button
+        class="form-field"
         type="button"
         aria-label="Show the current selection "
         on:click={goToToday}
@@ -467,6 +464,7 @@
     {/if}
     {#if resetViewBtn}
       <button
+        class="form-field"
         type="button"
         aria-label="Show the current selection "
         on:click={resetView}
@@ -475,6 +473,7 @@
       </button>
     {/if}
     <button
+      class="form-field"
       type="button"
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
@@ -485,6 +484,8 @@
     </button>
 
     <button
+      id="s-apply-btn"
+      class="form-field"
       aria-label="Apply the current selection"
       on:click={apply}
       aria-disabled={!canApply()}
