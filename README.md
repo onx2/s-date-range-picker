@@ -83,6 +83,7 @@
 - [x] `cancelBtnText = "Camcel"` (string)
 - [x] `todayBtnText = "Today"` (string)
 - [x] `todayBtn = false` (boolean)
+- [x] `timePickerControls = false` (boolean)
 - [x] `resetViewBtnText = "&#8602;"` (html | string) - ↚
 - [x] `resetViewBtn = false` (boolean)
 - [x] `id = "s-date-range-picker-" + Math.random()` (string)
