@@ -59,7 +59,8 @@ export default {
   input: isProd ? "src/date-range-picker/index.js" : "src/index.js",
   output: [
     { file: pkg.module, format: "es" },
-    { file: pkg.main, format: "umd", name }
+    { file: pkg.main, format: "umd", name },
+    { file: pkg.iife, format: "iife", name }
   ],
   plugins
 };

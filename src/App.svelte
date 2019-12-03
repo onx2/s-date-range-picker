@@ -27,14 +27,17 @@
   let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2;
 
   function onApply({ detail }) {
-    startDate = detail.start;
-    endDate = detail.end;
+    startDate = detail.startDate;
+    endDate = detail.endDate;
     console.log("apply", detail);
   }
 </script>
 
 <SDateRangePicker
   {singlePicker}
+  weekNumbers
+  isoWeekNumbers
+  weekGuides
   timePicker
   {monthDropdown}
   {yearDropdown}

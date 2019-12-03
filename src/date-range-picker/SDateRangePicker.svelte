@@ -15,6 +15,7 @@
     subYears,
     differenceInCalendarMonths,
     endOfWeek,
+    endOfYear,
     format,
     isAfter,
     isBefore,
@@ -23,6 +24,7 @@
     isSameDay,
     isSameMonth,
     startOfWeek,
+    startOfYear,
     subMonths
   } from "date-fns";
   import { localeFormat, roundDown } from "./utils";
@@ -40,8 +42,8 @@
   export let id = `s-date-range-picker-${Math.random()}`;
   export let isoWeekNumbers = false;
   export let locale;
-  export let maxDate = addYears(new Date(), 10);
-  export let minDate = subYears(new Date(), 10);
+  export let maxDate = addYears(endOfYear(new Date()), 10);
+  export let minDate = subYears(startOfYear(new Date()), 10);
   export let minuteIncrement = 1;
   export let monthDropdown = false;
   export let monthFormat = "MMMM";
@@ -172,9 +174,8 @@
     if (!canApply()) {
       return;
     }
-    // if (hideOnApply) {
-    //   hide();
-    // }
+
+    // hideOnApply &&  hide();
 
     dispatchEvent("apply", {
       startDate: tempStartDate,
@@ -187,6 +188,7 @@
   };
 
   const resetView = () => {
+    console.log(tempStartDate, startDate);
     const resetViewMonth = canApply() ? tempStartDate : startDate;
     months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i));
   };
@@ -207,9 +209,7 @@
     resetState();
     resetView();
 
-    // if (hideOnCancel) {
-    //   hide();
-    // }
+    // hideOnCancel && hide();
 
     dispatchEvent("cancel", {
       startDate,
@@ -259,9 +259,7 @@
         endDate: tempEndDate
       });
 
-      if (autoApply) {
-        apply();
-      }
+      autoApply && apply();
     }
   };
 

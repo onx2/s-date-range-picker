@@ -11,13 +11,8 @@
   export let weekGuides;
   export let weekNumbers;
 
-  $: weeksFromToday = week => {
-    if (week.weeksFromToday > 0) {
-      return `+${week.weeksFromToday}`;
-    }
-
-    return week.weeksFromToday;
-  };
+  $: weeksFromToday =
+    week.weeksFromToday > 0 ? `+${week.weeksFromToday}` : week.weeksFromToday;
 </script>
 
 <style>
@@ -56,7 +51,7 @@
   {#if weekGuides && week.weeksFromToday}
     <div class="left-side relative row side-width">
       <span aria-label={`${week.weeksFromToday} weeks from today`}>
-        {weeksFromToday(week)}w
+        {weeksFromToday}w
       </span>
     </div>
   {/if}

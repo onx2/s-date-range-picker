@@ -16,6 +16,7 @@
   "private": false,
   "main": "build/js/main.js",
   "module": "build/js/main.mjs",
+  "iife": "build/js/main.iife.js",
   "svelte": "./src/date-range-picker/index.js",
   "license": "MIT",
   "author": "Jeff Rooks <rooksjj@gmail.com>",
