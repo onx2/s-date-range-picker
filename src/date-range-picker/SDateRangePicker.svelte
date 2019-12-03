@@ -328,24 +328,18 @@
     background-color: #fff;
     border: 1px solid #d5d5d5;
     border-radius: 6px;
-    padding: 1em;
+    padding: 0.6em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
-  .label-row {
+  .s-date-range-picker :global(.space-between) {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-
-  .s-date-range-picker :global(.calendar-row) {
+  .s-date-range-picker :global(.row) {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -369,14 +363,34 @@
     margin: 1px;
     cursor: pointer;
   }
+
+  .s-date-range-picker :global(button) {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .s-date-range-picker :global(button:disabled) {
+    cursor: not-allowed;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
   .rtl {
     direction: rtl;
   }
-  .s-date-range-picker :global(button) {
-    cursor: pointer;
-  }
-  .s-date-range-picker :global(button:disabled) {
-    cursor: not-allowed;
+
+  .justify-end {
+    justify-content: flex-end;
+    display: flex;
   }
 </style>
 
@@ -385,11 +399,15 @@
   {id}
   style={`width: ${maxWidth}px`}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}>
-  <div class="label-row">
-    <label>{startDateReadout()} to {endDateReadout()}</label>
-    <!-- <button type="close" disabled={!canApply()} on:click={() => close()}>
+  <div class="space-between">
+    <h1>{startDateReadout()} to {endDateReadout()}</h1>
+    <button
+      class="form-field"
+      type="close"
+      disabled={!canApply()}
+      on:click={close}>
       x
-    </button> -->
+    </button>
   </div>
   <div>
     <div class="grid">
@@ -430,7 +448,7 @@
   </div>
 
   {#if timePicker}
-    <div class="calendar-row">
+    <div class="row">
 
       <TimePicker
         on:timeChange={onStartTimeChange}
@@ -451,7 +469,7 @@
       {/if}
     </div>
   {/if}
-  <div style="justify-content: flex-end; display: flex;">
+  <div class="justify-end">
     {#if todayBtn}
       <button
         class="form-field"

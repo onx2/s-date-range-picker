@@ -65,6 +65,7 @@ export const getDayMetaData = params => {
     tempStartDate,
     hasSelection ? tempEndDate : hoverDate
   );
+
   return {
     date,
     events,

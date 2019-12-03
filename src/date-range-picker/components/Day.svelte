@@ -102,6 +102,7 @@
 </style>
 
 <div
+  role="gridcell"
   class:rtl
   class:today={day.isToday}
   class:weekend={day.isWeekend}

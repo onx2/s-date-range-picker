@@ -45,12 +45,13 @@
 </script>
 
 <style>
-  div {
-    padding: 12px 48px;
+  .calendar {
+    padding: 6px 48px 0 48px;
+    user-select: none;
   }
 </style>
 
-<div style={`width: ${pageWidth}px;`}>
+<div style={`width: ${pageWidth}px;`} class="calendar">
   <Controls
     on:pageChange
     on:prevMonth
@@ -63,18 +64,20 @@
     {maxDate}
     {minDate}
     {yearDropdown} />
-  <DaysOfWeek {firstDayOfWeek} />
-  {#each weeks as week}
-    <Week
-      on:selection
-      on:hover
-      on:apply
-      {week}
-      {month}
-      {monthIndicator}
-      {rtl}
-      {weekGuides}
-      {weekNumbers}
-      {isoWeekNumbers} />
-  {/each}
+  <div role="grid">
+    <DaysOfWeek {firstDayOfWeek} />
+    {#each weeks as week}
+      <Week
+        on:selection
+        on:hover
+        on:apply
+        {week}
+        {month}
+        {monthIndicator}
+        {rtl}
+        {weekGuides}
+        {weekNumbers}
+        {isoWeekNumbers} />
+    {/each}
+  </div>
 </div>

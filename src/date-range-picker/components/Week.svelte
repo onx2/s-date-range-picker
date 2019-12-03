@@ -51,23 +51,23 @@
   }
 </style>
 
-<div aria-label={`${localeFormat(month, 'yyyy')}`} class="calendar-row">
+<div aria-label={`${localeFormat(month, 'yyyy')}`} class="row" role="row">
 
   {#if weekGuides && week.weeksFromToday}
-    <div class="relative calendar-row side-width left-side">
+    <div class="relative row side-width left-side">
       <span aria-label={`${week.weeksFromToday} weeks from today`}>
         {weeksFromToday(week)}w
       </span>
     </div>
   {/if}
 
-  <div class="calendar-row">
+  <div class="row">
     {#each week.daysInWeek as day (day.date.toString())}
       <Day {day} {monthIndicator} {rtl} on:selection on:hover on:apply />
     {/each}
   </div>
   {#if weekNumbers || isoWeekNumbers}
-    <div class="relative calendar-row side-width right-side">
+    <div class="relative row side-width right-side">
       {#if weekNumbers}
         <span aria-label={`Week ${week.weekNumber}`}>{week.weekNumber}</span>
       {/if}

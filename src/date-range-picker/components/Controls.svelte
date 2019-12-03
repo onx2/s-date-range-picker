@@ -43,15 +43,7 @@
     (!isSameMonth(mo, minDate) && isAfter(mo, maxDate));
 </script>
 
-<style>
-  div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-</style>
-
-<div>
+<div class="space-between">
   <button
     class="form-field"
     aria-disabled={prevBtnDisabled}

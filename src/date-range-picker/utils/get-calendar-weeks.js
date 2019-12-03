@@ -32,14 +32,14 @@ import { getDayMetaData } from "./get-day-meta-data";
 
 /**
  *
- * @param {Date} startDay
+ * @param {Date} start
  * @param {getDayMetaDataParams} getDayMetaDataParams
  *
  * @returns {Date[]}
  */
-const buildWeek = (startDay, getDayMetaDataParams) =>
-  [0, 1, 2, 3, 4, 5, 6].map(value =>
-    getDayMetaData({ ...getDayMetaDataParams, date: addDays(startDay, value) })
+const buildWeek = (start, getDayMetaDataParams) =>
+  [0, 1, 2, 3, 4, 5, 6].map((_, i) =>
+    getDayMetaData({ ...getDayMetaDataParams, date: addDays(start, i) })
   );
 
 /**

@@ -24,15 +24,12 @@
   );
 
   /** @todo Handle am/pm times */
-  const timeChange = () => {
-    const detail = {
+  const timeChange = () =>
+    dispatchEvent("timeChange", {
       hours: selectedHour,
-      minutes: selectedMinute
-    };
-    detail.seconds = timePickerSeconds ? selectedSecond : 0;
-
-    dispatchEvent("timeChange", detail);
-  };
+      minutes: selectedMinute,
+      seconds: timePickerSeconds ? selectedSecond : 0
+    });
 
   $: isFirstAvailableTime = isSameSecond(
     dateReference,
@@ -45,13 +42,7 @@
     selectedMinute = minutes[0];
     selectedSecond = seconds[0];
 
-    const detail = {
-      hours: selectedHour,
-      minutes: selectedMinute,
-      seconds: selectedSecond
-    };
-
-    dispatchEvent("timeChange", detail);
+    timeChange();
   };
 
   function timeChangeEndOfDay() {
@@ -59,19 +50,13 @@
     selectedMinute = minutes[minutes.length - 1];
     selectedSecond = seconds[seconds.length - 1];
 
-    const detail = {
-      hours: selectedHour,
-      minutes: selectedMinute,
-      seconds: selectedSecond
-    };
-
-    dispatchEvent("timeChange", detail);
+    timeChange();
   }
 </script>
 
 <style>
   div {
-    padding: 8px 0;
+    padding: 6px 0 12px 0;
     flex: 1;
     justify-content: center;
     display: flex;
@@ -79,9 +64,8 @@
 </style>
 
 <div>
-
   <button
-    aria-label="Last first time"
+    aria-label="First available time"
     type="button"
     class="form-field"
     disabled={isFirstAvailableTime}

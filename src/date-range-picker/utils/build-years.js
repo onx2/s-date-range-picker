@@ -3,15 +3,15 @@ import { localeFormat } from "./locale-format";
 
 /**
  *
- * @param {Date} minDate
- * @param {Date} maxDate
+ * @param {Date} min - Earliest allowed date
+ * @param {Date} max - Latest allowed date
  *
  * @returns {Date[]}
  */
-export const buildYears = (minDate, maxDate) => {
-  const numYears = differenceInCalendarYears(maxDate, minDate) + 1;
-  return [...Array(numYears)].map((_, i) => {
-    const value = addYears(minDate, i);
+export const buildYears = (min, max) => {
+  const numYrs = differenceInCalendarYears(max, min) + 1;
+  return [...Array(numYrs)].map((_, i) => {
+    const value = addYears(min, i);
     return { value, text: localeFormat(value, "yyyy") };
   });
 };

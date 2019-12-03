@@ -1,4 +1,4 @@
-import { isBefore } from "date-fns";
+import { isAfter } from "date-fns";
 
 /**
  *
@@ -8,21 +8,21 @@ import { isBefore } from "date-fns";
  */
 /**
  *
- * @param {Date} dateLeft - Date
- * @param {Date} dateRight - Date to compare
+ * @param {Date} date - Date
+ * @param {Date} dateToCompare - Date to compare
  *
  *
  * @returns {Range}
  */
-export const toRange = (dateLeft, dateRight) => {
-  if (isBefore(dateRight, dateLeft)) {
+export const toRange = (date, dateToCompare) => {
+  if (isAfter(date, dateToCompare)) {
     return {
-      start: dateRight,
-      end: dateLeft
+      start: dateToCompare,
+      end: date
     };
   }
   return {
-    start: dateLeft,
-    end: dateRight
+    start: date,
+    end: dateToCompare
   };
 };

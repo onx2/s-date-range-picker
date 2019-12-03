@@ -3,17 +3,17 @@ import { localeFormat } from "./locale-format";
 
 /**
  *
- * @param {Date} minDate
- * @param {string} monthFormat
+ * @param {Date} mo - Month
+ * @param {string} format - Format of the month
  *
  * @returns {Date[]}
  */
-export const buildMonths = (month, monthFormat) => {
-  const thisJanuary = startOfYear(month);
+export const buildMonths = (mo, format) => {
+  const yrStart = startOfYear(mo);
 
   return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((_, i) => {
-    const value = addMonths(thisJanuary, i);
+    const value = addMonths(yrStart, i);
 
-    return { value, text: localeFormat(value, monthFormat) };
+    return { value, text: localeFormat(value, format) };
   });
 };
