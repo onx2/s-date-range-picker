@@ -1,4 +1,4 @@
-# s-date-range-picker (pre-alpha)
+# s-date-range-picker (alpha)
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master) A date range picker built in SvelteJS
 
@@ -39,6 +39,7 @@
 - [ ] Documentation / Demo Site
 - [ ] Mobile / touch friendly
 - [ ] Optimizations / reduce bundle size
+- [ ] Accessibility review / updates
 
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
