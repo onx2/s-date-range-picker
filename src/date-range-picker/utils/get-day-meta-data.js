@@ -30,7 +30,7 @@ import { toRange } from "./to-range";
  *
  * @param {Object} params
  * @prop {Date} date
- * @prop {Date} tempEndDate
+ * @prop {Date} tempEnd
  * @prop {Date[]} events
  * @prop {Date} hoverDate
  * @prop {boolean} hasSelection

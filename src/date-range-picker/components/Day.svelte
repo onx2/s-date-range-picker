@@ -1,12 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import {
-    isSameMonth,
-    isSameDay,
-    startOfWeek,
-    parseISO,
-    endOfWeek
-  } from "date-fns";
+  import { endOfWeek, isSameMonth, isSameDay, startOfWeek } from "date-fns";
   import { localeFormat } from "../utils";
 
   export let day;
@@ -102,25 +96,25 @@
 </style>
 
 <div
-  role="gridcell"
-  class:rtl
+  class:end-date={day.isEndDate}
   class:today={day.isToday}
-  class:weekend={day.isWeekend}
   class:next-month={day.isNextMonth}
   class:prev-month={day.isPrevMonth}
+  class:rtl
   class:start-date={day.isStartDate}
-  class:end-date={day.isEndDate}
-  class:within-selection={day.isWithinSelection}>
+  class:weekend={day.isWeekend}
+  class:within-selection={day.isWithinSelection}
+  role="gridcell">
   <button
-    type="button"
-    aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     aria-disabled={day.isDisabled}
-    class="calendar-cell"
+    aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
+    class="cell"
     disabled={day.isDisabled}
-    on:keydown={onKeydown}
     on:click={() => dispatchEvent('selection', day.date)}
+    on:keydown={onKeydown}
+    on:focus={() => dispatchEvent('hover', day.date)}
     on:mouseenter={() => dispatchEvent('hover', day.date)}
-    on:focus={() => dispatchEvent('hover', day.date)}>
+    type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
     {/if}

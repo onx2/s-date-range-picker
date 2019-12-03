@@ -16,9 +16,9 @@
 <div class="row" role="row">
   {#each daysOfWeek as dayOfWeek}
     <span
-      role="gridcell"
-      class="calendar-cell"
-      aria-label={localeFormat(dayOfWeek, 'EEEE')}>
+      aria-label={localeFormat(dayOfWeek, 'EEEE')}
+      class="cell"
+      role="gridcell">
       {localeFormat(dayOfWeek, 'eeeeee')}
     </span>
   {/each}

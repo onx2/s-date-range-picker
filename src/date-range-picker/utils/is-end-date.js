@@ -6,8 +6,8 @@ import { isSameDay, isAfter } from "date-fns";
  * @property {boolean} hasSelection
  * @property {Date} date
  * @property {Date} hoverDate
- * @property {Date} tempStartDate
- * @property {Date} tempEndDate
+ * @property {Date} tempStart
+ * @property {Date} tempEnd
  *
  * @returns {boolean}
  */

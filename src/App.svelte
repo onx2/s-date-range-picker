@@ -19,7 +19,7 @@
   let startDate = singlePicker
     ? startOfDay(new Date())
     : startOfWeek(new Date());
-  let endDate = singlePicker ? startDate : endOfWeek(new Date());
+  let endDate = singlePicker ? start : endOfWeek(new Date());
   let monthDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
@@ -27,8 +27,8 @@
   let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2;
 
   function onApply({ detail }) {
-    startDate = detail.startDate;
-    endDate = detail.endDate;
+    startDate = detail.start;
+    endDate = detail.end;
     console.log("apply", detail);
   }
 </script>

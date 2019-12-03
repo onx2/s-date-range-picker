@@ -15,13 +15,13 @@ import { getDayMetaData } from "./get-day-meta-data";
  *
  * @param {Object} getDayMetaDataParams
  * @prop {Date} date
- * @prop {Date} tempEndDate
+ * @prop {Date} tempEnd
  * @prop {Date[]} events
  * @prop {Date} hoverDate
  * @prop {boolean} hasSelection
  * @prop {Date} month
  * @prop {boolean} singlePicker
- * @prop {Date} tempStartDate
+ * @prop {Date} tempStart
  * @prop {Date} today
  * @prop {Date} maxDate
  * @prop {Date} minDate

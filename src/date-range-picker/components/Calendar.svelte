@@ -1,14 +1,14 @@
 <script>
-  import Week from "./Week.svelte";
-  import DaysOfWeek from "./DaysOfWeek.svelte";
   import Controls from "./Controls.svelte";
-  import { getCalendarWeeks, dayOffset } from "../utils";
+  import DaysOfWeek from "./DaysOfWeek.svelte";
+  import Week from "./Week.svelte";
+  import { dayOffset, getCalendarWeeks } from "../utils";
 
   export let disabledDates;
   export let events;
+  export let firstDayOfWeek;
   export let hasSelection;
   export let hoverDate;
-  export let firstDayOfWeek;
   export let isoWeekNumbers;
   export let maxDate;
   export let minDate;
@@ -16,10 +16,10 @@
   export let monthDropdown;
   export let monthFormat;
   export let monthIndicator;
-  export let pageWidth;
-  export let rtl;
-  export let prevIcon;
   export let nextIcon;
+  export let pageWidth;
+  export let prevIcon;
+  export let rtl;
   export let singlePicker;
   export let tempEndDate;
   export let tempStartDate;
@@ -29,18 +29,18 @@
   export let yearDropdown;
 
   $: weeks = getCalendarWeeks({
-    month,
-    firstDayOfWeek,
-    events,
     disabledDates,
-    tempStartDate,
-    hoverDate,
+    events,
+    firstDayOfWeek,
     hasSelection,
-    minDate,
+    hoverDate,
     maxDate,
-    today,
+    minDate,
+    month,
+    singlePicker,
     tempEndDate,
-    singlePicker
+    tempStartDate,
+    today
   });
 </script>
 
@@ -53,31 +53,31 @@
 
 <div style={`width: ${pageWidth}px;`} class="calendar">
   <Controls
+    {maxDate}
+    {minDate}
+    {month}
+    {monthDropdown}
+    {monthFormat}
+    {nextIcon}
     on:pageChange
     on:prevMonth
     on:nextMonth
     {prevIcon}
-    {nextIcon}
-    {month}
-    {monthDropdown}
-    {monthFormat}
-    {maxDate}
-    {minDate}
     {yearDropdown} />
   <div role="grid">
     <DaysOfWeek {firstDayOfWeek} />
     {#each weeks as week}
       <Week
+        {isoWeekNumbers}
+        {month}
+        {monthIndicator}
         on:selection
         on:hover
         on:apply
-        {week}
-        {month}
-        {monthIndicator}
         {rtl}
+        {week}
         {weekGuides}
-        {weekNumbers}
-        {isoWeekNumbers} />
+        {weekNumbers} />
     {/each}
   </div>
 </div>

@@ -25,61 +25,63 @@
     startOfWeek,
     subMonths
   } from "date-fns";
-  import { roundDown, localeFormat } from "./utils";
+  import { localeFormat, roundDown } from "./utils";
   import Calendar from "./components/Calendar.svelte";
   import TimePicker from "./components/TimePicker.svelte";
 
+  export let applyBtnText = "Apply";
   export let autoApply = false;
+  export let cancelBtnText = "Cancel";
   export let dateFormat = "MMM dd, yyyy";
-  export let monthIndicator = true;
   export let disabledDates = [];
   export let endDate = endOfWeek(new Date());
   export let events = [];
   export let firstDayOfWeek = "sunday";
+  export let id = `s-date-range-picker-${Math.random()}`;
   export let isoWeekNumbers = false;
   export let locale;
   export let maxDate = addYears(new Date(), 10);
   export let minDate = subYears(new Date(), 10);
+  export let minuteIncrement = 1;
   export let monthDropdown = false;
   export let monthFormat = "MMMM";
+  export let monthIndicator = true;
+  export let nextIcon = "▸";
   export let numPages = 1;
+  export let prevIcon = "◂";
+  export let resetViewBtn = false;
+  export let resetViewBtnText = "↚";
   export let rtl = false;
+  export let secondIncrement = 1;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
   export let timePicker = false;
   export let timePicker24Hour = true;
-  export let minuteIncrement = 1;
-  export let secondIncrement = 1;
   export let timePickerSeconds = false;
-  export let prevIcon = "&#9666;";
-  export let nextIcon = "&#9656;";
   export let today = new Date();
+  export let todayBtn = false;
+  export let todayBtnText = "Today";
   export let weekGuides = false;
   export let weekNumbers = false;
   export let yearDropdown = false;
-  export let applyBtnText = "Apply";
-  export let cancelBtnText = "Cancel";
-  export let todayBtnText = "Today";
-  export let todayBtn = false;
-  export let resetViewBtnText = "&#8602;";
-  export let resetViewBtn = false;
-  export let id = `s-date-range-picker-${Math.random()}`;
+
+  /** @todo Implement props/options */
   // export let disabled = false;
   // export let hideOnCancel = true;
   // export let hideOnApply = true;
   // export let maxSpan = null;
   // export let predefinedRanges = [];
 
+  let hasSelection = true;
   let hoverDate = endDate;
   let tempEndDate = endDate;
   let tempStartDate = startDate;
-  let hasSelection = true;
 
-  const dispatchEvent = createEventDispatcher();
   const cellWidth = 44;
-  const maxCalsPerPage = 2;
+  const dispatchEvent = createEventDispatcher();
   const pageWidth = cellWidth * 7;
   const pageWidthWithPadding = pageWidth + 96;
+  const maxCalsPerPage = 2;
 
   // Used for the date-fns format abstraction, localeFormat
   /** @todo This might be better placed into a store. */
@@ -181,7 +183,7 @@
   };
 
   const goToToday = () => {
-    months = [...Array(numPages)].map((_, i) => addMonths(new Date(), i));
+    months = [...Array(numPages)].map((_, i) => addMonths(today, i));
   };
 
   const resetView = () => {
@@ -346,7 +348,7 @@
     width: 100%;
   }
 
-  .s-date-range-picker :global(.calendar-cell) {
+  .s-date-range-picker :global(.cell) {
     width: 44px;
     height: 44px;
     position: relative;
@@ -395,17 +397,18 @@
 </style>
 
 <form
-  on:submit|preventDefault={apply}
+  class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   {id}
-  style={`width: ${maxWidth}px`}
-  class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}>
+  on:submit|preventDefault={apply}
+  style={`width: ${maxWidth}px`}>
   <div class="space-between">
     <h1>{startDateReadout()} to {endDateReadout()}</h1>
     <button
+      aria-label="Close the date range picker"
       class="form-field"
-      type="close"
       disabled={!canApply()}
-      on:click={close}>
+      on:click={close}
+      type="close">
       x
     </button>
   </div>
@@ -413,19 +416,11 @@
     <div class="grid">
       {#each months as month}
         <Calendar
-          on:pageChange={onPageChange}
-          on:hover={onHover}
-          on:selection={onSelection}
-          on:prevMonth={onPrevMonth}
-          on:nextMonth={onNextMonth}
-          on:apply={apply}
-          {prevIcon}
-          {nextIcon}
           {disabledDates}
           {events}
-          {hoverDate}
-          {hasSelection}
           {firstDayOfWeek}
+          {hasSelection}
+          {hoverDate}
           {isoWeekNumbers}
           {maxDate}
           {minDate}
@@ -433,7 +428,15 @@
           {monthDropdown}
           {monthFormat}
           {monthIndicator}
+          {nextIcon}
+          on:apply={apply}
+          on:hover={onHover}
+          on:nextMonth={onNextMonth}
+          on:pageChange={onPageChange}
+          on:prevMonth={onPrevMonth}
+          on:selection={onSelection}
           {pageWidth}
+          {prevIcon}
           {rtl}
           {singlePicker}
           {tempEndDate}
@@ -451,18 +454,18 @@
     <div class="row">
 
       <TimePicker
-        on:timeChange={onStartTimeChange}
         dateReference={tempStartDate}
         {minuteIncrement}
+        on:timeChange={onStartTimeChange}
         {secondIncrement}
         {timePicker24Hour}
         {timePickerSeconds} />
 
       {#if !singlePicker}
         <TimePicker
-          on:timeChange={onEndTimeChange}
           dateReference={tempEndDate}
           {minuteIncrement}
+          on:timeChange={onEndTimeChange}
           {secondIncrement}
           {timePicker24Hour}
           {timePickerSeconds} />
@@ -472,42 +475,44 @@
   <div class="justify-end">
     {#if todayBtn}
       <button
+        aria-disabled={isSameMonth(today, months[0])}
+        aria-label="Show the today's month"
         class="form-field"
-        type="button"
-        aria-label="Show the current selection "
+        disabled={isSameMonth(today, months[0])}
         on:click={goToToday}
-        disabled={isSameMonth(new Date(), months[0])}>
+        type="button">
         {todayBtnText}
       </button>
     {/if}
     {#if resetViewBtn}
       <button
+        aria-disabled={!canResetView}
+        aria-label="Show the current selection's start month"
         class="form-field"
-        type="button"
-        aria-label="Show the current selection "
+        disabled={!canResetView}
         on:click={resetView}
-        disabled={!canResetView}>
+        type="button">
         {@html resetViewBtnText}
       </button>
     {/if}
     <button
-      class="form-field"
-      type="button"
+      aria-disabled={!canApply()}
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
+      class="form-field"
+      disabled={!canApply()}
       on:click={cancel}
-      aria-disabled={!canApply()}
-      disabled={!canApply()}>
+      type="button">
       {cancelBtnText}
     </button>
 
     <button
-      id="s-apply-btn"
-      class="form-field"
-      aria-label="Apply the current selection"
-      on:click={apply}
       aria-disabled={!canApply()}
-      disabled={!canApply()}>
+      aria-label="Apply the current selection"
+      class="form-field"
+      disabled={!canApply()}
+      id="s-apply-btn"
+      on:click={apply}>
       {applyBtnText}
     </button>
   </div>

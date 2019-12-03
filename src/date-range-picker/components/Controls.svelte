@@ -7,9 +7,9 @@
     isAfter,
     isBefore,
     isSameMonth,
-    subMonths,
     isSameYear,
-    isWithinInterval
+    isWithinInterval,
+    subMonths
   } from "date-fns";
   import { buildMonths, buildYears, localeFormat } from "../utils";
 
@@ -31,33 +31,33 @@
   $: selectedYear = { value: month, text: localeFormat(month, "yyyy") };
   $: prevMonth = subMonths(month, 1);
   $: nextMonth = addMonths(month, 1);
-  $: isMaxDate = isAfter(month, maxDate) || isSameMonth(month, maxDate);
-  $: isMinDate = isBefore(month, minDate) || isSameMonth(month, minDate);
+  $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate);
+  $: isMin = isBefore(month, minDate) || isSameMonth(month, minDate);
   $: months = buildMonths(month, monthFormat);
   $: years = buildYears(minDate, maxDate);
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
   $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
 
   $: isOptionDisabled = mo =>
-    isBefore(mo, minDate) ||
+    (!isSameMonth(mo, minDate) && isBefore(mo, minDate)) ||
     (!isSameMonth(mo, minDate) && isAfter(mo, maxDate));
 </script>
 
 <div class="space-between">
   <button
-    class="form-field"
     aria-disabled={prevBtnDisabled}
+    aria-label={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
+    class="form-field"
     disabled={prevBtnDisabled}
-    type="button"
     on:click={() => disptachEvent('prevMonth')}
-    aria-label={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}>
+    type="button">
     {@html prevIcon}
   </button>
   <span>
     {#if monthDropdown}
       <select
-        class="form-field"
         bind:value={selectedMonth}
+        class="form-field"
         on:change={() => disptachEvent('pageChange', {
             incrementAmount: differenceInCalendarMonths(
               selectedMonth.value,
@@ -66,9 +66,9 @@
           })}>
         {#each months as mo}
           <option
-            value={mo}
+            disabled={isOptionDisabled(mo.value)}
             selected={isSameMonth(mo.value, month)}
-            disabled={isOptionDisabled(mo.value)}>
+            value={mo}>
             {mo.text}
           </option>
         {/each}
@@ -78,17 +78,17 @@
     {/if}
     {#if yearDropdown}
       <select
-        class="form-field"
         bind:value={selectedYear}
+        class="form-field"
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
               differenceInCalendarYears(selectedYear.value, month) * 12
           })}>
         {#each years as yr}
           <option
-            value={yr}
+            disabled={isOptionDisabled(yr.value)}
             selected={isSameYear(yr.value, month)}
-            disabled={isOptionDisabled(yr.value)}>
+            value={yr}>
             {yr.text}
           </option>
         {/each}
@@ -98,12 +98,12 @@
     {/if}
   </span>
   <button
-    class="form-field"
     aria-disabled={nextBtnDisabled}
+    aria-label={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}
+    class="form-field"
     disabled={nextBtnDisabled}
-    type="button"
     on:click={() => disptachEvent('nextMonth')}
-    aria-label={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}>
+    type="button">
     {@html nextIcon}
   </button>
 </div>

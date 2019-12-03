@@ -1,20 +1,19 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { isSameSecond, startOfDay, endOfDay } from "date-fns";
+  import { endOfDay, isSameSecond, startOfDay } from "date-fns";
   import { pad, roundDown } from "../utils";
 
+  export let dateReference;
   export let minuteIncrement;
   export let secondIncrement;
   export let timePicker24Hour;
   export let timePickerSeconds;
-  export let dateReference;
 
   const dispatchEvent = createEventDispatcher();
 
   $: selectedHour = dateReference.getHours();
   $: selectedMinute = dateReference.getMinutes();
   $: selectedSecond = dateReference.getSeconds();
-
   $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
@@ -22,6 +21,11 @@
   $: seconds = [...Array(60 / secondIncrement)].map((_, i) =>
     pad(i * secondIncrement)
   );
+  $: isFirstAvailableTime = isSameSecond(
+    dateReference,
+    startOfDay(dateReference)
+  );
+  $: isLastAvailableTime = isSameSecond(dateReference, endOfDay(dateReference));
 
   /** @todo Handle am/pm times */
   const timeChange = () =>
@@ -30,12 +34,6 @@
       minutes: selectedMinute,
       seconds: timePickerSeconds ? selectedSecond : 0
     });
-
-  $: isFirstAvailableTime = isSameSecond(
-    dateReference,
-    startOfDay(dateReference)
-  );
-  $: isLastAvailableTime = isSameSecond(dateReference, endOfDay(dateReference));
 
   const timeChangeStartOfDay = () => {
     selectedHour = hours[0];
@@ -65,28 +63,28 @@
 
 <div>
   <button
+    aria-disabled={isFirstAvailableTime}
     aria-label="First available time"
-    type="button"
     class="form-field"
     disabled={isFirstAvailableTime}
-    aria-disabled={isFirstAvailableTime}
-    on:click={timeChangeStartOfDay}>
+    on:click={timeChangeStartOfDay}
+    type="button">
     {@html '&#8643;'}
   </button>
-  <select class="form-field" bind:value={selectedHour} on:change={timeChange}>
+  <select bind:value={selectedHour} class="form-field" on:change={timeChange}>
     {#each hours as hour}
       <option value={parseInt(hour)}>{hour}</option>
     {/each}
   </select>
-  <select class="form-field" bind:value={selectedMinute} on:change={timeChange}>
+  <select bind:value={selectedMinute} class="form-field" on:change={timeChange}>
     {#each minutes as minute}
       <option value={parseInt(minute)}>{minute}</option>
     {/each}
   </select>
   {#if timePickerSeconds}
     <select
-      class="form-field"
       bind:value={selectedSecond}
+      class="form-field"
       on:change={timeChange}>
       {#each seconds as second}
         <option value={parseInt(second)}>{second}</option>
@@ -102,12 +100,12 @@
   {/if} -->
 
   <button
+    aria-disabled={isLastAvailableTime}
     aria-label="Last available time"
-    type="button"
     class="form-field"
     disabled={isLastAvailableTime}
-    aria-disabled={isLastAvailableTime}
-    on:click={timeChangeEndOfDay}>
+    on:click={timeChangeEndOfDay}
+    type="button">
     {@html '&#8638;'}
   </button>
 </div>
