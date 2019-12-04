@@ -70,16 +70,25 @@
       class="form-field"
       disabled={isFirstAvailableTime}
       on:click={timeChangeStartOfDay}
+      title="First available time"
       type="button">
       {@html '&#8643;'}
     </button>
   {/if}
-  <select bind:value={selectedHour} class="form-field" on:change={timeChange}>
+  <select
+    bind:value={selectedHour}
+    class="form-field"
+    on:change={timeChange}
+    title={`${selectedHour} hours`}>
     {#each hours as hour}
       <option value={parseInt(hour)}>{hour}</option>
     {/each}
   </select>
-  <select bind:value={selectedMinute} class="form-field" on:change={timeChange}>
+  <select
+    bind:value={selectedMinute}
+    class="form-field"
+    on:change={timeChange}
+    title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
       <option value={parseInt(minute)}>{minute}</option>
     {/each}
@@ -88,7 +97,8 @@
     <select
       bind:value={selectedSecond}
       class="form-field"
-      on:change={timeChange}>
+      on:change={timeChange}
+      title={`${selectedSecond} seconds`}>
       {#each seconds as second}
         <option value={parseInt(second)}>{second}</option>
       {/each}
@@ -109,6 +119,7 @@
       class="form-field"
       disabled={isLastAvailableTime}
       on:click={timeChangeEndOfDay}
+      title="Last available time"
       type="button">
       {@html '&#8638;'}
     </button>

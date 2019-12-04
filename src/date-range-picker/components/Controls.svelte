@@ -50,6 +50,7 @@
     class="form-field"
     disabled={prevBtnDisabled}
     on:click={() => disptachEvent('prevMonth')}
+    title={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
     type="button">
     {@html prevIcon}
   </button>
@@ -103,6 +104,7 @@
     class="form-field"
     disabled={nextBtnDisabled}
     on:click={() => disptachEvent('nextMonth')}
+    title={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}
     type="button">
     {@html nextIcon}
   </button>

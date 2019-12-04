@@ -3,10 +3,11 @@
    * @todo Question: Can this component be divided up into separate components?
    * And if so, should it be?
    *
-   * Potential splitting: single vs range, slim vs full (could remove a significant amount of constality)
+   * Potential splitting: single vs range, slim vs full (could remove a significant amount of complexity)
    *
    * The TimePicker component could potentially be split out into a separate package that is imported.
    * If it were themeable, it may be easier / make more sense to split it out.
+   *
    */
   import { createEventDispatcher, onMount } from "svelte";
   import {
@@ -60,7 +61,7 @@
   export let timePicker = false;
   export let timePickerControls = true;
   export let timePicker24Hour = true;
-  export let timePickerSeconds = false;
+  export let timePickerSeconds = true;
   export let today = new Date();
   export let todayBtn = false;
   export let todayBtnText = "Today";
@@ -357,7 +358,7 @@
   }
 
   .s-date-range-picker :global(.form-field) {
-    padding: 8px 12px;
+    padding: 8px 14px;
     background-color: transparent;
     border-radius: 4px;
     border: 1px solid #d5d5d5;

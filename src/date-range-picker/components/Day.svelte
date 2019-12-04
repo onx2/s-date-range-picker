@@ -8,12 +8,24 @@
   export let rtl;
 
   const dispatchEvent = createEventDispatcher();
-
+  let mouseDownDate = null;
   const onKeydown = e => {
     if (e.key === "Enter") {
       e.preventDefault();
       dispatchEvent("apply");
     }
+  };
+  const onMouseUp = date => {
+    if (!isSameDay(date, mouseDownDate)) {
+      dispatchEvent("selection", date);
+    }
+
+    mouseDownDate = null;
+  };
+
+  const onMouseDown = date => {
+    mouseDownDate = date;
+    dispatchEvent("selection", date);
   };
 </script>
 
@@ -110,10 +122,11 @@
     aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     class="cell"
     disabled={day.isDisabled}
-    on:click={() => dispatchEvent('selection', day.date)}
     on:keydown={onKeydown}
     on:focus={() => dispatchEvent('hover', day.date)}
     on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:mousedown={() => onMouseDown(day.date)}
+    on:mouseup={() => onMouseUp(day.date)}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
