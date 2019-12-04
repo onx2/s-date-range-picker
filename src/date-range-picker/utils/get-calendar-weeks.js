@@ -37,6 +37,7 @@ import { getDayMetaData } from "./get-day-meta-data";
  *
  * @returns {Date[]}
  */
+
 const buildWeek = (start, getDayMetaDataParams) =>
   [0, 1, 2, 3, 4, 5, 6].map((_, i) =>
     getDayMetaData({ ...getDayMetaDataParams, date: addDays(start, i) })

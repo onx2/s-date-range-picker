@@ -71,9 +71,11 @@
         {isoWeekNumbers}
         {month}
         {monthIndicator}
-        on:selection
-        on:hover
         on:apply
+        on:hover
+        on:nextMonth
+        on:prevMonth
+        on:selection
         {rtl}
         {week}
         {weekGuides}

@@ -46,7 +46,12 @@
   }
 </style>
 
-<div aria-label={`${localeFormat(month, 'yyyy')}`} class="row" role="row">
+<div
+  aria-label={`${localeFormat(month, 'yyyy')}`}
+  class="row"
+  role="row"
+  on:nextMonth
+  on:prevMonth>
 
   {#if weekGuides && week.weeksFromToday}
     <div class="left-side relative row side-width">

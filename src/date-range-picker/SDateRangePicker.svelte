@@ -24,6 +24,7 @@
     isSameSecond,
     isSameDay,
     isSameMonth,
+    startOfDay,
     startOfWeek,
     startOfYear,
     subMonths
@@ -45,17 +46,17 @@
   export let locale;
   export let maxDate = addYears(endOfYear(new Date()), 10);
   export let minDate = subYears(startOfYear(new Date()), 10);
-  export let minuteIncrement = 1;
+  export let minuteIncrement = 5;
   export let monthDropdown = false;
   export let monthFormat = "MMMM";
   export let monthIndicator = true;
   export let nextIcon = "▸";
-  export let numPages = 1;
+  export let numPages = 2;
   export let prevIcon = "◂";
   export let resetViewBtn = false;
   export let resetViewBtnText = "↚";
   export let rtl = false;
-  export let secondIncrement = 1;
+  export let secondIncrement = 5;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
   export let timePicker = false;
@@ -114,7 +115,6 @@
       !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
     );
   };
-
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
   $: maxWidth =
     pickerWidth >= maxCalsPerPage * pageWidth
@@ -190,7 +190,6 @@
   };
 
   const resetView = () => {
-    console.log(tempStartDate, startDate);
     const resetViewMonth = canApply() ? tempStartDate : startDate;
     months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i));
   };
@@ -220,7 +219,7 @@
   };
 
   const onSelection = ({ detail }) => {
-    const newEndDate = new Date(
+    const detailWithEndDateTime = new Date(
       detail.getFullYear(),
       detail.getMonth(),
       detail.getDate(),
@@ -229,29 +228,48 @@
       tempEndDate.getSeconds()
     );
 
+    const detailWithStartDateTime = new Date(
+      detail.getFullYear(),
+      detail.getMonth(),
+      detail.getDate(),
+      tempStartDate.getHours(),
+      tempStartDate.getMinutes(),
+      tempStartDate.getSeconds()
+    );
+
     if (singlePicker) {
       // Start and end dates are always the same on singlePicker
-      tempStartDate = tempEndDate = newEndDate;
+      tempStartDate = tempEndDate = detailWithEndDateTime;
     } else if (hasSelection) {
-      // In range mode, if there is currently a selection and the selection
-      // event is fired the user must be selecting the start date
-      tempStartDate = new Date(
-        detail.getFullYear(),
-        detail.getMonth(),
-        detail.getDate(),
-        tempStartDate.getHours(),
-        tempStartDate.getMinutes(),
-        tempStartDate.getSeconds()
-      );
+      /**
+       * In range mode, if there is currently a selection and the selection
+       * event is fired the user must be selecting the start date.
+       *
+       * Updating the hoverDate during the tempStartDate selection is a requirement
+       * for the optimization that only triggers updates on hover when currently selecting.
+       */
+      tempStartDate = hoverDate = detailWithStartDateTime;
       hasSelection = false;
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
       // Sorting - Swap start and end dates when the end date is before the start date
-      if (isBefore(newEndDate, tempStartDate)) {
-        tempEndDate = tempStartDate;
-        tempStartDate = !timePicker ? startOfDay(newEndDate) : newEndDate;
+      if (isBefore(detailWithEndDateTime, tempStartDate)) {
+        if (isSameDay(detailWithEndDateTime, tempStartDate)) {
+          tempEndDate = tempStartDate;
+          tempStartDate = detailWithEndDateTime;
+        } else {
+          tempEndDate = new Date(
+            tempStartDate.getFullYear(),
+            tempStartDate.getMonth(),
+            tempStartDate.getDate(),
+            tempEndDate.getHours(),
+            tempEndDate.getMinutes(),
+            tempEndDate.getSeconds()
+          );
+          tempStartDate = detailWithStartDateTime;
+        }
       } else {
-        tempEndDate = newEndDate;
+        tempEndDate = detailWithEndDateTime;
       }
 
       hasSelection = true;
@@ -266,7 +284,9 @@
   };
 
   const onHover = ({ detail }) => {
-    hoverDate = detail;
+    if (!hasSelection) {
+      hoverDate = detail;
+    }
   };
 
   const onPrevMonth = () => {
@@ -274,6 +294,7 @@
   };
 
   const onNextMonth = () => {
+    console.log("onNextMonth");
     months = months.map(mo => addMonths(mo, 1));
   };
 

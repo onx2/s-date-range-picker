@@ -1,39 +1,117 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { endOfWeek, isSameMonth, isSameDay, startOfWeek } from "date-fns";
+  import {
+    addDays,
+    addMonths,
+    addWeeks,
+    endOfWeek,
+    isAfter,
+    isBefore,
+    isSameMonth,
+    isSameDay,
+    startOfWeek,
+    subDays,
+    subMonths,
+    subWeeks
+  } from "date-fns";
   import { localeFormat } from "../utils";
 
   export let day;
   export let monthIndicator;
   export let rtl;
 
-  const dispatchEvent = createEventDispatcher();
   let mouseDownDate = null;
-  const onKeydown = e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      dispatchEvent("apply");
+
+  const dispatchEvent = createEventDispatcher();
+
+  // Enter should submit / apply the selection, not activate a button.
+  const onKeydown = (e, date) => {
+    let newDate = date;
+
+    switch (e.code) {
+      case "Enter":
+      case "NumpadEnter":
+        dispatchEvent("apply");
+        return;
+      case "Space":
+        dispatchEvent("selection", date);
+        return;
+      case "Tab":
+        newDate = e.shiftKey ? subDays(date, 1) : addDays(date, 1);
+        return;
+      case "ArrowUp":
+        newDate = subWeeks(date, 1);
+        break;
+      case "ArrowDown":
+        newDate = addWeeks(date, 1);
+        break;
+      case "ArrowRight":
+        newDate = addDays(date, 1);
+        break;
+      case "ArrowLeft":
+        newDate = subDays(date, 1);
+        break;
+      case "PageDown":
+        newDate = subMonths(date, 1);
+        break;
+      case "PageDown":
+        newDate = addMonths(date, 1);
+        break;
+    }
+
+    /** @todo Flip page when focusing on an element that isn't visible */
+    dispatchEvent("hover", newDate);
+    document.getElementById(localeFormat(newDate, "yyyy-MM-dd")).focus();
+  };
+
+  const onMouseUp = (e, date) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.button === 0) {
+      if (!isSameDay(date, mouseDownDate)) {
+        dispatchEvent("selection", date);
+      }
+
+      mouseDownDate = null;
     }
   };
-  const onMouseUp = date => {
-    if (!isSameDay(date, mouseDownDate)) {
+
+  const onMouseDown = (e, date) => {
+    // Only continue if the left mouse button was clicked
+    if (e.button === 0) {
+      mouseDownDate = date;
       dispatchEvent("selection", date);
     }
-
-    mouseDownDate = null;
-  };
-
-  const onMouseDown = date => {
-    mouseDownDate = date;
-    dispatchEvent("selection", date);
   };
 </script>
 
 <style>
-  div {
-    margin: 2px 0;
+  div::after {
+    content: "";
+    top: 0;
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    background-color: #bbdefb;
+    transition: transform 220ms ease;
+    transform: scale(0);
+    border-radius: 100%;
   }
 
+  div {
+    position: relative;
+    overflow: hidden;
+  }
+
+  div.within-selection:not(.start-date):not(.end-date)::after {
+    transform: scale(1.4);
+  }
+
+  .end-date:after,
+  .start-date:after {
+    transform: scale(1);
+  }
   button {
     background-color: transparent;
     border-radius: 100%;
@@ -42,23 +120,24 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+    z-index: 1;
   }
 
   button:focus {
-    box-shadow: 0 0 4px #1565c0;
+    box-shadow: inset 0 0 0 1px #1565c0;
   }
 
   .within-selection,
   .end-date,
   .start-date {
-    background-color: #bbdefb;
+    /* background-color: #bbdefb; */
   }
 
-  .end-date {
+  .end-date::after {
     border-radius: 0 100% 100% 0;
   }
 
-  .start-date {
+  .start-date::after {
     border-radius: 100% 0 0 100%;
   }
 
@@ -98,11 +177,11 @@
   }
 
   /* Swap border radius when in rtl */
-  .rtl.end-date {
+  .rtl.end-date::after {
     border-radius: 100% 0 0 100%;
   }
 
-  .rtl.start-date {
+  .rtl.start-date::after {
     border-radius: 0 100% 100% 0;
   }
 </style>
@@ -116,17 +195,18 @@
   class:start-date={day.isStartDate}
   class:weekend={day.isWeekend}
   class:within-selection={day.isWithinSelection}
+  on:focus={() => dispatchEvent('hover', day.date)}
+  on:mouseenter={() => dispatchEvent('hover', day.date)}
+  on:mousedown={e => onMouseDown(e, day.date)}
+  on:mouseup={e => onMouseUp(e, day.date)}
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
     aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     class="cell"
     disabled={day.isDisabled}
-    on:keydown={onKeydown}
-    on:focus={() => dispatchEvent('hover', day.date)}
-    on:mouseenter={() => dispatchEvent('hover', day.date)}
-    on:mousedown={() => onMouseDown(day.date)}
-    on:mouseup={() => onMouseUp(day.date)}
+    id={localeFormat(day.date, 'yyyy-MM-dd')}
+    on:keydown={e => onKeydown(e, day.date)}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
