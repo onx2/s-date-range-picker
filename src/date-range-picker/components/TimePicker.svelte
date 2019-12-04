@@ -12,6 +12,7 @@
 
   const dispatchEvent = createEventDispatcher();
 
+  $: endOfDateReferenceDay = endOfDay(dateReference);
   $: selectedHour = dateReference.getHours();
   $: selectedMinute = dateReference.getMinutes();
   $: selectedSecond = dateReference.getSeconds();
@@ -22,11 +23,22 @@
   $: seconds = [...Array(60 / secondIncrement)].map((_, i) =>
     pad(i * secondIncrement)
   );
-  $: isFirstAvailableTime = isSameSecond(
-    dateReference,
-    startOfDay(dateReference)
-  );
-  $: isLastAvailableTime = isSameSecond(dateReference, endOfDay(dateReference));
+  $: isFirstAvailableTime =
+    timePickerControls &&
+    isSameSecond(dateReference, startOfDay(dateReference));
+  $: isLastAvailableTime =
+    timePickerControls &&
+    isSameSecond(
+      dateReference,
+      new Date(
+        endOfDateReferenceDay.getFullYear(),
+        endOfDateReferenceDay.getMonth(),
+        endOfDateReferenceDay.getDate(),
+        endOfDateReferenceDay.getHours(),
+        roundDown(endOfDateReferenceDay.getMinutes(), minuteIncrement),
+        roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
+      )
+    );
 
   /** @todo Handle am/pm times */
   const timeChange = () =>
