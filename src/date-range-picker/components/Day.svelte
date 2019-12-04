@@ -60,8 +60,16 @@
     }
 
     /** @todo Flip page when focusing on an element that isn't visible */
+
+    const el = document.getElementById(localeFormat(newDate, "yyyy-MM-dd"));
+    // Graceful failure until page flipping functionality is implemented.
+    if (!el) {
+      // Handle page flipping if the element isn't found
+      return;
+    }
+
     dispatchEvent("hover", newDate);
-    document.getElementById(localeFormat(newDate, "yyyy-MM-dd")).focus();
+    el.focus();
   };
 
   const onMouseUp = (e, date) => {
