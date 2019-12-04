@@ -102,9 +102,7 @@
     height: 44px;
     position: absolute;
     background-color: #bbdefb;
-    transition: transform 220ms ease;
-    transform: scale(0);
-    border-radius: 100%;
+    opacity: 0;
   }
 
   div {
@@ -113,12 +111,16 @@
   }
 
   div.within-selection:not(.start-date):not(.end-date)::after {
-    transform: scale(1.4);
+    opacity: 1;
+  }
+
+  div.within-selection::after {
+    transition: opacity 440ms ease;
   }
 
   .end-date:after,
   .start-date:after {
-    transform: scale(1);
+    opacity: 1;
   }
   button {
     background-color: transparent;
@@ -133,12 +135,6 @@
 
   button:focus {
     box-shadow: inset 0 0 0 1px #1565c0;
-  }
-
-  .within-selection,
-  .end-date,
-  .start-date {
-    /* background-color: #bbdefb; */
   }
 
   .end-date::after {
