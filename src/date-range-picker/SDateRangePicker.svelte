@@ -46,7 +46,7 @@
   export let locale;
   export let maxDate = addYears(endOfYear(new Date()), 10);
   export let minDate = subYears(startOfYear(new Date()), 10);
-  export let minuteIncrement = 5;
+  export let minuteIncrement = 1;
   export let monthDropdown = false;
   export let monthFormat = "MMMM";
   export let monthIndicator = true;
@@ -56,7 +56,7 @@
   export let resetViewBtn = false;
   export let resetViewBtnText = "↚";
   export let rtl = false;
-  export let secondIncrement = 5;
+  export let secondIncrement = 1;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
   export let timePicker = false;
@@ -79,8 +79,8 @@
 
   let hasSelection = true;
   let hoverDate = endDate;
-  let tempEndDate = endDate;
-  let tempStartDate = startDate;
+  $: tempEndDate = endDate;
+  $: tempStartDate = startDate;
 
   const cellWidth = 44;
   const dispatchEvent = createEventDispatcher();
@@ -411,7 +411,8 @@
     direction: rtl;
   }
 
-  .justify-end {
+  .actions-row {
+    padding-top: 8px;
     justify-content: flex-end;
     display: flex;
   }
@@ -494,7 +495,7 @@
           {timePickerSeconds} />
       {/if}
     </div>
-    {#if timePicker && !singlePicker && numPages === 1}
+    {#if !singlePicker && numPages === 1}
       <div class="row">
         <TimePicker
           dateReference={tempEndDate}
@@ -507,7 +508,7 @@
       </div>
     {/if}
   {/if}
-  <div class="justify-end">
+  <div class="actions-row">
     {#if todayBtn}
       <button
         aria-disabled={isSameMonth(today, months[0])}
@@ -547,7 +548,8 @@
       class="form-field"
       disabled={!canApply()}
       id="s-apply-btn"
-      on:click={apply}>
+      on:click={apply}
+      type="submit">
       {applyBtnText}
     </button>
   </div>

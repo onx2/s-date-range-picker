@@ -5,13 +5,7 @@
    * Using a svelte wrapper component to manage state allows for svelte-style
    * reactivity, rather than using foobar.$on() and foobar.$set()
    */
-  import {
-    addDays,
-    endOfWeek,
-    startOfWeek,
-    startOfDay,
-    endOfDay
-  } from "date-fns";
+  import { endOfWeek, startOfWeek, startOfDay, endOfDay } from "date-fns";
   import * as locales from "date-fns/locale";
   import SDateRangePicker from "./date-range-picker/SDateRangePicker.svelte";
 
@@ -41,10 +35,6 @@
 
 <SDateRangePicker
   {singlePicker}
-  weekNumbers
-  isoWeekNumbers
-  weekGuides
-  timePicker
   {monthDropdown}
   {yearDropdown}
   {resetViewBtn}

@@ -36,9 +36,6 @@
       case "Space":
         dispatchEvent("selection", date);
         return;
-      case "Tab":
-        newDate = e.shiftKey ? subDays(date, 1) : addDays(date, 1);
-        return;
       case "ArrowUp":
         newDate = subWeeks(date, 1);
         break;
@@ -54,13 +51,14 @@
       case "PageDown":
         newDate = subMonths(date, 1);
         break;
-      case "PageDown":
+      case "PageUp":
         newDate = addMonths(date, 1);
         break;
+      default:
+        return;
     }
 
     /** @todo Flip page when focusing on an element that isn't visible */
-
     const el = document.getElementById(localeFormat(newDate, "yyyy-MM-dd"));
     // Graceful failure until page flipping functionality is implemented.
     if (!el) {
@@ -73,12 +71,12 @@
   };
 
   const onMouseUp = (e, date) => {
-    e.preventDefault();
-    e.stopPropagation();
-
     if (e.button === 0) {
       if (!isSameDay(date, mouseDownDate)) {
         dispatchEvent("selection", date);
+        // Set the focus state to the last selected date.
+        // This happens automatically via a "click", but not on "mouseup"
+        document.getElementById(localeFormat(date, "yyyy-MM-dd")).focus();
       }
 
       mouseDownDate = null;
@@ -92,6 +90,12 @@
       dispatchEvent("selection", date);
     }
   };
+
+  // Prevent id duplication when showing multiple pages
+  const id =
+    !day.isNextMonth && !day.isPrevMonth
+      ? localeFormat(day.date, "yyyy-MM-dd")
+      : undefined;
 </script>
 
 <style>
@@ -170,7 +174,7 @@
   button:not(:disabled):hover .month-indicator,
   .start-date .month-indicator,
   .end-date .month-indicator {
-    transition: opacity 460ms ease;
+    transition: opacity 440ms ease;
     opacity: 1;
   }
 
@@ -199,7 +203,7 @@
   class:start-date={day.isStartDate}
   class:weekend={day.isWeekend}
   class:within-selection={day.isWithinSelection}
-  on:focus={() => dispatchEvent('hover', day.date)}
+  on:keydown={e => onKeydown(e, day.date)}
   on:mouseenter={() => dispatchEvent('hover', day.date)}
   on:mousedown={e => onMouseDown(e, day.date)}
   on:mouseup={e => onMouseUp(e, day.date)}
@@ -209,8 +213,7 @@
     aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
     class="cell"
     disabled={day.isDisabled}
-    id={localeFormat(day.date, 'yyyy-MM-dd')}
-    on:keydown={e => onKeydown(e, day.date)}
+    {id}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
