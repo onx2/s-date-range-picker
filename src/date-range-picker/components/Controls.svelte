@@ -19,6 +19,7 @@
   export let maxDate;
   export let minDate;
   export let nextIcon;
+  export let pageNum;
   export let prevIcon;
   export let yearDropdown;
 
@@ -34,7 +35,7 @@
   $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate);
   $: isMin = isBefore(month, minDate) || isSameMonth(month, minDate);
   $: months = buildMonths(month, monthFormat);
-  $: years = buildYears(minDate, maxDate);
+  $: years = buildYears(minDate, maxDate, pageNum);
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
   $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
 

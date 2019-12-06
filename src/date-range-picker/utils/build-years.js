@@ -8,8 +8,8 @@ import { localeFormat } from "./locale-format";
  *
  * @returns {Date[]}
  */
-export const buildYears = (min, max) => {
-  const numYrs = differenceInCalendarYears(max, min) + 1;
+export const buildYears = (min, max, pageNum) => {
+  const numYrs = differenceInCalendarYears(max, min) + pageNum + 1;
   return [...Array(numYrs)].map((_, i) => {
     const value = addYears(min, i);
     return { value, text: localeFormat(value, "yyyy") };

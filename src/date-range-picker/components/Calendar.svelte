@@ -17,6 +17,7 @@
   export let monthFormat;
   export let monthIndicator;
   export let nextIcon;
+  export let pageNum;
   export let pageWidth;
   export let prevIcon;
   export let rtl;
@@ -62,6 +63,7 @@
     on:pageChange
     on:prevMonth
     on:nextMonth
+    {pageNum}
     {prevIcon}
     {yearDropdown} />
   <div role="grid">

@@ -43,11 +43,11 @@
   export let firstDayOfWeek = "sunday";
   export let id = `s-date-range-picker-${Math.random()}`;
   export let isoWeekNumbers = false;
-  export let locale;
+  export let locale = undefined;
   export let maxDate = addYears(endOfYear(new Date()), 10);
   export let minDate = subYears(startOfYear(new Date()), 10);
   export let minuteIncrement = 1;
-  export let monthDropdown = false;
+  export let monthDropdown = true;
   export let monthFormat = "MMMM";
   export let monthIndicator = true;
   export let nextIcon = "▸";
@@ -59,8 +59,8 @@
   export let secondIncrement = 1;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
-  export let timePicker = false;
-  export let timePickerControls = true;
+  export let timePicker = true;
+  export let timePickerControls = false;
   export let timePicker24Hour = true;
   export let timePickerSeconds = true;
   export let today = new Date();
@@ -68,7 +68,7 @@
   export let todayBtnText = "Today";
   export let weekGuides = false;
   export let weekNumbers = false;
-  export let yearDropdown = false;
+  export let yearDropdown = true;
 
   /** @todo Implement props/options */
   // export let disabled = false;
@@ -82,7 +82,7 @@
   $: tempEndDate = endDate;
   $: tempStartDate = startDate;
 
-  const cellWidth = 44;
+  const cellWidth = 40;
   const dispatchEvent = createEventDispatcher();
   const pageWidth = cellWidth * 7;
   const pageWidthWithPadding = pageWidth + 96;
@@ -244,9 +244,6 @@
       /**
        * In range mode, if there is currently a selection and the selection
        * event is fired the user must be selecting the start date.
-       *
-       * Updating the hoverDate during the tempStartDate selection is a requirement
-       * for the optimization that only triggers updates on hover when currently selecting.
        */
       tempStartDate = hoverDate = detailWithStartDateTime;
       hasSelection = false;
@@ -347,7 +344,6 @@
 <style>
   .s-date-range-picker {
     font-size: 18px;
-    margin: 2em;
     background-color: #fff;
     border: 1px solid #d5d5d5;
     border-radius: 6px;
@@ -370,8 +366,8 @@
   }
 
   .s-date-range-picker :global(.cell) {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -379,12 +375,19 @@
   }
 
   .s-date-range-picker :global(.form-field) {
-    padding: 8px 14px;
     background-color: transparent;
     border-radius: 4px;
     border: 1px solid #d5d5d5;
     margin: 1px;
     cursor: pointer;
+  }
+
+  .s-date-range-picker :global(select.form-field) {
+    padding: 8px;
+  }
+
+  .s-date-range-picker :global(button.form-field) {
+    padding: 8px 16px;
   }
 
   .s-date-range-picker :global(button) {
@@ -431,12 +434,12 @@
       disabled={!canApply()}
       on:click={close}
       type="close">
-      x
+      &times;
     </button>
   </div>
   <div>
     <div class="grid">
-      {#each months as month}
+      {#each months as month, index}
         <Calendar
           {disabledDates}
           {events}
@@ -451,6 +454,7 @@
           {monthFormat}
           {monthIndicator}
           {nextIcon}
+          pageNum={index}
           on:apply={apply}
           on:hover={onHover}
           on:nextMonth={onNextMonth}
@@ -474,7 +478,6 @@
 
   {#if timePicker}
     <div class="row">
-
       <TimePicker
         dateReference={tempStartDate}
         {minuteIncrement}
@@ -547,7 +550,6 @@
       aria-label="Apply the current selection"
       class="form-field"
       disabled={!canApply()}
-      id="s-apply-btn"
       on:click={apply}
       type="submit">
       {applyBtnText}

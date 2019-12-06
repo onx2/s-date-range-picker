@@ -5,7 +5,13 @@
    * Using a svelte wrapper component to manage state allows for svelte-style
    * reactivity, rather than using foobar.$on() and foobar.$set()
    */
-  import { endOfWeek, startOfWeek, startOfDay, endOfDay } from "date-fns";
+  import {
+    addHours,
+    endOfWeek,
+    startOfWeek,
+    startOfDay,
+    endOfDay
+  } from "date-fns";
   import * as locales from "date-fns/locale";
   import SDateRangePicker from "./date-range-picker/SDateRangePicker.svelte";
 
@@ -24,23 +30,14 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
+  const maxDate = undefined; //addHours(endOfWeek(new Date()), 3);
   let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2;
 
   function onApply({ detail }) {
     startDate = detail.startDate;
     endDate = detail.endDate;
-    console.log("apply", detail);
+    console.log("apply", detail, maxDate);
   }
 </script>
 
-<SDateRangePicker
-  {singlePicker}
-  {monthDropdown}
-  {yearDropdown}
-  {resetViewBtn}
-  {todayBtn}
-  {numPages}
-  {locale}
-  {startDate}
-  {endDate}
-  on:apply={onApply} />
+<SDateRangePicker {maxDate} {startDate} {endDate} on:apply={onApply} />

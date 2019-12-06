@@ -28,6 +28,7 @@
   const onKeydown = (e, date) => {
     let newDate = date;
 
+    console.log(e);
     switch (e.code) {
       case "Enter":
       case "NumpadEnter":
@@ -44,6 +45,7 @@
         break;
       case "ArrowRight":
         newDate = addDays(date, 1);
+        console.log("ArrowRight", newDate);
         break;
       case "ArrowLeft":
         newDate = subDays(date, 1);
@@ -59,7 +61,10 @@
     }
 
     /** @todo Flip page when focusing on an element that isn't visible */
-    const el = document.getElementById(localeFormat(newDate, "yyyy-MM-dd"));
+    const el = document.querySelector(
+      `[data-date="${localeFormat(newDate, "yyyy-MM-dd")}"]`
+    );
+    console.log(el);
     // Graceful failure until page flipping functionality is implemented.
     if (!el) {
       // Handle page flipping if the element isn't found
@@ -76,7 +81,9 @@
         dispatchEvent("selection", date);
         // Set the focus state to the last selected date.
         // This happens automatically via a "click", but not on "mouseup"
-        document.getElementById(localeFormat(date, "yyyy-MM-dd")).focus();
+        document
+          .querySelector(`[data-date="${localeFormat(date, "yyyy-MM-dd")}"]`)
+          .focus();
       }
 
       mouseDownDate = null;
@@ -92,18 +99,18 @@
   };
 
   // Prevent id duplication when showing multiple pages
-  const id =
-    !day.isNextMonth && !day.isPrevMonth
-      ? localeFormat(day.date, "yyyy-MM-dd")
-      : undefined;
+  // const id =
+  //   !day.isNextMonth && !day.isPrevMonth
+  //     ? localeFormat(day.date, "yyyy-MM-dd")
+  //     : undefined;
 </script>
 
 <style>
   div::after {
     content: "";
     top: 0;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     background-color: #bbdefb;
     opacity: 0;
@@ -210,10 +217,10 @@
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
-    aria-label={localeFormat(day.date, 'EEEE, MMMM co, yyyy')}
+    aria-label={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
     class="cell"
     disabled={day.isDisabled}
-    {id}
+    data-date={localeFormat(day.date, 'yyyy-MM-dd')}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
