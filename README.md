@@ -29,18 +29,6 @@
 ## Screenshot (defaults)
 ![Svelte Date Range Picker 2019-11-30](https://i.ibb.co/fktvn56/Screenshot-from-2019-12-01-17-47-59.png)
 
-## Todos
-- [x] Publish to npm
-- [ ] Add the missing Props / Options
-- [ ] Tests
-- [ ] Linter
-- [ ] Styling
-- [ ] Show & hide functionality _(probably in the form of a button w/ popover)_
-- [ ] Documentation / Demo Site
-- [ ] Mobile / touch friendly
-- [ ] Optimizations / reduce bundle size
-- [ ] Accessibility review / updates
-
 ## Development
 - Requires [NodeJS](https://nodejs.org/)
 - Clone the repo: `git clone https://github.com/onx2/svelte-date-range-picker.git`
@@ -53,7 +41,6 @@
 ## API
 
 ### Props / Options
-**Implemented but still being reviewed / developed**
 - [x] `autoApply = false` (boolean)
 - [x] `dateFormat = "MMM dd, yyyy"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
 - [x] `disabledDates = []` (Date[])
@@ -88,17 +75,7 @@
 - [x] `resetViewBtn = false` (boolean)
 - [x] `id = "s-date-range-picker-" + Math.random()` (string)
 
-**Not implemented - todo**
-- [ ] `timePicker24Hour = true` (boolean)
-- [ ] `predefinedRanges = []` (Date[])
-- [ ] `maxSpan = Infinity` (number)
-- [ ] `events = []` (Date[])
-- [ ] `disabled = false` (boolean)
-
 ### Events
-
-- [ ] `show` Fired after the picker has been shown
-- [ ] `hide` Fired after the picker has been hidden
 - [x] `selection` Fired when a selection is made (start or end date has been chosen)
 - [x] `cancel` Fired when the "Cancel" button is clicked
 - [x] `apply` Fired when the "Apply" button is clicked
