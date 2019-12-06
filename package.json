@@ -38,7 +38,7 @@
     "@babel/core": "7.7.4",
     "@babel/preset-env": "7.7.4",
     "@types/jest": "24.0.23",
-    "babel-jest": "24.9.23",
+    "babel-jest": "24.9.0",
     "chokidar": "3.3.0",
     "cross-env": "6.0.3",
     "deasync": "0.1.16",
