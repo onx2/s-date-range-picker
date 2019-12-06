@@ -456,6 +456,7 @@
           {nextIcon}
           pageNum={index}
           on:apply={apply}
+          on:cancel={cancel}
           on:hover={onHover}
           on:nextMonth={onNextMonth}
           on:pageChange={onPageChange}

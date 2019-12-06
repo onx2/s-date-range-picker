@@ -63,7 +63,14 @@
 
   <div class="row" dir={rtl ? 'rtl' : 'ltr'}>
     {#each week.daysInWeek as day (day.date.toString())}
-      <Day {day} {monthIndicator} {rtl} on:selection on:hover on:apply />
+      <Day
+        {day}
+        {monthIndicator}
+        {rtl}
+        on:apply
+        on:cancel
+        on:hover
+        on:selection />
     {/each}
   </div>
   {#if weekNumbers || isoWeekNumbers}

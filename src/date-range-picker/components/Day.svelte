@@ -28,7 +28,6 @@
   const onKeydown = (e, date) => {
     let newDate = date;
 
-    console.log(e);
     switch (e.code) {
       case "Enter":
       case "NumpadEnter":
@@ -45,7 +44,6 @@
         break;
       case "ArrowRight":
         newDate = addDays(date, 1);
-        console.log("ArrowRight", newDate);
         break;
       case "ArrowLeft":
         newDate = subDays(date, 1);
@@ -56,6 +54,9 @@
       case "PageUp":
         newDate = addMonths(date, 1);
         break;
+      case "Escape":
+        dispatchEvent("cancel");
+        return;
       default:
         return;
     }
@@ -64,7 +65,7 @@
     const el = document.querySelector(
       `[data-date="${localeFormat(newDate, "yyyy-MM-dd")}"]`
     );
-    console.log(el);
+
     // Graceful failure until page flipping functionality is implemented.
     if (!el) {
       // Handle page flipping if the element isn't found
@@ -76,18 +77,15 @@
   };
 
   const onMouseUp = (e, date) => {
-    if (e.button === 0) {
-      if (!isSameDay(date, mouseDownDate)) {
-        dispatchEvent("selection", date);
-        // Set the focus state to the last selected date.
-        // This happens automatically via a "click", but not on "mouseup"
-        document
-          .querySelector(`[data-date="${localeFormat(date, "yyyy-MM-dd")}"]`)
-          .focus();
-      }
-
-      mouseDownDate = null;
+    if (e.button === 0 && !isSameDay(date, mouseDownDate)) {
+      dispatchEvent("selection", date);
+      // Set the focus state to the last selected date.
+      // This happens automatically via a "click", but not on "mouseup"
+      document
+        .querySelector(`[data-date="${localeFormat(date, "yyyy-MM-dd")}"]`)
+        .focus();
     }
+    mouseDownDate = null;
   };
 
   const onMouseDown = (e, date) => {
@@ -97,12 +95,6 @@
       dispatchEvent("selection", date);
     }
   };
-
-  // Prevent id duplication when showing multiple pages
-  // const id =
-  //   !day.isNextMonth && !day.isPrevMonth
-  //     ? localeFormat(day.date, "yyyy-MM-dd")
-  //     : undefined;
 </script>
 
 <style>

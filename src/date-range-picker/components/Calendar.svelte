@@ -74,6 +74,7 @@
         {month}
         {monthIndicator}
         on:apply
+        on:cancel
         on:hover
         on:nextMonth
         on:prevMonth
