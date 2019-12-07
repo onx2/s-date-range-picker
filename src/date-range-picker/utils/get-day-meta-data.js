@@ -5,11 +5,11 @@ import {
   isWithinInterval,
   subMonths,
   addMonths
-} from "date-fns";
-import { isDisabled } from "./is-disabled";
-import { isEndDate } from "./is-end-date";
-import { isStartDate } from "./is-start-date";
-import { toRange } from "./to-range";
+} from 'date-fns'
+import { isDisabled } from './is-disabled'
+import { isEndDate } from './is-end-date'
+import { isStartDate } from './is-start-date'
+import { toRange } from './to-range'
 
 /**
  *
@@ -58,13 +58,13 @@ export const getDayMetaData = params => {
     maxDate,
     minDate,
     disabledDates
-  } = params;
+  } = params
 
   // Sort the range asc for `isWithinInterval` function.
   const { start, end } = toRange(
     tempStartDate,
     hasSelection ? tempEndDate : hoverDate
-  );
+  )
 
   return {
     date,
@@ -80,5 +80,5 @@ export const getDayMetaData = params => {
     isWithinSelection: !singlePicker
       ? isWithinInterval(date, { start, end })
       : false
-  };
-};
+  }
+}

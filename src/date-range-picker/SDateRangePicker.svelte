@@ -9,7 +9,7 @@
    * If it were themeable, it may be easier / make more sense to split it out.
    *
    */
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onMount } from 'svelte'
   import {
     addMonths,
     addYears,
@@ -27,48 +27,48 @@
     startOfDay,
     startOfWeek,
     startOfYear,
-    subMonths
-  } from "date-fns";
-  import { localeFormat, roundDown } from "./utils";
-  import Calendar from "./components/Calendar.svelte";
-  import TimePicker from "./components/TimePicker.svelte";
+    subMonths,
+  } from 'date-fns'
+  import { localeFormat, roundDown } from './utils'
+  import Calendar from './components/Calendar.svelte'
+  import TimePicker from './components/TimePicker.svelte'
 
-  export let applyBtnText = "Apply";
-  export let autoApply = false;
-  export let cancelBtnText = "Cancel";
-  export let dateFormat = "MMM dd, yyyy";
-  export let disabledDates = [];
-  export let endDate = endOfWeek(new Date());
-  export let events = [];
-  export let firstDayOfWeek = "sunday";
-  export let id = `s-date-range-picker-${Math.random()}`;
-  export let isoWeekNumbers = false;
-  export let locale = undefined;
-  export let maxDate = addYears(endOfYear(new Date()), 10);
-  export let minDate = subYears(startOfYear(new Date()), 10);
-  export let minuteIncrement = 1;
-  export let monthDropdown = true;
-  export let monthFormat = "MMMM";
-  export let monthIndicator = true;
-  export let nextIcon = "▸";
-  export let numPages = 2;
-  export let prevIcon = "◂";
-  export let resetViewBtn = false;
-  export let resetViewBtnText = "↚";
-  export let rtl = false;
-  export let secondIncrement = 1;
-  export let singlePicker = false;
-  export let startDate = startOfWeek(new Date());
-  export let timePicker = true;
-  export let timePickerControls = false;
-  export let timePicker24Hour = true;
-  export let timePickerSeconds = true;
-  export let today = new Date();
-  export let todayBtn = false;
-  export let todayBtnText = "Today";
-  export let weekGuides = false;
-  export let weekNumbers = false;
-  export let yearDropdown = true;
+  export let applyBtnText = 'Apply'
+  export let autoApply = false
+  export let cancelBtnText = 'Cancel'
+  export let dateFormat = 'MMM dd, yyyy'
+  export let disabledDates = []
+  export let endDate = endOfWeek(new Date())
+  export let events = []
+  export let firstDayOfWeek = 'sunday'
+  export let id = `s-date-range-picker-${Math.random()}`
+  export let isoWeekNumbers = false
+  export let locale = undefined
+  export let maxDate = addYears(endOfYear(new Date()), 10)
+  export let minDate = subYears(startOfYear(new Date()), 10)
+  export let minuteIncrement = 1
+  export let monthDropdown = true
+  export let monthFormat = 'MMMM'
+  export let monthIndicator = true
+  export let nextIcon = '▸'
+  export let numPages = 2
+  export let prevIcon = '◂'
+  export let resetViewBtn = false
+  export let resetViewBtnText = '↚'
+  export let rtl = false
+  export let secondIncrement = 1
+  export let singlePicker = false
+  export let startDate = startOfWeek(new Date())
+  export let timePicker = true
+  export let timePickerControls = false
+  export let timePicker24Hour = true
+  export let timePickerSeconds = true
+  export let today = new Date()
+  export let todayBtn = false
+  export let todayBtnText = 'Today'
+  export let weekGuides = false
+  export let weekNumbers = false
+  export let yearDropdown = true
 
   /** @todo Implement props/options */
   // export let disabled = false;
@@ -77,24 +77,24 @@
   // export let maxSpan = null;
   // export let predefinedRanges = [];
 
-  let hasSelection = true;
-  let hoverDate = endDate;
-  $: tempEndDate = endDate;
-  $: tempStartDate = startDate;
+  let hasSelection = true
+  let hoverDate = endDate
+  $: tempEndDate = endDate
+  $: tempStartDate = startDate
 
-  const cellWidth = 40;
-  const dispatchEvent = createEventDispatcher();
-  const pageWidth = cellWidth * 7;
-  const pageWidthWithPadding = pageWidth + 96;
-  const maxCalsPerPage = 2;
+  const cellWidth = 40
+  const dispatchEvent = createEventDispatcher()
+  const pageWidth = cellWidth * 7
+  const pageWidthWithPadding = pageWidth + 96
+  const maxCalsPerPage = 2
 
   // Used for the date-fns format abstraction, localeFormat
   /** @todo This might be better placed into a store. */
-  window.__locale__ = locale;
+  window.__locale__ = locale
 
   $: canApply = () => {
     if (!hasSelection) {
-      return false;
+      return false
     }
 
     if (timePicker) {
@@ -102,44 +102,44 @@
         return (
           !isSameSecond(tempStartDate, startDate) ||
           !isSameSecond(tempEndDate, endDate)
-        );
+        )
       }
 
       return (
         !isSameMinute(tempStartDate, startDate) ||
         !isSameMinute(tempEndDate, endDate)
-      );
+      )
     }
 
     return (
       !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
-    );
-  };
-  $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate;
+    )
+  }
+  $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
   $: maxWidth =
     pickerWidth >= maxCalsPerPage * pageWidth
       ? maxCalsPerPage * pageWidthWithPadding
-      : pickerWidth;
-  $: months = [...Array(numPages)].map((_, i) => addMonths(today, i));
-  $: pickerWidth = numPages * pageWidthWithPadding;
+      : pickerWidth
+  $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
+  $: pickerWidth = numPages * pageWidthWithPadding
   $: startDateReadout = () => {
     if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-      return localeFormat(hoverDate, dateFormat);
+      return localeFormat(hoverDate, dateFormat)
     }
 
-    return localeFormat(tempStartDate, dateFormat);
-  };
+    return localeFormat(tempStartDate, dateFormat)
+  }
   $: endDateReadout = () => {
     if (!hasSelection) {
       if (isBefore(hoverDate, tempStartDate)) {
-        return localeFormat(tempStartDate, dateFormat);
+        return localeFormat(tempStartDate, dateFormat)
       }
 
-      return localeFormat(hoverDate, dateFormat);
+      return localeFormat(hoverDate, dateFormat)
     }
 
-    return localeFormat(tempEndDate, dateFormat);
-  };
+    return localeFormat(tempEndDate, dateFormat)
+  }
 
   // Round and set the hover data temp start & end dates based on start & end date props
   onMount(() => {
@@ -151,7 +151,7 @@
         startDate.getHours(),
         roundDown(startDate.getMinutes(), minuteIncrement),
         roundDown(startDate.getSeconds(), secondIncrement)
-      );
+      )
 
       tempEndDate = hoverDate = new Date(
         endDate.getFullYear(),
@@ -160,9 +160,9 @@
         endDate.getHours(),
         roundDown(endDate.getMinutes(), minuteIncrement),
         roundDown(endDate.getSeconds(), secondIncrement)
-      );
+      )
     }
-  });
+  })
 
   // const show() =>{
   //   dispatchEvent("show");
@@ -174,49 +174,49 @@
 
   const apply = () => {
     if (!canApply()) {
-      return;
+      return
     }
 
     // hideOnApply &&  hide();
 
-    dispatchEvent("apply", {
+    dispatchEvent('apply', {
       startDate: tempStartDate,
-      endDate: tempEndDate
-    });
-  };
+      endDate: tempEndDate,
+    })
+  }
 
   const goToToday = () => {
-    months = [...Array(numPages)].map((_, i) => addMonths(today, i));
-  };
+    months = [...Array(numPages)].map((_, i) => addMonths(today, i))
+  }
 
   const resetView = () => {
-    const resetViewMonth = canApply() ? tempStartDate : startDate;
-    months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i));
-  };
+    const resetViewMonth = canApply() ? tempStartDate : startDate
+    months = [...Array(numPages)].map((_, i) => addMonths(resetViewMonth, i))
+  }
 
   const resetState = () => {
-    tempStartDate = startDate;
-    tempEndDate = endDate;
-    hasSelection = true;
-  };
+    tempStartDate = startDate
+    tempEndDate = endDate
+    hasSelection = true
+  }
 
   const close = () => {
-    resetState();
-    resetView();
+    resetState()
+    resetView()
     // hide();
-  };
+  }
 
   const cancel = () => {
-    resetState();
-    resetView();
+    resetState()
+    resetView()
 
     // hideOnCancel && hide();
 
-    dispatchEvent("cancel", {
+    dispatchEvent('cancel', {
       startDate,
-      endDate
-    });
-  };
+      endDate,
+    })
+  }
 
   const onSelection = ({ detail }) => {
     const detailWithEndDateTime = new Date(
@@ -226,7 +226,7 @@
       tempEndDate.getHours(),
       tempEndDate.getMinutes(),
       tempEndDate.getSeconds()
-    );
+    )
 
     const detailWithStartDateTime = new Date(
       detail.getFullYear(),
@@ -235,25 +235,25 @@
       tempStartDate.getHours(),
       tempStartDate.getMinutes(),
       tempStartDate.getSeconds()
-    );
+    )
 
     if (singlePicker) {
       // Start and end dates are always the same on singlePicker
-      tempStartDate = tempEndDate = detailWithEndDateTime;
+      tempStartDate = tempEndDate = detailWithEndDateTime
     } else if (hasSelection) {
       /**
        * In range mode, if there is currently a selection and the selection
        * event is fired the user must be selecting the start date.
        */
-      tempStartDate = hoverDate = detailWithStartDateTime;
-      hasSelection = false;
+      tempStartDate = hoverDate = detailWithStartDateTime
+      hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
       // Sorting - Swap start and end dates when the end date is before the start date
       if (isBefore(detailWithEndDateTime, tempStartDate)) {
         if (isSameDay(detailWithEndDateTime, tempStartDate)) {
-          tempEndDate = tempStartDate;
-          tempStartDate = detailWithEndDateTime;
+          tempEndDate = tempStartDate
+          tempStartDate = detailWithEndDateTime
         } else {
           tempEndDate = new Date(
             tempStartDate.getFullYear(),
@@ -262,47 +262,47 @@
             tempEndDate.getHours(),
             tempEndDate.getMinutes(),
             tempEndDate.getSeconds()
-          );
-          tempStartDate = detailWithStartDateTime;
+          )
+          tempStartDate = detailWithStartDateTime
         }
       } else {
-        tempEndDate = detailWithEndDateTime;
+        tempEndDate = detailWithEndDateTime
       }
 
-      hasSelection = true;
+      hasSelection = true
 
-      dispatchEvent("selection", {
+      dispatchEvent('selection', {
         startDate: tempStartDate,
-        endDate: tempEndDate
-      });
+        endDate: tempEndDate,
+      })
 
-      autoApply && apply();
+      autoApply && apply()
     }
-  };
+  }
 
   const onHover = ({ detail }) => {
     if (!hasSelection) {
-      hoverDate = detail;
+      hoverDate = detail
     }
-  };
+  }
 
   const onPrevMonth = () => {
-    months = months.map(mo => subMonths(mo, 1));
-  };
+    months = months.map(mo => subMonths(mo, 1))
+  }
 
   const onNextMonth = () => {
-    console.log("onNextMonth");
-    months = months.map(mo => addMonths(mo, 1));
-  };
+    console.log('onNextMonth')
+    months = months.map(mo => addMonths(mo, 1))
+  }
 
   const onPageChange = ({ detail: { incrementAmount } }) => {
     if (incrementAmount > 0) {
-      months = months.map(mo => addMonths(mo, incrementAmount));
+      months = months.map(mo => addMonths(mo, incrementAmount))
     } else {
-      const absIncrementAmount = Math.abs(incrementAmount);
-      months = months.map(mo => subMonths(mo, absIncrementAmount));
+      const absIncrementAmount = Math.abs(incrementAmount)
+      months = months.map(mo => subMonths(mo, absIncrementAmount))
     }
-  };
+  }
 
   const onStartTimeChange = ({ detail }) => {
     const newDate = new Date(
@@ -312,15 +312,15 @@
       detail.hours,
       detail.minutes,
       detail.seconds
-    );
+    )
 
     if (isAfter(newDate, tempEndDate)) {
-      tempStartDate = tempEndDate;
-      tempEndDate = newDate;
+      tempStartDate = tempEndDate
+      tempEndDate = newDate
     } else {
-      tempStartDate = newDate;
+      tempStartDate = newDate
     }
-  };
+  }
 
   const onEndTimeChange = ({ detail }) => {
     const newDate = new Date(
@@ -330,15 +330,15 @@
       detail.hours,
       detail.minutes,
       detail.seconds
-    );
+    )
 
     if (isBefore(newDate, tempStartDate)) {
-      tempEndDate = tempStartDate;
-      tempStartDate = newDate;
+      tempEndDate = tempStartDate
+      tempStartDate = newDate
     } else {
-      tempEndDate = newDate;
+      tempEndDate = newDate
     }
-  };
+  }
 </script>
 
 <style>
@@ -348,8 +348,8 @@
     border: 1px solid #d5d5d5;
     border-radius: 6px;
     padding: 0.6em;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   .s-date-range-picker :global(.space-between) {

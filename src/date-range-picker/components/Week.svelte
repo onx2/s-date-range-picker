@@ -1,18 +1,18 @@
 <script>
-  import { isBefore, format } from "date-fns";
-  import Day from "./Day.svelte";
-  import { localeFormat } from "../utils";
+  import { isBefore, format } from 'date-fns'
+  import Day from './Day.svelte'
+  import { localeFormat } from '../utils'
 
-  export let isoWeekNumbers;
-  export let month;
-  export let monthIndicator;
-  export let rtl;
-  export let week;
-  export let weekGuides;
-  export let weekNumbers;
+  export let isoWeekNumbers
+  export let month
+  export let monthIndicator
+  export let rtl
+  export let week
+  export let weekGuides
+  export let weekNumbers
 
   $: weeksFromToday =
-    week.weeksFromToday > 0 ? `+${week.weeksFromToday}` : week.weeksFromToday;
+    week.weeksFromToday > 0 ? `+${week.weeksFromToday}` : week.weeksFromToday
 </script>
 
 <style>

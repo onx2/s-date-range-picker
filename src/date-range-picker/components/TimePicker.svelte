@@ -1,31 +1,30 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { endOfDay, isSameSecond, startOfDay } from "date-fns";
-  import { pad, roundDown } from "../utils";
+  import { createEventDispatcher } from 'svelte'
+  import { endOfDay, isSameSecond, startOfDay } from 'date-fns'
+  import { pad, roundDown } from '../utils'
 
-  export let dateReference;
-  export let minuteIncrement;
-  export let secondIncrement;
-  export let timePickerControls;
-  export let timePicker24Hour;
-  export let timePickerSeconds;
+  export let dateReference
+  export let minuteIncrement
+  export let secondIncrement
+  export let timePickerControls
+  export let timePicker24Hour
+  export let timePickerSeconds
 
-  const dispatchEvent = createEventDispatcher();
+  const dispatchEvent = createEventDispatcher()
 
-  $: endOfDateReferenceDay = endOfDay(dateReference);
-  $: selectedHour = dateReference.getHours();
-  $: selectedMinute = dateReference.getMinutes();
-  $: selectedSecond = dateReference.getSeconds();
-  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
+  $: endOfDateReferenceDay = endOfDay(dateReference)
+  $: selectedHour = dateReference.getHours()
+  $: selectedMinute = dateReference.getMinutes()
+  $: selectedSecond = dateReference.getSeconds()
+  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
-  );
+  )
   $: seconds = [...Array(60 / secondIncrement)].map((_, i) =>
     pad(i * secondIncrement)
-  );
+  )
   $: isFirstAvailableTime =
-    timePickerControls &&
-    isSameSecond(dateReference, startOfDay(dateReference));
+    timePickerControls && isSameSecond(dateReference, startOfDay(dateReference))
   $: isLastAvailableTime =
     timePickerControls &&
     isSameSecond(
@@ -38,30 +37,30 @@
         roundDown(endOfDateReferenceDay.getMinutes(), minuteIncrement),
         roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
       )
-    );
+    )
 
   /** @todo Handle am/pm times */
   const timeChange = () =>
-    dispatchEvent("timeChange", {
+    dispatchEvent('timeChange', {
       hours: selectedHour,
       minutes: selectedMinute,
-      seconds: timePickerSeconds ? selectedSecond : 0
-    });
+      seconds: timePickerSeconds ? selectedSecond : 0,
+    })
 
   const timeChangeStartOfDay = () => {
-    selectedHour = hours[0];
-    selectedMinute = minutes[0];
-    selectedSecond = seconds[0];
+    selectedHour = hours[0]
+    selectedMinute = minutes[0]
+    selectedSecond = seconds[0]
 
-    timeChange();
-  };
+    timeChange()
+  }
 
   function timeChangeEndOfDay() {
-    selectedHour = hours[hours.length - 1];
-    selectedMinute = minutes[minutes.length - 1];
-    selectedSecond = seconds[seconds.length - 1];
+    selectedHour = hours[hours.length - 1]
+    selectedMinute = minutes[minutes.length - 1]
+    selectedSecond = seconds[seconds.length - 1]
 
-    timeChange();
+    timeChange()
   }
 </script>
 

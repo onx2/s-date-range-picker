@@ -4,4 +4,4 @@
  *
  * @returns {(string | number)}
  */
-export const pad = n => (n < 10 ? `0${n}` : n);
+export const pad = n => (n < 10 ? `0${n}` : n)

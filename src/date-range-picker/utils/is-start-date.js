@@ -1,4 +1,4 @@
-import { isSameDay, isBefore } from "date-fns";
+import { isSameDay, isBefore } from 'date-fns'
 
 /**
  *
@@ -17,8 +17,8 @@ export const isStartDate = ({
   tempStartDate
 }) => {
   if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-    return isSameDay(date, hoverDate);
+    return isSameDay(date, hoverDate)
   }
 
-  return isSameDay(date, tempStartDate);
-};
+  return isSameDay(date, tempStartDate)
+}
