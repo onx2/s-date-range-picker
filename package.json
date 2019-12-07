@@ -29,7 +29,7 @@
     "lint": "eslint --fix src\"{,!(node_modules)/**/}*.{js,jsx}\"",
     "cleanup": "rimraf ./build",
     "test": "cross-env NODE_ENV=test jest",
-    "prepublishOnly": "yarn format && yarn build",
+    "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
     "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
   },
