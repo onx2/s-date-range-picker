@@ -59,11 +59,11 @@ export const getCalendarWeeks = getDayMetaDataParams => {
       start,
       end: addWeeks(start, 5)
     },
-    { weekStartsOn, locale: __locale__ }
+    { weekStartsOn, locale: window.__locale__ }
   ).map(date => ({
     weeksFromToday: differenceInCalendarWeeks(date, today, {
       weekStartsOn,
-      locale: __locale__
+      locale: window.__locale__
     }),
     weekNumber: getWeek(date, { weekStartsOn }),
     isoWeekNumber: getISOWeek(date),

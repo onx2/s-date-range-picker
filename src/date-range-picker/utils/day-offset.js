@@ -13,4 +13,4 @@ export const dayOffset = firstDayOfWeek =>
     'thursday',
     'friday',
     'saturday'
-  ].indexOf(firstDayOfWeek.toLocaleLowerCase(__locale__))
+  ].indexOf(firstDayOfWeek.toLocaleLowerCase(window.__locale__))

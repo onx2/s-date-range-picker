@@ -25,7 +25,8 @@
     "url": "https://github.com/onx2/svelte-date-range-picker"
   },
   "scripts": {
-    "format": "npx prettier --write \"{,!(node_modules)/**/}*.{js,jsx}\"",
+    "format": "npx prettier --write src\"{,!(node_modules)/**/}*.{js,jsx}\"",
+    "lint": "eslint --fix src\"{,!(node_modules)/**/}*.{js,jsx}\"",
     "cleanup": "rimraf ./build",
     "test": "cross-env NODE_ENV=test jest",
     "prepublishOnly": "yarn format && yarn build",
@@ -44,6 +45,7 @@
     "cross-env": "6.0.3",
     "deasync": "0.1.16",
     "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-svelte3": "^2.7.3",
     "jest": "24.9.0",
     "prettier": "^1.19.1",
