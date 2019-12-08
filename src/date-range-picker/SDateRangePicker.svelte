@@ -27,53 +27,50 @@
     startOfDay,
     startOfWeek,
     startOfYear,
-    subMonths,
-  } from 'date-fns'
-  import { localeFormat, roundDown } from './utils'
-  import Calendar from './components/Calendar.svelte'
-  import TimePicker from './components/TimePicker.svelte'
+    subMonths
+  } from "date-fns";
+  import { localeFormat, roundDown } from "./utils";
+  import Calendar from "./components/Calendar.svelte";
+  import TimePicker from "./components/TimePicker.svelte";
 
-  export let applyBtnText = 'Apply'
-  export let autoApply = false
-  export let cancelBtnText = 'Cancel'
-  export let dateFormat = 'MMM dd, yyyy'
-  export let disabledDates = []
-  export let endDate = endOfWeek(new Date())
-  export let events = []
-  export let firstDayOfWeek = 'sunday'
-  export let id = `s-date-range-picker-${Math.random()}`
-  export let isoWeekNumbers = false
-  export let locale = undefined
-  export let maxDate = addYears(endOfYear(new Date()), 10)
-  export let minDate = subYears(startOfYear(new Date()), 10)
-  export let minuteIncrement = 1
-  export let monthDropdown = true
-  export let monthFormat = 'MMMM'
-  export let monthIndicator = true
-  export let nextIcon = '▸'
-  export let numPages = 2
-  export let prevIcon = '◂'
-  export let resetViewBtn = false
-  export let resetViewBtnText = '↚'
-  export let rtl = false
-  export let secondIncrement = 1
-  export let singlePicker = false
-  export let startDate = startOfWeek(new Date())
-  export let timePicker = true
-  export let timePickerControls = false
-  export let timePicker24Hour = true
-  export let timePickerSeconds = true
-  export let today = new Date()
-  export let todayBtn = false
-  export let todayBtnText = 'Today'
-  export let weekGuides = false
-  export let weekNumbers = false
-  export let yearDropdown = true
+  export let applyBtnText = "Apply";
+  export let cancelBtnText = "Cancel";
+  export let dateFormat = "MMM dd, yyyy";
+  export let disabledDates = [];
+  export let endDate = endOfWeek(new Date());
+  export let events = [];
+  export let firstDayOfWeek = "sunday";
+  export let id = `s-date-range-picker-${Math.random()}`;
+  export let isoWeekNumbers = false;
+  export let locale = undefined;
+  export let maxDate = addYears(endOfYear(new Date()), 10);
+  export let minDate = subYears(startOfYear(new Date()), 10);
+  export let minuteIncrement = 1;
+  export let monthDropdown = true;
+  export let monthFormat = "MMMM";
+  export let monthIndicator = true;
+  export let nextIcon = "▸";
+  export let numPages = 2;
+  export let prevIcon = "◂";
+  export let resetViewBtn = false;
+  export let resetViewBtnText = "↚";
+  export let rtl = false;
+  export let secondIncrement = 1;
+  export let singlePicker = false;
+  export let startDate = startOfWeek(new Date());
+  export let timePicker = true;
+  export let timePickerControls = false;
+  export let timePicker24Hour = true;
+  export let timePickerSeconds = true;
+  export let today = new Date();
+  export let todayBtn = false;
+  export let todayBtnText = "Today";
+  export let weekGuides = false;
+  export let weekNumbers = false;
+  export let yearDropdown = true;
 
   /** @todo Implement props/options */
   // export let disabled = false;
-  // export let hideOnCancel = true;
-  // export let hideOnApply = true;
   // export let maxSpan = null;
   // export let predefinedRanges = [];
 
@@ -164,22 +161,12 @@
     }
   })
 
-  // const show() =>{
-  //   dispatchEvent("show");
-  // }
-
-  // const hide() =>{
-  //   dispatchEvent("hide");
-  // }
-
   const apply = () => {
     if (!canApply()) {
       return
     }
 
-    // hideOnApply &&  hide();
-
-    dispatchEvent('apply', {
+    dispatchEvent("apply", {
       startDate: tempStartDate,
       endDate: tempEndDate,
     })
@@ -201,18 +188,15 @@
   }
 
   const close = () => {
-    resetState()
-    resetView()
-    // hide();
-  }
+    resetState();
+    resetView();
+  };
 
   const cancel = () => {
     resetState()
     resetView()
 
-    // hideOnCancel && hide();
-
-    dispatchEvent('cancel', {
+    dispatchEvent("cancel", {
       startDate,
       endDate,
     })
@@ -273,10 +257,8 @@
 
       dispatchEvent('selection', {
         startDate: tempStartDate,
-        endDate: tempEndDate,
-      })
-
-      autoApply && apply()
+        endDate: tempEndDate
+      });
     }
   }
 
@@ -291,9 +273,8 @@
   }
 
   const onNextMonth = () => {
-    console.log('onNextMonth')
-    months = months.map(mo => addMonths(mo, 1))
-  }
+    months = months.map(mo => addMonths(mo, 1));
+  };
 
   const onPageChange = ({ detail: { incrementAmount } }) => {
     if (incrementAmount > 0) {

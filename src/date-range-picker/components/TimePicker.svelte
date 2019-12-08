@@ -40,12 +40,12 @@
     )
 
   /** @todo Handle am/pm times */
-  const timeChange = () =>
-    dispatchEvent('timeChange', {
+  const timeChange = () => dispatchEvent("timeChange", {
       hours: selectedHour,
       minutes: selectedMinute,
-      seconds: timePickerSeconds ? selectedSecond : 0,
-    })
+      seconds: timePickerSeconds ? selectedSecond : 0
+    });
+
 
   const timeChangeStartOfDay = () => {
     selectedHour = hours[0]
