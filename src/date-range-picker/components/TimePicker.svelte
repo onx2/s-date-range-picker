@@ -10,13 +10,13 @@
   export let timePicker24Hour
   export let timePickerSeconds
 
-  const dispatchEvent = createEventDispatcher()
+  const dispatchEvent = createEventDispatcher();
+  let selectedHour = dateReference.getHours();
+  let selectedMinute = dateReference.getMinutes();
+  let selectedSecond = dateReference.getSeconds();
 
-  $: endOfDateReferenceDay = endOfDay(dateReference)
-  $: selectedHour = dateReference.getHours()
-  $: selectedMinute = dateReference.getMinutes()
-  $: selectedSecond = dateReference.getSeconds()
-  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))
+  $: endOfDateReferenceDay = endOfDay(dateReference);
+  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
   )
