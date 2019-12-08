@@ -165,11 +165,6 @@
     hasSelection = true
   }
 
-  const close = () => {
-    resetState()
-    resetView()
-  }
-
   const cancel = () => {
     resetState()
     resetView()
@@ -356,17 +351,7 @@
 <form
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
-  <div class="space-between">
-    <label>{startDateReadout()} to {endDateReadout()}</label>
-    <button
-      aria-label="Close the date range picker"
-      class={btnClass}
-      disabled={!canApply()}
-      on:click={close}
-      type="close">
-      &times;
-    </button>
-  </div>
+  <label>{startDateReadout()} to {endDateReadout()}</label>
   <div>
     <div class="grid">
       {#each months as month, index}
