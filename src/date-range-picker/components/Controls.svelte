@@ -25,11 +25,11 @@
 
   const disptachEvent = createEventDispatcher()
 
-  $: selectedMonth = {
+  let selectedMonth = {
     value: month,
     text: localeFormat(month, monthFormat),
   }
-  $: selectedYear = { value: month, text: localeFormat(month, 'yyyy') }
+  let selectedYear = { value: month, text: localeFormat(month, 'yyyy') }
   $: prevMonth = subMonths(month, 1)
   $: nextMonth = addMonths(month, 1)
   $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate)
