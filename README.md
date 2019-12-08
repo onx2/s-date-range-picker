@@ -39,7 +39,9 @@
 - Install dpendencies: `yarn`
 - Run dev web server: `yarn serve`
 - Run tests: `yarn test` _(No tests yet)_
-- Run linter: `yarn lint` _(No linter yet)_
+- Run format: `yarn format`
+- Run linter: `yarn lint`
+- Run build: `yarn build`
 
 ## API
 
