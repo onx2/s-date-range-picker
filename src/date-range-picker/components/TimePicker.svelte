@@ -3,9 +3,11 @@
   import { endOfDay, isSameSecond, startOfDay } from 'date-fns'
   import { pad, roundDown } from '../utils'
 
+  export let btnClass
   export let dateReference
   export let minuteIncrement
   export let secondIncrement
+  export let selectClass
   export let timePickerControls
   export let timePicker24Hour
   export let timePickerSeconds
@@ -69,7 +71,7 @@
     <button
       aria-disabled={isFirstAvailableTime}
       aria-label="First available time"
-      class="form-field"
+      class={btnClass}
       disabled={isFirstAvailableTime}
       on:click={timeChangeStartOfDay}
       title="First available time"
@@ -79,7 +81,7 @@
   {/if}
   <select
     bind:value={selectedHour}
-    class="form-field"
+    class={selectClass}
     on:change={timeChange}
     title={`${selectedHour} hours`}>
     {#each hours as hour}
@@ -88,7 +90,7 @@
   </select>
   <select
     bind:value={selectedMinute}
-    class="form-field"
+    class={selectClass}
     on:change={timeChange}
     title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
@@ -98,7 +100,7 @@
   {#if timePickerSeconds}
     <select
       bind:value={selectedSecond}
-      class="form-field"
+      class={selectClass}
       on:change={timeChange}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
@@ -118,7 +120,7 @@
     <button
       aria-disabled={isLastAvailableTime}
       aria-label="Last available time"
-      class="form-field"
+      class={btnClass}
       disabled={isLastAvailableTime}
       on:click={timeChangeEndOfDay}
       title="Last available time"

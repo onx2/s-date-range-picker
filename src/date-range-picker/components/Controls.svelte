@@ -12,6 +12,7 @@
   } from 'date-fns'
   import { buildMonths, buildYears, localeFormat } from '../utils'
 
+  export let btnClass
   export let month
   export let monthFormat
   export let monthDropdown
@@ -20,6 +21,7 @@
   export let nextIcon
   export let pageNum
   export let prevIcon
+  export let selectClass
   export let yearDropdown
 
   const disptachEvent = createEventDispatcher()
@@ -47,7 +49,7 @@
   <button
     aria-disabled={prevBtnDisabled}
     aria-label={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
-    class="form-field"
+    class={btnClass}
     disabled={prevBtnDisabled}
     on:click={() => disptachEvent('prevMonth')}
     title={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
@@ -58,7 +60,7 @@
     {#if monthDropdown}
       <select
         bind:value={selectedMonth}
-        class="form-field"
+        class={selectClass}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount: differenceInCalendarMonths(
               selectedMonth.value,
@@ -80,7 +82,7 @@
     {#if yearDropdown}
       <select
         bind:value={selectedYear}
-        class="form-field"
+        class={selectClass}
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
               differenceInCalendarYears(selectedYear.value, month) * 12
@@ -101,7 +103,7 @@
   <button
     aria-disabled={nextBtnDisabled}
     aria-label={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}
-    class="form-field"
+    class={btnClass}
     disabled={nextBtnDisabled}
     on:click={() => disptachEvent('nextMonth')}
     title={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}

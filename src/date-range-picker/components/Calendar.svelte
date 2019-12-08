@@ -4,6 +4,7 @@
   import Week from './Week.svelte'
   import { getCalendarWeeks } from '../utils'
 
+  export let btnClass
   export let disabledDates
   export let events
   export let firstDayOfWeek
@@ -20,6 +21,7 @@
   export let prevIcon
   export let rtl
   export let singlePicker
+  export let selectClass
   export let tempEndDate
   export let tempStartDate
   export let today
@@ -45,6 +47,7 @@
 
 <div class="s-calendar">
   <Controls
+    {btnClass}
     {maxDate}
     {minDate}
     {month}
@@ -56,6 +59,7 @@
     on:nextMonth
     {pageNum}
     {prevIcon}
+    {selectClass}
     {yearDropdown} />
   <div role="grid">
     <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />

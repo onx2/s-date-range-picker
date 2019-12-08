@@ -42,7 +42,7 @@
   export let resetViewBtnText = '↚'
   export let rtl = false
   export let secondIncrement = 1
-  // export let selectClass = ''
+  export let selectClass = 's-picker-select'
   export let singlePicker = false
   export let startDate = startOfWeek(new Date())
   export let timePicker = false
@@ -355,6 +355,7 @@
   <div class="s-grid">
     {#each months as month, index}
       <Calendar
+        {btnClass}
         {disabledDates}
         {events}
         {firstDayOfWeek}
@@ -378,6 +379,7 @@
         {prevIcon}
         {rtl}
         {singlePicker}
+        {selectClass}
         {tempEndDate}
         {tempStartDate}
         {today}
@@ -390,20 +392,24 @@
   {#if timePicker}
     <div class="row" role="row">
       <TimePicker
+        {btnClass}
         dateReference={tempStartDate}
         {minuteIncrement}
         on:timeChange={onStartTimeChange}
         {secondIncrement}
+        {selectClass}
         {timePickerControls}
         {timePicker24Hour}
         {timePickerSeconds} />
 
       {#if !singlePicker && numPages >= 2}
         <TimePicker
+          {btnClass}
           dateReference={tempEndDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}
+          {selectClass}
           {timePickerControls}
           {timePicker24Hour}
           {timePickerSeconds} />
@@ -412,10 +418,12 @@
     {#if !singlePicker && numPages === 1}
       <div class="row">
         <TimePicker
+          {btnClass}
           dateReference={tempEndDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}
+          {selectClass}
           {timePickerControls}
           {timePicker24Hour}
           {timePickerSeconds} />
