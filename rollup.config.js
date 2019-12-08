@@ -8,6 +8,7 @@ import html from 'rollup-plugin-bundle-html'
 import { terser } from 'rollup-plugin-terser'
 import livereload from 'rollup-plugin-livereload'
 import bundleSize from 'rollup-plugin-bundle-size'
+import babel from 'rollup-plugin-babel'
 import pkg from './package.json'
 
 const name = pkg.name
@@ -28,12 +29,15 @@ const plugins = [
     // preprocess: require("./svelte.config.js").preprocess,
     css: isTest ? false : css => css.write('build/css/style.css')
   }),
-  resolve({ browser: true }),
+  resolve({
+    browser: true,
+    dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+  }),
   html({
     template: 'src/index.html',
     dest: 'build',
     filename: 'index.html'
-  })
+  }),
 ]
 
 if (isDev) {
@@ -51,9 +55,15 @@ if (isDev) {
 } else if (isProd) {
   // Minify
   plugins.push(terser({ sourcemap: true, mangle: true }))
-  // Output bundle sizes to console
-  plugins.push(bundleSize())
+  plugins.push(babel({
+    extensions: ['.js', '.mjs', '.svelte'],
+    include: ['src/**'],
+    exclude: ['node_modules/**'],
+    runtimeHelpers: true,
+  }))
 }
+
+plugins.push(bundleSize())
 
 export default {
   input: isProd ? 'src/date-range-picker/index.js' : 'src/index.js',

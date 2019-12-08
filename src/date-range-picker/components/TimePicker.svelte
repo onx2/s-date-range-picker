@@ -17,7 +17,6 @@
   $: selectedHour = dateReference.getHours()
   $: selectedMinute = dateReference.getMinutes()
   $: selectedSecond = dateReference.getSeconds()
-
   $: endOfDateReferenceDay = endOfDay(dateReference)
   $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
@@ -26,21 +25,21 @@
   $: seconds = [...Array(60 / secondIncrement)].map((_, i) =>
     pad(i * secondIncrement)
   )
-  $: isFirstAvailableTime =
-    timePickerControls && isSameSecond(dateReference, startOfDay(dateReference))
-  $: isLastAvailableTime =
-    timePickerControls &&
-    isSameSecond(
-      dateReference,
-      new Date(
-        endOfDateReferenceDay.getFullYear(),
-        endOfDateReferenceDay.getMonth(),
-        endOfDateReferenceDay.getDate(),
-        endOfDateReferenceDay.getHours(),
-        roundDown(endOfDateReferenceDay.getMinutes(), minuteIncrement),
-        roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
-      )
+  $: isFirstAvailableTime = isSameSecond(
+    dateReference,
+    startOfDay(dateReference)
+  )
+  $: isLastAvailableTime = isSameSecond(
+    dateReference,
+    new Date(
+      endOfDateReferenceDay.getFullYear(),
+      endOfDateReferenceDay.getMonth(),
+      endOfDateReferenceDay.getDate(),
+      endOfDateReferenceDay.getHours(),
+      roundDown(endOfDateReferenceDay.getMinutes(), minuteIncrement),
+      roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
     )
+  )
 </script>
 
 <div class="space-center">
@@ -51,10 +50,10 @@
       class={btnClass}
       disabled={isFirstAvailableTime}
       on:click={() => dispatchEvent('timeChange', {
-        hours: parseInt(hours[0]),
-        minutes: parseInt(minutes[0]),
-        seconds: parseInt(seconds[0])
-      })}
+          hours: parseInt(hours[0]),
+          minutes: parseInt(minutes[0]),
+          seconds: parseInt(seconds[0])
+        })}
       title="First available time"
       type="button">
       {@html '&#8643;'}
@@ -64,10 +63,10 @@
     value={selectedHour}
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
-      hours: e.target.value,
-      minutes: selectedMinute,
-      seconds: timePickerSeconds ? selectedSecond : 0
-    })}
+        hours: e.target.value,
+        minutes: selectedMinute,
+        seconds: timePickerSeconds ? selectedSecond : 0
+      })}
     title={`${selectedHour} hours`}>
     {#each hours as hour}
       <option value={parseInt(hour)}>{hour}</option>
@@ -77,10 +76,10 @@
     value={selectedMinute}
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
-      hours: selectedHour,
-      minutes: e.target.value,
-      seconds: timePickerSeconds ? selectedSecond : 0
-    })}
+        hours: selectedHour,
+        minutes: e.target.value,
+        seconds: timePickerSeconds ? selectedSecond : 0
+      })}
     title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
       <option value={parseInt(minute)}>{minute}</option>
@@ -91,10 +90,10 @@
       value={selectedSecond}
       class={selectClass}
       on:change={e => dispatchEvent('timeChange', {
-        hours: selectedHour,
-        minutes: selectedMinute,
-        seconds: e.target.value
-      })}
+          hours: selectedHour,
+          minutes: selectedMinute,
+          seconds: e.target.value
+        })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
         <option value={parseInt(second)}>{second}</option>
@@ -116,10 +115,10 @@
       class={btnClass}
       disabled={isLastAvailableTime}
       on:click={() => dispatchEvent('timeChange', {
-        hours: parseInt(hours[hours.length - 1]),
-        minutes: parseInt(minutes[minutes.length - 1]),
-        seconds: parseInt(seconds[seconds.length - 1])
-      })}
+          hours: parseInt(hours[hours.length - 1]),
+          minutes: parseInt(minutes[minutes.length - 1]),
+          seconds: parseInt(seconds[seconds.length - 1])
+        })}
       title="Last available time"
       type="button">
       {@html '&#8638;'}
