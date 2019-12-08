@@ -24,14 +24,13 @@
   import TimePicker from "./components/TimePicker.svelte";
 
   export let applyBtnText = "Apply";
+  export let btnClass = "s-picker-btn";
   export let cancelBtnText = "Cancel";
   export let dateFormat = "MMM dd, yyyy";
   export let disabledDates = [];
   export let endDate = endOfWeek(new Date());
   export let events = [];
   export let firstDayOfWeek = "sunday";
-  export let id = `s-date-range-picker-${Math.random()}`;
-  export let isoWeekNumbers = false;
   export let locale = undefined;
   export let maxDate = addYears(endOfYear(new Date()), 10);
   export let minDate = subYears(startOfYear(new Date()), 10);
@@ -69,11 +68,7 @@
   $: tempEndDate = endDate
   $: tempStartDate = startDate
 
-  const cellWidth = 40
   const dispatchEvent = createEventDispatcher()
-  const pageWidth = cellWidth * 7
-  const pageWidthWithPadding = pageWidth + 96
-  const maxCalsPerPage = 2
 
   // Used for the date-fns format abstraction, localeFormat
   /** @todo This might be better placed into a store. */
@@ -103,12 +98,7 @@
     )
   }
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
-  $: maxWidth =
-    pickerWidth >= maxCalsPerPage * pageWidth
-      ? maxCalsPerPage * pageWidthWithPadding
-      : pickerWidth
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
-  $: pickerWidth = numPages * pageWidthWithPadding
   $: startDateReadout = () => {
     if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
       return localeFormat(hoverDate, dateFormat)
@@ -313,21 +303,27 @@
 </script>
 
 <style>
-  .s-date-range-picker {
-    padding: 0.6em;
-  }
-
   .s-date-range-picker :global(.space-between) {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  .s-date-range-picker :global(.space-center) {
+    flex: 1;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .s-date-range-picker :global(.muted) {
+    color: #999;
+  }
+
   .s-date-range-picker :global(.row) {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 100%;
   }
 
   .s-date-range-picker :global(.cell) {
@@ -358,14 +354,12 @@
 
 <form
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
-  {id}
-  on:submit|preventDefault={apply}
-  style={`width: ${maxWidth}px`}>
+  on:submit|preventDefault={apply}>
   <div class="space-between">
     <label>{startDateReadout()} to {endDateReadout()}</label>
     <button
       aria-label="Close the date range picker"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={close}
       type="close">
@@ -381,7 +375,6 @@
           {firstDayOfWeek}
           {hasSelection}
           {hoverDate}
-          {isoWeekNumbers}
           {maxDate}
           {minDate}
           {month}
@@ -397,7 +390,6 @@
           on:pageChange={onPageChange}
           on:prevMonth={onPrevMonth}
           on:selection={onSelection}
-          {pageWidth}
           {prevIcon}
           {rtl}
           {singlePicker}
@@ -452,7 +444,7 @@
       <button
         aria-disabled={isSameMonth(today, months[0])}
         aria-label="Show the today's month"
-        class="form-field"
+        class={btnClass}
         disabled={isSameMonth(today, months[0])}
         on:click={goToToday}
         type="button">
@@ -463,7 +455,7 @@
       <button
         aria-disabled={!canResetView}
         aria-label="Show the current selection's start month"
-        class="form-field"
+        class={btnClass}
         disabled={!canResetView}
         on:click={resetView}
         type="button">
@@ -474,7 +466,7 @@
       aria-disabled={!canApply()}
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={cancel}
       type="button">
@@ -484,7 +476,7 @@
     <button
       aria-disabled={!canApply()}
       aria-label="Apply the current selection"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={apply}
       type="submit">

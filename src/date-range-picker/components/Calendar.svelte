@@ -9,7 +9,6 @@
   export let firstDayOfWeek
   export let hasSelection
   export let hoverDate
-  export let isoWeekNumbers
   export let maxDate
   export let minDate
   export let month
@@ -18,7 +17,6 @@
   export let monthIndicator
   export let nextIcon
   export let pageNum
-  export let pageWidth
   export let prevIcon
   export let rtl
   export let singlePicker
@@ -45,14 +43,7 @@
   })
 </script>
 
-<style>
-  .calendar {
-    padding: 6px 48px 0 48px;
-    user-select: none;
-  }
-</style>
-
-<div style={`width: ${pageWidth}px;`} class="calendar">
+<div>
   <Controls
     {maxDate}
     {minDate}
@@ -67,10 +58,9 @@
     {prevIcon}
     {yearDropdown} />
   <div role="grid">
-    <DaysOfWeek {firstDayOfWeek} />
+    <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />
     {#each weeks as week}
       <Week
-        {isoWeekNumbers}
         {month}
         {monthIndicator}
         on:apply

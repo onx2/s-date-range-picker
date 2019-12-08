@@ -40,4 +40,11 @@
   }
 </script>
 
-<SDateRangePicker {maxDate} todayBtn resetViewBtn timePicker timePickerControls {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker
+weekGuides
+weekNumbers
+todayBtn
+resetViewBtn
+timePicker
+timePickerControls
+{maxDate} {startDate} {endDate} on:apply={onApply} />

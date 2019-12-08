@@ -64,16 +64,8 @@
   }
 </script>
 
-<style>
-  div {
-    padding: 0 0 6px 0;
-    flex: 1;
-    justify-content: center;
-    display: flex;
-  }
-</style>
 
-<div>
+<div class="space-center">
   {#if timePickerControls}
     <button
       aria-disabled={isFirstAvailableTime}
