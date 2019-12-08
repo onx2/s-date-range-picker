@@ -9,7 +9,7 @@
 - npm: `npm i s-date-range-picker`
 - yarn: `yarn add s-date-range-picker`
 
-```
+```svelte
 <script>
   import SDateRangePicker from "s-date-range-picker";
 
