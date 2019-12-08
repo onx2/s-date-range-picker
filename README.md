@@ -42,7 +42,6 @@
 ## API
 
 ### Props / Options
-
 - [x] `dateFormat = "MMM dd, yyyy"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
 - [x] `disabledDates = []` (Date[])
 - [x] `endDate = endOfWeek(new Date())` (Date)
@@ -75,7 +74,6 @@
 - [x] `id = "s-date-range-picker-" + Math.random()` (string)
 
 ### Events
-
 - [x] `selection` Fired when a selection is made (start or end date has been chosen)
 - [x] `cancel` Fired when the "Cancel" button is clicked
 - [x] `apply` Fired when the "Apply" button is clicked
