@@ -1,14 +1,4 @@
 <script>
-  /**
-   * @todo Question: Can this component be divided up into separate components?
-   * And if so, should it be?
-   *
-   * Potential splitting: single vs range, slim vs full (could remove a significant amount of complexity)
-   *
-   * The TimePicker component could potentially be split out into a separate package that is imported.
-   * If it were themeable, it may be easier / make more sense to split it out.
-   *
-   */
   import { createEventDispatcher, onMount } from 'svelte'
   import {
     addMonths,
@@ -58,10 +48,10 @@
   export let secondIncrement = 1;
   export let singlePicker = false;
   export let startDate = startOfWeek(new Date());
-  export let timePicker = true;
+  export let timePicker = false;
   export let timePickerControls = false;
   export let timePicker24Hour = true;
-  export let timePickerSeconds = true;
+  export let timePickerSeconds = false;
   export let today = new Date();
   export let todayBtn = false;
   export let todayBtnText = "Today";
@@ -277,7 +267,6 @@
   };
 
   const onPageChange = ({ detail: { incrementAmount } }) => {
-    console.log("onPageChange: ", incrementAmount)
     if (incrementAmount > 0) {
       months = months.map(mo => addMonths(mo, incrementAmount))
     } else {
