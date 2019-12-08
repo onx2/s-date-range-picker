@@ -11,11 +11,11 @@
   export let timePickerSeconds;
 
   const dispatchEvent = createEventDispatcher();
+  let selectedHour = dateReference.getHours();
+  let selectedMinute = dateReference.getMinutes();
+  let selectedSecond = dateReference.getSeconds();
 
   $: endOfDateReferenceDay = endOfDay(dateReference);
-  $: selectedHour = dateReference.getHours();
-  $: selectedMinute = dateReference.getMinutes();
-  $: selectedSecond = dateReference.getSeconds();
   $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
@@ -41,12 +41,17 @@
     );
 
   /** @todo Handle am/pm times */
-  const timeChange = () =>
+  const timeChange = () => {
+
+    console.log(selectedHour);
+
     dispatchEvent("timeChange", {
       hours: selectedHour,
       minutes: selectedMinute,
       seconds: timePickerSeconds ? selectedSecond : 0
     });
+  }
+
 
   const timeChangeStartOfDay = () => {
     selectedHour = hours[0];
