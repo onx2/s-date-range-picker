@@ -10,7 +10,7 @@
 
 <div class="row" role="row">
   {#if weekGuides}
-    <div class="cell"></div>
+    <div class="cell" />
   {/if}
   {#each daysOfWeek as dayOfWeek}
     <small
@@ -21,6 +21,6 @@
     </small>
   {/each}
   {#if weekNumbers}
-    <div class="cell"></div>
+    <div class="cell" />
   {/if}
 </div>

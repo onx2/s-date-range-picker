@@ -8,8 +8,7 @@
     isBefore,
     isSameMonth,
     isSameYear,
-    isWithinInterval,
-    subMonths,
+    subMonths
   } from 'date-fns'
   import { buildMonths, buildYears, localeFormat } from '../utils'
 
@@ -27,7 +26,7 @@
 
   let selectedMonth = {
     value: month,
-    text: localeFormat(month, monthFormat),
+    text: localeFormat(month, monthFormat)
   }
   let selectedYear = { value: month, text: localeFormat(month, 'yyyy') }
   $: prevMonth = subMonths(month, 1)
@@ -64,7 +63,7 @@
             incrementAmount: differenceInCalendarMonths(
               selectedMonth.value,
               month
-            ),
+            )
           })}>
         {#each months as mo}
           <option
@@ -84,7 +83,7 @@
         class="form-field"
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
-              differenceInCalendarYears(selectedYear.value, month) * 12,
+              differenceInCalendarYears(selectedYear.value, month) * 12
           })}>
         {#each years as yr}
           <option

@@ -8,8 +8,7 @@
     "sourceType": "module"
   },
   "plugins": [
-    "svelte3",
-    "prettier"
+    "svelte3"
   ],
   "extends": [
     "eslint:recommended"
@@ -21,8 +20,5 @@
       ],
       "processor": "svelte3/svelte3"
     }
-  ],
-  "rules": {
-    "prettier/prettier": "error"
-  }
+  ]
 }

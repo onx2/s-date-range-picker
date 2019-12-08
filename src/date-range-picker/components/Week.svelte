@@ -1,5 +1,4 @@
 <script>
-  import { isBefore, format } from 'date-fns'
   import Day from './Day.svelte'
   import { localeFormat } from '../utils'
 
@@ -41,7 +40,9 @@
 
   <div class="row" dir={rtl ? 'rtl' : 'ltr'}>
     {#if weekGuides}
-      <small class="cell muted" aria-label={`${week.weeksFromToday} weeks from today`}>
+      <small
+        class="cell muted"
+        aria-label={`${week.weeksFromToday} weeks from today`}>
         {weeksFromToday}w
       </small>
     {/if}
@@ -56,7 +57,9 @@
         on:selection />
     {/each}
     {#if weekNumbers}
-      <small class="cell muted" aria-label={`Week ${week.weekNumber}`}>{week.weekNumber}</small>
+      <small class="cell muted" aria-label={`Week ${week.weekNumber}`}>
+        {week.weekNumber}
+      </small>
     {/if}
   </div>
 </div>

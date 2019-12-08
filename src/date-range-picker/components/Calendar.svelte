@@ -2,7 +2,7 @@
   import Controls from './Controls.svelte'
   import DaysOfWeek from './DaysOfWeek.svelte'
   import Week from './Week.svelte'
-  import { dayOffset, getCalendarWeeks } from '../utils'
+  import { getCalendarWeeks } from '../utils'
 
   export let disabledDates
   export let events
@@ -39,7 +39,7 @@
     singlePicker,
     tempEndDate,
     tempStartDate,
-    today,
+    today
   })
 </script>
 
