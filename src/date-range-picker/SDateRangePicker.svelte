@@ -277,6 +277,7 @@
   };
 
   const onPageChange = ({ detail: { incrementAmount } }) => {
+    console.log("onPageChange: ", incrementAmount)
     if (incrementAmount > 0) {
       months = months.map(mo => addMonths(mo, incrementAmount))
     } else {
@@ -324,13 +325,7 @@
 
 <style>
   .s-date-range-picker {
-    font-size: 18px;
-    background-color: #fff;
-    border: 1px solid #d5d5d5;
-    border-radius: 6px;
     padding: 0.6em;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   .s-date-range-picker :global(.space-between) {
@@ -353,36 +348,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .s-date-range-picker :global(.form-field) {
-    background-color: transparent;
-    border-radius: 4px;
-    border: 1px solid #d5d5d5;
-    margin: 1px;
-    cursor: pointer;
-  }
-
-  .s-date-range-picker :global(select.form-field) {
-    padding: 8px;
-  }
-
-  .s-date-range-picker :global(button.form-field) {
-    padding: 8px 16px;
-  }
-
-  .s-date-range-picker :global(button) {
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .s-date-range-picker :global(button:disabled) {
-    cursor: not-allowed;
-  }
-
-  h1 {
-    font-size: 20px;
-    margin: 0;
   }
 
   .grid {
@@ -408,7 +373,7 @@
   on:submit|preventDefault={apply}
   style={`width: ${maxWidth}px`}>
   <div class="space-between">
-    <h1>{startDateReadout()} to {endDateReadout()}</h1>
+    <label>{startDateReadout()} to {endDateReadout()}</label>
     <button
       aria-label="Close the date range picker"
       class="form-field"
