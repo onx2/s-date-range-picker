@@ -273,7 +273,6 @@
   };
 
   const onNextMonth = () => {
-    console.log("onNextMonth");
     months = months.map(mo => addMonths(mo, 1));
   };
 
@@ -287,7 +286,6 @@
   };
 
   const onStartTimeChange = ({ detail }) => {
-    console.log("onStartTimeChange", detail);
     const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),
