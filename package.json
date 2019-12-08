@@ -13,6 +13,9 @@
     "datetimepicker",
     "svelte-components"
   ],
+  "browserslist": [
+    "defaults"
+  ],
   "private": false,
   "main": "build/js/main.js",
   "module": "build/js/main.mjs",
