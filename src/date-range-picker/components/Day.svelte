@@ -99,13 +99,15 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    background-color: #bbdefb;
     opacity: 0;
+  }
+
+  div:not(.disabled)::after {
+    background-color: #bbdefb;
   }
 
   div {
     position: relative;
-    overflow: hidden;
   }
 
   div.within-selection:not(.start-date):not(.end-date)::after {
@@ -189,6 +191,7 @@
 </style>
 
 <div
+  class:disabled={day.isDisabled}
   class:end-date={day.isEndDate}
   class:today={day.isToday}
   class:next-month={day.isNextMonth}
