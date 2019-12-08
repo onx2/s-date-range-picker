@@ -16,8 +16,7 @@
   "overrides": [
     {
       "files": [
-        "src/date-range-picker/**/*.svelte",
-        "src/date-range-picker/**/*.js"
+        "src/date-range-picker/**/*.svelte"
       ],
       "processor": "svelte3/svelte3"
     }
