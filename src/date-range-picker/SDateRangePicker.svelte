@@ -331,7 +331,7 @@
     align-items: center;
   }
 
-  .grid {
+  .s-grid {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -352,7 +352,7 @@
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
-  <div class="grid">
+  <div class="s-grid">
     {#each months as month, index}
       <Calendar
         {disabledDates}

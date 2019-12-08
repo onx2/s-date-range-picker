@@ -43,7 +43,7 @@
   })
 </script>
 
-<div>
+<div class="s-calendar">
   <Controls
     {maxDate}
     {minDate}
