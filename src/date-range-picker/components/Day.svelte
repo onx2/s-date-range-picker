@@ -4,15 +4,10 @@
     addDays,
     addMonths,
     addWeeks,
-    endOfWeek,
-    isAfter,
-    isBefore,
-    isSameMonth,
     isSameDay,
-    startOfWeek,
     subDays,
     subMonths,
-    subWeeks,
+    subWeeks
   } from 'date-fns'
   import { localeFormat } from '../utils'
 

@@ -10,13 +10,13 @@
   export let timePicker24Hour
   export let timePickerSeconds
 
-  const dispatchEvent = createEventDispatcher();
-  let selectedHour = dateReference.getHours();
-  let selectedMinute = dateReference.getMinutes();
-  let selectedSecond = dateReference.getSeconds();
+  const dispatchEvent = createEventDispatcher()
+  let selectedHour = dateReference.getHours()
+  let selectedMinute = dateReference.getMinutes()
+  let selectedSecond = dateReference.getSeconds()
 
-  $: endOfDateReferenceDay = endOfDay(dateReference);
-  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i));
+  $: endOfDateReferenceDay = endOfDay(dateReference)
+  $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))
   $: minutes = [...Array(60 / minuteIncrement)].map((_, i) =>
     pad(i * minuteIncrement)
   )
@@ -40,12 +40,12 @@
     )
 
   /** @todo Handle am/pm times */
-  const timeChange = () => dispatchEvent("timeChange", {
+  const timeChange = () =>
+    dispatchEvent('timeChange', {
       hours: selectedHour,
       minutes: selectedMinute,
       seconds: timePickerSeconds ? selectedSecond : 0
-    });
-
+    })
 
   const timeChangeStartOfDay = () => {
     selectedHour = hours[0]
@@ -64,16 +64,7 @@
   }
 </script>
 
-<style>
-  div {
-    padding: 0 0 6px 0;
-    flex: 1;
-    justify-content: center;
-    display: flex;
-  }
-</style>
-
-<div>
+<div class="space-center">
   {#if timePickerControls}
     <button
       aria-disabled={isFirstAvailableTime}

@@ -8,8 +8,7 @@
     "sourceType": "module"
   },
   "plugins": [
-    "svelte3",
-    "prettier"
+    "svelte3"
   ],
   "extends": [
     "eslint:recommended"
@@ -17,12 +16,10 @@
   "overrides": [
     {
       "files": [
-        "**/*.svelte"
+        "src/date-range-picker/**/*.svelte",
+        "src/date-range-picker/**/*.js"
       ],
       "processor": "svelte3/svelte3"
     }
-  ],
-  "rules": {
-    "prettier/prettier": "error"
-  }
+  ]
 }

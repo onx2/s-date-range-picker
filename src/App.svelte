@@ -11,33 +11,43 @@
     startOfWeek,
     startOfDay,
     endOfDay
-  } from "date-fns";
-  import * as locales from "date-fns/locale";
-  import SDateRangePicker from "./date-range-picker/SDateRangePicker.svelte";
+  } from 'date-fns'
+  import * as locales from 'date-fns/locale'
+  import SDateRangePicker from './date-range-picker/SDateRangePicker.svelte'
 
-  const random = false;
+  const random = false
 
-  const localesArray = Object.keys(locales).map(i => locales[i]);
+  const localesArray = Object.keys(locales).map(i => locales[i])
   const locale = random
     ? localesArray[Math.floor(Math.random() * localesArray.length)]
-    : undefined;
-  const singlePicker = false;
+    : undefined
+  const singlePicker = false
   let startDate = singlePicker
     ? startOfDay(new Date())
-    : startOfWeek(new Date());
-  let endDate = singlePicker ? startDate : endOfWeek(new Date());
-  let monthDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
-  let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true;
-  let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
-  let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true;
-  const maxDate = undefined; //addHours(endOfWeek(new Date()), 3);
-  let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2;
+    : startOfWeek(new Date())
+  let endDate = singlePicker ? startDate : endOfWeek(new Date())
+  let monthDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
+  let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
+  let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
+  let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
+  const maxDate = undefined
+  let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2
 
   function onApply({ detail }) {
-    startDate = detail.startDate;
-    endDate = detail.endDate;
-    console.log("apply", detail, maxDate);
+    startDate = detail.startDate
+    endDate = detail.endDate
+    console.log('apply', detail, maxDate)
   }
 </script>
 
-<SDateRangePicker {maxDate} {startDate} {endDate} on:apply={onApply} />
+<SDateRangePicker
+  weekGuides
+  weekNumbers
+  todayBtn
+  resetViewBtn
+  timePicker
+  timePickerControls
+  startDate={startDate}
+  endDate={endDate}
+  on:apply={onApply}>
+  </SDateRangePicker>

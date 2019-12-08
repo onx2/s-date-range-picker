@@ -1,0 +1,4 @@
+node_modules/**
+svelte-jest.js
+svelte.config.js
+rollup.config.js

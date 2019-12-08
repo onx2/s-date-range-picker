@@ -2,24 +2,25 @@
   import { getDaysOfWeek, localeFormat } from '../utils'
 
   export let firstDayOfWeek
+  export let weekGuides
+  export let weekNumbers
 
   $: daysOfWeek = getDaysOfWeek(firstDayOfWeek)
 </script>
 
-<style>
-  span {
-    font-size: 0.8rem;
-    color: #999;
-  }
-</style>
-
 <div class="row" role="row">
+  {#if weekGuides}
+    <div class="cell" />
+  {/if}
   {#each daysOfWeek as dayOfWeek}
-    <span
+    <small
       aria-label={localeFormat(dayOfWeek, 'EEEE')}
-      class="cell"
+      class="cell muted"
       role="gridcell">
       {localeFormat(dayOfWeek, 'eeeeee')}
-    </span>
+    </small>
   {/each}
+  {#if weekNumbers}
+    <div class="cell" />
+  {/if}
 </div>

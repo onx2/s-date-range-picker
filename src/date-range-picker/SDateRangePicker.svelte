@@ -1,73 +1,60 @@
 <script>
-  /**
-   * @todo Question: Can this component be divided up into separate components?
-   * And if so, should it be?
-   *
-   * Potential splitting: single vs range, slim vs full (could remove a significant amount of complexity)
-   *
-   * The TimePicker component could potentially be split out into a separate package that is imported.
-   * If it were themeable, it may be easier / make more sense to split it out.
-   *
-   */
   import { createEventDispatcher, onMount } from 'svelte'
   import {
     addMonths,
     addYears,
     subYears,
-    differenceInCalendarMonths,
     endOfWeek,
     endOfYear,
-    format,
     isAfter,
     isBefore,
     isSameMinute,
     isSameSecond,
     isSameDay,
     isSameMonth,
-    startOfDay,
     startOfWeek,
     startOfYear,
     subMonths
-  } from "date-fns";
-  import { localeFormat, roundDown } from "./utils";
-  import Calendar from "./components/Calendar.svelte";
-  import TimePicker from "./components/TimePicker.svelte";
+  } from 'date-fns'
+  import { localeFormat, roundDown } from './utils'
+  import Calendar from './components/Calendar.svelte'
+  import TimePicker from './components/TimePicker.svelte'
 
-  export let applyBtnText = "Apply";
-  export let cancelBtnText = "Cancel";
-  export let dateFormat = "MMM dd, yyyy";
-  export let disabledDates = [];
-  export let endDate = endOfWeek(new Date());
-  export let events = [];
-  export let firstDayOfWeek = "sunday";
-  export let id = `s-date-range-picker-${Math.random()}`;
-  export let isoWeekNumbers = false;
-  export let locale = undefined;
-  export let maxDate = addYears(endOfYear(new Date()), 10);
-  export let minDate = subYears(startOfYear(new Date()), 10);
-  export let minuteIncrement = 1;
-  export let monthDropdown = true;
-  export let monthFormat = "MMMM";
-  export let monthIndicator = true;
-  export let nextIcon = "▸";
-  export let numPages = 2;
-  export let prevIcon = "◂";
-  export let resetViewBtn = false;
-  export let resetViewBtnText = "↚";
-  export let rtl = false;
-  export let secondIncrement = 1;
-  export let singlePicker = false;
-  export let startDate = startOfWeek(new Date());
-  export let timePicker = true;
-  export let timePickerControls = false;
-  export let timePicker24Hour = true;
-  export let timePickerSeconds = true;
-  export let today = new Date();
-  export let todayBtn = false;
-  export let todayBtnText = "Today";
-  export let weekGuides = false;
-  export let weekNumbers = false;
-  export let yearDropdown = true;
+  export let applyBtnText = 'Apply'
+  export let btnClass = 's-picker-btn'
+  export let cancelBtnText = 'Cancel'
+  export let dateFormat = 'MMM dd, yyyy'
+  export let disabledDates = []
+  export let endDate = endOfWeek(new Date())
+  export let events = []
+  export let firstDayOfWeek = 'sunday'
+  export let locale = undefined
+  export let maxDate = addYears(endOfYear(new Date()), 10)
+  export let minDate = subYears(startOfYear(new Date()), 10)
+  export let minuteIncrement = 1
+  export let monthDropdown = true
+  export let monthFormat = 'MMMM'
+  export let monthIndicator = true
+  export let nextIcon = '▸'
+  export let numPages = 2
+  export let prevIcon = '◂'
+  export let resetViewBtn = false
+  export let resetViewBtnText = '↚'
+  export let rtl = false
+  export let secondIncrement = 1
+  // export let selectClass = ''
+  export let singlePicker = false
+  export let startDate = startOfWeek(new Date())
+  export let timePicker = false
+  export let timePickerControls = false
+  export let timePicker24Hour = true
+  export let timePickerSeconds = false
+  export let today = new Date()
+  export let todayBtn = false
+  export let todayBtnText = 'Today'
+  export let weekGuides = false
+  export let weekNumbers = false
+  export let yearDropdown = true
 
   /** @todo Implement props/options */
   // export let disabled = false;
@@ -79,11 +66,7 @@
   $: tempEndDate = endDate
   $: tempStartDate = startDate
 
-  const cellWidth = 40
   const dispatchEvent = createEventDispatcher()
-  const pageWidth = cellWidth * 7
-  const pageWidthWithPadding = pageWidth + 96
-  const maxCalsPerPage = 2
 
   // Used for the date-fns format abstraction, localeFormat
   /** @todo This might be better placed into a store. */
@@ -113,12 +96,7 @@
     )
   }
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
-  $: maxWidth =
-    pickerWidth >= maxCalsPerPage * pageWidth
-      ? maxCalsPerPage * pageWidthWithPadding
-      : pickerWidth
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
-  $: pickerWidth = numPages * pageWidthWithPadding
   $: startDateReadout = () => {
     if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
       return localeFormat(hoverDate, dateFormat)
@@ -166,9 +144,9 @@
       return
     }
 
-    dispatchEvent("apply", {
+    dispatchEvent('apply', {
       startDate: tempStartDate,
-      endDate: tempEndDate,
+      endDate: tempEndDate
     })
   }
 
@@ -188,17 +166,17 @@
   }
 
   const close = () => {
-    resetState();
-    resetView();
-  };
+    resetState()
+    resetView()
+  }
 
   const cancel = () => {
     resetState()
     resetView()
 
-    dispatchEvent("cancel", {
+    dispatchEvent('cancel', {
       startDate,
-      endDate,
+      endDate
     })
   }
 
@@ -258,7 +236,7 @@
       dispatchEvent('selection', {
         startDate: tempStartDate,
         endDate: tempEndDate
-      });
+      })
     }
   }
 
@@ -273,8 +251,8 @@
   }
 
   const onNextMonth = () => {
-    months = months.map(mo => addMonths(mo, 1));
-  };
+    months = months.map(mo => addMonths(mo, 1))
+  }
 
   const onPageChange = ({ detail: { incrementAmount } }) => {
     if (incrementAmount > 0) {
@@ -323,27 +301,30 @@
 </script>
 
 <style>
-  .s-date-range-picker {
-    font-size: 18px;
-    background-color: #fff;
-    border: 1px solid #d5d5d5;
-    border-radius: 6px;
-    padding: 0.6em;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
   .s-date-range-picker :global(.space-between) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .s-date-range-picker :global(small) {
+    font-size: 0.68rem;
+  }
+
+  .s-date-range-picker :global(.space-center) {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .s-date-range-picker :global(.muted) {
+    opacity: 0.4;
   }
 
   .s-date-range-picker :global(.row) {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 100%;
   }
 
   .s-date-range-picker :global(.cell) {
@@ -353,36 +334,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .s-date-range-picker :global(.form-field) {
-    background-color: transparent;
-    border-radius: 4px;
-    border: 1px solid #d5d5d5;
-    margin: 1px;
-    cursor: pointer;
-  }
-
-  .s-date-range-picker :global(select.form-field) {
-    padding: 8px;
-  }
-
-  .s-date-range-picker :global(button.form-field) {
-    padding: 8px 16px;
-  }
-
-  .s-date-range-picker :global(button) {
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .s-date-range-picker :global(button:disabled) {
-    cursor: not-allowed;
-  }
-
-  h1 {
-    font-size: 20px;
-    margin: 0;
   }
 
   .grid {
@@ -404,14 +355,12 @@
 
 <form
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
-  {id}
-  on:submit|preventDefault={apply}
-  style={`width: ${maxWidth}px`}>
+  on:submit|preventDefault={apply}>
   <div class="space-between">
-    <h1>{startDateReadout()} to {endDateReadout()}</h1>
+    <label>{startDateReadout()} to {endDateReadout()}</label>
     <button
       aria-label="Close the date range picker"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={close}
       type="close">
@@ -427,7 +376,6 @@
           {firstDayOfWeek}
           {hasSelection}
           {hoverDate}
-          {isoWeekNumbers}
           {maxDate}
           {minDate}
           {month}
@@ -443,7 +391,6 @@
           on:pageChange={onPageChange}
           on:prevMonth={onPrevMonth}
           on:selection={onSelection}
-          {pageWidth}
           {prevIcon}
           {rtl}
           {singlePicker}
@@ -498,7 +445,7 @@
       <button
         aria-disabled={isSameMonth(today, months[0])}
         aria-label="Show the today's month"
-        class="form-field"
+        class={btnClass}
         disabled={isSameMonth(today, months[0])}
         on:click={goToToday}
         type="button">
@@ -509,7 +456,7 @@
       <button
         aria-disabled={!canResetView}
         aria-label="Show the current selection's start month"
-        class="form-field"
+        class={btnClass}
         disabled={!canResetView}
         on:click={resetView}
         type="button">
@@ -520,7 +467,7 @@
       aria-disabled={!canApply()}
       aria-label="Cancel the current selection and revert to previous start and
       end dates"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={cancel}
       type="button">
@@ -530,7 +477,7 @@
     <button
       aria-disabled={!canApply()}
       aria-label="Apply the current selection"
-      class="form-field"
+      class={btnClass}
       disabled={!canApply()}
       on:click={apply}
       type="submit">
