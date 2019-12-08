@@ -352,46 +352,43 @@
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
-  <div>
-    <div class="grid">
-      {#each months as month, index}
-        <Calendar
-          {disabledDates}
-          {events}
-          {firstDayOfWeek}
-          {hasSelection}
-          {hoverDate}
-          {maxDate}
-          {minDate}
-          {month}
-          {monthDropdown}
-          {monthFormat}
-          {monthIndicator}
-          {nextIcon}
-          pageNum={index}
-          on:apply={apply}
-          on:cancel={cancel}
-          on:hover={onHover}
-          on:nextMonth={onNextMonth}
-          on:pageChange={onPageChange}
-          on:prevMonth={onPrevMonth}
-          on:selection={onSelection}
-          {prevIcon}
-          {rtl}
-          {singlePicker}
-          {tempEndDate}
-          {tempStartDate}
-          {today}
-          {weekGuides}
-          {weekNumbers}
-          {yearDropdown} />
-      {/each}
-    </div>
-    <div class="full-height-scroll" />
+  <div class="grid">
+    {#each months as month, index}
+      <Calendar
+        {disabledDates}
+        {events}
+        {firstDayOfWeek}
+        {hasSelection}
+        {hoverDate}
+        {maxDate}
+        {minDate}
+        {month}
+        {monthDropdown}
+        {monthFormat}
+        {monthIndicator}
+        {nextIcon}
+        pageNum={index}
+        on:apply={apply}
+        on:cancel={cancel}
+        on:hover={onHover}
+        on:nextMonth={onNextMonth}
+        on:pageChange={onPageChange}
+        on:prevMonth={onPrevMonth}
+        on:selection={onSelection}
+        {prevIcon}
+        {rtl}
+        {singlePicker}
+        {tempEndDate}
+        {tempStartDate}
+        {today}
+        {weekGuides}
+        {weekNumbers}
+        {yearDropdown} />
+    {/each}
   </div>
 
   {#if timePicker}
-    <div class="row">
+    <div class="row" role="row">
       <TimePicker
         dateReference={tempStartDate}
         {minuteIncrement}
@@ -425,7 +422,7 @@
       </div>
     {/if}
   {/if}
-  <div class="actions-row">
+  <div class="actions-row" role="row">
     {#if todayBtn}
       <button
         aria-disabled={isSameMonth(today, months[0])}

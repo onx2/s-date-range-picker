@@ -5,6 +5,7 @@ import { localeFormat } from './locale-format'
  *
  * @param {Date} min - Earliest allowed date
  * @param {Date} max - Latest allowed date
+ * @param {number} pageNum - Each page starts a month later than the last
  *
  * @returns {Date[]}
  */
