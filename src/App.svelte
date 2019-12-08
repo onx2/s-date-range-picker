@@ -46,7 +46,6 @@
   todayBtn
   resetViewBtn
   timePicker
-  numPages={4}
   timePickerControls
   startDate={startDate}
   endDate={endDate}

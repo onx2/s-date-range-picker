@@ -19,6 +19,8 @@
 
   const dispatchEvent = createEventDispatcher()
 
+  const getEl = date =>
+    document.querySelector(`[data-date="${localeFormat(date, 'yyyy-MM-dd')}"]`)
   // Enter should submit / apply the selection, not activate a button.
   const onKeydown = (e, date) => {
     let newDate = date
@@ -57,18 +59,14 @@
     }
 
     /** @todo Flip page when focusing on an element that isn't visible */
-    const el = document.querySelector(
-      `[data-date="${localeFormat(newDate, 'yyyy-MM-dd')}"]`
-    )
-
     // Graceful failure until page flipping functionality is implemented.
-    if (!el) {
+    if (!getEl(newDate)) {
       // Handle page flipping if the element isn't found
       return
     }
 
     dispatchEvent('hover', newDate)
-    el.focus()
+    getEl(newDate).focus()
   }
 
   const onMouseUp = (e, date) => {
@@ -76,9 +74,7 @@
       dispatchEvent('selection', date)
       // Set the focus state to the last selected date.
       // This happens automatically via a "click", but not on "mouseup"
-      document
-        .querySelector(`[data-date="${localeFormat(date, 'yyyy-MM-dd')}"]`)
-        .focus()
+      getEl(date).focus()
     }
     mouseDownDate = null
   }
@@ -93,6 +89,10 @@
 </script>
 
 <style>
+  div {
+    position: relative;
+  }
+
   div::after {
     content: '';
     top: 0;
@@ -106,15 +106,11 @@
     background-color: #bbdefb;
   }
 
-  div {
-    position: relative;
-  }
-
-  div.within-selection:not(.start-date):not(.end-date)::after {
+  .within-selection:not(.start-date):not(.end-date)::after {
     opacity: 1;
   }
 
-  div.within-selection::after {
+  .within-selection::after {
     transition: opacity 440ms ease;
   }
 
@@ -122,6 +118,7 @@
   .start-date:after {
     opacity: 1;
   }
+
   button {
     background-color: transparent;
     border-radius: 100%;
@@ -145,7 +142,7 @@
     border-radius: 100% 0 0 100%;
   }
 
-  .end-date.start-date {
+  .end-date.start-date::after {
     border-radius: 100%;
   }
 
