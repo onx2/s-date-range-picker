@@ -41,16 +41,11 @@
     );
 
   /** @todo Handle am/pm times */
-  const timeChange = () => {
-
-    console.log(selectedHour);
-
-    dispatchEvent("timeChange", {
+  const timeChange = () => dispatchEvent("timeChange", {
       hours: selectedHour,
       minutes: selectedMinute,
       seconds: timePickerSeconds ? selectedSecond : 0
     });
-  }
 
 
   const timeChangeStartOfDay = () => {
