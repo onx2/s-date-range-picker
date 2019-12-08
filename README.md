@@ -42,36 +42,37 @@
 ## API
 
 ### Props / Options
-- [x] `dateFormat = "MMM dd, yyyy"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
-- [x] `disabledDates = []` (Date[])
-- [x] `endDate = endOfWeek(new Date())` (Date)
-- [x] `firstDayOfWeek = "sunday"` (string)
-- [x] `isoWeekNumbers = false` (boolean)
-- [x] `locale = undefined` (Locale) `date-fns` defaults to the system locale.
-- [x] `maxDate = addYears(new Date(), 10)` (Date)
-- [x] `minDate = subYears(new Date(), 10)` (Date)
-- [x] `monthDropdown = false` (boolean)
-- [x] `monthFormat = "MMMM"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
-- [x] `rtl = false` (boolean)
-- [x] `singlePicker = false` (boolean)
-- [x] `startDate = startOfWeek(new Date())` (Date)
-- [x] `timePicker = false` (boolean)
-- [x] `timePickerIncrement = 1` (number)
-- [x] `timePickerSeconds = false` (boolean)
-- [x] `today = new Date()` (Date) Used as a reference in `predefinedRanges` and for underlining in calendar
-- [x] `prevIcon = "&#9666;"` (html | string) - ◂
-- [x] `nextIcon = "&#9656;"` (html | string) - ▸
-- [x] `weekGuides = false` (boolean) Distance in calendar weeks from today
-- [x] `weekNumbers = false` (boolean) Local week numbers
-- [x] `yearDropdown = false` (boolean)
-- [x] `applyBtnText = "Apply"` (string)
-- [x] `cancelBtnText = "Camcel"` (string)
-- [x] `todayBtnText = "Today"` (string)
-- [x] `todayBtn = false` (boolean)
-- [x] `timePickerControls = false` (boolean)
-- [x] `resetViewBtnText = "&#8602;"` (html | string) - ↚
-- [x] `resetViewBtn = false` (boolean)
-- [x] `id = "s-date-range-picker-" + Math.random()` (string)
+```javascript
+applyBtnText = "Apply"; // (string)
+cancelBtnText = "Camcel"; // (string)
+dateFormat = "MMM dd, yyyy"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+disabledDates = []; // (Date[])
+endDate = endOfWeek(new Date()); // (Date)
+firstDayOfWeek = "sunday"; // (string)
+isoWeekNumbers = false; // (boolean)
+locale = undefined; // (Locale) date-fns defaults to the system locale.
+maxDate = addYears(new Date(), 10); // (Date)
+minDate = subYears(new Date(), 10); // (Date)
+monthDropdown = false; // (boolean)
+monthFormat = "MMMM"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+nextIcon = "&#9656;"; // (html | string) - ▸
+prevIcon = "&#9666;"; // (html | string) - ◂
+resetViewBtn = false; // (boolean)
+resetViewBtnText = "&#8602;"; // (html | string) - ↚
+rtl = false; // (boolean)
+singlePicker = false; // (boolean)
+startDate = startOfWeek(new Date()); // (Date)
+timePicker = false; // (boolean)
+timePickerControls = false; // (boolean)
+timePickerIncrement = 1; // (number)
+timePickerSeconds = false; // (boolean)
+today = new Date(); // (Date) Used as a reference in predefinedRanges and for underlining in calendar
+todayBtn = false; // (boolean)
+todayBtnText = "Today"; // (string)
+weekGuides = false; // (boolean) Distance in calendar weeks from today
+weekNumbers = false; // (boolean) Local week numbers
+yearDropdown = false; // (boolean)
+```
 
 ### Events
 - [x] `selection` Fired when a selection is made (start or end date has been chosen)
