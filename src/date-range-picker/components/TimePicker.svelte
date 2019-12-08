@@ -13,9 +13,10 @@
   export let timePickerSeconds
 
   const dispatchEvent = createEventDispatcher()
-  let selectedHour = dateReference.getHours()
-  let selectedMinute = dateReference.getMinutes()
-  let selectedSecond = dateReference.getSeconds()
+
+  $: selectedHour = dateReference.getHours()
+  $: selectedMinute = dateReference.getMinutes()
+  $: selectedSecond = dateReference.getSeconds()
 
   $: endOfDateReferenceDay = endOfDay(dateReference)
   $: hours = [...Array(timePicker24Hour ? 24 : 12)].map((_, i) => pad(i))
@@ -40,30 +41,6 @@
         roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
       )
     )
-
-  /** @todo Handle am/pm times */
-  const timeChange = () =>
-    dispatchEvent('timeChange', {
-      hours: selectedHour,
-      minutes: selectedMinute,
-      seconds: timePickerSeconds ? selectedSecond : 0
-    })
-
-  const timeChangeStartOfDay = () => {
-    selectedHour = hours[0]
-    selectedMinute = minutes[0]
-    selectedSecond = seconds[0]
-
-    timeChange()
-  }
-
-  function timeChangeEndOfDay() {
-    selectedHour = hours[hours.length - 1]
-    selectedMinute = minutes[minutes.length - 1]
-    selectedSecond = seconds[seconds.length - 1]
-
-    timeChange()
-  }
 </script>
 
 <div class="space-center">
@@ -73,25 +50,37 @@
       aria-label="First available time"
       class={btnClass}
       disabled={isFirstAvailableTime}
-      on:click={timeChangeStartOfDay}
+      on:click={() => dispatchEvent('timeChange', {
+        hours: parseInt(hours[0]),
+        minutes: parseInt(minutes[0]),
+        seconds: parseInt(seconds[0])
+      })}
       title="First available time"
       type="button">
       {@html '&#8643;'}
     </button>
   {/if}
   <select
-    bind:value={selectedHour}
+    value={selectedHour}
     class={selectClass}
-    on:change={timeChange}
+    on:change={e => dispatchEvent('timeChange', {
+      hours: e.target.value,
+      minutes: selectedMinute,
+      seconds: timePickerSeconds ? selectedSecond : 0
+    })}
     title={`${selectedHour} hours`}>
     {#each hours as hour}
       <option value={parseInt(hour)}>{hour}</option>
     {/each}
   </select>
   <select
-    bind:value={selectedMinute}
+    value={selectedMinute}
     class={selectClass}
-    on:change={timeChange}
+    on:change={e => dispatchEvent('timeChange', {
+      hours: selectedHour,
+      minutes: e.target.value,
+      seconds: timePickerSeconds ? selectedSecond : 0
+    })}
     title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
       <option value={parseInt(minute)}>{minute}</option>
@@ -99,9 +88,13 @@
   </select>
   {#if timePickerSeconds}
     <select
-      bind:value={selectedSecond}
+      value={selectedSecond}
       class={selectClass}
-      on:change={timeChange}
+      on:change={e => dispatchEvent('timeChange', {
+        hours: selectedHour,
+        minutes: selectedMinute,
+        seconds: e.target.value
+      })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
         <option value={parseInt(second)}>{second}</option>
@@ -122,7 +115,11 @@
       aria-label="Last available time"
       class={btnClass}
       disabled={isLastAvailableTime}
-      on:click={timeChangeEndOfDay}
+      on:click={() => dispatchEvent('timeChange', {
+        hours: parseInt(hours[hours.length - 1]),
+        minutes: parseInt(minutes[minutes.length - 1]),
+        seconds: parseInt(seconds[seconds.length - 1])
+      })}
       title="Last available time"
       type="button">
       {@html '&#8638;'}
