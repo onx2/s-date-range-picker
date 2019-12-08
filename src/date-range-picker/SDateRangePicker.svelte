@@ -34,7 +34,6 @@
   import TimePicker from "./components/TimePicker.svelte";
 
   export let applyBtnText = "Apply";
-  export let autoApply = false;
   export let cancelBtnText = "Cancel";
   export let dateFormat = "MMM dd, yyyy";
   export let disabledDates = [];
@@ -72,8 +71,6 @@
 
   /** @todo Implement props/options */
   // export let disabled = false;
-  // export let hideOnCancel = true;
-  // export let hideOnApply = true;
   // export let maxSpan = null;
   // export let predefinedRanges = [];
 
@@ -164,20 +161,10 @@
     }
   });
 
-  // const show() =>{
-  //   dispatchEvent("show");
-  // }
-
-  // const hide() =>{
-  //   dispatchEvent("hide");
-  // }
-
   const apply = () => {
     if (!canApply()) {
       return;
     }
-
-    // hideOnApply &&  hide();
 
     dispatchEvent("apply", {
       startDate: tempStartDate,
@@ -203,14 +190,11 @@
   const close = () => {
     resetState();
     resetView();
-    // hide();
   };
 
   const cancel = () => {
     resetState();
     resetView();
-
-    // hideOnCancel && hide();
 
     dispatchEvent("cancel", {
       startDate,
@@ -275,8 +259,6 @@
         startDate: tempStartDate,
         endDate: tempEndDate
       });
-
-      autoApply && apply();
     }
   };
 
@@ -305,6 +287,7 @@
   };
 
   const onStartTimeChange = ({ detail }) => {
+    console.log("onStartTimeChange", detail);
     const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),

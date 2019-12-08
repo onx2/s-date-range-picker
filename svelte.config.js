@@ -1,3 +1,6 @@
+/**
+ * @todo Use this file in rollup.config.js to add preprocessor for TypeScript
+ */
 const {
   preprocess,
   createEnv,

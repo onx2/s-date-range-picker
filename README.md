@@ -12,11 +12,11 @@
 ```
 <script>
   import SDateRangePicker from "s-date-range-picker";
-  
+
   // Manage start and end props from main app component
   let startDate = new Date();
   let endDate = new Date();
-  
+
   // Update state on apply event
   function onApply({ detail }) {
     startDate = detail.startDate;
@@ -26,10 +26,13 @@
 
 <SDateRangePicker {startDate} {endDate} on:apply={onApply} />
 ```
+
 ## Screenshot (defaults)
+
 ![Svelte Date Range Picker 2019-11-30](https://i.ibb.co/fktvn56/Screenshot-from-2019-12-01-17-47-59.png)
 
 ## Development
+
 - Requires [NodeJS](https://nodejs.org/)
 - Clone the repo: `git clone https://github.com/onx2/svelte-date-range-picker.git`
 - Enter directory: `cd svelte-date-range-picker`
@@ -41,13 +44,11 @@
 ## API
 
 ### Props / Options
-- [x] `autoApply = false` (boolean)
+
 - [x] `dateFormat = "MMM dd, yyyy"` (string) [options](https://date-fns.org/v2.8.1/docs/format)
 - [x] `disabledDates = []` (Date[])
 - [x] `endDate = endOfWeek(new Date())` (Date)
 - [x] `firstDayOfWeek = "sunday"` (string)
-- [x] `hideOnCancel = false` (boolean)
-- [x] `hideOnApply = false` (boolean)
 - [x] `isoWeekNumbers = false` (boolean)
 - [x] `locale = undefined` (Locale) `date-fns` defaults to the system locale.
 - [x] `maxDate = addYears(new Date(), 10)` (Date)
@@ -76,11 +77,12 @@
 - [x] `id = "s-date-range-picker-" + Math.random()` (string)
 
 ### Events
+
 - [x] `selection` Fired when a selection is made (start or end date has been chosen)
 - [x] `cancel` Fired when the "Cancel" button is clicked
 - [x] `apply` Fired when the "Apply" button is clicked
 
-___
+---
 
 Thanks [geakstr](https://github.com/geakstr/svelte-3-rollup-typescript-vscode) for the [Svelte](https://svelte.dev/) component template!
 
