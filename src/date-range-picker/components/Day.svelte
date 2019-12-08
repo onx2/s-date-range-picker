@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte'
   import {
     addDays,
     addMonths,
@@ -12,94 +12,94 @@
     startOfWeek,
     subDays,
     subMonths,
-    subWeeks
-  } from "date-fns";
-  import { localeFormat } from "../utils";
+    subWeeks,
+  } from 'date-fns'
+  import { localeFormat } from '../utils'
 
-  export let day;
-  export let monthIndicator;
-  export let rtl;
+  export let day
+  export let monthIndicator
+  export let rtl
 
-  let mouseDownDate = null;
+  let mouseDownDate = null
 
-  const dispatchEvent = createEventDispatcher();
+  const dispatchEvent = createEventDispatcher()
 
   // Enter should submit / apply the selection, not activate a button.
   const onKeydown = (e, date) => {
-    let newDate = date;
+    let newDate = date
 
     switch (e.code) {
-      case "Enter":
-      case "NumpadEnter":
-        dispatchEvent("apply");
-        return;
-      case "Space":
-        dispatchEvent("selection", date);
-        return;
-      case "ArrowUp":
-        newDate = subWeeks(date, 1);
-        break;
-      case "ArrowDown":
-        newDate = addWeeks(date, 1);
-        break;
-      case "ArrowRight":
-        newDate = addDays(date, 1);
-        break;
-      case "ArrowLeft":
-        newDate = subDays(date, 1);
-        break;
-      case "PageDown":
-        newDate = subMonths(date, 1);
-        break;
-      case "PageUp":
-        newDate = addMonths(date, 1);
-        break;
-      case "Escape":
-        dispatchEvent("cancel");
-        return;
+      case 'Enter':
+      case 'NumpadEnter':
+        dispatchEvent('apply')
+        return
+      case 'Space':
+        dispatchEvent('selection', date)
+        return
+      case 'ArrowUp':
+        newDate = subWeeks(date, 1)
+        break
+      case 'ArrowDown':
+        newDate = addWeeks(date, 1)
+        break
+      case 'ArrowRight':
+        newDate = addDays(date, 1)
+        break
+      case 'ArrowLeft':
+        newDate = subDays(date, 1)
+        break
+      case 'PageDown':
+        newDate = subMonths(date, 1)
+        break
+      case 'PageUp':
+        newDate = addMonths(date, 1)
+        break
+      case 'Escape':
+        dispatchEvent('cancel')
+        return
       default:
-        return;
+        return
     }
 
     /** @todo Flip page when focusing on an element that isn't visible */
     const el = document.querySelector(
-      `[data-date="${localeFormat(newDate, "yyyy-MM-dd")}"]`
-    );
+      `[data-date="${localeFormat(newDate, 'yyyy-MM-dd')}"]`
+    )
 
     // Graceful failure until page flipping functionality is implemented.
     if (!el) {
       // Handle page flipping if the element isn't found
-      return;
+      return
     }
 
-    dispatchEvent("hover", newDate);
-    el.focus();
-  };
+    dispatchEvent('hover', newDate)
+    el.focus()
+  }
 
   const onMouseUp = (e, date) => {
     if (e.button === 0 && !isSameDay(date, mouseDownDate)) {
-      dispatchEvent("selection", date);
+      dispatchEvent('selection', date)
       // Set the focus state to the last selected date.
       // This happens automatically via a "click", but not on "mouseup"
       document
-        .querySelector(`[data-date="${localeFormat(date, "yyyy-MM-dd")}"]`)
-        .focus();
+        .querySelector(`[data-date="${localeFormat(date, 'yyyy-MM-dd')}"]`)
+        .focus()
     }
-    mouseDownDate = null;
-  };
+    mouseDownDate = null
+  }
 
   const onMouseDown = (e, date) => {
     // Only continue if the left mouse button was clicked
     if (e.button === 0) {
-      mouseDownDate = date;
-      dispatchEvent("selection", date);
+      mouseDownDate = date
+      dispatchEvent('selection', date)
     }
-  };
+  }
 </script>
 
 <style>
   div::after {
-    content: "";
+    content: '';
     top: 0;
     width: 40px;
     height: 40px;

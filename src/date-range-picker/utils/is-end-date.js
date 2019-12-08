@@ -1,4 +1,4 @@
-import { isSameDay, isAfter } from "date-fns";
+import { isSameDay, isAfter } from 'date-fns'
 
 /**
  *
@@ -20,11 +20,11 @@ export const isEndDate = ({
 }) => {
   if (!hasSelection) {
     if (isAfter(hoverDate, tempStartDate)) {
-      return isSameDay(date, hoverDate);
+      return isSameDay(date, hoverDate)
     }
 
-    return isSameDay(date, tempStartDate);
+    return isSameDay(date, tempStartDate)
   }
 
-  return isSameDay(date, tempEndDate);
-};
+  return isSameDay(date, tempEndDate)
+}

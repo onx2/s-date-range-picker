@@ -5,4 +5,4 @@
  *
  * @returns {number}
  */
-export const roundDown = (n, p = 1) => Math.floor(n / p) * p;
+export const roundDown = (n, p = 1) => Math.floor(n / p) * p

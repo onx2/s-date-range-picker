@@ -1,9 +1,9 @@
 <script>
-  import { getDaysOfWeek, localeFormat } from "../utils";
+  import { getDaysOfWeek, localeFormat } from '../utils'
 
-  export let firstDayOfWeek;
+  export let firstDayOfWeek
 
-  $: daysOfWeek = getDaysOfWeek(firstDayOfWeek);
+  $: daysOfWeek = getDaysOfWeek(firstDayOfWeek)
 </script>
 
 <style>

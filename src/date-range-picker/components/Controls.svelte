@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte'
   import {
     addMonths,
     differenceInCalendarMonths,
@@ -9,39 +9,39 @@
     isSameMonth,
     isSameYear,
     isWithinInterval,
-    subMonths
-  } from "date-fns";
-  import { buildMonths, buildYears, localeFormat } from "../utils";
+    subMonths,
+  } from 'date-fns'
+  import { buildMonths, buildYears, localeFormat } from '../utils'
 
-  export let month;
-  export let monthFormat;
-  export let monthDropdown;
-  export let maxDate;
-  export let minDate;
-  export let nextIcon;
-  export let pageNum;
-  export let prevIcon;
-  export let yearDropdown;
+  export let month
+  export let monthFormat
+  export let monthDropdown
+  export let maxDate
+  export let minDate
+  export let nextIcon
+  export let pageNum
+  export let prevIcon
+  export let yearDropdown
 
-  const disptachEvent = createEventDispatcher();
+  const disptachEvent = createEventDispatcher()
 
   $: selectedMonth = {
     value: month,
-    text: localeFormat(month, monthFormat)
-  };
-  $: selectedYear = { value: month, text: localeFormat(month, "yyyy") };
-  $: prevMonth = subMonths(month, 1);
-  $: nextMonth = addMonths(month, 1);
-  $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate);
-  $: isMin = isBefore(month, minDate) || isSameMonth(month, minDate);
-  $: months = buildMonths(month, monthFormat);
-  $: years = buildYears(minDate, maxDate, pageNum);
-  $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate);
-  $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate);
+    text: localeFormat(month, monthFormat),
+  }
+  $: selectedYear = { value: month, text: localeFormat(month, 'yyyy') }
+  $: prevMonth = subMonths(month, 1)
+  $: nextMonth = addMonths(month, 1)
+  $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate)
+  $: isMin = isBefore(month, minDate) || isSameMonth(month, minDate)
+  $: months = buildMonths(month, monthFormat)
+  $: years = buildYears(minDate, maxDate, pageNum)
+  $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate)
+  $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate)
 
   $: isOptionDisabled = mo =>
     (!isSameMonth(mo, minDate) && isBefore(mo, minDate)) ||
-    (!isSameMonth(mo, minDate) && isAfter(mo, maxDate));
+    (!isSameMonth(mo, minDate) && isAfter(mo, maxDate))
 </script>
 
 <div class="space-between">
@@ -64,7 +64,7 @@
             incrementAmount: differenceInCalendarMonths(
               selectedMonth.value,
               month
-            )
+            ),
           })}>
         {#each months as mo}
           <option
@@ -84,7 +84,7 @@
         class="form-field"
         on:change={() => disptachEvent('pageChange', {
             incrementAmount:
-              differenceInCalendarYears(selectedYear.value, month) * 12
+              differenceInCalendarYears(selectedYear.value, month) * 12,
           })}>
         {#each years as yr}
           <option
