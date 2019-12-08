@@ -8,6 +8,8 @@ import {
 } from 'date-fns'
 import { isDisabled } from './is-disabled'
 import { isEndDate } from './is-end-date'
+import { isNextMonth } from './is-next-month'
+import { isPrevMonth } from './is-prev-month'
 import { isStartDate } from './is-start-date'
 import { toRange } from './to-range'
 
@@ -71,8 +73,8 @@ export const getDayMetaData = params => {
     events,
     isToday: isSameDay(date, today),
     isWeekend: isWeekend(date),
-    isPrevMonth: isSameMonth(subMonths(month, 1), date),
-    isNextMonth: isSameMonth(addMonths(month, 1), date),
+    isPrevMonth: isPrevMonth(month, date),
+    isNextMonth: isNextMonth(month, date),
     isStartDate: isStartDate(params),
     isDisabled: isDisabled({ date, maxDate, minDate, disabledDates }),
     // Used only in range mode

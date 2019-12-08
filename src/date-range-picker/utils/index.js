@@ -6,6 +6,8 @@ import { getDayMetaData } from './get-day-meta-data'
 import { getDaysOfWeek } from './get-days-of-week'
 import { isDisabled } from './is-disabled'
 import { isEndDate } from './is-end-date'
+import { isNextMonth } from './is-next-month'
+import { isPrevMonth } from './is-prev-month'
 import { isStartDate } from './is-start-date'
 import { pad } from './pad'
 import { roundDown } from './round-down'
@@ -21,6 +23,8 @@ export {
   getDayMetaData,
   isDisabled,
   isEndDate,
+  isNextMonth,
+  isPrevMonth,
   isStartDate,
   localeFormat,
   pad,
