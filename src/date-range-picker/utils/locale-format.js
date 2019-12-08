@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format } from 'date-fns'
 
 /**
  *
@@ -9,4 +9,4 @@ import { format } from "date-fns";
  *                     defaulting to the current system locale
  */
 export const localeFormat = (date, dateFormat) =>
-  format(date, dateFormat, { locale: __locale__ });
+  format(date, dateFormat, { locale: window.__locale__ })

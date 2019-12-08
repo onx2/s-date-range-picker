@@ -1,5 +1,5 @@
-import { addDays, startOfWeek } from "date-fns";
-import { dayOffset } from "./day-offset";
+import { addDays, startOfWeek } from 'date-fns'
+import { dayOffset } from './day-offset'
 
 /**
  *
@@ -15,4 +15,4 @@ export const getDaysOfWeek = firstDayOfWeek =>
       }),
       i
     )
-  );
+  )

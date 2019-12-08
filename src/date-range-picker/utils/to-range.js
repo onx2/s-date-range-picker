@@ -1,4 +1,4 @@
-import { isAfter } from "date-fns";
+import { isAfter } from 'date-fns'
 
 /**
  *
@@ -19,10 +19,10 @@ export const toRange = (date, dateToCompare) => {
     return {
       start: dateToCompare,
       end: date
-    };
+    }
   }
   return {
     start: date,
     end: dateToCompare
-  };
-};
+  }
+}

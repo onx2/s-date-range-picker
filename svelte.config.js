@@ -5,9 +5,9 @@ const {
   preprocess,
   createEnv,
   readConfigFile
-} = require("svelte-ts-preprocess");
+} = require('svelte-ts-preprocess')
 
-const env = createEnv();
+const env = createEnv()
 
 module.exports = {
   preprocess: preprocess({
@@ -18,4 +18,4 @@ module.exports = {
       customElement: true
     }
   })
-};
+}

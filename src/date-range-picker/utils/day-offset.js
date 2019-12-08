@@ -6,11 +6,11 @@
  */
 export const dayOffset = firstDayOfWeek =>
   [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
-  ].indexOf(firstDayOfWeek.toLocaleLowerCase(__locale__));
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday'
+  ].indexOf(firstDayOfWeek.toLocaleLowerCase(window.__locale__))

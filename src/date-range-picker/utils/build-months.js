@@ -1,5 +1,5 @@
-import { addMonths, startOfYear } from "date-fns";
-import { localeFormat } from "./locale-format";
+import { addMonths, startOfYear } from 'date-fns'
+import { localeFormat } from './locale-format'
 
 /**
  *
@@ -9,11 +9,11 @@ import { localeFormat } from "./locale-format";
  * @returns {Date[]}
  */
 export const buildMonths = (mo, format) => {
-  const yrStart = startOfYear(mo);
+  const yrStart = startOfYear(mo)
 
   return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((_, i) => {
-    const value = addMonths(yrStart, i);
+    const value = addMonths(yrStart, i)
 
-    return { value, text: localeFormat(value, format) };
-  });
-};
+    return { value, text: localeFormat(value, format) }
+  })
+}

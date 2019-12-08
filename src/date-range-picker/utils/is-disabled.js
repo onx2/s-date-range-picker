@@ -1,4 +1,4 @@
-import { isAfter, isBefore, isSameDay } from "date-fns";
+import { isAfter, isBefore, isSameDay } from 'date-fns'
 
 /**
  *
@@ -13,16 +13,16 @@ import { isAfter, isBefore, isSameDay } from "date-fns";
  */
 export const isDisabled = ({ date, maxDate, minDate, disabledDates }) => {
   if (disabledDates.some(disabledDate => isSameDay(date, disabledDate))) {
-    return true;
+    return true
   }
 
   if (isBefore(date, minDate)) {
-    return true;
+    return true
   }
 
   if (isAfter(date, maxDate)) {
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
