@@ -4,7 +4,6 @@
 
   export let month
   export let monthIndicator
-  export let rtl
   export let week
   export let weekGuides
   export let weekNumbers
@@ -16,29 +15,19 @@
 <div
   aria-label={`${localeFormat(month, 'yyyy')}`}
   class="row"
-  dir={rtl ? 'rtl' : 'ltr'}
   role="row"
   on:nextMonth
   on:prevMonth>
   {#if weekGuides}
-    <small
-      class="cell muted"
-      aria-label={`${week.weeksFromToday} weeks from today`}>
-      {weeksFromToday}w
+    <small class="cell muted" aria-label={`${week.weeksFromToday}`}>
+      {weeksFromToday}
     </small>
   {/if}
   {#each week.daysInWeek as day (day.date.toString())}
-    <Day
-      {day}
-      {monthIndicator}
-      {rtl}
-      on:apply
-      on:cancel
-      on:hover
-      on:selection />
+    <Day {day} {monthIndicator} on:apply on:cancel on:hover on:selection />
   {/each}
   {#if weekNumbers}
-    <small class="cell muted" aria-label={`Week ${week.weekNumber}`}>
+    <small class="cell muted" aria-label={`${week.weekNumber}`}>
       {week.weekNumber}
     </small>
   {/if}

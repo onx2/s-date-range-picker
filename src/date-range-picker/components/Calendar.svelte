@@ -19,7 +19,6 @@
   export let nextIcon
   export let pageNum
   export let prevIcon
-  export let rtl
   export let singlePicker
   export let selectClass
   export let tempEndDate
@@ -73,7 +72,6 @@
         on:nextMonth
         on:prevMonth
         on:selection
-        {rtl}
         {week}
         {weekGuides}
         {weekNumbers} />

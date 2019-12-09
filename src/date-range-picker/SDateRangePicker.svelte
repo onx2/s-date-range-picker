@@ -292,6 +292,12 @@
       tempEndDate = newDate
     }
   }
+
+  $: lang = locale
+    ? locale.code
+    : navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
 </script>
 
 <style>
@@ -311,8 +317,13 @@
     align-items: center;
   }
 
-  .s-date-range-picker :global(.muted) {
-    opacity: 0.4;
+  /*
+    https://webaim.org/resources/contrastchecker/
+    WCAG AAA Compliant: #595959 on #FFFFFF background
+    WCAG AA Compliant: #757575 on #FFFFFF background
+  */
+  .s-date-range-picker :global(:not(:disabled).muted) {
+    color: #757575;
   }
 
   .s-date-range-picker :global(.row) {
@@ -336,19 +347,28 @@
     flex-direction: row;
   }
 
-  .rtl {
-    direction: rtl;
-  }
-
   .actions-row {
     padding-top: 8px;
     justify-content: flex-end;
     display: flex;
   }
+
+  /*
+    Swap border radius of the start and end dates when in rtl
+  */
+  .s-date-range-picker[dir='rtl'] :global(.end-date::after) {
+    border-radius: 100% 0 0 100%;
+  }
+
+  .s-date-range-picker[dir='rtl'] :global(.start-date::after) {
+    border-radius: 0 100% 100% 0;
+  }
 </style>
 
 <form
-  class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
+  {lang}
+  dir={rtl ? 'rtl' : 'ltr'}
+  class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
   <div class="s-grid">
@@ -376,7 +396,6 @@
         on:prevMonth={onPrevMonth}
         on:selection={onSelection}
         {prevIcon}
-        {rtl}
         {singlePicker}
         {selectClass}
         {tempEndDate}
@@ -389,7 +408,7 @@
   </div>
 
   {#if timePicker}
-    <div class="row" role="row">
+    <div class="row">
       <TimePicker
         {btnClass}
         dateReference={tempStartDate}
@@ -429,7 +448,7 @@
       </div>
     {/if}
   {/if}
-  <div class="actions-row" role="row">
+  <div class="actions-row">
     {#if todayBtn}
       <button
         aria-disabled={isSameMonth(today, months[0])}

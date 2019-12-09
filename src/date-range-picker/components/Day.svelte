@@ -13,7 +13,6 @@
 
   export let day
   export let monthIndicator
-  export let rtl
 
   let mouseDownDate = null
 
@@ -150,13 +149,6 @@
     text-decoration: underline;
   }
 
-  .start-date button,
-  .end-date button,
-  button:not(:disabled):hover {
-    background-color: #1565c0;
-    color: white;
-  }
-
   .month-indicator {
     font-size: 0.6rem;
     top: 4px;
@@ -171,19 +163,12 @@
     opacity: 1;
   }
 
-  .next-month button,
-  .prev-month button,
-  button:disabled {
-    opacity: 0.6;
-  }
-
-  /* Swap border radius when in rtl */
-  .rtl.end-date::after {
-    border-radius: 100% 0 0 100%;
-  }
-
-  .rtl.start-date::after {
-    border-radius: 0 100% 100% 0;
+  .start-date button,
+  .end-date button,
+  button:not(:disabled):hover {
+    background-color: #1565c0;
+    /* Overwrite .muted class for prev/next months */
+    color: white !important;
   }
 </style>
 
@@ -193,21 +178,21 @@
   class:today={day.isToday}
   class:next-month={day.isNextMonth}
   class:prev-month={day.isPrevMonth}
-  class:rtl
   class:start-date={day.isStartDate}
   class:weekend={day.isWeekend}
   class:within-selection={day.isWithinSelection}
-  on:keydown={e => onKeydown(e, day.date)}
-  on:mouseenter={() => dispatchEvent('hover', day.date)}
-  on:mousedown={e => onMouseDown(e, day.date)}
-  on:mouseup={e => onMouseUp(e, day.date)}
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
     aria-label={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
     class="cell"
+    class:muted={day.isNextMonth || day.isPrevMonth}
     disabled={day.isDisabled}
     data-date={localeFormat(day.date, 'yyyy-MM-dd')}
+    on:keydown={e => onKeydown(e, day.date)}
+    on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:mousedown={e => onMouseDown(e, day.date)}
+    on:mouseup={e => onMouseUp(e, day.date)}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>

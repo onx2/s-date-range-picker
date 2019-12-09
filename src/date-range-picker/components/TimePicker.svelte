@@ -60,6 +60,7 @@
     </button>
   {/if}
   <select
+    aria-label="Hour select"
     value={selectedHour}
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
@@ -73,6 +74,7 @@
     {/each}
   </select>
   <select
+    aria-label="Minute select"
     value={selectedMinute}
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
@@ -87,6 +89,7 @@
   </select>
   {#if timePickerSeconds}
     <select
+      aria-label="Second select"
       value={selectedSecond}
       class={selectClass}
       on:change={e => dispatchEvent('timeChange', {

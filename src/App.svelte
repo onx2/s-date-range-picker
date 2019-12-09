@@ -30,7 +30,7 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = undefined
+  const maxDate = addHours(endDate, 40)
   let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2
 
   function onApply({ detail }) {
@@ -43,6 +43,7 @@
 <SDateRangePicker
   weekGuides
   weekNumbers
+  {maxDate}
   todayBtn
   resetViewBtn
   timePicker
