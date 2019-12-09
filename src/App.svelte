@@ -31,7 +31,6 @@
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   const maxDate = undefined
-  let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2
 
   function onApply({ detail }) {
     startDate = detail.startDate
@@ -44,6 +43,7 @@
   weekGuides
   weekNumbers
   todayBtn
+  twoPages
   resetViewBtn
   timePicker
   timePickerControls

@@ -10,6 +10,7 @@ import { isNextMonth } from './is-next-month'
 import { isPrevMonth } from './is-prev-month'
 import { isStartDate } from './is-start-date'
 import { pad } from './pad'
+import { passiveSupported } from './passive-supported'
 import { roundDown } from './round-down'
 import { toRange } from './to-range'
 import { localeFormat } from './locale-format'
@@ -28,6 +29,7 @@ export {
   isStartDate,
   localeFormat,
   pad,
+  passiveSupported,
   roundDown,
   toRange
 }
