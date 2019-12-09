@@ -60,7 +60,6 @@
   // export let predefinedRanges = [];
 
   let hasSelection = true
-  let hoverDate = endDate
   let calendarRef
   let numPages = twoPages ? 2 : 1
 
