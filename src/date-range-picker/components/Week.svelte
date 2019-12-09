@@ -2,6 +2,7 @@
   import Day from './Day.svelte'
   import { localeFormat } from '../utils'
 
+  export let disablePrevNextMo
   export let month
   export let monthIndicator
   export let rtl
@@ -30,6 +31,7 @@
   {#each week.daysInWeek as day (day.date.toString())}
     <Day
       {day}
+      {disablePrevNextMo}
       {monthIndicator}
       {rtl}
       on:apply
