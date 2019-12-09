@@ -44,33 +44,61 @@
 ### Props / Options
 ```javascript
 applyBtnText = "Apply"; // (string)
+
 cancelBtnText = "Camcel"; // (string)
+
 dateFormat = "MMM dd, yyyy"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+
 disabledDates = []; // (Date[])
+
 endDate = endOfWeek(new Date()); // (Date)
+
 firstDayOfWeek = "sunday"; // (string)
+
 isoWeekNumbers = false; // (boolean)
+
 locale = undefined; // (Locale) date-fns defaults to the system locale.
+
 maxDate = addYears(new Date(), 10); // (Date)
+
 minDate = subYears(new Date(), 10); // (Date)
+
 monthDropdown = false; // (boolean)
+
 monthFormat = "MMMM"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+
 nextIcon = "&#9656;"; // (html | string) - ▸
+
 prevIcon = "&#9666;"; // (html | string) - ◂
+
 resetViewBtn = false; // (boolean)
+
 resetViewBtnText = "&#8602;"; // (html | string) - ↚
+
 rtl = false; // (boolean)
+
 singlePicker = false; // (boolean)
+
 startDate = startOfWeek(new Date()); // (Date)
+
 timePicker = false; // (boolean)
+
 timePickerControls = false; // (boolean)
+
 timePickerIncrement = 1; // (number)
+
 timePickerSeconds = false; // (boolean)
+
 today = new Date(); // (Date) Used as a reference in predefinedRanges and for underlining in calendar
+
 todayBtn = false; // (boolean)
+
 todayBtnText = "Today"; // (string)
+
 weekGuides = false; // (boolean) Distance in calendar weeks from today
+
 weekNumbers = false; // (boolean) Local week numbers
+
 yearDropdown = false; // (boolean)
 ```
 
