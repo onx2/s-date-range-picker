@@ -1,6 +1,7 @@
 /**
  * The DOM API, of which addEventListener is a part, is not defined by the
- * ECMAScript language specification, so it is unrelated to Babel.
+ * ECMAScript language specification, so it is unrelated to Babel; thus, the
+ * necessity for this function.
  * https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  *
  * This function is used for safely detecting passive option support, but
