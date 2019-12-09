@@ -51,12 +51,12 @@
       roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
     )
   )
-  $: isHourOptionDisabled = hours => {
+  $: isHourOptionDisabled = h => {
     const date = new Date(
       dateReference.getFullYear(),
       dateReference.getMonth(),
       dateReference.getDate(),
-      parseInt(hours)
+      parseInt(h)
     )
     return (
       (!isSameHour(date, minDate) && isBefore(date, minDate)) ||
@@ -64,17 +64,32 @@
     )
   }
 
-  $: isMinuteOptionDisabled = minutes => {
+  $: isMinuteOptionDisabled = m => {
     const date = new Date(
       dateReference.getFullYear(),
       dateReference.getMonth(),
       dateReference.getDate(),
-      parseInt(selectedHour),
-      parseInt(minutes)
+      selectedHour,
+      parseInt(m)
     )
     return (
       (!isSameMinute(date, minDate) && isBefore(date, minDate)) ||
       (!isSameMinute(date, minDate) && isAfter(date, maxDate))
+    )
+  }
+
+  $: isSecondOptionDisabled = s => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      selectedHour,
+      selectedMinute,
+      parseInt(s)
+    )
+    return (
+      (!isSameSecond(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameSecond(date, minDate) && isAfter(date, maxDate))
     )
   }
 </script>
@@ -142,7 +157,7 @@
         })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
-        <option value={parseInt(second)}>{second}</option>
+        <option value={parseInt(second)} disabled={isSecondOptionDisabled(second)}>{second}</option>
       {/each}
     </select>
   {/if}
