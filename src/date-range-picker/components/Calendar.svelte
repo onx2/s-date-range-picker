@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { parseISO } from 'date-fns'
+  import { isSameDay } from 'date-fns'
   import Controls from './Controls.svelte'
   import DaysOfWeek from './DaysOfWeek.svelte'
   import Week from './Week.svelte'
@@ -46,26 +46,36 @@
   const onTouchmove = e => {
     const target = getTouchTarget(e)
     if ('data-date' in target.attributes && !target.disabled) {
-      dispatchEvent(
-        'hover',
-        new Date(parseISO(target.attributes['data-date'].value))
-      )
+      const valueArray = target.attributes['data-date'].value.split('-')
+      const newDate = new Date(valueArray[0], valueArray[1], valueArray[2])
+      // Prevent unnecessary updates
+      if (!isSameDay(newDate, tempEndDate)) {
+        dispatchEvent('hover', newDate)
+      }
     }
   }
+
   const onTouchStart = e => {
     if ('data-date' in e.target.attributes && !e.target.disabled) {
+      const valueArray = e.target.attributes['data-date'].value.split('-')
       dispatchEvent(
         'selection',
-        new Date(parseISO(e.target.attributes['data-date'].value))
+        new Date(new Date(
+          valueArray[0],
+          valueArray[1],
+          valueArray[2]
+        ))
       )
     }
   }
+
   const onTouchEnd = e => {
     const target = getTouchTarget(e)
     if ('data-date' in target.attributes && !target.disabled) {
+      const valueArray = target.attributes['data-date'].value.split('-')
       dispatchEvent(
         'selection',
-        new Date(parseISO(target.attributes['data-date'].value))
+        new Date(new Date(valueArray[0], valueArray[1], valueArray[2]))
       )
     }
   }
