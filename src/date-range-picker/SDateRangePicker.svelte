@@ -196,11 +196,10 @@
       // Start and end dates are always the same on singlePicker
       tempStartDate = tempEndDate = detailWithEndDateTime
     } else if (hasSelection) {
-      /**
-       * In range mode, if there is currently a selection and the selection
-       * event is fired the user must be selecting the start date.
-       */
-      tempStartDate = tempEndDate = detailWithStartDateTime
+      // In range mode, if there is currently a selection and the selection
+      // event is fired the user must be selecting the start date.
+      tempStartDate = detailWithStartDateTime
+      tempEndDate = detailWithEndDateTime
       hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
@@ -235,7 +234,15 @@
 
   const onHover = ({ detail }) => {
     if (!hasSelection) {
-      tempEndDate = detail
+      // Only update the year, month, and date when hovering over new dates.
+      tempEndDate = new Date(
+        detail.getFullYear(),
+        detail.getMonth(),
+        detail.getDate(),
+        tempEndDate.getHours(),
+        tempEndDate.getMinutes(),
+        tempEndDate.getSeconds()
+      )
     }
   }
 
@@ -357,7 +364,6 @@
         {disabledDates}
         {events}
         {firstDayOfWeek}
-        {hasSelection}
         {maxDate}
         {minDate}
         {month}

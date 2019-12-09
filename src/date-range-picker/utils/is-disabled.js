@@ -3,7 +3,6 @@ import { isAfter, isBefore, isSameDay } from 'date-fns'
 /**
  *
  * @param {Object}
- * @property {boolean} hasSelection
  * @property {Date} date
  * @property {Date} maxDate
  * @property {Date} minDate

@@ -14,7 +14,7 @@ export const isEndDate = ({
   tempEndDate,
   date,
   hasSelection,
-  tempStartDate,
+  tempStartDate
 }) => {
   if (!hasSelection) {
     if (isAfter(tempEndDate, tempStartDate)) {

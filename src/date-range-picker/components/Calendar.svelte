@@ -8,7 +8,6 @@
   export let disabledDates
   export let events
   export let firstDayOfWeek
-  export let hasSelection
   export let maxDate
   export let minDate
   export let month
@@ -32,7 +31,6 @@
     disabledDates,
     events,
     firstDayOfWeek,
-    hasSelection,
     maxDate,
     minDate,
     month,
