@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import {
     addMonths,
     addYears,
@@ -16,7 +16,7 @@
     startOfYear,
     subMonths
   } from 'date-fns'
-  import { localeFormat, roundDown } from './utils'
+  import { localeFormat, passiveSupported, roundDown } from './utils'
   import Calendar from './components/Calendar.svelte'
   import TimePicker from './components/TimePicker.svelte'
   export let applyBtnText = 'Apply'
@@ -35,7 +35,6 @@
   export let monthFormat = 'MMMM'
   export let monthIndicator = true
   export let nextIcon = '▸'
-  export let numPages = 2
   export let prevIcon = '◂'
   export let resetViewBtn = false
   export let resetViewBtnText = '↚'
@@ -51,6 +50,7 @@
   export let today = new Date()
   export let todayBtn = false
   export let todayBtnText = 'Today'
+  export let twoPages = false
   export let weekGuides = false
   export let weekNumbers = false
   export let yearDropdown = true
@@ -60,8 +60,9 @@
   // export let predefinedRanges = [];
 
   let hasSelection = true
-  $: tempEndDate = endDate
-  $: tempStartDate = startDate
+  let hoverDate = endDate
+  let calendarRef
+  let numPages = twoPages ? 2 : 1
 
   const dispatchEvent = createEventDispatcher()
 
@@ -69,6 +70,8 @@
   /** @todo This might be better placed into a store. */
   window.__locale__ = locale
 
+  $: tempEndDate = endDate
+  $: tempStartDate = startDate
   $: canApply = () => {
     if (!hasSelection) {
       return false
@@ -112,9 +115,21 @@
 
     return localeFormat(tempEndDate, dateFormat)
   }
+  $: pickerWidth = calendarRef ? numPages * calendarRef.offsetWidth : 0
 
   // Round and set the hover data temp start & end dates based on start & end date props
   onMount(() => {
+    calendarRef = document.querySelector('.s-calendar')
+
+    if (twoPages) {
+      onResize() // Initial sizing
+      window.addEventListener(
+        'resize',
+        onResize,
+        passiveSupported ? { passive: true } : false
+      )
+    }
+
     if (timePicker) {
       tempStartDate = new Date(
         startDate.getFullYear(),
@@ -135,6 +150,16 @@
       )
     }
   })
+
+  onDestroy(() => {
+    if (twoPages) {
+      window.removeEventListener('resize', onResize)
+    }
+  })
+
+  const onResize = () => {
+    numPages = document.body.scrollWidth <= 2 * calendarRef.offsetWidth ? 1 : 2
+  }
 
   const apply = () => {
     if (!canApply()) {
@@ -322,8 +347,13 @@
     align-items: center;
   }
 
-  .s-date-range-picker :global(.muted) {
-    opacity: 0.4;
+  /*
+    https://webaim.org/resources/contrastchecker/
+    WCAG AAA Compliant: #595959 on #FFFFFF background
+    WCAG AA Compliant: #757575 on #FFFFFF background
+  */
+  .s-date-range-picker :global(:not(:disabled).muted) {
+    color: #757575;
   }
 
   .s-date-range-picker :global(.row) {
@@ -347,20 +377,28 @@
     flex-direction: row;
   }
 
-  .rtl {
-    direction: rtl;
-  }
-
   .actions-row {
     padding-top: 8px;
     justify-content: flex-end;
     display: flex;
   }
+
+  /*
+    Swap border radius of the start and end dates when in rtl
+  */
+  .s-date-range-picker[dir='rtl'] :global(.end-date::after) {
+    border-radius: 100% 0 0 100%;
+  }
+
+  .s-date-range-picker[dir='rtl'] :global(.start-date::after) {
+    border-radius: 0 100% 100% 0;
+  }
 </style>
 
 <form
   {lang}
-  class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
+  dir={rtl ? 'rtl' : 'ltr'}
+  class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
   <div class="s-grid">
@@ -386,7 +424,6 @@
         on:prevMonth={onPrevMonth}
         on:selection={onSelection}
         {prevIcon}
-        {rtl}
         {singlePicker}
         {selectClass}
         {tempEndDate}
