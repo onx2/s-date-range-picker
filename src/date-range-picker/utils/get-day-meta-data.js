@@ -34,7 +34,6 @@ import { toRange } from './to-range'
  * @prop {Date} date
  * @prop {Date} tempEnd
  * @prop {Date[]} events
- * @prop {Date} hoverDate
  * @prop {boolean} hasSelection
  * @prop {Date} month
  * @prop {boolean} singlePicker
@@ -51,7 +50,6 @@ export const getDayMetaData = params => {
     date,
     tempEndDate,
     events,
-    hoverDate,
     hasSelection,
     month,
     singlePicker,
@@ -65,7 +63,7 @@ export const getDayMetaData = params => {
   // Sort the range asc for `isWithinInterval` function.
   const { start, end } = toRange(
     tempStartDate,
-    hasSelection ? tempEndDate : hoverDate
+    tempEndDate
   )
 
   return {

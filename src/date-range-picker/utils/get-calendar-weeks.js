@@ -17,7 +17,6 @@ import { getDayMetaData } from './get-day-meta-data'
  * @prop {Date} date
  * @prop {Date} tempEnd
  * @prop {Date[]} events
- * @prop {Date} hoverDate
  * @prop {boolean} hasSelection
  * @prop {Date} month
  * @prop {boolean} singlePicker

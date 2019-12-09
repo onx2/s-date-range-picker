@@ -9,7 +9,6 @@
   export let events
   export let firstDayOfWeek
   export let hasSelection
-  export let hoverDate
   export let maxDate
   export let minDate
   export let month
@@ -34,7 +33,6 @@
     events,
     firstDayOfWeek,
     hasSelection,
-    hoverDate,
     maxDate,
     minDate,
     month,

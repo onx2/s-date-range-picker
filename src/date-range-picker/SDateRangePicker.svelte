@@ -61,7 +61,6 @@
   // export let predefinedRanges = [];
 
   let hasSelection = true
-  let hoverDate = endDate
   $: tempEndDate = endDate
   $: tempStartDate = startDate
 
@@ -97,19 +96,19 @@
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
   $: startDateReadout = () => {
-    if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-      return localeFormat(hoverDate, dateFormat)
+    if (!hasSelection && isBefore(tempEndDate, tempStartDate)) {
+      return localeFormat(tempEndDate, dateFormat)
     }
 
     return localeFormat(tempStartDate, dateFormat)
   }
   $: endDateReadout = () => {
     if (!hasSelection) {
-      if (isBefore(hoverDate, tempStartDate)) {
+      if (isBefore(tempEndDate, tempStartDate)) {
         return localeFormat(tempStartDate, dateFormat)
       }
 
-      return localeFormat(hoverDate, dateFormat)
+      return localeFormat(tempEndDate, dateFormat)
     }
 
     return localeFormat(tempEndDate, dateFormat)
@@ -127,7 +126,7 @@
         roundDown(startDate.getSeconds(), secondIncrement)
       )
 
-      tempEndDate = hoverDate = new Date(
+      tempEndDate = new Date(
         endDate.getFullYear(),
         endDate.getMonth(),
         endDate.getDate(),
@@ -201,7 +200,7 @@
        * In range mode, if there is currently a selection and the selection
        * event is fired the user must be selecting the start date.
        */
-      tempStartDate = hoverDate = detailWithStartDateTime
+      tempStartDate = tempEndDate = detailWithStartDateTime
       hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
@@ -236,7 +235,7 @@
 
   const onHover = ({ detail }) => {
     if (!hasSelection) {
-      hoverDate = detail
+      tempEndDate = detail
     }
   }
 
@@ -359,7 +358,6 @@
         {events}
         {firstDayOfWeek}
         {hasSelection}
-        {hoverDate}
         {maxDate}
         {minDate}
         {month}
@@ -393,6 +391,8 @@
       <TimePicker
         {btnClass}
         dateReference={tempStartDate}
+        {maxDate}
+        {minDate}
         {minuteIncrement}
         on:timeChange={onStartTimeChange}
         {secondIncrement}
@@ -405,6 +405,8 @@
         <TimePicker
           {btnClass}
           dateReference={tempEndDate}
+          {maxDate}
+          {minDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}
@@ -419,6 +421,8 @@
         <TimePicker
           {btnClass}
           dateReference={tempEndDate}
+          {maxDate}
+          {minDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}

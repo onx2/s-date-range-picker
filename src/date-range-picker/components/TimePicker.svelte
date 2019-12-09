@@ -4,7 +4,10 @@
   import { pad, roundDown } from '../utils'
 
   export let btnClass
+  // Start or end date
   export let dateReference
+  export let maxDate
+  export let minDate
   export let minuteIncrement
   export let secondIncrement
   export let selectClass

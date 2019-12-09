@@ -197,10 +197,6 @@
   class:start-date={day.isStartDate}
   class:weekend={day.isWeekend}
   class:within-selection={day.isWithinSelection}
-  on:keydown={e => onKeydown(e, day.date)}
-  on:mouseenter={() => dispatchEvent('hover', day.date)}
-  on:mousedown={e => onMouseDown(e, day.date)}
-  on:mouseup={e => onMouseUp(e, day.date)}
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
@@ -208,6 +204,10 @@
     class="cell"
     disabled={day.isDisabled}
     data-date={localeFormat(day.date, 'yyyy-MM-dd')}
+    on:keydown={e => onKeydown(e, day.date)}
+    on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:mousedown={e => onMouseDown(e, day.date)}
+    on:mouseup={e => onMouseUp(e, day.date)}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
