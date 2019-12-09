@@ -30,8 +30,7 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = addHours(endDate, 500)
-  let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2
+  const maxDate = undefine
 
   function onApply({ detail }) {
     startDate = detail.startDate
@@ -45,6 +44,7 @@
   weekNumbers
   {maxDate}
   todayBtn
+  twoPages
   resetViewBtn
   timePicker
   timePickerControls
