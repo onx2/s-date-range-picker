@@ -30,7 +30,7 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = undefine
+  const maxDate = undefined
 
   function onApply({ detail }) {
     startDate = detail.startDate
