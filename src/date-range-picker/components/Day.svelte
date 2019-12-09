@@ -101,7 +101,7 @@
     opacity: 0;
   }
 
-  div:not(.disabled)::after {
+  div:not(.disabled):not(.next-month):not(.prev-month)::after {
     background-color: #bbdefb;
   }
 
@@ -156,15 +156,15 @@
     opacity: 0;
   }
 
-  button:not(:disabled):hover .month-indicator,
-  .start-date .month-indicator,
-  .end-date .month-indicator {
+  button:not(:disabled):not(.next-month):not(.prev-month):hover .month-indicator,
+  .start-date:not(.next-month):not(.prev-month) .month-indicator,
+  .end-date:not(.next-month):not(.prev-month) .month-indicator {
     transition: opacity 440ms ease;
     opacity: 1;
   }
 
-  .start-date button,
-  .end-date button,
+  .start-date:not(.next-month):not(.prev-month) button,
+  .end-date:not(.next-month):not(.prev-month) button,
   button:not(:disabled):hover {
     background-color: #1565c0;
     /* Overwrite .muted class for prev/next months */

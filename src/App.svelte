@@ -30,13 +30,13 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = addHours(endDate, 40)
+  const maxDate = addHours(endDate, 500)
   let numPages = random ? Math.floor(Math.random() * 2 + 1) : 2
 
   function onApply({ detail }) {
     startDate = detail.startDate
     endDate = detail.endDate
-    console.log('apply', detail, maxDate)
+    console.log('onApply: ', detail)
   }
 </script>
 
@@ -50,5 +50,4 @@
   timePickerControls
   startDate={startDate}
   endDate={endDate}
-  on:apply={onApply}>
-  </SDateRangePicker>
+  on:apply={onApply} />
