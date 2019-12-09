@@ -35,13 +35,14 @@
   function onApply({ detail }) {
     startDate = detail.startDate
     endDate = detail.endDate
-    console.log('apply', detail, maxDate)
+    console.log('onApply: ', detail)
   }
 </script>
 
 <SDateRangePicker
   weekGuides
   weekNumbers
+  {maxDate}
   todayBtn
   twoPages
   resetViewBtn
@@ -49,5 +50,4 @@
   timePickerControls
   startDate={startDate}
   endDate={endDate}
-  on:apply={onApply}>
-  </SDateRangePicker>
+  on:apply={onApply} />

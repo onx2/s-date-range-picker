@@ -59,6 +59,7 @@
   <span>
     {#if monthDropdown}
       <select
+        aria-label="Month select"
         bind:value={selectedMonth}
         class={selectClass}
         on:change={() => disptachEvent('pageChange', {
@@ -81,6 +82,7 @@
     {/if}
     {#if yearDropdown}
       <select
+        aria-label="Year select"
         bind:value={selectedYear}
         class={selectClass}
         on:change={() => disptachEvent('pageChange', {
