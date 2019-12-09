@@ -359,7 +359,7 @@
 </style>
 
 <form
-  lang={lang}
+  {lang}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
