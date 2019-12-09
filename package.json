@@ -96,5 +96,10 @@
         "tsConfig": "tsconfig.test.json"
       }
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format && yarn lint"
+    }
   }
 }
