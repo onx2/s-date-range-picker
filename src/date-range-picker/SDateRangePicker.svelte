@@ -197,6 +197,11 @@
   }
 
   const onSelection = ({ detail }) => {
+    /**
+     * @todo Take into account the min and max dates
+     * when the new end date is after max date, set it to max date
+     * when the new start date is before min date, set it to min date
+     */
     const detailWithEndDateTime = new Date(
       detail.getFullYear(),
       detail.getMonth(),
@@ -408,6 +413,7 @@
         {disabledDates}
         {events}
         {firstDayOfWeek}
+        {hasSelection}
         {maxDate}
         {minDate}
         {month}

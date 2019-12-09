@@ -49,6 +49,7 @@
   twoPages
   resetViewBtn
   timePicker
+  timePickerSeconds
   timePickerControls
   startDate={startDate}
   endDate={endDate}

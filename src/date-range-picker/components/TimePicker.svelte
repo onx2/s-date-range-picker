@@ -1,6 +1,14 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { endOfDay, isSameSecond, startOfDay } from 'date-fns'
+  import {
+    endOfDay,
+    isAfter,
+    isBefore,
+    isSameHour,
+    isSameMinute,
+    isSameSecond,
+    startOfDay
+  } from 'date-fns'
   import { pad, roundDown } from '../utils'
 
   export let btnClass
@@ -43,6 +51,32 @@
       roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
     )
   )
+  $: isHourOptionDisabled = hours => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      parseInt(hours)
+    )
+    return (
+      (!isSameHour(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameHour(date, minDate) && isAfter(date, maxDate))
+    )
+  }
+
+  $: isMinuteOptionDisabled = minutes => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      parseInt(selectedHour),
+      parseInt(minutes)
+    )
+    return (
+      (!isSameMinute(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameMinute(date, minDate) && isAfter(date, maxDate))
+    )
+  }
 </script>
 
 <div class="space-center">
@@ -73,7 +107,9 @@
       })}
     title={`${selectedHour} hours`}>
     {#each hours as hour}
-      <option value={parseInt(hour)}>{hour}</option>
+      <option value={parseInt(hour)} disabled={isHourOptionDisabled(hour)}>
+        {hour}
+      </option>
     {/each}
   </select>
   <select
@@ -87,7 +123,11 @@
       })}
     title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
-      <option value={parseInt(minute)}>{minute}</option>
+      <option
+        value={parseInt(minute)}
+        disabled={isMinuteOptionDisabled(minute)}>
+        {minute}
+      </option>
     {/each}
   </select>
   {#if timePickerSeconds}
