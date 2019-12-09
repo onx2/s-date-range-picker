@@ -15,7 +15,7 @@
   import * as locales from 'date-fns/locale'
   import SDateRangePicker from './date-range-picker/SDateRangePicker.svelte'
 
-  const random = false
+  const random = true
 
   const localesArray = Object.keys(locales).map(i => locales[i])
   const locale = random
@@ -46,6 +46,7 @@ console.log(maxDate)
   weekGuides
   weekNumbers
   todayBtn
+  {locale}
   resetViewBtn
   timePicker
   timePickerControls

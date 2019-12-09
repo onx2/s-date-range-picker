@@ -22,9 +22,10 @@
   on:prevMonth>
   {#if weekGuides}
     <small
+      aria-label={`${week.weeksFromToday} weeks from today`}
       class="cell muted"
-      aria-label={`${week.weeksFromToday} weeks from today`}>
-      {weeksFromToday}w
+      title={`${week.weeksFromToday} weeks from today`}>
+      {weeksFromToday}
     </small>
   {/if}
   {#each week.daysInWeek as day (day.date.toString())}
@@ -38,7 +39,10 @@
       on:selection />
   {/each}
   {#if weekNumbers}
-    <small class="cell muted" aria-label={`Week ${week.weekNumber}`}>
+    <small
+      aria-label={`Week ${week.weekNumber}`}
+      class="cell muted"
+      title={`Week ${week.weekNumber}`}>
       {week.weekNumber}
     </small>
   {/if}

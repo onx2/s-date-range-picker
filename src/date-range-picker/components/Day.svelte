@@ -208,6 +208,7 @@
     on:mouseenter={() => dispatchEvent('hover', day.date)}
     on:mousedown={e => onMouseDown(e, day.date)}
     on:mouseup={e => onMouseUp(e, day.date)}
+    title={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>

@@ -19,7 +19,6 @@
   import { localeFormat, roundDown } from './utils'
   import Calendar from './components/Calendar.svelte'
   import TimePicker from './components/TimePicker.svelte'
-
   export let applyBtnText = 'Apply'
   export let btnClass = 's-picker-btn'
   export let cancelBtnText = 'Cancel'
@@ -298,6 +297,12 @@
       tempEndDate = newDate
     }
   }
+
+  $: lang = locale
+    ? locale.code
+    : navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
 </script>
 
 <style>
@@ -354,6 +359,7 @@
 </style>
 
 <form
+  lang={lang}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
@@ -393,7 +399,7 @@
   </div>
 
   {#if timePicker}
-    <div class="row" role="row">
+    <div class="row" style="flex-wrap: wrap;">
       <TimePicker
         {btnClass}
         dateReference={tempStartDate}
@@ -407,7 +413,7 @@
         {timePicker24Hour}
         {timePickerSeconds} />
 
-      {#if !singlePicker && numPages >= 2}
+      {#if !singlePicker}
         <TimePicker
           {btnClass}
           dateReference={tempEndDate}
@@ -422,24 +428,8 @@
           {timePickerSeconds} />
       {/if}
     </div>
-    {#if !singlePicker && numPages === 1}
-      <div class="row">
-        <TimePicker
-          {btnClass}
-          dateReference={tempEndDate}
-          {maxDate}
-          {minDate}
-          {minuteIncrement}
-          on:timeChange={onEndTimeChange}
-          {secondIncrement}
-          {selectClass}
-          {timePickerControls}
-          {timePicker24Hour}
-          {timePickerSeconds} />
-      </div>
-    {/if}
   {/if}
-  <div class="actions-row" role="row">
+  <div class="actions-row">
     {#if todayBtn}
       <button
         aria-disabled={isSameMonth(today, months[0])}
