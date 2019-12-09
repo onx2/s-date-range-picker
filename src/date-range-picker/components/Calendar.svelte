@@ -1,8 +1,10 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
+  import { parseISO } from 'date-fns'
   import Controls from './Controls.svelte'
   import DaysOfWeek from './DaysOfWeek.svelte'
   import Week from './Week.svelte'
-  import { getCalendarWeeks } from '../utils'
+  import { getCalendarWeeks, getTouchTarget } from '../utils'
 
   export let btnClass
   export let disabledDates
@@ -38,6 +40,35 @@
     tempStartDate,
     today
   })
+
+  const dispatchEvent = createEventDispatcher()
+
+  const onTouchmove = e => {
+    const target = getTouchTarget(e)
+    if ('data-date' in target.attributes && !target.disabled) {
+      dispatchEvent(
+        'hover',
+        new Date(parseISO(target.attributes['data-date'].value))
+      )
+    }
+  }
+  const onTouchStart = e => {
+    if ('data-date' in e.target.attributes && !e.target.disabled) {
+      dispatchEvent(
+        'selection',
+        new Date(parseISO(e.target.attributes['data-date'].value))
+      )
+    }
+  }
+  const onTouchEnd = e => {
+    const target = getTouchTarget(e)
+    if ('data-date' in target.attributes && !target.disabled) {
+      dispatchEvent(
+        'selection',
+        new Date(parseISO(target.attributes['data-date'].value))
+      )
+    }
+  }
 </script>
 
 <div class="s-calendar">
@@ -56,7 +87,11 @@
     {prevIcon}
     {selectClass}
     {yearDropdown} />
-  <div role="grid">
+  <div
+    role="grid"
+    on:touchmove|passive={onTouchmove}
+    on:touchstart={onTouchStart}
+    on:touchend={onTouchEnd}>
     <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />
     {#each weeks as week}
       <Week

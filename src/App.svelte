@@ -15,7 +15,7 @@
   import * as locales from 'date-fns/locale'
   import SDateRangePicker from './date-range-picker/SDateRangePicker.svelte'
 
-  const random = true
+  const random = false
 
   const localesArray = Object.keys(locales).map(i => locales[i])
   const locale = random
@@ -32,7 +32,6 @@
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   const maxDate = addHours(endDate, 3)
 
-  console.log(maxDate)
   function onApply({ detail }) {
     startDate = detail.startDate
     endDate = detail.endDate

@@ -4,6 +4,7 @@ import { dayOffset } from './day-offset'
 import { getCalendarWeeks } from './get-calendar-weeks'
 import { getDayMetaData } from './get-day-meta-data'
 import { getDaysOfWeek } from './get-days-of-week'
+import { getTouchTarget } from './get-touch-target'
 import { isDisabled } from './is-disabled'
 import { isEndDate } from './is-end-date'
 import { isNextMonth } from './is-next-month'
@@ -22,6 +23,7 @@ export {
   getCalendarWeeks,
   getDaysOfWeek,
   getDayMetaData,
+  getTouchTarget,
   isDisabled,
   isEndDate,
   isNextMonth,

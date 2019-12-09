@@ -397,6 +397,7 @@
 <form
   {lang}
   dir={rtl ? 'rtl' : 'ltr'}
+  style={`width: ${pickerWidth}px`}
   class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
@@ -473,6 +474,7 @@
         class={btnClass}
         disabled={isSameMonth(today, months[0])}
         on:click={goToToday}
+        title="Show the today's month"
         type="button">
         {todayBtnText}
       </button>
@@ -484,6 +486,7 @@
         class={btnClass}
         disabled={!canResetView}
         on:click={resetView}
+        title="Show the current selection's start month"
         type="button">
         {@html resetViewBtnText}
       </button>
@@ -495,6 +498,8 @@
       class={btnClass}
       disabled={!canApply()}
       on:click={cancel}
+      title="Cancel the current selection and revert to previous start and end
+      dates"
       type="button">
       {cancelBtnText}
     </button>
@@ -505,6 +510,7 @@
       class={btnClass}
       disabled={!canApply()}
       on:click={apply}
+      title="Apply the current selection"
       type="submit">
       {applyBtnText}
     </button>
