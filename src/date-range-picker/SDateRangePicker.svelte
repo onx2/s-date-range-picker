@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import {
     addMonths,
     addYears,
@@ -16,7 +16,7 @@
     startOfYear,
     subMonths
   } from 'date-fns'
-  import { localeFormat, roundDown } from './utils'
+  import { localeFormat, passiveSupported, roundDown } from './utils'
   import Calendar from './components/Calendar.svelte'
   import TimePicker from './components/TimePicker.svelte'
 
@@ -36,7 +36,6 @@
   export let monthFormat = 'MMMM'
   export let monthIndicator = true
   export let nextIcon = '▸'
-  export let numPages = 2
   export let prevIcon = '◂'
   export let resetViewBtn = false
   export let resetViewBtnText = '↚'
@@ -52,6 +51,7 @@
   export let today = new Date()
   export let todayBtn = false
   export let todayBtnText = 'Today'
+  export let twoPages = false
   export let weekGuides = false
   export let weekNumbers = false
   export let yearDropdown = true
@@ -62,8 +62,8 @@
 
   let hasSelection = true
   let hoverDate = endDate
-  $: tempEndDate = endDate
-  $: tempStartDate = startDate
+  let calendarRef
+  let numPages = twoPages ? 2 : 1
 
   const dispatchEvent = createEventDispatcher()
 
@@ -71,6 +71,8 @@
   /** @todo This might be better placed into a store. */
   window.__locale__ = locale
 
+  $: tempEndDate = endDate
+  $: tempStartDate = startDate
   $: canApply = () => {
     if (!hasSelection) {
       return false
@@ -114,9 +116,21 @@
 
     return localeFormat(tempEndDate, dateFormat)
   }
+  $: pickerWidth = calendarRef ? numPages * calendarRef.offsetWidth : 0
 
   // Round and set the hover data temp start & end dates based on start & end date props
   onMount(() => {
+    calendarRef = document.querySelector('.s-calendar')
+
+    if (twoPages) {
+      onResize() // Initial sizing
+      window.addEventListener(
+        'resize',
+        onResize,
+        passiveSupported ? { passive: true } : false
+      )
+    }
+
     if (timePicker) {
       tempStartDate = new Date(
         startDate.getFullYear(),
@@ -137,6 +151,16 @@
       )
     }
   })
+
+  onDestroy(() => {
+    if (twoPages) {
+      window.removeEventListener('resize', onResize)
+    }
+  })
+
+  const onResize = () => {
+    numPages = document.body.scrollWidth <= 2 * calendarRef.offsetWidth ? 1 : 2
+  }
 
   const apply = () => {
     if (!canApply()) {
@@ -348,6 +372,7 @@
 </style>
 
 <form
+  style={`width: ${pickerWidth}px`}
   class={rtl ? 'rtl s-date-range-picker' : 's-date-range-picker'}
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
@@ -389,7 +414,7 @@
   </div>
 
   {#if timePicker}
-    <div class="row" role="row">
+    <div class="row">
       <TimePicker
         {btnClass}
         dateReference={tempStartDate}
