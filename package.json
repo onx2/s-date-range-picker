@@ -33,7 +33,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
-    "build": "yarn cleanup && yarn format && yarn lint && cross-env NODE_ENV=production rollup --config"
+    "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
   },
   "dependencies": {
     "date-fns": "2.8.1"

@@ -57,8 +57,7 @@
   export let yearDropdown = true
 
   /** @todo Implement props/options */
-  // export let disabled = false;
-  // export let maxSpan = null;
+  // export let maxSpan = null;w
   // export let predefinedRanges = [];
 
   let hasSelection = true
