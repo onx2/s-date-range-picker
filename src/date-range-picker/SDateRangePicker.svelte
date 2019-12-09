@@ -25,7 +25,6 @@
   export let cancelBtnText = 'Cancel'
   export let dateFormat = 'MMM dd, yyyy'
   export let disabledDates = []
-  export let disablePrevNextMo = false
   export let endDate = endOfWeek(new Date())
   export let events = []
   export let firstDayOfWeek = 'sunday'
@@ -357,7 +356,6 @@
       <Calendar
         {btnClass}
         {disabledDates}
-        {disablePrevNextMo}
         {events}
         {firstDayOfWeek}
         {hasSelection}

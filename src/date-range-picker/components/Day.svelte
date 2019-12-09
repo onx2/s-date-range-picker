@@ -12,7 +12,6 @@
   import { localeFormat } from '../utils'
 
   export let day
-  export let disablePrevNextMo
   export let monthIndicator
   export let rtl
 

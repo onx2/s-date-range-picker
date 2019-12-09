@@ -6,7 +6,6 @@
 
   export let btnClass
   export let disabledDates
-  export let disablePrevNextMo
   export let events
   export let firstDayOfWeek
   export let hasSelection
@@ -66,7 +65,6 @@
     <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />
     {#each weeks as week}
       <Week
-        {disablePrevNextMo}
         {month}
         {monthIndicator}
         on:apply
