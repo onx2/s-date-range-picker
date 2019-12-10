@@ -55,8 +55,6 @@ endDate = endOfWeek(new Date()); // (Date)
 
 firstDayOfWeek = "sunday"; // (string)
 
-isoWeekNumbers = false; // (boolean)
-
 locale = undefined; // (Locale) date-fns defaults to the system locale.
 
 maxDate = addYears(new Date(), 10); // (Date)
@@ -94,6 +92,8 @@ today = new Date(); // (Date) Used as a reference in predefinedRanges and for un
 todayBtn = false; // (boolean)
 
 todayBtnText = "Today"; // (string)
+
+twoPages = true; // (boolean)
 
 weekGuides = false; // (boolean) Distance in calendar weeks from today
 
