@@ -9,6 +9,7 @@ import { terser } from 'rollup-plugin-terser'
 import livereload from 'rollup-plugin-livereload'
 import bundleSize from 'rollup-plugin-bundle-size'
 import babel from 'rollup-plugin-babel'
+import sveltePreprocess from 'svelte-preprocess'
 import pkg from './package.json'
 
 const name = pkg.name
@@ -20,6 +21,15 @@ const isProd = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
 const isTest = process.env.NODE_ENV === 'test'
 
+const preprocess = sveltePreprocess({
+  scss: {
+    includePaths: ['src'],
+  },
+  postcss: {
+    plugins: [require('autoprefixer')],
+  },
+});
+
 const plugins = [
   commonjs({ include: 'node_modules/**' }),
   // typescript({ typescript: tscompile }),
@@ -27,6 +37,7 @@ const plugins = [
     dev: isProd ? false : true,
     extensions: ['.svelte'],
     // preprocess: require("./svelte.config.js").preprocess,
+    preprocess,
     css: isTest ? false : css => css.write('build/css/style.css')
   }),
   resolve({

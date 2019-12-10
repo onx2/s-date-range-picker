@@ -10,7 +10,7 @@
     isSameYear,
     subMonths
   } from 'date-fns'
-  import { buildMonths, buildYears, localeFormat } from '../utils'
+  import { buildMonthDropdown, buildYearDropdown, localeFormat } from '../utils'
 
   export let btnClass
   export let month
@@ -35,8 +35,8 @@
   $: nextMonth = addMonths(month, 1)
   $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate)
   $: isMin = isBefore(month, minDate) || isSameMonth(month, minDate)
-  $: months = buildMonths(month, monthFormat)
-  $: years = buildYears(minDate, maxDate, pageNum)
+  $: months = buildMonthDropdown(month, monthFormat)
+  $: years = buildYearDropdown(minDate, maxDate, pageNum)
   $: nextBtnDisabled = isSameMonth(month, maxDate) || isAfter(month, maxDate)
   $: prevBtnDisabled = isSameMonth(month, minDate) || isBefore(month, minDate)
 

@@ -4,7 +4,6 @@ import {
   endOfMonth,
   eachWeekOfInterval,
   getWeek,
-  getISOWeek,
   addWeeks,
   subMonths,
   startOfWeek
@@ -64,7 +63,6 @@ export const getCalendarWeeks = getDayMetaDataParams => {
       locale: window.__locale__
     }),
     weekNumber: getWeek(date, { weekStartsOn }),
-    isoWeekNumber: getISOWeek(date),
     daysInWeek: buildWeek(date, getDayMetaDataParams)
   }))
 }

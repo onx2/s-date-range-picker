@@ -227,16 +227,24 @@
     } else if (hasSelection) {
       // In range mode, if there is currently a selection and the selection
       // event is fired the user must be selecting the start date.
-      tempStartDate = isBefore(detailWithStartDateTime, minDate) ? minDate : detailWithStartDateTime
-      tempEndDate = isAfter(detailWithEndDateTime, maxDate) ? maxDate : detailWithEndDateTime
+      tempStartDate = isBefore(detailWithStartDateTime, minDate)
+        ? minDate
+        : detailWithStartDateTime
+      tempEndDate = isAfter(detailWithEndDateTime, maxDate)
+        ? maxDate
+        : detailWithEndDateTime
       hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
       // Sorting - Swap start and end dates when the end date is before the start date
       if (isBefore(detailWithEndDateTime, tempStartDate)) {
         if (isSameDay(detailWithEndDateTime, tempStartDate)) {
-          tempEndDate = isAfter(tempStartDate, maxDate) ? maxDate : tempStartDate
-          tempStartDate = isBefore(detailWithEndDateTime, minDate) ? minDate : detailWithEndDateTime
+          tempEndDate = isAfter(tempStartDate, maxDate)
+            ? maxDate
+            : tempStartDate
+          tempStartDate = isBefore(detailWithEndDateTime, minDate)
+            ? minDate
+            : detailWithEndDateTime
         } else {
           const newEndDate = new Date(
             tempStartDate.getFullYear(),
@@ -248,10 +256,14 @@
           )
 
           tempEndDate = isAfter(newEndDate, maxDate) ? maxDate : newEndDate
-          tempStartDate = isBefore(detailWithStartDateTime, minDate) ? minDate : detailWithStartDateTime
+          tempStartDate = isBefore(detailWithStartDateTime, minDate)
+            ? minDate
+            : detailWithStartDateTime
         }
       } else {
-        tempEndDate = isAfter(detailWithEndDateTime, maxDate) ? maxDate : detailWithEndDateTime
+        tempEndDate = isAfter(detailWithEndDateTime, maxDate)
+          ? maxDate
+          : detailWithEndDateTime
       }
 
       hasSelection = true

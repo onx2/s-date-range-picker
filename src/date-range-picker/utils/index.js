@@ -1,5 +1,5 @@
-import { buildMonths } from './build-months'
-import { buildYears } from './build-years'
+import { buildMonthDropdown } from './build-month-dropdown'
+import { buildYearDropdown } from './build-year-dropdown'
 import { dayOffset } from './day-offset'
 import { getCalendarWeeks } from './get-calendar-weeks'
 import { getDayMetaData } from './get-day-meta-data'
@@ -17,8 +17,8 @@ import { toRange } from './to-range'
 import { localeFormat } from './locale-format'
 
 export {
-  buildMonths,
-  buildYears,
+  buildMonthDropdown,
+  buildYearDropdown,
   dayOffset,
   getCalendarWeeks,
   getDaysOfWeek,

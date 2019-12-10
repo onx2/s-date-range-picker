@@ -39,6 +39,10 @@
   }
 </script>
 
+<style lang="scss" global>
+  @import "src/date-range-picker/themes/s-date-range-picker.default.scss";
+</style>
+
 <SDateRangePicker
   {maxDate}
   weekGuides
