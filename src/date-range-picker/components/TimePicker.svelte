@@ -157,7 +157,11 @@
         })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
-        <option value={parseInt(second)} disabled={isSecondOptionDisabled(second)}>{second}</option>
+        <option
+          value={parseInt(second)}
+          disabled={isSecondOptionDisabled(second)}>
+          {second}
+        </option>
       {/each}
     </select>
   {/if}
