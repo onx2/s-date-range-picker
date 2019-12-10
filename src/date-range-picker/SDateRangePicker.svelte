@@ -227,18 +227,18 @@
     } else if (hasSelection) {
       // In range mode, if there is currently a selection and the selection
       // event is fired the user must be selecting the start date.
-      tempStartDate = detailWithStartDateTime
-      tempEndDate = detailWithEndDateTime
+      tempStartDate = isBefore(detailWithStartDateTime, minDate) ? minDate : detailWithStartDateTime
+      tempEndDate = isAfter(detailWithEndDateTime, maxDate) ? maxDate : detailWithEndDateTime
       hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
       // Sorting - Swap start and end dates when the end date is before the start date
       if (isBefore(detailWithEndDateTime, tempStartDate)) {
         if (isSameDay(detailWithEndDateTime, tempStartDate)) {
-          tempEndDate = tempStartDate
-          tempStartDate = detailWithEndDateTime
+          tempEndDate = isAfter(tempStartDate, maxDate) ? maxDate : tempStartDate
+          tempStartDate = isBefore(detailWithEndDateTime, minDate) ? minDate : detailWithEndDateTime
         } else {
-          tempEndDate = new Date(
+          const newEndDate = new Date(
             tempStartDate.getFullYear(),
             tempStartDate.getMonth(),
             tempStartDate.getDate(),
@@ -246,10 +246,12 @@
             tempEndDate.getMinutes(),
             tempEndDate.getSeconds()
           )
-          tempStartDate = detailWithStartDateTime
+
+          tempEndDate = isAfter(newEndDate, maxDate) ? maxDate : newEndDate
+          tempStartDate = isBefore(detailWithStartDateTime, minDate) ? minDate : detailWithStartDateTime
         }
       } else {
-        tempEndDate = detailWithEndDateTime
+        tempEndDate = isAfter(detailWithEndDateTime, maxDate) ? maxDate : detailWithEndDateTime
       }
 
       hasSelection = true
