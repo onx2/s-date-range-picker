@@ -30,23 +30,26 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = undefined
+  const maxDate = addHours(endDate, 3)
 
   function onApply({ detail }) {
     startDate = detail.startDate
     endDate = detail.endDate
-    console.log('onApply: ', detail)
+    console.log('onApply: ', detail, maxDate)
   }
 </script>
 
 <SDateRangePicker
+  {maxDate}
   weekGuides
   weekNumbers
   {maxDate}
   todayBtn
+  {locale}
   twoPages
   resetViewBtn
   timePicker
+  timePickerSeconds
   timePickerControls
   startDate={startDate}
   endDate={endDate}

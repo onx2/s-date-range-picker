@@ -1,15 +1,16 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
+  import { isSameDay } from 'date-fns'
   import Controls from './Controls.svelte'
   import DaysOfWeek from './DaysOfWeek.svelte'
   import Week from './Week.svelte'
-  import { getCalendarWeeks } from '../utils'
+  import { getCalendarWeeks, getTouchTarget } from '../utils'
 
   export let btnClass
   export let disabledDates
   export let events
   export let firstDayOfWeek
   export let hasSelection
-  export let hoverDate
   export let maxDate
   export let minDate
   export let month
@@ -32,8 +33,6 @@
     disabledDates,
     events,
     firstDayOfWeek,
-    hasSelection,
-    hoverDate,
     maxDate,
     minDate,
     month,
@@ -42,6 +41,58 @@
     tempStartDate,
     today
   })
+
+  const dispatchEvent = createEventDispatcher()
+
+  const onTouchmove = e => {
+    const target = getTouchTarget(e)
+    if ('data-date' in target.attributes && !target.disabled) {
+      const valueArray = target.attributes['data-date'].value.split('-')
+      const newDate = new Date(
+        valueArray[0],
+        parseInt(valueArray[1]) - 1,
+        valueArray[2]
+      )
+      // Prevent unnecessary updates
+      if (!isSameDay(newDate, tempEndDate)) {
+        dispatchEvent('hover', newDate)
+      }
+    }
+  }
+
+  const onTouchStart = e => {
+    // e.preventDefault() is used to prevent mouse events from firing
+    // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent
+    e.preventDefault()
+    if (hasSelection) {
+      if ('data-date' in e.target.attributes && !e.target.disabled) {
+        const valueArray = e.target.attributes['data-date'].value.split('-')
+        dispatchEvent(
+          'selection',
+          new Date(valueArray[0], parseInt(valueArray[1]) - 1, valueArray[2])
+        )
+      }
+    }
+  }
+
+  const onTouchEnd = e => {
+    // e.preventDefault() is used to prevent mouse events from firing
+    // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent
+    e.preventDefault()
+    const target = getTouchTarget(e)
+    if ('data-date' in target.attributes && !target.disabled) {
+      const valueArray = target.attributes['data-date'].value.split('-')
+      const newDate = new Date(
+        valueArray[0],
+        parseInt(valueArray[1]) - 1,
+        valueArray[2]
+      )
+
+      if (!isSameDay(newDate, tempStartDate)) {
+        dispatchEvent('selection', newDate)
+      }
+    }
+  }
 </script>
 
 <div class="s-calendar">
@@ -60,7 +111,11 @@
     {prevIcon}
     {selectClass}
     {yearDropdown} />
-  <div role="grid">
+  <div
+    role="grid"
+    on:touchmove|passive={onTouchmove}
+    on:touchstart={onTouchStart}
+    on:touchend={onTouchEnd}>
     <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />
     {#each weeks as week}
       <Week

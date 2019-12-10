@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+
   import {
     addMonths,
     addYears,
@@ -19,7 +20,6 @@
   import { localeFormat, passiveSupported, roundDown } from './utils'
   import Calendar from './components/Calendar.svelte'
   import TimePicker from './components/TimePicker.svelte'
-
   export let applyBtnText = 'Apply'
   export let btnClass = 's-picker-btn'
   export let cancelBtnText = 'Cancel'
@@ -61,7 +61,6 @@
   // export let predefinedRanges = [];
 
   let hasSelection = true
-  let hoverDate = endDate
   let calendarRef
   let numPages = twoPages ? 2 : 1
 
@@ -99,19 +98,19 @@
   $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
   $: startDateReadout = () => {
-    if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-      return localeFormat(hoverDate, dateFormat)
+    if (!hasSelection && isBefore(tempEndDate, tempStartDate)) {
+      return localeFormat(tempEndDate, dateFormat)
     }
 
     return localeFormat(tempStartDate, dateFormat)
   }
   $: endDateReadout = () => {
     if (!hasSelection) {
-      if (isBefore(hoverDate, tempStartDate)) {
+      if (isBefore(tempEndDate, tempStartDate)) {
         return localeFormat(tempStartDate, dateFormat)
       }
 
-      return localeFormat(hoverDate, dateFormat)
+      return localeFormat(tempEndDate, dateFormat)
     }
 
     return localeFormat(tempEndDate, dateFormat)
@@ -141,7 +140,7 @@
         roundDown(startDate.getSeconds(), secondIncrement)
       )
 
-      tempEndDate = hoverDate = new Date(
+      tempEndDate = new Date(
         endDate.getFullYear(),
         endDate.getMonth(),
         endDate.getDate(),
@@ -199,6 +198,11 @@
   }
 
   const onSelection = ({ detail }) => {
+    /**
+     * @todo Take into account the min and max dates
+     * when the new end date is after max date, set it to max date
+     * when the new start date is before min date, set it to min date
+     */
     const detailWithEndDateTime = new Date(
       detail.getFullYear(),
       detail.getMonth(),
@@ -221,11 +225,10 @@
       // Start and end dates are always the same on singlePicker
       tempStartDate = tempEndDate = detailWithEndDateTime
     } else if (hasSelection) {
-      /**
-       * In range mode, if there is currently a selection and the selection
-       * event is fired the user must be selecting the start date.
-       */
-      tempStartDate = hoverDate = detailWithStartDateTime
+      // In range mode, if there is currently a selection and the selection
+      // event is fired the user must be selecting the start date.
+      tempStartDate = detailWithStartDateTime
+      tempEndDate = detailWithEndDateTime
       hasSelection = false
     } else {
       // In range mode, if there isn't a selection, the user must be selecting an end date
@@ -260,7 +263,15 @@
 
   const onHover = ({ detail }) => {
     if (!hasSelection) {
-      hoverDate = detail
+      // Only update the year, month, and date when hovering over new dates.
+      tempEndDate = new Date(
+        detail.getFullYear(),
+        detail.getMonth(),
+        detail.getDate(),
+        tempEndDate.getHours(),
+        tempEndDate.getMinutes(),
+        tempEndDate.getSeconds()
+      )
     }
   }
 
@@ -392,6 +403,7 @@
 <form
   {lang}
   dir={rtl ? 'rtl' : 'ltr'}
+  style={`width: ${pickerWidth}px`}
   class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>{startDateReadout()} to {endDateReadout()}</label>
@@ -403,7 +415,6 @@
         {events}
         {firstDayOfWeek}
         {hasSelection}
-        {hoverDate}
         {maxDate}
         {minDate}
         {month}
@@ -432,10 +443,12 @@
   </div>
 
   {#if timePicker}
-    <div class="row">
+    <div class="row" style="flex-wrap: wrap;">
       <TimePicker
         {btnClass}
         dateReference={tempStartDate}
+        {maxDate}
+        {minDate}
         {minuteIncrement}
         on:timeChange={onStartTimeChange}
         {secondIncrement}
@@ -444,10 +457,12 @@
         {timePicker24Hour}
         {timePickerSeconds} />
 
-      {#if !singlePicker && numPages >= 2}
+      {#if !singlePicker}
         <TimePicker
           {btnClass}
           dateReference={tempEndDate}
+          {maxDate}
+          {minDate}
           {minuteIncrement}
           on:timeChange={onEndTimeChange}
           {secondIncrement}
@@ -457,20 +472,6 @@
           {timePickerSeconds} />
       {/if}
     </div>
-    {#if !singlePicker && numPages === 1}
-      <div class="row">
-        <TimePicker
-          {btnClass}
-          dateReference={tempEndDate}
-          {minuteIncrement}
-          on:timeChange={onEndTimeChange}
-          {secondIncrement}
-          {selectClass}
-          {timePickerControls}
-          {timePicker24Hour}
-          {timePickerSeconds} />
-      </div>
-    {/if}
   {/if}
   <div class="actions-row">
     {#if todayBtn}
@@ -480,6 +481,7 @@
         class={btnClass}
         disabled={isSameMonth(today, months[0])}
         on:click={goToToday}
+        title="Show the today's month"
         type="button">
         {todayBtnText}
       </button>
@@ -491,6 +493,7 @@
         class={btnClass}
         disabled={!canResetView}
         on:click={resetView}
+        title="Show the current selection's start month"
         type="button">
         {@html resetViewBtnText}
       </button>
@@ -502,6 +505,8 @@
       class={btnClass}
       disabled={!canApply()}
       on:click={cancel}
+      title="Cancel the current selection and revert to previous start and end
+      dates"
       type="button">
       {cancelBtnText}
     </button>
@@ -512,6 +517,7 @@
       class={btnClass}
       disabled={!canApply()}
       on:click={apply}
+      title="Apply the current selection"
       type="submit">
       {applyBtnText}
     </button>

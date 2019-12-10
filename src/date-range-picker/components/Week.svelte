@@ -19,7 +19,10 @@
   on:nextMonth
   on:prevMonth>
   {#if weekGuides}
-    <small class="cell muted" aria-label={`${week.weeksFromToday}`}>
+    <small
+      aria-label={`${week.weeksFromToday} weeks from today`}
+      class="cell muted"
+      title={`${week.weeksFromToday} weeks from today`}>
       {weeksFromToday}
     </small>
   {/if}
@@ -27,7 +30,10 @@
     <Day {day} {monthIndicator} on:apply on:cancel on:hover on:selection />
   {/each}
   {#if weekNumbers}
-    <small class="cell muted" aria-label={`${week.weekNumber}`}>
+    <small
+      aria-label={`Week ${week.weekNumber}`}
+      class="cell muted"
+      title={`Week ${week.weekNumber}`}>
       {week.weekNumber}
     </small>
   {/if}

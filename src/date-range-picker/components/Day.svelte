@@ -156,7 +156,8 @@
     opacity: 0;
   }
 
-  button:not(:disabled):not(.next-month):not(.prev-month):hover .month-indicator,
+  button:not(:disabled):not(.next-month):not(.prev-month):hover
+    .month-indicator,
   .start-date:not(.next-month):not(.prev-month) .month-indicator,
   .end-date:not(.next-month):not(.prev-month) .month-indicator {
     transition: opacity 440ms ease;
@@ -193,6 +194,7 @@
     on:mouseenter={() => dispatchEvent('hover', day.date)}
     on:mousedown={e => onMouseDown(e, day.date)}
     on:mouseup={e => onMouseUp(e, day.date)}
+    title={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
     type="button">
     {#if monthIndicator}
       <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>

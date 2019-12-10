@@ -5,7 +5,6 @@ import { isSameDay, isBefore } from 'date-fns'
  * @param {Object}
  * @property {boolean} hasSelection
  * @property {Date} date
- * @property {Date} hoverDate
  * @property {Date} tempStartDate
  *
  * @returns {boolean}
@@ -13,11 +12,11 @@ import { isSameDay, isBefore } from 'date-fns'
 export const isStartDate = ({
   hasSelection,
   date,
-  hoverDate,
+  tempEndDate,
   tempStartDate
 }) => {
-  if (!hasSelection && isBefore(hoverDate, tempStartDate)) {
-    return isSameDay(date, hoverDate)
+  if (!hasSelection && isBefore(tempEndDate, tempStartDate)) {
+    return isSameDay(date, tempEndDate)
   }
 
   return isSameDay(date, tempStartDate)

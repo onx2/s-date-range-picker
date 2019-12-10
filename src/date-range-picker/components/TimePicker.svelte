@@ -1,10 +1,21 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { endOfDay, isSameSecond, startOfDay } from 'date-fns'
+  import {
+    endOfDay,
+    isAfter,
+    isBefore,
+    isSameHour,
+    isSameMinute,
+    isSameSecond,
+    startOfDay
+  } from 'date-fns'
   import { pad, roundDown } from '../utils'
 
   export let btnClass
+  // Start or end date
   export let dateReference
+  export let maxDate
+  export let minDate
   export let minuteIncrement
   export let secondIncrement
   export let selectClass
@@ -40,6 +51,47 @@
       roundDown(endOfDateReferenceDay.getSeconds(), secondIncrement)
     )
   )
+  $: isHourOptionDisabled = h => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      parseInt(h)
+    )
+    return (
+      (!isSameHour(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameHour(date, minDate) && isAfter(date, maxDate))
+    )
+  }
+
+  $: isMinuteOptionDisabled = m => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      selectedHour,
+      parseInt(m)
+    )
+    return (
+      (!isSameMinute(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameMinute(date, minDate) && isAfter(date, maxDate))
+    )
+  }
+
+  $: isSecondOptionDisabled = s => {
+    const date = new Date(
+      dateReference.getFullYear(),
+      dateReference.getMonth(),
+      dateReference.getDate(),
+      selectedHour,
+      selectedMinute,
+      parseInt(s)
+    )
+    return (
+      (!isSameSecond(date, minDate) && isBefore(date, minDate)) ||
+      (!isSameSecond(date, minDate) && isAfter(date, maxDate))
+    )
+  }
 </script>
 
 <div class="space-center">
@@ -70,7 +122,9 @@
       })}
     title={`${selectedHour} hours`}>
     {#each hours as hour}
-      <option value={parseInt(hour)}>{hour}</option>
+      <option value={parseInt(hour)} disabled={isHourOptionDisabled(hour)}>
+        {hour}
+      </option>
     {/each}
   </select>
   <select
@@ -84,7 +138,11 @@
       })}
     title={`${selectedMinute} minutes`}>
     {#each minutes as minute}
-      <option value={parseInt(minute)}>{minute}</option>
+      <option
+        value={parseInt(minute)}
+        disabled={isMinuteOptionDisabled(minute)}>
+        {minute}
+      </option>
     {/each}
   </select>
   {#if timePickerSeconds}
@@ -99,7 +157,7 @@
         })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
-        <option value={parseInt(second)}>{second}</option>
+        <option value={parseInt(second)} disabled={isSecondOptionDisabled(second)}>{second}</option>
       {/each}
     </select>
   {/if}
