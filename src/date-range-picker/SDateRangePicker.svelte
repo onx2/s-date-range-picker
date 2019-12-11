@@ -70,7 +70,7 @@
   /** @todo This might be better placed into a store. */
   window.__locale__ = locale
 
-  $: tempEndDate = endDate
+  $: tempEndDate = singlePicker ? startDate : endDate
   $: tempStartDate = startDate
   $: canApply = () => {
     if (!hasSelection) {
@@ -81,21 +81,22 @@
       if (timePickerSeconds) {
         return (
           !isSameSecond(tempStartDate, startDate) ||
-          !isSameSecond(tempEndDate, endDate)
+          (!singlePicker && !isSameSecond(tempEndDate, endDate))
         )
       }
 
       return (
         !isSameMinute(tempStartDate, startDate) ||
-        !isSameMinute(tempEndDate, endDate)
+        (!singlePicker && !isSameMinute(tempEndDate, endDate))
       )
     }
 
     return (
-      !isSameDay(tempStartDate, startDate) || !isSameDay(tempEndDate, endDate)
+      !isSameDay(tempStartDate, startDate) ||
+      (!singlePicker && !isSameDay(tempEndDate, endDate))
     )
   }
-  $: canResetView = !isSameMonth(tempStartDate, months[0]) && tempEndDate
+  $: canResetView = !isSameMonth(tempStartDate, months[0])
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
   $: startDateReadout = () => {
     if (!hasSelection && isBefore(tempEndDate, tempStartDate)) {
@@ -312,6 +313,7 @@
   }
 
   const onStartTimeChange = ({ detail }) => {
+    console.log('onStartTimeChange', detail)
     const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),
@@ -321,7 +323,7 @@
       detail.seconds
     )
 
-    if (isAfter(newDate, tempEndDate)) {
+    if (!singlePicker && isAfter(newDate, tempEndDate)) {
       tempStartDate = tempEndDate
       tempEndDate = newDate
     } else {
@@ -429,7 +431,9 @@
   style={`width: ${pickerWidth}px`}
   class="s-date-range-picker"
   on:submit|preventDefault={apply}>
-  <label>{startDateReadout()} to {endDateReadout()}</label>
+  <label>
+    {startDateReadout()} {!singlePicker ? ` to ${endDateReadout()}` : ''}
+  </label>
   <div class="s-grid">
     {#each months as month, index}
       <Calendar

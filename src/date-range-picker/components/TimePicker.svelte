@@ -116,7 +116,7 @@
     value={selectedHour}
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
-        hours: e.target.value,
+        hours: parseInt(e.target.value),
         minutes: selectedMinute,
         seconds: timePickerSeconds ? selectedSecond : 0
       })}
@@ -133,7 +133,7 @@
     class={selectClass}
     on:change={e => dispatchEvent('timeChange', {
         hours: selectedHour,
-        minutes: e.target.value,
+        minutes: parseInt(e.target.value),
         seconds: timePickerSeconds ? selectedSecond : 0
       })}
     title={`${selectedMinute} minutes`}>
@@ -153,7 +153,7 @@
       on:change={e => dispatchEvent('timeChange', {
           hours: selectedHour,
           minutes: selectedMinute,
-          seconds: e.target.value
+          seconds: parseInt(e.target.value)
         })}
       title={`${selectedSecond} seconds`}>
       {#each seconds as second}
