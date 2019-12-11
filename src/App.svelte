@@ -30,12 +30,12 @@
   let yearDropdown = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let todayBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
   let resetViewBtn = random ? Boolean(Math.floor(Math.random() * 2)) : true
-  const maxDate = addHours(endDate, 3)
+  const maxDate = undefined
 
   function onApply({ detail }) {
     startDate = detail.startDate
     endDate = detail.endDate
-    console.log('onApply: ', detail, maxDate)
+    console.log('onApply: ', detail)
   }
 </script>
 
@@ -52,9 +52,9 @@
   {locale}
   twoPages
   resetViewBtn
-  singlePicker
   timePicker
   timePickerSeconds
   timePickerControls
   startDate={startDate}
+  endDate={endDate}
   on:apply={onApply} />

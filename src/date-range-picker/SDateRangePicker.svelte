@@ -70,7 +70,7 @@
   /** @todo This might be better placed into a store. */
   window.__locale__ = locale
 
-  $: tempEndDate = singlePicker ? startDate : endDate
+  $: tempEndDate = endDate
   $: tempStartDate = startDate
   $: canApply = () => {
     if (!hasSelection) {
@@ -313,7 +313,6 @@
   }
 
   const onStartTimeChange = ({ detail }) => {
-    console.log('onStartTimeChange', detail)
     const newDate = new Date(
       tempStartDate.getFullYear(),
       tempStartDate.getMonth(),
@@ -362,6 +361,7 @@
     justify-content: space-between;
     align-items: center;
   }
+
   .s-date-range-picker :global(small) {
     font-size: 0.68rem;
   }
