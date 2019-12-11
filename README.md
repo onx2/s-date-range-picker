@@ -2,6 +2,10 @@
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master) A date range picker built in SvelteJS
 
+![Branch coverage](./coverage/badge-branches.svg)
+![Function coverage](./coverage/badge-functions.svg)
+![Line coverage](./coverage/badge-lines.svg)
+![Statement coverage](./coverage/badge-statements.svg)
 ## Getting Started
 
 **In a Svelte App**
