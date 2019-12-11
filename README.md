@@ -2,7 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master)
 [![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
-[![codecov](https://codecov.io/gh/onx2/svelte-date-range-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/onx2/svelte-date-range-picker)
 
 A date range picker built in SvelteJS
 
