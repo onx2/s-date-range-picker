@@ -88,20 +88,18 @@
 </script>
 
 <style>
-  div {
+  .s-day {
     position: relative;
   }
 
-  div::after {
+  .s-day::after {
     content: '';
     top: 0;
-    width: 40px;
-    height: 40px;
     position: absolute;
     opacity: 0;
   }
 
-  div:not(.disabled):not(.next-month):not(.prev-month)::after {
+  .s-day:not(.disabled):not(.next-month):not(.prev-month)::after {
     background-color: #bbdefb;
   }
 
@@ -174,6 +172,7 @@
 </style>
 
 <div
+  class="s-day"
   class:disabled={day.isDisabled}
   class:end-date={day.isEndDate}
   class:today={day.isToday}

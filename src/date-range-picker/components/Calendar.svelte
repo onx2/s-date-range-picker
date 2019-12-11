@@ -64,14 +64,12 @@
     // e.preventDefault() is used to prevent mouse events from firing
     // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent
     e.preventDefault()
-    if (hasSelection) {
-      if ('data-date' in e.target.attributes && !e.target.disabled) {
-        const valueArray = e.target.attributes['data-date'].value.split('-')
-        dispatchEvent(
-          'selection',
-          new Date(valueArray[0], parseInt(valueArray[1]) - 1, valueArray[2])
-        )
-      }
+    if ('data-date' in e.target.attributes && !e.target.disabled) {
+      const valueArray = e.target.attributes['data-date'].value.split('-')
+      dispatchEvent(
+        'selection',
+        new Date(valueArray[0], parseInt(valueArray[1]) - 1, valueArray[2])
+      )
     }
   }
 
@@ -88,7 +86,7 @@
         valueArray[2]
       )
 
-      if (!isSameDay(newDate, tempStartDate)) {
+      if (!isSameDay(newDate, tempStartDate) && !hasSelection) {
         dispatchEvent('selection', newDate)
       }
     }

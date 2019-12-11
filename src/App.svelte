@@ -52,7 +52,7 @@
   {locale}
   twoPages
   resetViewBtn
-  timePicker
+  timePicker={false}
   timePickerSeconds
   timePickerControls
   startDate={startDate}

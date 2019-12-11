@@ -158,7 +158,8 @@
   })
 
   const onResize = () => {
-    numPages = document.body.scrollWidth <= 2 * calendarRef.offsetWidth ? 1 : 2
+    numPages =
+      document.body.offsetWidth - 64 <= 2 * calendarRef.offsetWidth ? 1 : 2
   }
 
   const apply = () => {
@@ -381,9 +382,13 @@
     align-items: center;
   }
 
+  .s-date-range-picker :global(.cell),
+  .s-date-range-picker :global(.s-day::after) {
+    width: 36px;
+    height: 36px;
+  }
+
   .s-date-range-picker :global(.cell) {
-    width: 40px;
-    height: 40px;
     position: relative;
     display: flex;
     justify-content: center;
