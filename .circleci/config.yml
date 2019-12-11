@@ -46,6 +46,7 @@ jobs:
       - checkout
       - codecov/upload:
           file: {{ ./coverage }}
+          token: 798c7030-962b-4e49-a3f3-2bab26384c1b
       - run: yarn
       - run: yarn build
 
