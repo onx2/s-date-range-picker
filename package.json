@@ -30,7 +30,7 @@
     "format": "npx prettier --write src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "lint": "eslint --fix src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "cleanup": "rimraf ./build",
-    "test": "cross-env NODE_ENV=test jest --collect-coverage",
+    "test": "cross-env NODE_ENV=test jest --coverage; jest-coverage-badges",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
     "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
@@ -51,6 +51,7 @@
     "eslint-plugin-svelte3": "^2.7.3",
     "husky": "^3.1.0",
     "jest": "24.9.0",
+    "jest-coverage-badges": "^1.1.2",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
@@ -76,6 +77,11 @@
     "collectCoverageFrom": [
       "./src/**/*.{js,ts}",
       "!**/*.d.ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
