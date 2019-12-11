@@ -1,6 +1,9 @@
 # s-date-range-picker (alpha)
 
-[![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master) A date range picker built in SvelteJS
+[![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master)
+[![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
+
+A date range picker built in SvelteJS
 
 ## Getting Started
 
