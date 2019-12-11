@@ -30,7 +30,7 @@
     "format": "npx prettier --write src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "lint": "eslint --fix src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "cleanup": "rimraf ./build",
-    "test": "cross-env NODE_ENV=test jest --collect-coverage && codecov",
+    "test": "cross-env NODE_ENV=test jest --collect-coverage",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
     "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
@@ -45,7 +45,6 @@
     "autoprefixer": "^9.7.3",
     "babel-jest": "24.9.0",
     "chokidar": "3.3.0",
-    "codecov": "^3.6.1",
     "cross-env": "6.0.3",
     "deasync": "0.1.16",
     "eslint": "^6.7.2",
@@ -78,7 +77,6 @@
       "./src/**/*.{js,ts}",
       "!**/*.d.ts"
     ],
-    "coverageDirectory": "./coverage/",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"

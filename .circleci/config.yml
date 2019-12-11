@@ -1,8 +1,6 @@
 # Javascript Node CircleCI 2.0 configuration file
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 version: 2
-orbs:
-  codecov: codecov/codecov@1.0.2
 jobs:
   format:
     docker:
@@ -44,9 +42,6 @@ jobs:
 
     steps:
       - checkout
-      - codecov/upload:
-          file: {{ ./coverage }}
-          token: 798c7030-962b-4e49-a3f3-2bab26384c1b
       - run: yarn
       - run: yarn build
 
