@@ -30,7 +30,7 @@
     "format": "npx prettier --write src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "lint": "eslint --fix src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "cleanup": "rimraf ./build",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest --collect-coverage",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
     "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
