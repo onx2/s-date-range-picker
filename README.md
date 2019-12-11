@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master)
 [![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
+
 ![Branch coverage](./coverage/badge-branches.svg)
 ![Function coverage](./coverage/badge-functions.svg)
 ![Line coverage](./coverage/badge-lines.svg)
