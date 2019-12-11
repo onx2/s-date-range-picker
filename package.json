@@ -65,7 +65,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-serve": "1.0.1",
     "rollup-plugin-svelte": "5.1.1",
-    "rollup-plugin-terser": "5.1.2",
+    "rollup-plugin-terser": "TrySound/rollup-plugin-terser#fd8d3c9e830b9b05078b05a573550e782c9c9c65",
     "rollup-plugin-typescript2": "0.25.3",
     "svelte": "3.16.0",
     "svelte-preprocess": "^3.2.6",
