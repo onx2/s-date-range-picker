@@ -2,13 +2,13 @@
 
 [![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master)
 [![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
-
-A date range picker built in SvelteJS
-
 ![Branch coverage](./coverage/badge-branches.svg)
 ![Function coverage](./coverage/badge-functions.svg)
 ![Line coverage](./coverage/badge-lines.svg)
 ![Statement coverage](./coverage/badge-statements.svg)
+
+A date range picker built with [Svelte](https://svelte.dev/)
+
 ## Getting Started
 
 **In a Svelte App**
