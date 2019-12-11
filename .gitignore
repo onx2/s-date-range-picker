@@ -6,3 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 node_modules/
 build
+coverage/lcov-reeport
+coverage/*.info
+coverage/*.json
