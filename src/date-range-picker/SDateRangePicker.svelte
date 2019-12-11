@@ -149,6 +149,10 @@
         roundDown(endDate.getSeconds(), secondIncrement)
       )
     }
+
+    if (singlePicker) {
+      endDate = startDate
+    }
   })
 
   onDestroy(() => {
@@ -224,7 +228,7 @@
 
     if (singlePicker) {
       // Start and end dates are always the same on singlePicker
-      tempStartDate = tempEndDate = detailWithEndDateTime
+      tempStartDate = tempEndDate = detailWithStartDateTime
     } else if (hasSelection) {
       // In range mode, if there is currently a selection and the selection
       // event is fired the user must be selecting the start date.

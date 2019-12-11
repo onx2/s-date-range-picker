@@ -52,9 +52,9 @@
   {locale}
   twoPages
   resetViewBtn
+  singlePicker
   timePicker={false}
   timePickerSeconds
   timePickerControls
   startDate={startDate}
-  endDate={endDate}
   on:apply={onApply} />
