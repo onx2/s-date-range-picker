@@ -6,3 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 node_modules/
 build
+coverage/Icov-report
+coverage/*.json
+coverage/*.info
