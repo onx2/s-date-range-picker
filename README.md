@@ -42,7 +42,7 @@ A date range picker built with [Svelte](https://svelte.dev/)
 - Enter directory: `cd svelte-date-range-picker`
 - Install dpendencies: `yarn`
 - Run dev web server: `yarn serve`
-- Run tests: `yarn test` _(No tests yet)_
+- Run tests: `yarn test`
 - Run format: `yarn format`
 - Run linter: `yarn lint`
 - Run build: `yarn build`
