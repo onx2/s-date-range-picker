@@ -7,7 +7,7 @@ import { localeFormat } from './locale-format'
  * @param {Date} max - Latest allowed date
  * @param {number} pageNum - Each page starts a month later than the last
  *
- * @returns {Date[]}
+ * @returns {object[]} - { value: Date, text: string }
  */
 export const buildYearDropdown = (min, max, pageNum) => {
   const numYrs = differenceInCalendarYears(max, min) + pageNum + 1
