@@ -55,7 +55,7 @@ applyBtnText = "Apply"; // (string)
 
 cancelBtnText = "Camcel"; // (string)
 
-dateFormat = "MMM dd, yyyy"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+dateFormat = "MMM dd, yyyy"; // (string)
 
 disabledDates = []; // (Date[])
 
@@ -71,7 +71,7 @@ minDate = subYears(new Date(), 10); // (Date)
 
 monthDropdown = false; // (boolean)
 
-monthFormat = "MMMM"; // (string) [options](https://date-fns.org/v2.8.1/docs/format)
+monthFormat = "MMMM"; // (string)
 
 nextIcon = "&#9656;"; // (html | string) - ▸
 
@@ -115,6 +115,18 @@ yearDropdown = false; // (boolean)
 - [x] `cancel` Fired when the "Cancel" button is clicked
 - [x] `apply` Fired when the "Apply" button is clicked
 
+
+### Goals
+- 100% test coverage
+- Event data
+- Better accessibility
+- Total localization
+- AM / PM times
+- Maximum span of days option
+- Predefined ranges option
+- Add storybook for demo site to display different props / options
+- Convert to Typescript
+- Theming capabilities with a default theme
 ---
 
 Thanks [geakstr](https://github.com/geakstr/svelte-3-rollup-typescript-vscode) for the [Svelte](https://svelte.dev/) component template!
