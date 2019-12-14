@@ -1,6 +1,6 @@
 # s-date-range-picker (alpha)
 
-[![CircleCI](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master.svg?style=svg)](https://circleci.com/gh/onx2/svelte-date-range-picker/tree/master)
+[![CircleCI](https://circleci.com/gh/onx2/s-date-range-picker.svg?style=svg)](https://circleci.com/gh/onx2/s-date-range-picker)
 [![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
 
 ![Branch coverage](./coverage/badge-branches.svg)
