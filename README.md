@@ -111,10 +111,16 @@ yearDropdown = false; // (boolean)
 ```
 
 ### Events
-- [x] `selection` Fired when a selection is made (start or end date has been chosen)
-- [x] `cancel` Fired when the "Cancel" button is clicked
-- [x] `apply` Fired when the "Apply" button is clicked
+```typescript
+// Fired when a selection is made (start or end date has been chosen)
+selection(): { startDate: Date, endDate: Date};
 
+// Fired when the "Cancel" button is clicked
+cancel(): { startDate: Date, endDate: Date};
+
+// Fired when the "Apply" button is clicked
+apply(): { startDate: Date, endDate: Date};
+```
 
 ### Goals
 - 100% test coverage
