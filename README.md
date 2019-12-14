@@ -50,64 +50,64 @@ A date range picker built with [Svelte](https://svelte.dev/)
 ## API
 
 ### Props / Options
-```javascript
-applyBtnText = "Apply"; // (string)
+```typescripte
+applyBtnText: string = "Apply";
 
-cancelBtnText = "Camcel"; // (string)
+cancelBtnText: string = "Camcel";
 
-dateFormat = "MMM dd, yyyy"; // (string)
+dateFormat: string = "MMM dd, yyyy";
 
-disabledDates = []; // (Date[])
+disabledDates: Date[] = [];
 
-endDate = endOfWeek(new Date()); // (Date)
+endDate: Date = endOfWeek(new Date());
 
-firstDayOfWeek = "sunday"; // (string)
+firstDayOfWeek: string = "sunday";
 
-locale = undefined; // (Locale) date-fns defaults to the system locale.
+locale?: Locale = undefined; // date-fns defaults to the system locale.
 
-maxDate = addYears(new Date(), 10); // (Date)
+maxDate: Date = addYears(new Date(), 10);
 
-minDate = subYears(new Date(), 10); // (Date)
+minDate: Date = subYears(new Date(), 10);
 
-monthDropdown = false; // (boolean)
+monthDropdown: boolean = false;
 
-monthFormat = "MMMM"; // (string)
+monthFormat: string = "MMMM";
 
-nextIcon = "&#9656;"; // (html | string) - ▸
+nextIcon: string | HTMLElement = "&#9656;"; - ▸
 
-prevIcon = "&#9666;"; // (html | string) - ◂
+prevIcon: string | HTMLElement = "&#9666;"; // (html | string) - ◂
 
-resetViewBtn = false; // (boolean)
+resetViewBtn: boolean = false;
 
-resetViewBtnText = "&#8602;"; // (html | string) - ↚
+resetViewBtnText: string | HTMLElement = "&#8602;" // ↚
 
-rtl = false; // (boolean)
+rtl: boolean = false;
 
-singlePicker = false; // (boolean)
+singlePicker: boolean = false;
 
-startDate = startOfWeek(new Date()); // (Date)
+startDate: Date = startOfWeek(new Date());
 
-timePicker = false; // (boolean)
+timePicker: boolean = false;
 
-timePickerControls = false; // (boolean)
+timePickerControls: boolean = false;
 
-timePickerIncrement = 1; // (number)
+timePickerIncrement: number = 1;
 
-timePickerSeconds = false; // (boolean)
+timePickerSeconds: boolean = false;
 
-today = new Date(); // (Date) Used as a reference in predefinedRanges and for underlining in calendar
+today: Date = new Date(); // Used as a reference in predefinedRanges and for underlining in calendar
 
-todayBtn = false; // (boolean)
+todayBtn: boolean = false;
 
-todayBtnText = "Today"; // (string)
+todayBtnText: string = "Today";
 
-twoPages = true; // (boolean)
+twoPages: boolean = true;
 
-weekGuides = false; // (boolean) Distance in calendar weeks from today
+weekGuides: boolean = false; // Distance in calendar weeks from today
 
-weekNumbers = false; // (boolean) Local week numbers
+weekNumbers: boolean = false; // Local week numbers
 
-yearDropdown = false; // (boolean)
+yearDropdown: boolean = false;
 ```
 
 ### Events
