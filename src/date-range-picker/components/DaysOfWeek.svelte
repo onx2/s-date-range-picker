@@ -1,5 +1,5 @@
 <script>
-  import { getDaysOfWeek, localeFormat } from '../utils'
+  import { getDaysOfWeek, localeFormat } from "../utils"
 
   export let firstDayOfWeek
   export let weekGuides
@@ -14,10 +14,10 @@
   {/if}
   {#each daysOfWeek as dayOfWeek}
     <small
-      aria-label={localeFormat(dayOfWeek, 'EEEE')}
+      aria-label={localeFormat(dayOfWeek, "EEEE")}
       class="cell muted"
       role="gridcell">
-      {localeFormat(dayOfWeek, 'eeeeee')}
+      {localeFormat(dayOfWeek, "eeeeee")}
     </small>
   {/each}
   {#if weekNumbers}

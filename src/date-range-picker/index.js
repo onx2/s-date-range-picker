@@ -1,3 +1,3 @@
-import SDateRangePicker from './SDateRangePicker.svelte'
+import SDateRangePicker from "./SDateRangePicker.svelte"
 
 export default SDateRangePicker

@@ -27,13 +27,13 @@
     "url": "https://github.com/onx2/svelte-date-range-picker"
   },
   "scripts": {
-    "format": "npx prettier --write src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
-    "lint": "eslint --fix src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
+    "format": "npx prettier --write src/date-range-picker/**/\"*.{js,svelte}\"",
+    "lint": "eslint --fix src/date-range-picker/**/\"*.{js,svelte}\"",
     "cleanup": "rimraf ./build",
     "test": "rimraf ./coverage; cross-env NODE_ENV=test jest --coverage; jest-coverage-badges",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
-    "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
-    "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
+    "serve": "yarn cleanup; cross-env NODE_ENV=development rollup --config --watch",
+    "build": "yarn cleanup; cross-env NODE_ENV=production rollup --config"
   },
   "dependencies": {
     "date-fns": "2.8.1"

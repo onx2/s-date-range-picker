@@ -1,10 +1,10 @@
-import { addDays, subDays } from 'date-fns'
-import { isEndDate } from '../index'
+import { addDays, subDays } from "date-fns"
+import { isEndDate } from "../index"
 
 const tempEndDate = addDays(new Date(), 2)
 
-describe('isEndDate', () => {
-  it('Has selection defaults to date & tempEndDate is same day ', () => {
+describe("isEndDate", () => {
+  it("Has selection defaults to date & tempEndDate is same day ", () => {
     const tempStartDate = subDays(new Date(), 2)
     const date = new Date()
     const hasSelection = true

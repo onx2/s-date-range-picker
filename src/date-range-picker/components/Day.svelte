@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from "svelte"
   import {
     addDays,
     addMonths,
@@ -8,8 +8,8 @@
     subDays,
     subMonths,
     subWeeks
-  } from 'date-fns'
-  import { localeFormat } from '../utils'
+  } from "date-fns"
+  import { localeFormat } from "../utils"
 
   export let day
   export let monthIndicator
@@ -19,39 +19,39 @@
   const dispatchEvent = createEventDispatcher()
 
   const getEl = date =>
-    document.querySelector(`[data-date="${localeFormat(date, 'yyyy-MM-dd')}"]`)
+    document.querySelector(`[data-date="${localeFormat(date, "yyyy-MM-dd")}"]`)
   // Enter should submit / apply the selection, not activate a button.
   const onKeydown = (e, date) => {
     let newDate = date
 
     switch (e.code) {
-      case 'Enter':
-      case 'NumpadEnter':
-        dispatchEvent('apply')
+      case "Enter":
+      case "NumpadEnter":
+        dispatchEvent("apply")
         return
-      case 'Space':
-        dispatchEvent('selection', date)
+      case "Space":
+        dispatchEvent("selection", date)
         return
-      case 'ArrowUp':
+      case "ArrowUp":
         newDate = subWeeks(date, 1)
         break
-      case 'ArrowDown':
+      case "ArrowDown":
         newDate = addWeeks(date, 1)
         break
-      case 'ArrowRight':
+      case "ArrowRight":
         newDate = addDays(date, 1)
         break
-      case 'ArrowLeft':
+      case "ArrowLeft":
         newDate = subDays(date, 1)
         break
-      case 'PageDown':
+      case "PageDown":
         newDate = subMonths(date, 1)
         break
-      case 'PageUp':
+      case "PageUp":
         newDate = addMonths(date, 1)
         break
-      case 'Escape':
-        dispatchEvent('cancel')
+      case "Escape":
+        dispatchEvent("cancel")
         return
       default:
         return
@@ -64,13 +64,13 @@
       return
     }
 
-    dispatchEvent('hover', newDate)
+    dispatchEvent("hover", newDate)
     getEl(newDate).focus()
   }
 
   const onMouseUp = (e, date) => {
     if (e.button === 0 && !isSameDay(date, mouseDownDate)) {
-      dispatchEvent('selection', date)
+      dispatchEvent("selection", date)
       // Set the focus state to the last selected date.
       // This happens automatically via a "click", but not on "mouseup"
       getEl(date).focus()
@@ -82,7 +82,7 @@
     // Only continue if the left mouse button was clicked
     if (e.button === 0) {
       mouseDownDate = date
-      dispatchEvent('selection', date)
+      dispatchEvent("selection", date)
     }
   }
 </script>
@@ -93,7 +93,7 @@
   }
 
   .s-day::after {
-    content: '';
+    content: "";
     top: 0;
     position: absolute;
     opacity: 0;
@@ -184,20 +184,20 @@
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
-    aria-label={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
+    aria-label={localeFormat(day.date, "EEEE, MMMM dd, yyyy")}
     class="cell"
     class:muted={day.isNextMonth || day.isPrevMonth}
     disabled={day.isDisabled}
-    data-date={localeFormat(day.date, 'yyyy-MM-dd')}
+    data-date={localeFormat(day.date, "yyyy-MM-dd")}
     on:keydown={e => onKeydown(e, day.date)}
-    on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:mouseenter={() => dispatchEvent("hover", day.date)}
     on:mousedown={e => onMouseDown(e, day.date)}
     on:mouseup={e => onMouseUp(e, day.date)}
-    title={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
+    title={localeFormat(day.date, "EEEE, MMMM dd, yyyy")}
     type="button">
     {#if monthIndicator}
-      <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
+      <span class="month-indicator">{localeFormat(day.date, "MMM")}</span>
     {/if}
-    {localeFormat(day.date, 'd')}
+    {localeFormat(day.date, "d")}
   </button>
 </div>

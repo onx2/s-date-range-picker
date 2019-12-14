@@ -16,9 +16,15 @@
   "overrides": [
     {
       "files": [
-        "src/date-range-picker/**/*.svelte"
+        "src/date-range-picker/**/*.svelte",
+        "src/date-range-picker/*.svelte"
       ],
       "processor": "svelte3/svelte3"
     }
-  ]
+  ],
+  "rules": {
+    "comma-dangle": "error",
+    "quotes": ["error", "double"],
+    "semi": ["error", "never"]
+  }
 }

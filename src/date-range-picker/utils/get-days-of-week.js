@@ -1,5 +1,5 @@
-import { addDays, startOfWeek } from 'date-fns'
-import { dayOffset } from './day-offset'
+import { addDays, startOfWeek } from "date-fns"
+import { dayOffset } from "./day-offset"
 
 /**
  * @todo Allow changing of week length

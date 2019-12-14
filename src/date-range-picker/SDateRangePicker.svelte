@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from "svelte"
 
   import {
     addMonths,
@@ -16,32 +16,32 @@
     startOfWeek,
     startOfYear,
     subMonths
-  } from 'date-fns'
-  import { localeFormat, passiveSupported, roundDown } from './utils'
-  import Calendar from './components/Calendar.svelte'
-  import TimePicker from './components/TimePicker.svelte'
-  export let applyBtnText = 'Apply'
-  export let btnClass = 's-picker-btn'
-  export let cancelBtnText = 'Cancel'
-  export let dateFormat = 'MMM dd, yyyy'
+  } from "date-fns"
+  import { localeFormat, passiveSupported, roundDown } from "./utils"
+  import Calendar from "./components/Calendar.svelte"
+  import TimePicker from "./components/TimePicker.svelte"
+  export let applyBtnText = "Apply"
+  export let btnClass = "s-picker-btn"
+  export let cancelBtnText = "Cancel"
+  export let dateFormat = "MMM dd, yyyy"
   export let disabledDates = []
   export let endDate = endOfWeek(new Date())
   export let events = []
-  export let firstDayOfWeek = 'sunday'
+  export let firstDayOfWeek = "sunday"
   export let locale = undefined
   export let maxDate = addYears(endOfYear(new Date()), 10)
   export let minDate = subYears(startOfYear(new Date()), 10)
   export let minuteIncrement = 1
   export let monthDropdown = true
-  export let monthFormat = 'MMMM'
+  export let monthFormat = "MMMM"
   export let monthIndicator = true
-  export let nextIcon = '▸'
-  export let prevIcon = '◂'
+  export let nextIcon = "▸"
+  export let prevIcon = "◂"
   export let resetViewBtn = false
-  export let resetViewBtnText = '↚'
+  export let resetViewBtnText = "↚"
   export let rtl = false
   export let secondIncrement = 1
-  export let selectClass = 's-picker-select'
+  export let selectClass = "s-picker-select"
   export let singlePicker = false
   export let startDate = startOfWeek(new Date())
   export let timePicker = false
@@ -50,7 +50,7 @@
   export let timePickerSeconds = false
   export let today = new Date()
   export let todayBtn = false
-  export let todayBtnText = 'Today'
+  export let todayBtnText = "Today"
   export let twoPages = false
   export let weekGuides = false
   export let weekNumbers = false
@@ -120,12 +120,12 @@
 
   // Round and set the hover data temp start & end dates based on start & end date props
   onMount(() => {
-    calendarRef = document.querySelector('.s-calendar')
+    calendarRef = document.querySelector(".s-calendar")
 
     if (twoPages) {
       onResize() // Initial sizing
       window.addEventListener(
-        'resize',
+        "resize",
         onResize,
         passiveSupported ? { passive: true } : false
       )
@@ -158,7 +158,7 @@
 
   onDestroy(() => {
     if (twoPages) {
-      window.removeEventListener('resize', onResize)
+      window.removeEventListener("resize", onResize)
     }
   })
 
@@ -172,7 +172,7 @@
       return
     }
 
-    dispatchEvent('apply', {
+    dispatchEvent("apply", {
       startDate: tempStartDate,
       endDate: tempEndDate
     })
@@ -197,7 +197,7 @@
     resetState()
     resetView()
 
-    dispatchEvent('cancel', {
+    dispatchEvent("cancel", {
       startDate,
       endDate
     })
@@ -274,7 +274,7 @@
 
       hasSelection = true
 
-      dispatchEvent('selection', {
+      dispatchEvent("selection", {
         startDate: tempStartDate,
         endDate: tempEndDate
       })
@@ -416,23 +416,23 @@
   /*
     Swap border radius of the start and end dates when in rtl
   */
-  .s-date-range-picker[dir='rtl'] :global(.end-date::after) {
+  .s-date-range-picker[dir="rtl"] :global(.end-date::after) {
     border-radius: 100% 0 0 100%;
   }
 
-  .s-date-range-picker[dir='rtl'] :global(.start-date::after) {
+  .s-date-range-picker[dir="rtl"] :global(.start-date::after) {
     border-radius: 0 100% 100% 0;
   }
 </style>
 
 <form
   {lang}
-  dir={rtl ? 'rtl' : 'ltr'}
+  dir={rtl ? "rtl" : "ltr"}
   style={`width: ${pickerWidth}px`}
   class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>
-    {startDateReadout()} {!singlePicker ? ` to ${endDateReadout()}` : ''}
+    {startDateReadout()} {!singlePicker ? ` to ${endDateReadout()}` : ""}
   </label>
   <div class="s-grid">
     {#each months as month, index}

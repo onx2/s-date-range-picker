@@ -20,8 +20,8 @@ try {
     }
   }
 
-  window.addEventListener('test', null, options)
-  window.removeEventListener('test', null, options)
+  window.addEventListener("test", null, options)
+  window.removeEventListener("test", null, options)
 } catch (err) {
   passiveSupported = false
 }

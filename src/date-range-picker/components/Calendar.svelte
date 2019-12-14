@@ -1,10 +1,10 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
-  import { isSameDay } from 'date-fns'
-  import Controls from './Controls.svelte'
-  import DaysOfWeek from './DaysOfWeek.svelte'
-  import Week from './Week.svelte'
-  import { getCalendarWeeks, getTouchTarget } from '../utils'
+  import { createEventDispatcher } from "svelte"
+  import { isSameDay } from "date-fns"
+  import Controls from "./Controls.svelte"
+  import DaysOfWeek from "./DaysOfWeek.svelte"
+  import Week from "./Week.svelte"
+  import { getCalendarWeeks, getTouchTarget } from "../utils"
 
   export let btnClass
   export let disabledDates
@@ -46,8 +46,8 @@
 
   const onTouchmove = e => {
     const target = getTouchTarget(e)
-    if ('data-date' in target.attributes && !target.disabled) {
-      const valueArray = target.attributes['data-date'].value.split('-')
+    if ("data-date" in target.attributes && !target.disabled) {
+      const valueArray = target.attributes["data-date"].value.split("-")
       const newDate = new Date(
         valueArray[0],
         parseInt(valueArray[1]) - 1,
@@ -55,7 +55,7 @@
       )
       // Prevent unnecessary updates
       if (!isSameDay(newDate, tempEndDate)) {
-        dispatchEvent('hover', newDate)
+        dispatchEvent("hover", newDate)
       }
     }
   }
@@ -64,10 +64,10 @@
     // e.preventDefault() is used to prevent mouse events from firing
     // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent
     e.preventDefault()
-    if ('data-date' in e.target.attributes && !e.target.disabled) {
-      const valueArray = e.target.attributes['data-date'].value.split('-')
+    if ("data-date" in e.target.attributes && !e.target.disabled) {
+      const valueArray = e.target.attributes["data-date"].value.split("-")
       dispatchEvent(
-        'selection',
+        "selection",
         new Date(valueArray[0], parseInt(valueArray[1]) - 1, valueArray[2])
       )
     }
@@ -78,8 +78,8 @@
     // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent
     e.preventDefault()
     const target = getTouchTarget(e)
-    if ('data-date' in target.attributes && !target.disabled) {
-      const valueArray = target.attributes['data-date'].value.split('-')
+    if ("data-date" in target.attributes && !target.disabled) {
+      const valueArray = target.attributes["data-date"].value.split("-")
       const newDate = new Date(
         valueArray[0],
         parseInt(valueArray[1]) - 1,
@@ -87,7 +87,7 @@
       )
 
       if (!isSameDay(newDate, tempStartDate) && !hasSelection) {
-        dispatchEvent('selection', newDate)
+        dispatchEvent("selection", newDate)
       }
     }
   }

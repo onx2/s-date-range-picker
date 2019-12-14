@@ -1,5 +1,5 @@
-import { addMonths, startOfYear } from 'date-fns'
-import { localeFormat } from './locale-format'
+import { addMonths, startOfYear } from "date-fns"
+import { localeFormat } from "./locale-format"
 
 /**
  *

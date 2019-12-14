@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from "svelte"
   import {
     addMonths,
     differenceInCalendarMonths,
@@ -9,8 +9,8 @@
     isSameMonth,
     isSameYear,
     subMonths
-  } from 'date-fns'
-  import { buildMonthDropdown, buildYearDropdown, localeFormat } from '../utils'
+  } from "date-fns"
+  import { buildMonthDropdown, buildYearDropdown, localeFormat } from "../utils"
 
   export let btnClass
   export let month
@@ -30,7 +30,7 @@
     value: month,
     text: localeFormat(month, monthFormat)
   }
-  let selectedYear = { value: month, text: localeFormat(month, 'yyyy') }
+  let selectedYear = { value: month, text: localeFormat(month, "yyyy") }
   $: prevMonth = subMonths(month, 1)
   $: nextMonth = addMonths(month, 1)
   $: isMax = isAfter(month, maxDate) || isSameMonth(month, maxDate)
@@ -48,11 +48,11 @@
 <div class="space-between">
   <button
     aria-disabled={prevBtnDisabled}
-    aria-label={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
+    aria-label={`Previous month, ${localeFormat(prevMonth, "MMMM yyyy")}`}
     class={btnClass}
     disabled={prevBtnDisabled}
-    on:click={() => disptachEvent('prevMonth')}
-    title={`Previous month, ${localeFormat(prevMonth, 'MMMM yyyy')}`}
+    on:click={() => disptachEvent("prevMonth")}
+    title={`Previous month, ${localeFormat(prevMonth, "MMMM yyyy")}`}
     type="button">
     {@html prevIcon}
   </button>
@@ -62,7 +62,7 @@
         aria-label="Month select"
         bind:value={selectedMonth}
         class={selectClass}
-        on:change={() => disptachEvent('pageChange', {
+        on:change={() => disptachEvent("pageChange", {
             incrementAmount: differenceInCalendarMonths(
               selectedMonth.value,
               month
@@ -78,14 +78,14 @@
         {/each}
       </select>
     {:else}
-      <small>{localeFormat(month, 'MMMM')}</small>
+      <small>{localeFormat(month, "MMMM")}</small>
     {/if}
     {#if yearDropdown}
       <select
         aria-label="Year select"
         bind:value={selectedYear}
         class={selectClass}
-        on:change={() => disptachEvent('pageChange', {
+        on:change={() => disptachEvent("pageChange", {
             incrementAmount:
               differenceInCalendarYears(selectedYear.value, month) * 12
           })}>
@@ -99,16 +99,16 @@
         {/each}
       </select>
     {:else}
-      <small>{localeFormat(month, 'yyyy')}</small>
+      <small>{localeFormat(month, "yyyy")}</small>
     {/if}
   </span>
   <button
     aria-disabled={nextBtnDisabled}
-    aria-label={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}
+    aria-label={`Next month, ${localeFormat(nextMonth, "MMMM yyyy")}`}
     class={btnClass}
     disabled={nextBtnDisabled}
-    on:click={() => disptachEvent('nextMonth')}
-    title={`Next month, ${localeFormat(nextMonth, 'MMMM yyyy')}`}
+    on:click={() => disptachEvent("nextMonth")}
+    title={`Next month, ${localeFormat(nextMonth, "MMMM yyyy")}`}
     type="button">
     {@html nextIcon}
   </button>

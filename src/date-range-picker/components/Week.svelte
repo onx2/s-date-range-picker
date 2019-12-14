@@ -1,6 +1,6 @@
 <script>
-  import Day from './Day.svelte'
-  import { localeFormat } from '../utils'
+  import Day from "./Day.svelte"
+  import { localeFormat } from "../utils"
 
   export let month
   export let monthIndicator
@@ -13,7 +13,7 @@
 </script>
 
 <div
-  aria-label={`${localeFormat(month, 'yyyy')}`}
+  aria-label={`${localeFormat(month, "yyyy")}`}
   class="row"
   role="row"
   on:nextMonth

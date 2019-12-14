@@ -7,9 +7,9 @@ import {
   addWeeks,
   subMonths,
   startOfWeek
-} from 'date-fns'
-import { dayOffset } from './day-offset'
-import { getDayMetaData } from './get-day-meta-data'
+} from "date-fns"
+import { dayOffset } from "./day-offset"
+import { getDayMetaData } from "./get-day-meta-data"
 /**
  *
  * @param {Object} getDayMetaDataParams
