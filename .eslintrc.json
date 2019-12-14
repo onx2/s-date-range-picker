@@ -1,5 +1,6 @@
 {
   "env": {
+    "jest/globals": true,
     "browser": true,
     "es6": true
   },
@@ -8,6 +9,7 @@
     "sourceType": "module"
   },
   "plugins": [
+    "jest",
     "svelte3"
   ],
   "extends": [

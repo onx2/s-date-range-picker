@@ -427,12 +427,12 @@
 
 <form
   {lang}
-  dir={rtl ? "rtl" : "ltr"}
+  dir={rtl ? 'rtl' : 'ltr'}
   style={`width: ${pickerWidth}px`}
   class="s-date-range-picker"
   on:submit|preventDefault={apply}>
   <label>
-    {startDateReadout()} {!singlePicker ? ` to ${endDateReadout()}` : ""}
+    {startDateReadout()} {!singlePicker ? ` to ${endDateReadout()}` : ''}
   </label>
   <div class="s-grid">
     {#each months as month, index}

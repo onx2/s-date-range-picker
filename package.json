@@ -1,6 +1,6 @@
 {
   "name": "s-date-range-picker",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A date range picker built with Svelte",
   "keywords": [
     "svelte",
@@ -28,7 +28,10 @@
   },
   "scripts": {
     "format": "npx prettier --write src/date-range-picker/**/\"*.{js,svelte}\"",
-    "lint": "eslint --fix src/date-range-picker/**/\"*.{js,svelte}\"",
+    "lint:js": "eslint --fix src/date-range-picker/**/*.js",
+    "lint:svelte": "eslint --fix src/date-range-picker/**/*.svelte",
+    "lint:tests": "cross-env NODE_ENV=test eslint --fix src/date-range-picker/**/*.test.js",
+    "lint": "yarn lint:js; yarn lint:svelte; yarn lint:tests",
     "cleanup": "rimraf ./build",
     "test": "rimraf ./coverage; cross-env NODE_ENV=test jest --coverage; jest-coverage-badges",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
@@ -48,6 +51,7 @@
     "cross-env": "6.0.3",
     "deasync": "0.1.16",
     "eslint": "^6.7.2",
+    "eslint-plugin-jest": "^23.1.1",
     "eslint-plugin-svelte3": "^2.7.3",
     "husky": "^3.1.0",
     "jest": "24.9.0",

@@ -13,7 +13,7 @@
 </script>
 
 <div
-  aria-label={`${localeFormat(month, "yyyy")}`}
+  aria-label={`${localeFormat(month, 'yyyy')}`}
   class="row"
   role="row"
   on:nextMonth

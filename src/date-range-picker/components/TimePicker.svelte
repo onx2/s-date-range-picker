@@ -101,21 +101,21 @@
       aria-label="First available time"
       class={btnClass}
       disabled={isFirstAvailableTime}
-      on:click={() => dispatchEvent("timeChange", {
+      on:click={() => dispatchEvent('timeChange', {
           hours: parseInt(hours[0]),
           minutes: parseInt(minutes[0]),
           seconds: parseInt(seconds[0])
         })}
       title="First available time"
       type="button">
-      {@html "&#8643;"}
+      {@html '&#8643;'}
     </button>
   {/if}
   <select
     aria-label="Hour select"
     value={selectedHour}
     class={selectClass}
-    on:change={e => dispatchEvent("timeChange", {
+    on:change={e => dispatchEvent('timeChange', {
         hours: parseInt(e.target.value),
         minutes: selectedMinute,
         seconds: timePickerSeconds ? selectedSecond : 0
@@ -131,7 +131,7 @@
     aria-label="Minute select"
     value={selectedMinute}
     class={selectClass}
-    on:change={e => dispatchEvent("timeChange", {
+    on:change={e => dispatchEvent('timeChange', {
         hours: selectedHour,
         minutes: parseInt(e.target.value),
         seconds: timePickerSeconds ? selectedSecond : 0
@@ -150,7 +150,7 @@
       aria-label="Second select"
       value={selectedSecond}
       class={selectClass}
-      on:change={e => dispatchEvent("timeChange", {
+      on:change={e => dispatchEvent('timeChange', {
           hours: selectedHour,
           minutes: selectedMinute,
           seconds: parseInt(e.target.value)
@@ -179,14 +179,14 @@
       aria-label="Last available time"
       class={btnClass}
       disabled={isLastAvailableTime}
-      on:click={() => dispatchEvent("timeChange", {
+      on:click={() => dispatchEvent('timeChange', {
           hours: parseInt(hours[hours.length - 1]),
           minutes: parseInt(minutes[minutes.length - 1]),
           seconds: parseInt(seconds[seconds.length - 1])
         })}
       title="Last available time"
       type="button">
-      {@html "&#8638;"}
+      {@html '&#8638;'}
     </button>
   {/if}
 </div>
