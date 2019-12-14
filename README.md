@@ -50,7 +50,7 @@ A date range picker built with [Svelte](https://svelte.dev/)
 ## API
 
 ### Props / Options
-```typescripte
+```typescript
 applyBtnText: string = "Apply";
 
 cancelBtnText: string = "Camcel";
