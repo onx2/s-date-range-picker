@@ -38,7 +38,7 @@ A date range picker built with [Svelte](https://svelte.dev/)
 ## Development
 
 - Requires [NodeJS](https://nodejs.org/)
-- Clone the repo: `git clone https://github.com/onx2/svelte-date-range-picker.git`
+- Clone the repo: `git clone https://github.com/onx2/s-date-range-picker.git`
 - Enter directory: `cd svelte-date-range-picker`
 - Install dpendencies: `yarn`
 - Run dev web server: `yarn serve`
