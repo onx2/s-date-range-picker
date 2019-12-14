@@ -2,6 +2,7 @@ import { addDays, startOfWeek } from 'date-fns'
 import { dayOffset } from './day-offset'
 
 /**
+ * @todo Allow changing of week length
  *
  * @param {string} firstDayOfWeek
  *
