@@ -24,6 +24,7 @@ $borderRadius: 4px;
 
   select, button {
     cursor: pointer;
+    user-select: none;
   }
 
   :disabled {

@@ -30,7 +30,7 @@
     "format": "npx prettier --write src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "lint": "eslint --fix src/date-range-picker\"{,!(node_modules)/**/}*.{js,svelte}\"",
     "cleanup": "rimraf ./build",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "rimraf ./coverage; cross-env NODE_ENV=test jest --coverage; jest-coverage-badges",
     "prepublishOnly": "yarn format && yarn lint && yarn build",
     "serve": "yarn cleanup && cross-env NODE_ENV=development rollup --config --watch",
     "build": "yarn cleanup && cross-env NODE_ENV=production rollup --config"
@@ -39,8 +39,8 @@
     "date-fns": "2.8.1"
   },
   "devDependencies": {
-    "@babel/core": "7.7.4",
-    "@babel/preset-env": "7.7.4",
+    "@babel/core": "7.7.5",
+    "@babel/preset-env": "7.7.6",
     "@types/jest": "24.0.23",
     "autoprefixer": "^9.7.3",
     "babel-jest": "24.9.0",
@@ -51,11 +51,12 @@
     "eslint-plugin-svelte3": "^2.7.3",
     "husky": "^3.1.0",
     "jest": "24.9.0",
+    "jest-coverage-badges": "^1.1.2",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
     "rimraf": "3.0.0",
-    "rollup": "1.27.8",
+    "rollup": "1.27.12",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-bundle-html": "0.2.2",
     "rollup-plugin-bundle-size": "^1.0.3",
@@ -64,9 +65,9 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-serve": "1.0.1",
     "rollup-plugin-svelte": "5.1.1",
-    "rollup-plugin-terser": "TrySound/rollup-plugin-terser#fd8d3c9e830b9b05078b05a573550e782c9c9c65",
+    "rollup-plugin-terser": "5.1.3",
     "rollup-plugin-typescript2": "0.25.3",
-    "svelte": "3.16.0",
+    "svelte": "3.16.4",
     "svelte-preprocess": "^3.2.6",
     "svelte-ts-preprocess": "1.1.3",
     "ts-jest": "24.2.0",
@@ -76,6 +77,11 @@
     "collectCoverageFrom": [
       "./src/**/*.{js,ts}",
       "!**/*.d.ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
@@ -103,7 +109,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format && yarn lint"
+      "pre-commit": "yarn format && yarn lint && yarn test"
     }
   }
 }
