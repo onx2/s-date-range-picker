@@ -1,3 +1,4 @@
+import { format } from "date-fns"
 import { getDaysOfWeek } from '../index'
 
 describe('getDaysOfWeek', () => {

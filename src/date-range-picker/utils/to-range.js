@@ -19,7 +19,8 @@ export const toRange = (date, dateToCompare) => {
   let end = dateToCompare
 
   if (isAfter(date, dateToCompare)) {
-    ;(start = dateToCompare), (end = date)
+    start = dateToCompare
+    end = date
   }
 
   return { start, end }
