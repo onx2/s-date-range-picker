@@ -148,8 +148,8 @@
   }
 
   .month-indicator {
-    font-size: 0.6rem;
-    top: 4px;
+    font-size: 0.56rem;
+    top: 2px;
     position: absolute;
     opacity: 0;
   }

@@ -168,10 +168,6 @@
   }
 
   const apply = () => {
-    if (!canApply()) {
-      return
-    }
-
     dispatchEvent("apply", {
       startDate: tempStartDate,
       endDate: tempEndDate
