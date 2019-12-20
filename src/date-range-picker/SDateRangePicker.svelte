@@ -96,8 +96,8 @@
       (!singlePicker && !isSameDay(tempEndDate, endDate))
     )
   }
-  $: canResetView = !isSameMonth(tempStartDate, months[0])
   $: months = [...Array(numPages)].map((_, i) => addMonths(today, i))
+  $: canResetView = !isSameMonth(tempStartDate, months[0])
   $: startDateReadout = () => {
     if (!hasSelection && isBefore(tempEndDate, tempStartDate)) {
       return localeFormat(tempEndDate, dateFormat)
@@ -118,12 +118,12 @@
   }
   $: pickerWidth = calendarRef ? numPages * calendarRef.offsetWidth : 0
 
-  // Round and set the hover data temp start & end dates based on start & end date props
+  // Round and set temp start & end dates based on start & end date props
   onMount(() => {
     calendarRef = document.querySelector(".s-calendar")
 
     if (twoPages) {
-      onResize() // Initial sizing
+      onResize()
       window.addEventListener(
         "resize",
         onResize,

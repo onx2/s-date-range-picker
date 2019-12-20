@@ -1,11 +1,11 @@
 module.exports = {
   presets: [
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
-        useBuiltIns: 'entry',
+        useBuiltIns: "entry",
         corejs: 3
       }
-    ],
-  ],
+    ]
+  ]
 }

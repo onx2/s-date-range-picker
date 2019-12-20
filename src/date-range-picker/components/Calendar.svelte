@@ -117,7 +117,6 @@
     <DaysOfWeek {weekGuides} {weekNumbers} {firstDayOfWeek} />
     {#each weeks as week}
       <Week
-        {month}
         {monthIndicator}
         on:apply
         on:cancel
