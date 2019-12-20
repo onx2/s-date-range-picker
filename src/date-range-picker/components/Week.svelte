@@ -10,11 +10,7 @@
     week.weeksFromToday > 0 ? `+${week.weeksFromToday}` : week.weeksFromToday
 </script>
 
-<div
-  class="row"
-  role="row"
-  on:nextMonth
-  on:prevMonth>
+<div class="row" role="row" on:nextMonth on:prevMonth>
   {#if weekGuides}
     <small
       aria-label={`${week.weeksFromToday} weeks from today`}
