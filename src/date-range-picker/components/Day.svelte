@@ -186,20 +186,20 @@
   role="gridcell">
   <button
     aria-disabled={day.isDisabled}
-    aria-label={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
+    aria-label={localeFormat(day.date, "EEEE, MMMM dd, yyyy")}
     class="cell"
     class:muted={day.isNextMonth || day.isPrevMonth}
     disabled={day.isDisabled}
-    data-date={localeFormat(day.date, 'yyyy-MM-dd')}
+    data-date={localeFormat(day.date, "yyyy-MM-dd")}
     on:keydown={e => onKeydown(e, day.date)}
-    on:mouseenter={() => dispatchEvent('hover', day.date)}
+    on:mouseenter={() => dispatchEvent("hover", day.date)}
     on:mousedown={e => onMouseDown(e, day.date)}
     on:mouseup={e => onMouseUp(e, day.date)}
-    title={localeFormat(day.date, 'EEEE, MMMM dd, yyyy')}
+    title={localeFormat(day.date, "EEEE, MMMM dd, yyyy")}
     type="button">
     {#if monthIndicator}
-      <span class="month-indicator">{localeFormat(day.date, 'MMM')}</span>
+      <span class="month-indicator">{localeFormat(day.date, "MMM")}</span>
     {/if}
-    {localeFormat(day.date, 'd')}
+    {localeFormat(day.date, "d")}
   </button>
 </div>
