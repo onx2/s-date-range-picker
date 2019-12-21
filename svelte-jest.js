@@ -1,14 +1,14 @@
-const deasync = require('deasync')
-const rollup = require('rollup')
+const deasync = require("deasync")
+const rollup = require("rollup")
 
-const config = require('./rollup.config.js')
+const config = require("./rollup.config.js")
 
 exports.process = (...args) => {
   const [, input] = args
   const compiled = {}
   rollup
     .rollup({ input, plugins: config.plugins })
-    .then(bundle => bundle.generate({ format: 'cjs', sourcemap: true }))
+    .then(bundle => bundle.generate({ format: "cjs", sourcemap: true }))
     .then(({ output }) =>
       output.reduce((carry, record) => Object.assign(carry, record), compiled)
     )

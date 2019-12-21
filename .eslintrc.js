@@ -1,32 +1,35 @@
-{
-  "env": {
+module.exports = {
+  env: {
     "jest/globals": true,
     "browser": true,
     "es6": true
   },
-  "parserOptions": {
+  parserOptions: {
     "ecmaVersion": 2019,
     "sourceType": "module"
   },
-  "plugins": [
+  plugins: [
     "jest",
     "svelte3"
   ],
-  "extends": [
+  settings: {
+		"svelte3/ignore-styles": attributes => attributes.lang && attributes.lang.includes('scss')
+	},
+  extends: [
     "eslint:recommended"
   ],
-  "overrides": [
+  overrides: [
     {
-      "files": [
+     files: [
         "src/date-range-picker/**/*.svelte",
         "src/date-range-picker/*.svelte"
       ],
-      "processor": "svelte3/svelte3"
+      processor: "svelte3/svelte3"
     }
   ],
-  "rules": {
+  rules: {
     "comma-dangle": "error",
-    "quotes": ["error", "double"],
-    "semi": ["error", "never"]
+    quotes: ["error", "double"],
+    semi: ["error", "never"]
   }
 }

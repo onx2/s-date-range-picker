@@ -87,7 +87,9 @@
   }
 </script>
 
-<style>
+<style lang="scss" type="text/scss">
+  @import "src/date-range-picker/themes/variables.scss";
+
   .s-day {
     position: relative;
   }
@@ -100,7 +102,7 @@
   }
 
   .s-day:not(.disabled):not(.next-month):not(.prev-month)::after {
-    background-color: #bbdefb;
+    background-color: $withinSelection;
   }
 
   .within-selection:not(.start-date):not(.end-date)::after {
@@ -128,7 +130,7 @@
   }
 
   button:focus {
-    box-shadow: inset 0 0 0 1px #1565c0;
+    box-shadow: inset 0 0 0 2px $primaryColor;
   }
 
   .end-date::after {
@@ -165,7 +167,7 @@
   .start-date:not(.next-month):not(.prev-month) button,
   .end-date:not(.next-month):not(.prev-month) button,
   button:not(:disabled):hover {
-    background-color: #1565c0;
+    background-color: $primaryColor;
     /* Overwrite .muted class for prev/next months */
     color: white !important;
   }
