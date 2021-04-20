@@ -1,5 +1,7 @@
 # s-date-range-picker (alpha)
 
+## ⚠️ This repository isn't maintained anymore but feel free to fork it as a good starting place for a date picker in svelte.
+
 [![CircleCI](https://circleci.com/gh/onx2/s-date-range-picker.svg?style=svg)](https://circleci.com/gh/onx2/s-date-range-picker)
 [![npm version](https://badge.fury.io/js/s-date-range-picker.svg)](https://badge.fury.io/js/s-date-range-picker)
 
